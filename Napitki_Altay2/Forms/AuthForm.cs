@@ -112,9 +112,8 @@ namespace Napitki_Altay2
             bool success = false;
             try // Открытие соединения, проверка работы БД
             {
-                const string command = "select * from Auth " +
-                    "where User_login=@login " +
-                    "and User_password=@password";
+                const string command = "select * from Auth where "
+                    + "User_login=@login and User_pass=@password";
                 SqlCommand check = Check(command);
                 check.Parameters.AddWithValue("@login", 
                     LoginTextBox.Texts);

@@ -75,6 +75,12 @@
     <Compile Include="Forms\MainWorkForm.Designer.cs">
       <DependentUpon>MainWorkForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\MainWorkFormAdmin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\MainWorkFormAdmin.Designer.cs">
+      <DependentUpon>MainWorkFormAdmin.cs</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Forms\RegistrationForm.cs">
       <SubType>Form</SubType>
@@ -90,6 +96,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\MainWorkForm.resx">
       <DependentUpon>MainWorkForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\MainWorkFormAdmin.resx">
+      <DependentUpon>MainWorkFormAdmin.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
