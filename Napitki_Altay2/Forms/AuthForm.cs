@@ -2,6 +2,7 @@
 using System;
 using System.Data.SqlClient;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Button;
 
 namespace Napitki_Altay2
 {
@@ -66,6 +67,7 @@ namespace Napitki_Altay2
             if (PasswordTextBox.Texts.Equals(@"Пароль"))
             {
                 PasswordTextBox.Texts = "";
+                PasswordTextBox.PasswordChar = true;
             }
         }
         /// <summary>
@@ -80,6 +82,7 @@ namespace Napitki_Altay2
             if (PasswordTextBox.Texts.Equals(""))
             {
                 PasswordTextBox.Texts = "Пароль";
+                PasswordTextBox.PasswordChar = false;
             }
         }
         /// <summary>
@@ -140,6 +143,21 @@ namespace Napitki_Altay2
                         MessageBoxButtons.OK, 
                         MessageBoxIcon.Error);
             }
+        }
+        #endregion
+        #region [Показ/скрытие пароля]
+        /// <summary>
+        /// Состояние показа пароля при 
+        /// разных переключателях CheckBox
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Visible_Pass_Check_CheckedChanged(object sender, EventArgs e)
+        {
+            if (VisiblePassCheck.Checked == true)
+                PasswordTextBox.PasswordChar = false;
+            else
+                PasswordTextBox.PasswordChar = true;
         }
         #endregion
     }

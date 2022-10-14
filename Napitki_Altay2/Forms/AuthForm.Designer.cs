@@ -33,6 +33,7 @@
             this.DetailsPictureBox = new System.Windows.Forms.PictureBox();
             this.LoginPictureBox = new System.Windows.Forms.PictureBox();
             this.OpenFormRegistration = new System.Windows.Forms.LinkLabel();
+            this.VisiblePassCheck = new System.Windows.Forms.CheckBox();
             this.LogInAppButton = new Napitki_Altay2.Design.CustomButton();
             this.PasswordTextBox = new Napitki_Altay2.Design.CustomTextBox();
             this.LoginTextBox = new Napitki_Altay2.Design.CustomTextBox();
@@ -68,7 +69,7 @@
             this.OpenFormRegistration.AutoSize = true;
             this.OpenFormRegistration.Font = new System.Drawing.Font("Segoe UI Variable Text", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.OpenFormRegistration.LinkColor = System.Drawing.Color.RoyalBlue;
-            this.OpenFormRegistration.Location = new System.Drawing.Point(144, 370);
+            this.OpenFormRegistration.Location = new System.Drawing.Point(144, 373);
             this.OpenFormRegistration.Name = "OpenFormRegistration";
             this.OpenFormRegistration.Size = new System.Drawing.Size(155, 17);
             this.OpenFormRegistration.TabIndex = 5;
@@ -76,6 +77,22 @@
             this.OpenFormRegistration.Text = "Нет аккаунта? Создайте!";
             this.OpenFormRegistration.VisitedLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
             this.OpenFormRegistration.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.OpenFormRegistration_LinkClicked);
+            // 
+            // VisiblePassCheck
+            // 
+            this.VisiblePassCheck.AutoSize = true;
+            this.VisiblePassCheck.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.VisiblePassCheck.Cursor = System.Windows.Forms.Cursors.Default;
+            this.VisiblePassCheck.FlatAppearance.BorderColor = System.Drawing.SystemColors.Window;
+            this.VisiblePassCheck.Font = new System.Drawing.Font("Segoe UI Variable Text", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.VisiblePassCheck.Location = new System.Drawing.Point(356, 262);
+            this.VisiblePassCheck.Name = "VisiblePassCheck";
+            this.VisiblePassCheck.Size = new System.Drawing.Size(95, 24);
+            this.VisiblePassCheck.TabIndex = 6;
+            this.VisiblePassCheck.Text = "Показать";
+            this.VisiblePassCheck.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.VisiblePassCheck.UseVisualStyleBackColor = true;
+            this.VisiblePassCheck.CheckedChanged += new System.EventHandler(this.Visible_Pass_Check_CheckedChanged);
             // 
             // LogInAppButton
             // 
@@ -88,7 +105,7 @@
             this.LogInAppButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.LogInAppButton.Font = new System.Drawing.Font("Segoe UI Semibold", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.LogInAppButton.ForeColor = System.Drawing.Color.White;
-            this.LogInAppButton.Location = new System.Drawing.Point(168, 313);
+            this.LogInAppButton.Location = new System.Drawing.Point(168, 309);
             this.LogInAppButton.Name = "LogInAppButton";
             this.LogInAppButton.Size = new System.Drawing.Size(126, 54);
             this.LogInAppButton.TabIndex = 2;
@@ -105,7 +122,7 @@
             this.PasswordTextBox.BorderSize = 2;
             this.PasswordTextBox.Font = new System.Drawing.Font("Segoe UI Variable Text", 10.2F);
             this.PasswordTextBox.ForeColor = System.Drawing.Color.Black;
-            this.PasswordTextBox.Location = new System.Drawing.Point(111, 269);
+            this.PasswordTextBox.Location = new System.Drawing.Point(111, 253);
             this.PasswordTextBox.Margin = new System.Windows.Forms.Padding(4);
             this.PasswordTextBox.Multiline = false;
             this.PasswordTextBox.Name = "PasswordTextBox";
@@ -126,7 +143,7 @@
             this.LoginTextBox.BorderSize = 2;
             this.LoginTextBox.Font = new System.Drawing.Font("Segoe UI Variable Text", 10.2F);
             this.LoginTextBox.ForeColor = System.Drawing.Color.Black;
-            this.LoginTextBox.Location = new System.Drawing.Point(111, 222);
+            this.LoginTextBox.Location = new System.Drawing.Point(111, 201);
             this.LoginTextBox.Margin = new System.Windows.Forms.Padding(4);
             this.LoginTextBox.Multiline = false;
             this.LoginTextBox.Name = "LoginTextBox";
@@ -150,12 +167,13 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(461, 516);
+            this.Controls.Add(this.VisiblePassCheck);
             this.Controls.Add(this.OpenFormRegistration);
-            this.Controls.Add(this.DetailsPictureBox);
-            this.Controls.Add(this.LoginPictureBox);
             this.Controls.Add(this.LogInAppButton);
             this.Controls.Add(this.PasswordTextBox);
             this.Controls.Add(this.LoginTextBox);
+            this.Controls.Add(this.LoginPictureBox);
+            this.Controls.Add(this.DetailsPictureBox);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "AuthForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -175,6 +193,7 @@
         private System.Windows.Forms.PictureBox LoginPictureBox;
         private System.Windows.Forms.PictureBox DetailsPictureBox;
         private System.Windows.Forms.LinkLabel OpenFormRegistration;
+        private System.Windows.Forms.CheckBox VisiblePassCheck;
     }
 }
 
