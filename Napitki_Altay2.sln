@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32922.545
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Napitki_Altay2", "Napitki_Altay2\Napitki_Altay2.csproj", "{E99D02F3-7141-40AC-AA9A-05AE774499D6}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E99D02F3-7141-40AC-AA9A-05AE774499D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E99D02F3-7141-40AC-AA9A-05AE774499D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E99D02F3-7141-40AC-AA9A-05AE774499D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E99D02F3-7141-40AC-AA9A-05AE774499D6}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A621AFD6-62F4-4BF5-A464-6C171F68A4E4}
+	EndGlobalSection
+EndGlobal
