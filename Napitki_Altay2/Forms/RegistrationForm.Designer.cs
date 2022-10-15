@@ -30,26 +30,193 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RegistrationForm));
+            this.RegPictureBox = new System.Windows.Forms.PictureBox();
+            this.ChoosePictureBox = new System.Windows.Forms.PictureBox();
+            this.RoleContextMenuStip = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.администраторToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.сотрудникToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.деморежимToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ChooseRoleTextBox = new Napitki_Altay2.Design.CustomTextBox();
+            this.PasswordCreateTextBox = new Napitki_Altay2.Design.CustomTextBox();
+            this.LoginCreateTextBox = new Napitki_Altay2.Design.CustomTextBox();
             this.CustomFormForAllProject = new Napitki_Altay2.DesignComponents.CustomForm(this.components);
-            this.LoginPictureBox = new System.Windows.Forms.PictureBox();
-            ((System.ComponentModel.ISupportInitialize)(this.LoginPictureBox)).BeginInit();
+            this.RegisterAccountButton = new Napitki_Altay2.Design.CustomButton();
+            this.DetailsPictureBox = new System.Windows.Forms.PictureBox();
+            this.VisiblePassCheckRegForm = new System.Windows.Forms.CheckBox();
+            ((System.ComponentModel.ISupportInitialize)(this.RegPictureBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ChoosePictureBox)).BeginInit();
+            this.RoleContextMenuStip.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.DetailsPictureBox)).BeginInit();
             this.SuspendLayout();
+            // 
+            // RegPictureBox
+            // 
+            this.RegPictureBox.BackColor = System.Drawing.Color.White;
+            this.RegPictureBox.Image = global::Napitki_Altay2.Properties.Resources.PictureLoginForm;
+            this.RegPictureBox.Location = new System.Drawing.Point(111, 10);
+            this.RegPictureBox.Name = "RegPictureBox";
+            this.RegPictureBox.Size = new System.Drawing.Size(239, 211);
+            this.RegPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.RegPictureBox.TabIndex = 4;
+            this.RegPictureBox.TabStop = false;
+            // 
+            // ChoosePictureBox
+            // 
+            this.ChoosePictureBox.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.ChoosePictureBox.Image = global::Napitki_Altay2.Properties.Resources.PictureRegForm;
+            this.ChoosePictureBox.Location = new System.Drawing.Point(313, 311);
+            this.ChoosePictureBox.Name = "ChoosePictureBox";
+            this.ChoosePictureBox.Size = new System.Drawing.Size(32, 27);
+            this.ChoosePictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.ChoosePictureBox.TabIndex = 8;
+            this.ChoosePictureBox.TabStop = false;
+            this.ChoosePictureBox.Click += new System.EventHandler(this.ChoosePictureBox_Click);
+            // 
+            // RoleContextMenuStip
+            // 
+            this.RoleContextMenuStip.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
+            this.RoleContextMenuStip.Font = new System.Drawing.Font("Segoe UI Variable Text", 10.2F);
+            this.RoleContextMenuStip.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.RoleContextMenuStip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.администраторToolStripMenuItem,
+            this.сотрудникToolStripMenuItem,
+            this.деморежимToolStripMenuItem});
+            this.RoleContextMenuStip.Name = "RoleContextMenuStip";
+            this.RoleContextMenuStip.Size = new System.Drawing.Size(204, 82);
+            // 
+            // администраторToolStripMenuItem
+            // 
+            this.администраторToolStripMenuItem.Name = "администраторToolStripMenuItem";
+            this.администраторToolStripMenuItem.Size = new System.Drawing.Size(203, 26);
+            this.администраторToolStripMenuItem.Text = "Администратор";
+            this.администраторToolStripMenuItem.Click += new System.EventHandler(this.администраторToolStripMenuItem_Click);
+            // 
+            // сотрудникToolStripMenuItem
+            // 
+            this.сотрудникToolStripMenuItem.Name = "сотрудникToolStripMenuItem";
+            this.сотрудникToolStripMenuItem.Size = new System.Drawing.Size(203, 26);
+            this.сотрудникToolStripMenuItem.Text = "Сотрудник";
+            this.сотрудникToolStripMenuItem.Click += new System.EventHandler(this.сотрудникToolStripMenuItem_Click);
+            // 
+            // деморежимToolStripMenuItem
+            // 
+            this.деморежимToolStripMenuItem.Name = "деморежимToolStripMenuItem";
+            this.деморежимToolStripMenuItem.Size = new System.Drawing.Size(203, 26);
+            this.деморежимToolStripMenuItem.Text = "Демо-режим";
+            this.деморежимToolStripMenuItem.Click += new System.EventHandler(this.деморежимToolStripMenuItem_Click);
+            // 
+            // ChooseRoleTextBox
+            // 
+            this.ChooseRoleTextBox.BackColor = System.Drawing.Color.White;
+            this.ChooseRoleTextBox.BorderColor = System.Drawing.Color.RoyalBlue;
+            this.ChooseRoleTextBox.BorderFocusColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
+            this.ChooseRoleTextBox.BorderSize = 2;
+            this.ChooseRoleTextBox.Enabled = false;
+            this.ChooseRoleTextBox.Font = new System.Drawing.Font("Segoe UI Variable Text", 10.2F);
+            this.ChooseRoleTextBox.ForeColor = System.Drawing.Color.Black;
+            this.ChooseRoleTextBox.Location = new System.Drawing.Point(111, 305);
+            this.ChooseRoleTextBox.Margin = new System.Windows.Forms.Padding(4);
+            this.ChooseRoleTextBox.Multiline = false;
+            this.ChooseRoleTextBox.Name = "ChooseRoleTextBox";
+            this.ChooseRoleTextBox.Padding = new System.Windows.Forms.Padding(7);
+            this.ChooseRoleTextBox.PasswordChar = false;
+            this.ChooseRoleTextBox.Size = new System.Drawing.Size(239, 37);
+            this.ChooseRoleTextBox.TabIndex = 7;
+            this.ChooseRoleTextBox.Texts = "Права пользователя";
+            this.ChooseRoleTextBox.UnderlinedStyle = false;
+            // 
+            // PasswordCreateTextBox
+            // 
+            this.PasswordCreateTextBox.BackColor = System.Drawing.Color.White;
+            this.PasswordCreateTextBox.BorderColor = System.Drawing.Color.RoyalBlue;
+            this.PasswordCreateTextBox.BorderFocusColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
+            this.PasswordCreateTextBox.BorderSize = 2;
+            this.PasswordCreateTextBox.Font = new System.Drawing.Font("Segoe UI Variable Text", 10.2F);
+            this.PasswordCreateTextBox.ForeColor = System.Drawing.Color.Black;
+            this.PasswordCreateTextBox.Location = new System.Drawing.Point(111, 253);
+            this.PasswordCreateTextBox.Margin = new System.Windows.Forms.Padding(4);
+            this.PasswordCreateTextBox.Multiline = false;
+            this.PasswordCreateTextBox.Name = "PasswordCreateTextBox";
+            this.PasswordCreateTextBox.Padding = new System.Windows.Forms.Padding(7);
+            this.PasswordCreateTextBox.PasswordChar = false;
+            this.PasswordCreateTextBox.Size = new System.Drawing.Size(239, 37);
+            this.PasswordCreateTextBox.TabIndex = 6;
+            this.PasswordCreateTextBox.Texts = "Создание пароля";
+            this.PasswordCreateTextBox.UnderlinedStyle = false;
+            this.PasswordCreateTextBox.Enter += new System.EventHandler(this.User_Enter_In_TextBox_Pass_Create);
+            this.PasswordCreateTextBox.Leave += new System.EventHandler(this.User_Leave_From_TextBox_Pass_Create);
+            // 
+            // LoginCreateTextBox
+            // 
+            this.LoginCreateTextBox.BackColor = System.Drawing.Color.White;
+            this.LoginCreateTextBox.BorderColor = System.Drawing.Color.RoyalBlue;
+            this.LoginCreateTextBox.BorderFocusColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
+            this.LoginCreateTextBox.BorderSize = 2;
+            this.LoginCreateTextBox.Font = new System.Drawing.Font("Segoe UI Variable Text", 10.2F);
+            this.LoginCreateTextBox.ForeColor = System.Drawing.Color.Black;
+            this.LoginCreateTextBox.Location = new System.Drawing.Point(111, 201);
+            this.LoginCreateTextBox.Margin = new System.Windows.Forms.Padding(4);
+            this.LoginCreateTextBox.Multiline = false;
+            this.LoginCreateTextBox.Name = "LoginCreateTextBox";
+            this.LoginCreateTextBox.Padding = new System.Windows.Forms.Padding(7);
+            this.LoginCreateTextBox.PasswordChar = false;
+            this.LoginCreateTextBox.Size = new System.Drawing.Size(239, 37);
+            this.LoginCreateTextBox.TabIndex = 5;
+            this.LoginCreateTextBox.Texts = "Создание логина";
+            this.LoginCreateTextBox.UnderlinedStyle = false;
+            this.LoginCreateTextBox.Enter += new System.EventHandler(this.User_Enter_In_TextBox_Login_Create);
+            this.LoginCreateTextBox.Leave += new System.EventHandler(this.User_Leave_From_TextBox_Login_Create);
             // 
             // CustomFormForAllProject
             // 
             this.CustomFormForAllProject.Form = this;
             this.CustomFormForAllProject.FormStyle = Napitki_Altay2.DesignComponents.CustomForm.fStyle.None;
             // 
-            // LoginPictureBox
+            // RegisterAccountButton
             // 
-            this.LoginPictureBox.BackColor = System.Drawing.Color.White;
-            this.LoginPictureBox.Image = global::Napitki_Altay2.Properties.Resources.PictureLoginForm;
-            this.LoginPictureBox.Location = new System.Drawing.Point(111, 10);
-            this.LoginPictureBox.Name = "LoginPictureBox";
-            this.LoginPictureBox.Size = new System.Drawing.Size(239, 211);
-            this.LoginPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.LoginPictureBox.TabIndex = 4;
-            this.LoginPictureBox.TabStop = false;
+            this.RegisterAccountButton.BackColor = System.Drawing.Color.RoyalBlue;
+            this.RegisterAccountButton.BackgroundColor = System.Drawing.Color.RoyalBlue;
+            this.RegisterAccountButton.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
+            this.RegisterAccountButton.BorderRadius = 5;
+            this.RegisterAccountButton.BorderSize = 0;
+            this.RegisterAccountButton.FlatAppearance.BorderSize = 0;
+            this.RegisterAccountButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.RegisterAccountButton.Font = new System.Drawing.Font("Segoe UI Semibold", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.RegisterAccountButton.ForeColor = System.Drawing.Color.White;
+            this.RegisterAccountButton.Location = new System.Drawing.Point(167, 361);
+            this.RegisterAccountButton.Name = "RegisterAccountButton";
+            this.RegisterAccountButton.Size = new System.Drawing.Size(126, 54);
+            this.RegisterAccountButton.TabIndex = 9;
+            this.RegisterAccountButton.Text = "Создать";
+            this.RegisterAccountButton.TextColor = System.Drawing.Color.White;
+            this.RegisterAccountButton.UseVisualStyleBackColor = false;
+            this.RegisterAccountButton.Click += new System.EventHandler(this.RegisterAccountButton_Click);
+            // 
+            // DetailsPictureBox
+            // 
+            this.DetailsPictureBox.Image = ((System.Drawing.Image)(resources.GetObject("DetailsPictureBox.Image")));
+            this.DetailsPictureBox.Location = new System.Drawing.Point(2, 387);
+            this.DetailsPictureBox.Name = "DetailsPictureBox";
+            this.DetailsPictureBox.Size = new System.Drawing.Size(457, 128);
+            this.DetailsPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.DetailsPictureBox.TabIndex = 10;
+            this.DetailsPictureBox.TabStop = false;
+            // 
+            // VisiblePassCheckRegForm
+            // 
+            this.VisiblePassCheckRegForm.AutoSize = true;
+            this.VisiblePassCheckRegForm.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.VisiblePassCheckRegForm.Cursor = System.Windows.Forms.Cursors.Default;
+            this.VisiblePassCheckRegForm.FlatAppearance.BorderColor = System.Drawing.SystemColors.Window;
+            this.VisiblePassCheckRegForm.Font = new System.Drawing.Font("Segoe UI Variable Text", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.VisiblePassCheckRegForm.Location = new System.Drawing.Point(356, 262);
+            this.VisiblePassCheckRegForm.Name = "VisiblePassCheckRegForm";
+            this.VisiblePassCheckRegForm.Size = new System.Drawing.Size(95, 24);
+            this.VisiblePassCheckRegForm.TabIndex = 11;
+            this.VisiblePassCheckRegForm.Text = "Показать";
+            this.VisiblePassCheckRegForm.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.VisiblePassCheckRegForm.UseVisualStyleBackColor = true;
+            this.VisiblePassCheckRegForm.CheckedChanged += new System.EventHandler(this.VisiblePassCheckRegForm_CheckedChanged);
             // 
             // RegistrationForm
             // 
@@ -57,19 +224,41 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(461, 516);
-            this.Controls.Add(this.LoginPictureBox);
+            this.Controls.Add(this.VisiblePassCheckRegForm);
+            this.Controls.Add(this.RegisterAccountButton);
+            this.Controls.Add(this.ChoosePictureBox);
+            this.Controls.Add(this.ChooseRoleTextBox);
+            this.Controls.Add(this.PasswordCreateTextBox);
+            this.Controls.Add(this.LoginCreateTextBox);
+            this.Controls.Add(this.RegPictureBox);
+            this.Controls.Add(this.DetailsPictureBox);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "RegistrationForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Регистрация";
-            ((System.ComponentModel.ISupportInitialize)(this.LoginPictureBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.RegPictureBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ChoosePictureBox)).EndInit();
+            this.RoleContextMenuStip.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.DetailsPictureBox)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
 
         private DesignComponents.CustomForm CustomFormForAllProject;
-        private System.Windows.Forms.PictureBox LoginPictureBox;
+        private System.Windows.Forms.PictureBox RegPictureBox;
+        private Design.CustomTextBox LoginCreateTextBox;
+        private Design.CustomTextBox PasswordCreateTextBox;
+        private System.Windows.Forms.PictureBox ChoosePictureBox;
+        private Design.CustomTextBox ChooseRoleTextBox;
+        private System.Windows.Forms.ContextMenuStrip RoleContextMenuStip;
+        private System.Windows.Forms.ToolStripMenuItem администраторToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem сотрудникToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem деморежимToolStripMenuItem;
+        private Design.CustomButton RegisterAccountButton;
+        private System.Windows.Forms.PictureBox DetailsPictureBox;
+        private System.Windows.Forms.CheckBox VisiblePassCheckRegForm;
     }
 }

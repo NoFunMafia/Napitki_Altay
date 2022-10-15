@@ -33,11 +33,11 @@
             this.DetailsPictureBox = new System.Windows.Forms.PictureBox();
             this.LoginPictureBox = new System.Windows.Forms.PictureBox();
             this.OpenFormRegistration = new System.Windows.Forms.LinkLabel();
-            this.VisiblePassCheck = new System.Windows.Forms.CheckBox();
             this.LogInAppButton = new Napitki_Altay2.Design.CustomButton();
             this.PasswordTextBox = new Napitki_Altay2.Design.CustomTextBox();
             this.LoginTextBox = new Napitki_Altay2.Design.CustomTextBox();
             this.CustomFormForAllProject = new Napitki_Altay2.DesignComponents.CustomForm(this.components);
+            this.VisiblePassCheck = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.DetailsPictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.LoginPictureBox)).BeginInit();
             this.SuspendLayout();
@@ -77,22 +77,6 @@
             this.OpenFormRegistration.Text = "Нет аккаунта? Создайте!";
             this.OpenFormRegistration.VisitedLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
             this.OpenFormRegistration.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.OpenFormRegistration_LinkClicked);
-            // 
-            // VisiblePassCheck
-            // 
-            this.VisiblePassCheck.AutoSize = true;
-            this.VisiblePassCheck.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.VisiblePassCheck.Cursor = System.Windows.Forms.Cursors.Default;
-            this.VisiblePassCheck.FlatAppearance.BorderColor = System.Drawing.SystemColors.Window;
-            this.VisiblePassCheck.Font = new System.Drawing.Font("Segoe UI Variable Text", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.VisiblePassCheck.Location = new System.Drawing.Point(356, 262);
-            this.VisiblePassCheck.Name = "VisiblePassCheck";
-            this.VisiblePassCheck.Size = new System.Drawing.Size(95, 24);
-            this.VisiblePassCheck.TabIndex = 6;
-            this.VisiblePassCheck.Text = "Показать";
-            this.VisiblePassCheck.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.VisiblePassCheck.UseVisualStyleBackColor = true;
-            this.VisiblePassCheck.CheckedChanged += new System.EventHandler(this.Visible_Pass_Check_CheckedChanged);
             // 
             // LogInAppButton
             // 
@@ -160,6 +144,22 @@
             // 
             this.CustomFormForAllProject.Form = this;
             this.CustomFormForAllProject.FormStyle = Napitki_Altay2.DesignComponents.CustomForm.fStyle.None;
+            // 
+            // VisiblePassCheck
+            // 
+            this.VisiblePassCheck.AutoSize = true;
+            this.VisiblePassCheck.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.VisiblePassCheck.Cursor = System.Windows.Forms.Cursors.Default;
+            this.VisiblePassCheck.FlatAppearance.BorderColor = System.Drawing.SystemColors.Window;
+            this.VisiblePassCheck.Font = new System.Drawing.Font("Segoe UI Variable Text", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.VisiblePassCheck.Location = new System.Drawing.Point(356, 262);
+            this.VisiblePassCheck.Name = "VisiblePassCheck";
+            this.VisiblePassCheck.Size = new System.Drawing.Size(95, 24);
+            this.VisiblePassCheck.TabIndex = 6;
+            this.VisiblePassCheck.Text = "Показать";
+            this.VisiblePassCheck.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.VisiblePassCheck.UseVisualStyleBackColor = true;
+            this.VisiblePassCheck.CheckedChanged += new System.EventHandler(this.Visible_Pass_Check_CheckedChanged);
             // 
             // AuthForm
             // 

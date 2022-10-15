@@ -125,6 +125,11 @@ namespace Napitki_Altay2
                     success = dataReader.Read();
                 }
             }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Ошибка", 
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
             finally // Закрытие соединения с БД
             {
                 datebaseCon.closeConnection();
