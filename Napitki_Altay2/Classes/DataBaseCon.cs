@@ -38,6 +38,7 @@ namespace Napitki_Altay2
             }
         }
         #endregion
+        #region [Возврат значение соединения]
         /// <summary>
         /// Возврат соединения
         /// </summary>
@@ -46,5 +47,6 @@ namespace Napitki_Altay2
         {
             return con;
         }
+        #endregion
     }
 }

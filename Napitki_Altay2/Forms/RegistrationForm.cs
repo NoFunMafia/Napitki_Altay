@@ -1,13 +1,7 @@
-﻿using Napitki_Altay2.Forms;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using System;
 using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Napitki_Altay2
@@ -147,46 +141,71 @@ namespace Napitki_Altay2
                 PasswordCreateTextBox.PasswordChar = true;
         }
         #endregion
-        private void RegisterAccountButton_Click(object sender, EventArgs e)
+        #region [Внесение нового логина и пароля пользователя в БД, проверка полей заполнения]
+        /// <summary>
+        /// Действие регистрации нового аккаунта с 
+        /// проверками на успешность внесения данных
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void RegisterAccountButton_Click
+            (object sender, EventArgs e)
         {
             bool success;
             try // Открытие соединения, проверка работы БД
             {
                 int isAdmin = 0, isUser = 0, isDemo = 0;
-                if (ChooseRoleTextBox.Texts == "Администратор")
+                CheckUserRole(ref isAdmin, ref isUser, ref isDemo);
+                if (isAdmin == 0 && isUser == 0 && isDemo == 0)
                 {
-                    isAdmin = 1;
+                    MessageBox.Show
+                        ("Права пользователя не определены!",
+                        "Ошибка", 
+                        MessageBoxButtons.OK, 
+                        MessageBoxIcon.Error);
                 }
-                else if (ChooseRoleTextBox.Texts == "Сотрудник")
+                else if(isAdmin >= 0 || isUser >= 0 || isDemo >= 0)
                 {
-                    isUser = 1;
-                }
-                else
-                    isDemo = 1;
-                string sqlCom = "insert into " +
-                "Auth(User_login, User_pass, User_demo, " +
-                "User_casual, User_admin) values" + "('"
-                + LoginCreateTextBox.Texts.ToString() + "','"
-                + PasswordCreateTextBox.Texts.ToString() + "','"
-                + isDemo.ToString() + "','"
-                + isUser.ToString() + "','"
-                + isAdmin.ToString() + "')";
-                SqlCommand check = Check(sqlCom);
-                datebaseCon.openConnection();
-                using (var datareader = check.ExecuteReader())
-                {
-                    success = datareader.Read();
-                    MessageBox.Show("Пользователь успешно добавлен!",
-                    "Информация", MessageBoxButtons.OK,
-                    MessageBoxIcon.Information);
-                    AuthForm authForm = new AuthForm();
-                    authForm.Show();
-                    this.Hide();
+                    if(LoginCreateTextBox.Texts == "Создание логина" || 
+                        PasswordCreateTextBox.Texts == "Создание пароля")
+                    {
+                        MessageBox.Show
+                            ("Поля данных не заполнены до конца!",
+                            "Ошибка", 
+                            MessageBoxButtons.OK, 
+                            MessageBoxIcon.Error);
+                    }
+                    else
+                    {
+                        if (CheckLoginUserInDB())
+                            return;
+                        string sqlCom = "insert into " +
+                        "Auth(User_login, User_pass, User_demo, " +
+                        "User_casual, User_admin) values" + "('"
+                        + LoginCreateTextBox.Texts.ToString() + "','"
+                        + PasswordCreateTextBox.Texts.ToString() + "','"
+                        + isDemo.ToString() + "','"
+                        + isUser.ToString() + "','"
+                        + isAdmin.ToString() + "')";
+                        SqlCommand check = Check(sqlCom);
+                        datebaseCon.openConnection();
+                        using (var datareader = check.ExecuteReader())
+                        {
+                            success = datareader.Read();
+                            MessageBox.Show
+                                ("Пользователь успешно добавлен!",
+                            "Информация", MessageBoxButtons.OK,
+                            MessageBoxIcon.Information);
+                            AuthForm authForm = new AuthForm();
+                            authForm.Show();
+                            this.Hide();
+                        }
+                    }
                 }
             }
-            catch(Exception ex)
+            catch(Exception)
             {
-                MessageBox.Show(ex.Message,
+                MessageBox.Show("Ошибка подключения к базе данных!",
                     "Ошибка",
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Error);
@@ -196,5 +215,75 @@ namespace Napitki_Altay2
                 datebaseCon.closeConnection();
             }
         }
+        #endregion
+        #region [Метод проверки уникальности логина]
+        /// <summary>
+        /// Проверка уникальности логина пользователя
+        /// </summary>
+        /// <returns>Правда - если логин занят, 
+        /// ложь - свободен</returns>
+        public Boolean CheckLoginUserInDB()
+        {
+            DataBaseCon dataBaseCon = new DataBaseCon();
+            DataTable dataTable = new DataTable();
+            SqlCommand command = new SqlCommand
+                ("select * from Auth where User_login=@usLog", 
+                dataBaseCon.sqlConnection());
+            command.Parameters.Add
+                ("@usLog", SqlDbType.VarChar).Value 
+                = LoginCreateTextBox.Texts;
+            SqlDataAdapter adapter = new SqlDataAdapter();
+            adapter.SelectCommand = command;
+            adapter.Fill(dataTable);
+            if (dataTable.Rows.Count > 0)
+            {
+                MessageBox.Show("Данный логин занят, используйте другой!",
+                                    "Ошибка",
+                                    MessageBoxButtons.OK,
+                                    MessageBoxIcon.Error);
+                return true;
+            }
+            else
+                return false;
+        }
+        #endregion
+        #region [Метод сверки роли пользователя]
+        /// <summary>
+        /// Сверка роли пользователя при регистрации аккаунта
+        /// </summary>
+        /// <param name="isAdmin">Пользователь админ?</param>
+        /// <param name="isUser">Пользователь сотрудник?</param>
+        /// <param name="isDemo">Пользователь использует демо-режим?</param>
+        private void CheckUserRole
+            (ref int isAdmin, ref int isUser, ref int isDemo)
+        {
+            if (ChooseRoleTextBox.Texts == "Администратор")
+                isAdmin = 1;
+            else if (ChooseRoleTextBox.Texts == "Сотрудник")
+                isUser = 1;
+            else if (ChooseRoleTextBox.Texts == "Демо-режим")
+                isDemo = 1;
+            else
+            {
+                isAdmin = 0;
+                isUser = 0;
+                isDemo = 0;
+            }
+        }
+        #endregion
+        #region [Событие перехода на форму входа в программу]
+        /// <summary>
+        /// Открытие формы авторизации, 
+        /// если у пользователя уже есть аккаунт
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OpenFormLogin_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            AuthForm authForm = new AuthForm();
+            authForm.Show();
+            this.Hide();
+        }
+        #endregion
     }
 }

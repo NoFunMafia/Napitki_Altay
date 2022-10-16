@@ -2,7 +2,6 @@
 using System;
 using System.Data.SqlClient;
 using System.Windows.Forms;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.Button;
 
 namespace Napitki_Altay2
 {
@@ -109,20 +108,33 @@ namespace Napitki_Altay2
         private void LogInAppButton_Click
             (object sender, EventArgs e)
         {
-            bool success = false;
             try // Открытие соединения, проверка работы БД
             {
-                const string command = "select * from Auth where "
-                    + "User_login=@login and User_pass=@password";
-                SqlCommand check = Check(command);
-                check.Parameters.AddWithValue("@login", 
-                    LoginTextBox.Texts);
-                check.Parameters.AddWithValue("@password", 
-                    PasswordTextBox.Texts);
-                datebaseCon.openConnection();
-                using (var dataReader = check.ExecuteReader())
+                if (LoginTextBox.Texts == "Логин" || 
+                    PasswordTextBox.Texts == "Пароль")
                 {
-                    success = dataReader.Read();
+                    MessageBox.Show("Данные для входа не введены!",
+                        "Ошибка", 
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error);
+                }
+                else
+                {
+                    const string command = "select * from Auth where "
+                    + "User_login=@login and User_pass=@password";
+                    SqlCommand check = Check(command);
+                    check.Parameters.AddWithValue("@login",
+                        LoginTextBox.Texts);
+                    check.Parameters.AddWithValue("@password",
+                        PasswordTextBox.Texts);
+                    datebaseCon.openConnection();
+                    using (var dataReader = check.ExecuteReader())
+                    {
+                        bool success = dataReader.Read();
+                        MainWorkForm mainWorkForm = new MainWorkForm();
+                        mainWorkForm.Show();
+                        this.Hide();
+                    }
                 }
             }
             catch(Exception ex)
@@ -133,19 +145,6 @@ namespace Napitki_Altay2
             finally // Закрытие соединения с БД
             {
                 datebaseCon.closeConnection();
-            }
-            if (success) // Если, успех
-            {
-                MainWorkForm mainWorkForm = new MainWorkForm();
-                mainWorkForm.Show();
-                this.Hide();
-            }
-            else // Иначе, ошибка
-            {
-                MessageBox.Show("Введен неправильный логин/пароль!",
-                    "Ошибка",
-                        MessageBoxButtons.OK, 
-                        MessageBoxIcon.Error);
             }
         }
         #endregion

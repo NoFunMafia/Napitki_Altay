@@ -36,13 +36,14 @@
             this.администраторToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.сотрудникToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.деморежимToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.DetailsPictureBox = new System.Windows.Forms.PictureBox();
+            this.VisiblePassCheckRegForm = new System.Windows.Forms.CheckBox();
+            this.OpenFormLogin = new System.Windows.Forms.LinkLabel();
+            this.RegisterAccountButton = new Napitki_Altay2.Design.CustomButton();
             this.ChooseRoleTextBox = new Napitki_Altay2.Design.CustomTextBox();
             this.PasswordCreateTextBox = new Napitki_Altay2.Design.CustomTextBox();
             this.LoginCreateTextBox = new Napitki_Altay2.Design.CustomTextBox();
             this.CustomFormForAllProject = new Napitki_Altay2.DesignComponents.CustomForm(this.components);
-            this.RegisterAccountButton = new Napitki_Altay2.Design.CustomButton();
-            this.DetailsPictureBox = new System.Windows.Forms.PictureBox();
-            this.VisiblePassCheckRegForm = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.RegPictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ChoosePictureBox)).BeginInit();
             this.RoleContextMenuStip.SuspendLayout();
@@ -104,6 +105,67 @@
             this.деморежимToolStripMenuItem.Size = new System.Drawing.Size(203, 26);
             this.деморежимToolStripMenuItem.Text = "Демо-режим";
             this.деморежимToolStripMenuItem.Click += new System.EventHandler(this.деморежимToolStripMenuItem_Click);
+            // 
+            // DetailsPictureBox
+            // 
+            this.DetailsPictureBox.Image = ((System.Drawing.Image)(resources.GetObject("DetailsPictureBox.Image")));
+            this.DetailsPictureBox.Location = new System.Drawing.Point(2, 387);
+            this.DetailsPictureBox.Name = "DetailsPictureBox";
+            this.DetailsPictureBox.Size = new System.Drawing.Size(457, 128);
+            this.DetailsPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.DetailsPictureBox.TabIndex = 10;
+            this.DetailsPictureBox.TabStop = false;
+            // 
+            // VisiblePassCheckRegForm
+            // 
+            this.VisiblePassCheckRegForm.AutoSize = true;
+            this.VisiblePassCheckRegForm.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.VisiblePassCheckRegForm.Cursor = System.Windows.Forms.Cursors.Default;
+            this.VisiblePassCheckRegForm.FlatAppearance.BorderColor = System.Drawing.SystemColors.Window;
+            this.VisiblePassCheckRegForm.Font = new System.Drawing.Font("Segoe UI Variable Text", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.VisiblePassCheckRegForm.Location = new System.Drawing.Point(356, 262);
+            this.VisiblePassCheckRegForm.Name = "VisiblePassCheckRegForm";
+            this.VisiblePassCheckRegForm.Size = new System.Drawing.Size(95, 24);
+            this.VisiblePassCheckRegForm.TabIndex = 11;
+            this.VisiblePassCheckRegForm.Text = "Показать";
+            this.VisiblePassCheckRegForm.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.VisiblePassCheckRegForm.UseVisualStyleBackColor = true;
+            this.VisiblePassCheckRegForm.CheckedChanged += new System.EventHandler(this.VisiblePassCheckRegForm_CheckedChanged);
+            // 
+            // OpenFormLogin
+            // 
+            this.OpenFormLogin.ActiveLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
+            this.OpenFormLogin.AutoSize = true;
+            this.OpenFormLogin.Font = new System.Drawing.Font("Segoe UI Variable Text", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.OpenFormLogin.LinkColor = System.Drawing.Color.RoyalBlue;
+            this.OpenFormLogin.Location = new System.Drawing.Point(135, 417);
+            this.OpenFormLogin.Name = "OpenFormLogin";
+            this.OpenFormLogin.Size = new System.Drawing.Size(174, 17);
+            this.OpenFormLogin.TabIndex = 12;
+            this.OpenFormLogin.TabStop = true;
+            this.OpenFormLogin.Text = "Уже есть аккаунт? Войдите!";
+            this.OpenFormLogin.VisitedLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
+            this.OpenFormLogin.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.OpenFormLogin_LinkClicked);
+            // 
+            // RegisterAccountButton
+            // 
+            this.RegisterAccountButton.BackColor = System.Drawing.Color.RoyalBlue;
+            this.RegisterAccountButton.BackgroundColor = System.Drawing.Color.RoyalBlue;
+            this.RegisterAccountButton.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
+            this.RegisterAccountButton.BorderRadius = 5;
+            this.RegisterAccountButton.BorderSize = 0;
+            this.RegisterAccountButton.FlatAppearance.BorderSize = 0;
+            this.RegisterAccountButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.RegisterAccountButton.Font = new System.Drawing.Font("Segoe UI Semibold", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.RegisterAccountButton.ForeColor = System.Drawing.Color.White;
+            this.RegisterAccountButton.Location = new System.Drawing.Point(167, 355);
+            this.RegisterAccountButton.Name = "RegisterAccountButton";
+            this.RegisterAccountButton.Size = new System.Drawing.Size(126, 54);
+            this.RegisterAccountButton.TabIndex = 9;
+            this.RegisterAccountButton.Text = "Создать";
+            this.RegisterAccountButton.TextColor = System.Drawing.Color.White;
+            this.RegisterAccountButton.UseVisualStyleBackColor = false;
+            this.RegisterAccountButton.Click += new System.EventHandler(this.RegisterAccountButton_Click);
             // 
             // ChooseRoleTextBox
             // 
@@ -172,58 +234,13 @@
             this.CustomFormForAllProject.Form = this;
             this.CustomFormForAllProject.FormStyle = Napitki_Altay2.DesignComponents.CustomForm.fStyle.None;
             // 
-            // RegisterAccountButton
-            // 
-            this.RegisterAccountButton.BackColor = System.Drawing.Color.RoyalBlue;
-            this.RegisterAccountButton.BackgroundColor = System.Drawing.Color.RoyalBlue;
-            this.RegisterAccountButton.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
-            this.RegisterAccountButton.BorderRadius = 5;
-            this.RegisterAccountButton.BorderSize = 0;
-            this.RegisterAccountButton.FlatAppearance.BorderSize = 0;
-            this.RegisterAccountButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.RegisterAccountButton.Font = new System.Drawing.Font("Segoe UI Semibold", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.RegisterAccountButton.ForeColor = System.Drawing.Color.White;
-            this.RegisterAccountButton.Location = new System.Drawing.Point(167, 361);
-            this.RegisterAccountButton.Name = "RegisterAccountButton";
-            this.RegisterAccountButton.Size = new System.Drawing.Size(126, 54);
-            this.RegisterAccountButton.TabIndex = 9;
-            this.RegisterAccountButton.Text = "Создать";
-            this.RegisterAccountButton.TextColor = System.Drawing.Color.White;
-            this.RegisterAccountButton.UseVisualStyleBackColor = false;
-            this.RegisterAccountButton.Click += new System.EventHandler(this.RegisterAccountButton_Click);
-            // 
-            // DetailsPictureBox
-            // 
-            this.DetailsPictureBox.Image = ((System.Drawing.Image)(resources.GetObject("DetailsPictureBox.Image")));
-            this.DetailsPictureBox.Location = new System.Drawing.Point(2, 387);
-            this.DetailsPictureBox.Name = "DetailsPictureBox";
-            this.DetailsPictureBox.Size = new System.Drawing.Size(457, 128);
-            this.DetailsPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.DetailsPictureBox.TabIndex = 10;
-            this.DetailsPictureBox.TabStop = false;
-            // 
-            // VisiblePassCheckRegForm
-            // 
-            this.VisiblePassCheckRegForm.AutoSize = true;
-            this.VisiblePassCheckRegForm.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.VisiblePassCheckRegForm.Cursor = System.Windows.Forms.Cursors.Default;
-            this.VisiblePassCheckRegForm.FlatAppearance.BorderColor = System.Drawing.SystemColors.Window;
-            this.VisiblePassCheckRegForm.Font = new System.Drawing.Font("Segoe UI Variable Text", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.VisiblePassCheckRegForm.Location = new System.Drawing.Point(356, 262);
-            this.VisiblePassCheckRegForm.Name = "VisiblePassCheckRegForm";
-            this.VisiblePassCheckRegForm.Size = new System.Drawing.Size(95, 24);
-            this.VisiblePassCheckRegForm.TabIndex = 11;
-            this.VisiblePassCheckRegForm.Text = "Показать";
-            this.VisiblePassCheckRegForm.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.VisiblePassCheckRegForm.UseVisualStyleBackColor = true;
-            this.VisiblePassCheckRegForm.CheckedChanged += new System.EventHandler(this.VisiblePassCheckRegForm_CheckedChanged);
-            // 
             // RegistrationForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(461, 516);
+            this.Controls.Add(this.OpenFormLogin);
             this.Controls.Add(this.VisiblePassCheckRegForm);
             this.Controls.Add(this.RegisterAccountButton);
             this.Controls.Add(this.ChoosePictureBox);
@@ -260,5 +277,6 @@
         private Design.CustomButton RegisterAccountButton;
         private System.Windows.Forms.PictureBox DetailsPictureBox;
         private System.Windows.Forms.CheckBox VisiblePassCheckRegForm;
+        private System.Windows.Forms.LinkLabel OpenFormLogin;
     }
 }
