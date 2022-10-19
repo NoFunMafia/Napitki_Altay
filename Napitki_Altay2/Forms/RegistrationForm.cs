@@ -8,8 +8,10 @@ namespace Napitki_Altay2
 {
     public partial class RegistrationForm : Form
     {
+        #region [Подключение класса соединения с БД]
         // Использование класса соединения с БД
         DataBaseCon datebaseCon = new DataBaseCon();
+        #endregion
         public RegistrationForm()
         {
             InitializeComponent();
@@ -168,13 +170,11 @@ namespace Napitki_Altay2
                 {
                     if(LoginCreateTextBox.Texts == "Создание логина" || 
                         PasswordCreateTextBox.Texts == "Создание пароля")
-                    {
                         MessageBox.Show
                             ("Поля данных не заполнены до конца!",
                             "Ошибка", 
                             MessageBoxButtons.OK, 
                             MessageBoxIcon.Error);
-                    }
                     else
                     {
                         if (CheckLoginUserInDB())
@@ -271,7 +271,7 @@ namespace Napitki_Altay2
             }
         }
         #endregion
-        #region [Событие перехода на форму входа в программу]
+        #region [Событие перехода на форму AuthForm]
         /// <summary>
         /// Открытие формы авторизации, 
         /// если у пользователя уже есть аккаунт

@@ -138,7 +138,7 @@
             this.OpenFormLogin.AutoSize = true;
             this.OpenFormLogin.Font = new System.Drawing.Font("Segoe UI Variable Text", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.OpenFormLogin.LinkColor = System.Drawing.Color.RoyalBlue;
-            this.OpenFormLogin.Location = new System.Drawing.Point(135, 417);
+            this.OpenFormLogin.Location = new System.Drawing.Point(136, 413);
             this.OpenFormLogin.Name = "OpenFormLogin";
             this.OpenFormLogin.Size = new System.Drawing.Size(174, 17);
             this.OpenFormLogin.TabIndex = 12;
@@ -158,7 +158,7 @@
             this.RegisterAccountButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.RegisterAccountButton.Font = new System.Drawing.Font("Segoe UI Semibold", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.RegisterAccountButton.ForeColor = System.Drawing.Color.White;
-            this.RegisterAccountButton.Location = new System.Drawing.Point(167, 355);
+            this.RegisterAccountButton.Location = new System.Drawing.Point(167, 354);
             this.RegisterAccountButton.Name = "RegisterAccountButton";
             this.RegisterAccountButton.Size = new System.Drawing.Size(126, 54);
             this.RegisterAccountButton.TabIndex = 9;

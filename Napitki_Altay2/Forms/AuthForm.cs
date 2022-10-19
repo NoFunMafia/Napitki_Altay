@@ -7,8 +7,20 @@ namespace Napitki_Altay2
 {
     public partial class AuthForm : Form
     {
+        #region [Использование переменных и класса подключения к БД]
         // Использование класса соединения с БД
         DataBaseCon datebaseCon = new DataBaseCon();
+        /// <summary>
+        /// Переменная хранащая логин пользователя для 
+        /// передачи его в карточку на форме MainWorkForm
+        /// </summary>
+        public static string LoginString;
+        /// <summary>
+        /// Переменная хранащая пароль пользователя для 
+        /// передачи его в карточку на форме MainWorkForm
+        /// </summary>
+        public static string PasswordString;
+        #endregion
         public AuthForm()
         {
             InitializeComponent();
@@ -108,6 +120,7 @@ namespace Napitki_Altay2
         private void LogInAppButton_Click
             (object sender, EventArgs e)
         {
+            bool success;
             try // Открытие соединения, проверка работы БД
             {
                 if (LoginTextBox.Texts == "Логин" || 
@@ -130,11 +143,21 @@ namespace Napitki_Altay2
                     datebaseCon.openConnection();
                     using (var dataReader = check.ExecuteReader())
                     {
-                        bool success = dataReader.Read();
+                        LoginString = LoginTextBox.Texts;
+                        PasswordString = PasswordTextBox.Texts;
+                        success = dataReader.Read();
+                    }
+                    if (success)
+                    {
                         MainWorkForm mainWorkForm = new MainWorkForm();
                         mainWorkForm.Show();
                         this.Hide();
                     }
+                    else
+                        MessageBox.Show("Введен неправильный логин/пароль!", 
+                            "Ошибка",
+                        MessageBoxButtons.OK, 
+                        MessageBoxIcon.Error);
                 }
             }
             catch(Exception ex)
