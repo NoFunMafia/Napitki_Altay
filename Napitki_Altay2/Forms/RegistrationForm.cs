@@ -1,8 +1,10 @@
-﻿using System;
+﻿#region [using's]
+using System;
 using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
 using System.Windows.Forms;
+#endregion
 
 namespace Napitki_Altay2
 {
@@ -62,14 +64,14 @@ namespace Napitki_Altay2
             ChooseRoleTextBox.Texts = "Сотрудник";
         }
         /// <summary>
-        /// Событие нажатия на кнопку "Демо-режим" в ToolStripMenu
+        /// Событие нажатия на кнопку "Заказчик" в ToolStripMenu
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void деморежимToolStripMenuItem_Click
+        private void заказчикToolStripMenuItem_Click
             (object sender, EventArgs e)
         {
-            ChooseRoleTextBox.Texts = "Демо-режим";
+            ChooseRoleTextBox.Texts = "Заказчик";
         }
         #endregion
         #region [Событие фокусировки с TextBox'ами]
@@ -156,17 +158,17 @@ namespace Napitki_Altay2
             bool success;
             try // Открытие соединения, проверка работы БД
             {
-                int isAdmin = 0, isUser = 0, isDemo = 0;
-                CheckUserRole(ref isAdmin, ref isUser, ref isDemo);
-                if (isAdmin == 0 && isUser == 0 && isDemo == 0)
+                if (ChooseRoleTextBox.Texts == "Роль пользователя")
                 {
                     MessageBox.Show
-                        ("Права пользователя не определены!",
+                        ("Роль пользователя не определена!",
                         "Ошибка", 
                         MessageBoxButtons.OK, 
                         MessageBoxIcon.Error);
                 }
-                else if(isAdmin >= 0 || isUser >= 0 || isDemo >= 0)
+                else if(ChooseRoleTextBox.Texts == "Администратор" 
+                    || ChooseRoleTextBox.Texts == "Сотрудник" 
+                    || ChooseRoleTextBox.Texts == "Заказчик")
                 {
                     if(LoginCreateTextBox.Texts == "Создание логина" || 
                         PasswordCreateTextBox.Texts == "Создание пароля")
@@ -179,14 +181,13 @@ namespace Napitki_Altay2
                     {
                         if (CheckLoginUserInDB())
                             return;
-                        string sqlCom = "insert into " +
-                        "Auth(User_login, User_pass, User_demo, " +
-                        "User_casual, User_admin) values" + "('"
-                        + LoginCreateTextBox.Texts.ToString() + "','"
-                        + PasswordCreateTextBox.Texts.ToString() + "','"
-                        + isDemo.ToString() + "','"
-                        + isUser.ToString() + "','"
-                        + isAdmin.ToString() + "')";
+                        int chooseRole = CheckUserRole();
+                        string sqlCom = "insert " +
+                                "into Authentication_" +
+                                "(Login_User, Password_User, FK_Role_User) " +
+                                $"values ('{LoginCreateTextBox.Texts}', " +
+                                $"'{PasswordCreateTextBox.Texts}', " +
+                                $"{chooseRole})";
                         SqlCommand check = Check(sqlCom);
                         datebaseCon.openConnection();
                         using (var datareader = check.ExecuteReader())
@@ -215,6 +216,17 @@ namespace Napitki_Altay2
                 datebaseCon.closeConnection();
             }
         }
+        private int CheckUserRole()
+        {
+            int chooseRole = 0;
+            if (ChooseRoleTextBox.Texts == "Администратор")
+                chooseRole = 1;
+            else if (ChooseRoleTextBox.Texts == "Сотрудник")
+                chooseRole = 2;
+            else
+                chooseRole = 3;
+            return chooseRole;
+        }
         #endregion
         #region [Метод проверки уникальности логина]
         /// <summary>
@@ -227,7 +239,8 @@ namespace Napitki_Altay2
             DataBaseCon dataBaseCon = new DataBaseCon();
             DataTable dataTable = new DataTable();
             SqlCommand command = new SqlCommand
-                ("select * from Auth where User_login=@usLog", 
+                ("select * from Authentication_ " +
+                "where Login_User=@usLog", 
                 dataBaseCon.sqlConnection());
             command.Parameters.Add
                 ("@usLog", SqlDbType.VarChar).Value 
@@ -245,30 +258,6 @@ namespace Napitki_Altay2
             }
             else
                 return false;
-        }
-        #endregion
-        #region [Метод сверки роли пользователя]
-        /// <summary>
-        /// Сверка роли пользователя при регистрации аккаунта
-        /// </summary>
-        /// <param name="isAdmin">Пользователь админ?</param>
-        /// <param name="isUser">Пользователь сотрудник?</param>
-        /// <param name="isDemo">Пользователь использует демо-режим?</param>
-        private void CheckUserRole
-            (ref int isAdmin, ref int isUser, ref int isDemo)
-        {
-            if (ChooseRoleTextBox.Texts == "Администратор")
-                isAdmin = 1;
-            else if (ChooseRoleTextBox.Texts == "Сотрудник")
-                isUser = 1;
-            else if (ChooseRoleTextBox.Texts == "Демо-режим")
-                isDemo = 1;
-            else
-            {
-                isAdmin = 0;
-                isUser = 0;
-                isDemo = 0;
-            }
         }
         #endregion
         #region [Событие перехода на форму AuthForm]

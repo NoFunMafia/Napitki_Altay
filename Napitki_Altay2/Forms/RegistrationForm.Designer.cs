@@ -35,7 +35,7 @@
             this.RoleContextMenuStip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.администраторToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.сотрудникToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.деморежимToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.заказчикToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.DetailsPictureBox = new System.Windows.Forms.PictureBox();
             this.VisiblePassCheckRegForm = new System.Windows.Forms.CheckBox();
             this.OpenFormLogin = new System.Windows.Forms.LinkLabel();
@@ -81,7 +81,7 @@
             this.RoleContextMenuStip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.администраторToolStripMenuItem,
             this.сотрудникToolStripMenuItem,
-            this.деморежимToolStripMenuItem});
+            this.заказчикToolStripMenuItem});
             this.RoleContextMenuStip.Name = "RoleContextMenuStip";
             this.RoleContextMenuStip.Size = new System.Drawing.Size(204, 82);
             // 
@@ -99,12 +99,12 @@
             this.сотрудникToolStripMenuItem.Text = "Сотрудник";
             this.сотрудникToolStripMenuItem.Click += new System.EventHandler(this.сотрудникToolStripMenuItem_Click);
             // 
-            // деморежимToolStripMenuItem
+            // заказчикToolStripMenuItem
             // 
-            this.деморежимToolStripMenuItem.Name = "деморежимToolStripMenuItem";
-            this.деморежимToolStripMenuItem.Size = new System.Drawing.Size(203, 26);
-            this.деморежимToolStripMenuItem.Text = "Демо-режим";
-            this.деморежимToolStripMenuItem.Click += new System.EventHandler(this.деморежимToolStripMenuItem_Click);
+            this.заказчикToolStripMenuItem.Name = "заказчикToolStripMenuItem";
+            this.заказчикToolStripMenuItem.Size = new System.Drawing.Size(203, 26);
+            this.заказчикToolStripMenuItem.Text = "Заказчик";
+            this.заказчикToolStripMenuItem.Click += new System.EventHandler(this.заказчикToolStripMenuItem_Click);
             // 
             // DetailsPictureBox
             // 
@@ -184,7 +184,7 @@
             this.ChooseRoleTextBox.PasswordChar = false;
             this.ChooseRoleTextBox.Size = new System.Drawing.Size(239, 37);
             this.ChooseRoleTextBox.TabIndex = 7;
-            this.ChooseRoleTextBox.Texts = "Права пользователя";
+            this.ChooseRoleTextBox.Texts = "Роль пользователя";
             this.ChooseRoleTextBox.UnderlinedStyle = false;
             // 
             // PasswordCreateTextBox
@@ -273,7 +273,7 @@
         private System.Windows.Forms.ContextMenuStrip RoleContextMenuStip;
         private System.Windows.Forms.ToolStripMenuItem администраторToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem сотрудникToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem деморежимToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem заказчикToolStripMenuItem;
         private Design.CustomButton RegisterAccountButton;
         private System.Windows.Forms.PictureBox DetailsPictureBox;
         private System.Windows.Forms.CheckBox VisiblePassCheckRegForm;

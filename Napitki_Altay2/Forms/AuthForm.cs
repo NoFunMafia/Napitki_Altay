@@ -1,8 +1,9 @@
-﻿using Napitki_Altay2.Forms;
+﻿#region [using's]
+using Napitki_Altay2.Forms;
 using System;
 using System.Data.SqlClient;
 using System.Windows.Forms;
-
+#endregion
 namespace Napitki_Altay2
 {
     public partial class AuthForm : Form
@@ -133,8 +134,9 @@ namespace Napitki_Altay2
                 }
                 else
                 {
-                    const string command = "select * from Auth where "
-                    + "User_login=@login and User_pass=@password";
+                    const string command 
+                        = "select * from Authentication_ where "
+                    + "Login_User=@login and Password_User=@password";
                     SqlCommand check = Check(command);
                     check.Parameters.AddWithValue("@login",
                         LoginTextBox.Texts);

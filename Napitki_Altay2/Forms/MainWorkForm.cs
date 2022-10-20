@@ -1,4 +1,5 @@
-﻿using System;
+﻿#region [using's]
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.Sql;
 using System.Data.SqlClient;
-
+#endregion
 namespace Napitki_Altay2.Forms
 {
     public partial class MainWorkForm : Form
@@ -31,9 +32,144 @@ namespace Napitki_Altay2.Forms
         /// <param name="e"></param>
         private void MainWorkForm_Load(object sender, EventArgs e)
         {
-            // Передача значения Пароля из формы AuthForm
-            PassCreaUpdaTextBox.Texts = AuthForm.PasswordString;
-            string sqlComUserFIO = "";
+            try
+            {
+                bool successLoad;
+                // Передача значения Пароля из формы AuthForm
+                PassCreaUpdaTextBox.Texts = AuthForm.PasswordString;
+                string sqlComUserFIO = $"select * from Info_About_User " +
+                    $"join Authentication_ on Authentication_.FK_Info_User " +
+                    $"= Info_About_User.ID_Info_User " +
+                    $"where Authentication_.Login_User = " +
+                    $"'{AuthForm.LoginString}'";
+                SqlCommand check = Check(sqlComUserFIO);
+                datebaseCon.openConnection();
+                using (var datareader = check.ExecuteReader())
+                {
+                    successLoad = datareader.Read();
+                    {
+                        CheckDataReaderRowsInfo(datareader);
+                    }
+                }
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message, 
+                    "Ошибка", 
+                    MessageBoxButtons.OK, 
+                    MessageBoxIcon.Error);
+            }
+            finally
+            {
+                datebaseCon.closeConnection();
+            }
+            try
+            {
+                datebaseCon.openConnection();
+                SqlDataAdapter dataAdapter = new SqlDataAdapter
+                    ("select Id_Application, " +
+                    "Applicant_Company, User_Surname, " +
+                    "User_Name, " +
+                    "User_Patronymic, Status_Name " +
+                    "from Application_To_Company" +
+                    " join Info_About_User on " +
+                    "Application_To_Company.FK_Info_User = " +
+                    "Info_About_User.ID_Info_User join " +
+                    "Status_Application on " +
+                    "Application_To_Company.FK_Status_Application" +
+                    " = Status_Application.ID_Status " +
+                    $"where Info_About_User.User_Name = " +
+                    $"'{NameCreateTextBox.Texts}' and " +
+                    $"Info_About_User.User_Surname = " +
+                    $"'{FamCreateTextBox.Texts}' and " +
+                    $"Info_About_User.User_Patronymic = " +
+                    $"'{PatrCreateTextBox.Texts}'",
+                    datebaseCon.sqlConnection());
+                DataTable dataTable = new DataTable();
+                dataAdapter.Fill(dataTable);
+                OutputInTableSetting(dataTable);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message,
+                    "Ошибка",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+            }
+            finally
+            {
+                datebaseCon.closeConnection();
+            }
+        }
+        #endregion
+        #region [Настройки вывода информации в DataGridViewApplication]
+        /// <summary>
+        /// Настройки вывода информации в DataGridViewApplication
+        /// </summary>
+        /// <param name="dataTable"></param>
+        private void OutputInTableSetting(DataTable dataTable)
+        {
+            DataGridViewApplication.DataSource = dataTable;
+            DataGridViewApplication.Columns[0].HeaderText = "Номер заявки";
+            DataGridViewApplication.Columns[0].Width = 60;
+            DataGridViewApplication.Columns[1].HeaderText = "Компания заявителя";
+            DataGridViewApplication.Columns[1].Width = 140;
+            DataGridViewApplication.Columns[2].HeaderText = "Фамилия заявителя";
+            DataGridViewApplication.Columns[2].Width = 120;
+            DataGridViewApplication.Columns[3].HeaderText = "Имя заявителя";
+            DataGridViewApplication.Columns[3].Width = 130;
+            DataGridViewApplication.Columns[4].HeaderText = "Отчество заявителя";
+            DataGridViewApplication.Columns[4].Width = 130;
+            DataGridViewApplication.Columns[5].HeaderText = "Статус заявки";
+            DataGridViewApplication.Columns[5].Width = 112;
+        }
+        #endregion
+        #region [Метод проверки наличия у пользователя заполненного ФИО в БД]
+        /// <summary>
+        /// Метод проверки наличия у пользователя заполненного ФИО в БД
+        /// </summary>
+        /// <param name="datareader"></param>
+        private void CheckDataReaderRowsInfo(SqlDataReader datareader)
+        {
+            if (datareader.HasRows)
+            {
+                FamCreateTextBox.Texts =
+                    datareader.GetValue(1).ToString();
+                CreateUserFIOButton.Enabled = false;
+                ((Control)this.ApplicationPage).Enabled = true;
+            }
+            else
+            {
+                FamCreateTextBox.Texts = "";
+                ((Control)this.ApplicationPage).Enabled = false;
+                InfoApplicationLabel.Visible = true;
+            }
+            if (datareader.HasRows)
+            {
+                NameCreateTextBox.Texts =
+                    datareader.GetValue(2).ToString();
+                CreateUserFIOButton.Enabled = false;
+                ((Control)this.ApplicationPage).Enabled = true;
+            }
+            else
+            {
+                NameCreateTextBox.Texts = "";
+                ((Control)this.ApplicationPage).Enabled = false;
+                InfoApplicationLabel.Visible = true;
+            }
+            if (datareader.HasRows)
+            {
+                PatrCreateTextBox.Texts =
+                    datareader.GetValue(3).ToString();
+                CreateUserFIOButton.Enabled = false;
+                ((Control)this.ApplicationPage).Enabled = true;
+            }
+            else
+            {
+                PatrCreateTextBox.Texts = "";
+                ((Control)this.ApplicationPage).Enabled = false;
+                InfoApplicationLabel.Visible = true;
+            }
         }
         #endregion
         #region [Изменение логина и пароля пользователя, использование метода схожести логина с другими пользователями]
@@ -42,8 +178,9 @@ namespace Napitki_Altay2.Forms
             bool success;
             try
             {
-                string sqlCom = "update Auth set User_pass = " +
-                    "@updPass where User_login = @oldLog";
+                string sqlCom = "update Authentication_ " +
+                    "set Password_User = " +
+                    "@updPass where Login_User = @oldLog";
                 SqlCommand check = Check(sqlCom);
                 check.Parameters.AddWithValue("@updPass", 
                     PassCreaUpdaTextBox.Texts);
@@ -84,6 +221,7 @@ namespace Napitki_Altay2.Forms
             return new SqlCommand(command, datebaseCon.sqlConnection());
         }
         #endregion
+        #region [Событие нажатия на кнопку CreateUserFIOButton]
         private void CreateUserFIOButton_Click(object sender, EventArgs e)
         {
             bool success;
@@ -100,8 +238,8 @@ namespace Napitki_Altay2.Forms
                 {
                     if (CheckFIOUserInDB())
                         return;
-                    string sqlComFIO = "insert into About_user" +
-                        "(Surname, Name_user, Patronymic) " +
+                    string sqlComFIO = "insert into Info_About_User" +
+                        "(User_Surname, User_Name, User_Patronymic) " +
                         "values ('"
                         + FamCreateTextBox.Texts
                         + "','"
@@ -109,16 +247,16 @@ namespace Napitki_Altay2.Forms
                         + "','"
                         + PatrCreateTextBox.Texts
                         + "')";
-                    string sqlComFIO2 = $"update Auth " +
-                        $"set id_user_for_role = About_user.id_user " +
-                        $"from About_user where " +
-                        $"About_user.Surname = " +
+                    string sqlComFIO2 = $"update Authentication_ " +
+                        $"set FK_Info_User = Info_About_User.ID_Info_User " +
+                        $"from Info_About_User where " +
+                        $"Info_About_User.User_Surname = " +
                         $"'{FamCreateTextBox.Texts}' " +
-                        $"and About_user.Name_user = " +
+                        $"and Info_About_User.User_Name = " +
                         $"'{NameCreateTextBox.Texts}' " +
-                        $"and About_user.Patronymic = " +
+                        $"and Info_About_User.User_Patronymic = " +
                         $"'{PatrCreateTextBox.Texts}' " +
-                        $"and Auth.User_login = " +
+                        $"and Authentication_.Login_User = " +
                         $"'{AuthForm.LoginString}'";
                     SqlCommand check = Check(sqlComFIO);
                     SqlCommand check2 = Check(sqlComFIO2);
@@ -130,6 +268,7 @@ namespace Napitki_Altay2.Forms
                             ("Пользователь успешно добавлен!",
                         "Информация", MessageBoxButtons.OK,
                         MessageBoxIcon.Information);
+                        CreateUserFIOButton.Enabled = false;
                     }
                     using (var datareader = check2.ExecuteReader())
                     {
@@ -149,13 +288,19 @@ namespace Napitki_Altay2.Forms
                 datebaseCon.closeConnection();
             }
         }
+        #endregion
+        #region [Метод проверки занятости ФИО в БД]
+        /// <summary>
+        /// Метод проверки занятости ФИО в БД
+        /// </summary>
+        /// <returns>True - занят, false - свободен</returns>
         public Boolean CheckFIOUserInDB()
         {
             DataBaseCon dataBaseCon = new DataBaseCon();
             DataTable dataTable = new DataTable();
             SqlCommand command = new SqlCommand
-                ("select * from About_user where Surname=@usSur " +
-                "and Name_user=@usName and Patronymic=@usPat",
+                ("select * from Info_About_User where User_Surname=@usSur " +
+                "and User_Name=@usName and User_Patronymic=@usPat",
                 dataBaseCon.sqlConnection());
             command.Parameters.Add
                 ("@usSur", SqlDbType.VarChar).Value
@@ -180,6 +325,13 @@ namespace Napitki_Altay2.Forms
             }
             else
                 return false;
+        }
+        #endregion
+        private void CreateApplicationButton_Click(object sender, EventArgs e)
+        {
+            CreateApplicationForm createApplicationForm
+                = new CreateApplicationForm();
+            createApplicationForm.Show();
         }
     }
 }
