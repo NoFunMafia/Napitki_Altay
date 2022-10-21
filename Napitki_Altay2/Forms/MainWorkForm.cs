@@ -18,6 +18,9 @@ namespace Napitki_Altay2.Forms
         #region [Подключение класса соединения с БД]
         // Использование класса соединения с БД
         DataBaseCon datebaseCon = new DataBaseCon();
+        public static string SurnameUserString;
+        public static string NameUserString;
+        public static string PatronymicUserString;
         #endregion
         public MainWorkForm()
         {
@@ -88,6 +91,9 @@ namespace Napitki_Altay2.Forms
                 DataTable dataTable = new DataTable();
                 dataAdapter.Fill(dataTable);
                 OutputInTableSetting(dataTable);
+                SurnameUserString = FamCreateTextBox.Texts;
+                NameUserString = NameCreateTextBox.Texts;
+                PatronymicUserString = PatrCreateTextBox.Texts;
             }
             catch (Exception ex)
             {
@@ -172,7 +178,7 @@ namespace Napitki_Altay2.Forms
             }
         }
         #endregion
-        #region [Изменение логина и пароля пользователя, использование метода схожести логина с другими пользователями]
+        #region [Изменение пароля пользователя]
         private void UpdLogPassButton_Click(object sender, EventArgs e)
         {
             bool success;
@@ -327,11 +333,55 @@ namespace Napitki_Altay2.Forms
                 return false;
         }
         #endregion
+        #region [Открытие формы создания обращения]
         private void CreateApplicationButton_Click(object sender, EventArgs e)
         {
             CreateApplicationForm createApplicationForm
                 = new CreateApplicationForm();
             createApplicationForm.Show();
         }
+        #endregion
+        #region [Событие нажатия на кнопку перезагрузки данных в DGW]
+        private void UpdateDataInDGW_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                datebaseCon.openConnection();
+                SqlDataAdapter dataAdapter = new SqlDataAdapter
+                    ("select Id_Application, " +
+                    "Applicant_Company, User_Surname, " +
+                    "User_Name, " +
+                    "User_Patronymic, Status_Name " +
+                    "from Application_To_Company" +
+                    " join Info_About_User on " +
+                    "Application_To_Company.FK_Info_User = " +
+                    "Info_About_User.ID_Info_User join " +
+                    "Status_Application on " +
+                    "Application_To_Company.FK_Status_Application" +
+                    " = Status_Application.ID_Status " +
+                    $"where Info_About_User.User_Name = " +
+                    $"'{NameCreateTextBox.Texts}' and " +
+                    $"Info_About_User.User_Surname = " +
+                    $"'{FamCreateTextBox.Texts}' and " +
+                    $"Info_About_User.User_Patronymic = " +
+                    $"'{PatrCreateTextBox.Texts}'",
+                    datebaseCon.sqlConnection());
+                DataTable dataTable = new DataTable();
+                dataAdapter.Fill(dataTable);
+                OutputInTableSetting(dataTable);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message,
+                    "Ошибка",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+            }
+            finally
+            {
+                datebaseCon.closeConnection();
+            }
+        }
+#endregion
     }
 }
