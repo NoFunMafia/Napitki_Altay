@@ -15,7 +15,7 @@ namespace Napitki_Altay2.Forms
 {
     public partial class MainWorkForm : Form
     {
-        #region [Подключение класса соединения с БД]
+        #region [Подключение класса соединения с БД, объявление string переменных ФИО]
         // Использование класса соединения с БД
         DataBaseCon datebaseCon = new DataBaseCon();
         public static string SurnameUserString;
@@ -73,7 +73,8 @@ namespace Napitki_Altay2.Forms
                     ("select Id_Application, " +
                     "Applicant_Company, User_Surname, " +
                     "User_Name, " +
-                    "User_Patronymic, Status_Name " +
+                    "User_Patronymic, " +
+                    "Status_Name " +
                     "from Application_To_Company" +
                     " join Info_About_User on " +
                     "Application_To_Company.FK_Info_User = " +
@@ -127,7 +128,7 @@ namespace Napitki_Altay2.Forms
             DataGridViewApplication.Columns[4].HeaderText = "Отчество заявителя";
             DataGridViewApplication.Columns[4].Width = 130;
             DataGridViewApplication.Columns[5].HeaderText = "Статус заявки";
-            DataGridViewApplication.Columns[5].Width = 112;
+            DataGridViewApplication.Columns[5].Width = 116;
         }
         #endregion
         #region [Метод проверки наличия у пользователя заполненного ФИО в БД]
@@ -339,6 +340,7 @@ namespace Napitki_Altay2.Forms
             CreateApplicationForm createApplicationForm
                 = new CreateApplicationForm();
             createApplicationForm.Show();
+            this.Hide();
         }
         #endregion
         #region [Событие нажатия на кнопку перезагрузки данных в DGW]
@@ -382,6 +384,10 @@ namespace Napitki_Altay2.Forms
                 datebaseCon.closeConnection();
             }
         }
-#endregion
+        #endregion
+        private void DeleteApplicationButton_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

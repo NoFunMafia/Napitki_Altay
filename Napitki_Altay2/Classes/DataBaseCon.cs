@@ -4,17 +4,17 @@ namespace Napitki_Altay2
     internal class DataBaseCon
     {
         #region [Выбор БД для дома/учёбы]
-        /* //БД для тестирования в домашних условиях
+         //БД для тестирования в домашних условиях
         SqlConnection con = new SqlConnection(@"Data Source=MYHOMIES;
-        Initial Catalog=Altai_ZavodDB;
-        Integrated Security=True");*/
+        Initial Catalog=Altai_ZavodBackup;
+        Integrated Security=True");
 
         // БД для тестирования в учебных условиях
-        SqlConnection con = new SqlConnection(@"Data Source=62.78.81.19;
+        /*SqlConnection con = new SqlConnection(@"Data Source=62.78.81.19;
         Initial Catalog=Altai_zavod;
         Persist Security Info=True;
         User ID=25-тпмоксингв;
-        Password=650131");
+        Password=650131");*/
         #endregion
         #region [Открытие/закрытие соединения с БД]
         /// <summary>

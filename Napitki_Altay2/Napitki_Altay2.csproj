@@ -147,5 +147,14 @@
   <ItemGroup>
     <None Include="Resources\PictureRegForm.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\PictureMainWorkForm.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Picture2MainWorkForm.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Picture3MainWorkForm.jpg" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
