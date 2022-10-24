@@ -71,7 +71,7 @@ namespace Napitki_Altay2
         private void заказчикToolStripMenuItem_Click
             (object sender, EventArgs e)
         {
-            ChooseRoleTextBox.Texts = "Заказчик";
+            ChooseRoleTextBox.Texts = "Заявитель";
         }
         #endregion
         #region [Событие фокусировки с TextBox'ами]
@@ -168,7 +168,7 @@ namespace Napitki_Altay2
                 }
                 else if(ChooseRoleTextBox.Texts == "Администратор" 
                     || ChooseRoleTextBox.Texts == "Сотрудник" 
-                    || ChooseRoleTextBox.Texts == "Заказчик")
+                    || ChooseRoleTextBox.Texts == "Заявитель")
                 {
                     if(LoginCreateTextBox.Texts == "Создание логина" || 
                         PasswordCreateTextBox.Texts == "Создание пароля")

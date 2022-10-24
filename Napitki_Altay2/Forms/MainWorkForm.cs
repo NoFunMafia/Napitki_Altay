@@ -1,14 +1,7 @@
 ﻿#region [using's]
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Data.Sql;
 using System.Data.SqlClient;
 #endregion
 namespace Napitki_Altay2.Forms
@@ -55,17 +48,26 @@ namespace Napitki_Altay2.Forms
                     }
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, 
-                    "Ошибка", 
-                    MessageBoxButtons.OK, 
+                MessageBox.Show(ex.Message,
+                    "Ошибка",
+                    MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
             }
             finally
             {
                 datebaseCon.closeConnection();
             }
+            LoadDataGridView();
+        }
+        #endregion
+        #region [Метод обновления данных в DGW]
+        /// <summary>
+        /// Обновление данных в DGW
+        /// </summary>
+        private void LoadDataGridView()
+        {
             try
             {
                 datebaseCon.openConnection();
@@ -323,7 +325,7 @@ namespace Napitki_Altay2.Forms
             adapter.Fill(dataTable);
             if (dataTable.Rows.Count > 0)
             {
-                MessageBox.Show("Данное ФИО уже зарегестрировано " +
+                MessageBox.Show("Данное ФИО уже зарегистрировано " +
                     "в системе, используйте другое!",
                                     "Ошибка",
                                     MessageBoxButtons.OK,
@@ -385,9 +387,76 @@ namespace Napitki_Altay2.Forms
             }
         }
         #endregion
+        #region [Удаление заявки]
         private void DeleteApplicationButton_Click(object sender, EventArgs e)
         {
-
+            DialogResult result = MessageBox.Show
+                ("Вы действительно хотите удалить обращение?", 
+                "Внимание", 
+                MessageBoxButtons.YesNo, 
+                MessageBoxIcon.Warning);
+            if(result == DialogResult.Yes)
+            {
+                string sqlComDelete = "delete from " +
+                    "Application_To_Company " +
+                    "where ID_Application " +
+                    $"= " +
+                    $"'{DataGridViewApplication.CurrentRow.Cells[0].Value}'";
+                SqlCommand sqlCommand = new SqlCommand
+                    (sqlComDelete, 
+                    datebaseCon.sqlConnection());
+                try
+                {
+                    datebaseCon.openConnection();
+                    using(var datareader = sqlCommand)
+                    {
+                        sqlCommand.ExecuteReader();
+                    }
+                }
+                catch(Exception ex)
+                {
+                    MessageBox.Show(ex.Message, 
+                        "Ошибка", 
+                        MessageBoxButtons.OK, 
+                        MessageBoxIcon.Error);
+                }
+                finally
+                {
+                    datebaseCon.closeConnection();
+                }
+                LoadDataGridView();
+            }
         }
+        #endregion
+        #region [Открытие прайс-листа]
+        private void OpenPriceListButton_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start
+                ("https://napitki-altay.ru/wp-content/uploads/2022/01/" +
+                "Прайс-лист-01.11.2021-3.pdf");
+        }
+        #endregion
+        #region [Открытие СОУТов 2016-2021]
+        private void OpenSout2016Button_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start
+                ("https://napitki-altay.ru/wp-content/uploads/2018/09/" +
+                "результаты-СОУТ-2016-2017.pdf");
+        }
+        private void OpenSout2018Button_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start
+                ("https://napitki-altay.ru/wp-content/uploads/2018/09/" +
+                "результаты-СОУТ-2018.pdf");
+        }
+        private void OpenSout2021Button_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start
+                ("https://napitki-altay.ru/wp-content/uploads/2021/11/" +
+                "Сводная-ведомость-результатов-" +
+                "проведения-специальной-оценки" +
+                "-условий-труда-01.11.2021г.pdf");
+        }
+        #endregion
     }
 }

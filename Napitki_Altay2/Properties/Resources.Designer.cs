@@ -103,6 +103,16 @@ namespace Napitki_Altay2.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Picture4MainWorkForm {
+            get {
+                object obj = ResourceManager.GetObject("Picture4MainWorkForm", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap PictureLoginForm {
             get {
                 object obj = ResourceManager.GetObject("PictureLoginForm", resourceCulture);

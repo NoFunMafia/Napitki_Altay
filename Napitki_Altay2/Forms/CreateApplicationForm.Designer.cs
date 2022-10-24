@@ -385,7 +385,7 @@
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "CreateApplicationForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Создание заявки";
+            this.Text = "Создание обращения";
             ((System.ComponentModel.ISupportInitialize)(this.ApplPictureBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ChooseTypeApplPictureBox)).EndInit();
             this.TypeApplMenuStip.ResumeLayout(false);

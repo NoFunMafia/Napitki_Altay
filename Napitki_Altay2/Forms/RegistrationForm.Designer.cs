@@ -103,7 +103,7 @@
             // 
             this.заказчикToolStripMenuItem.Name = "заказчикToolStripMenuItem";
             this.заказчикToolStripMenuItem.Size = new System.Drawing.Size(203, 26);
-            this.заказчикToolStripMenuItem.Text = "Заказчик";
+            this.заказчикToolStripMenuItem.Text = "Заявитель";
             this.заказчикToolStripMenuItem.Click += new System.EventHandler(this.заказчикToolStripMenuItem_Click);
             // 
             // DetailsPictureBox

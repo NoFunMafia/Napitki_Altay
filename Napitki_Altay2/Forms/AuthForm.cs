@@ -1,6 +1,8 @@
 ﻿#region [using's]
 using Napitki_Altay2.Forms;
 using System;
+using System.Data;
+using System.Data.Common;
 using System.Data.SqlClient;
 using System.Windows.Forms;
 #endregion
@@ -21,6 +23,7 @@ namespace Napitki_Altay2
         /// передачи его в карточку на форме MainWorkForm
         /// </summary>
         public static string PasswordString;
+        public static string RoleString;
         #endregion
         public AuthForm()
         {
@@ -134,10 +137,41 @@ namespace Napitki_Altay2
                 }
                 else
                 {
-                    const string command 
-                        = "select * from Authentication_ where "
-                    + "Login_User=@login and Password_User=@password";
-                    SqlCommand check = Check(command);
+                    try
+                    {
+                        bool successLoad;
+                        string sqlComRoleUser = $"select * " +
+                            $"from Authentication_ " +
+                            $"where Login_User = " +
+                            $"'{LoginTextBox.Texts}' and " +
+                            $"Password_User = '{PasswordTextBox.Texts}'";
+                        SqlCommand checkRole = Check(sqlComRoleUser);
+                        datebaseCon.openConnection();
+                        using (var datareader = checkRole.ExecuteReader())
+                        {
+                            successLoad = datareader.Read();
+                            {
+                                CheckUserRole(datareader);
+                            }
+                        }
+                    }
+                    catch(Exception ex)
+                    {
+                        MessageBox.Show(ex.Message, 
+                            "Ошибка", 
+                            MessageBoxButtons.OK, 
+                            MessageBoxIcon.Error);
+                    }
+                    finally
+                    {
+                        datebaseCon.closeConnection();
+                    }
+                    string sqlComRole 
+                        = $"select * from Authentication_ " +
+                        $"where Login_User=@login and " +
+                        $"Password_User=@password and " +
+                        $"FK_Role_User = '{RoleString}'";
+                    SqlCommand check = Check(sqlComRole);
                     check.Parameters.AddWithValue("@login",
                         LoginTextBox.Texts);
                     check.Parameters.AddWithValue("@password",
@@ -151,9 +185,24 @@ namespace Napitki_Altay2
                     }
                     if (success)
                     {
-                        MainWorkForm mainWorkForm = new MainWorkForm();
-                        mainWorkForm.Show();
-                        this.Hide();
+                        if(RoleString == "3")
+                        {
+                            MainWorkForm mainWorkForm = new MainWorkForm();
+                            mainWorkForm.Show();
+                            this.Hide();
+                        }
+                        else if(RoleString == "2")
+                        {
+                            MainWorkFormWorker mainWorkFormWorker = new MainWorkFormWorker();
+                            mainWorkFormWorker.Show();
+                            this.Hide();
+                        }
+                        else
+                        {
+                            MainWorkFormAdmin mainWorkFormAdmin = new MainWorkFormAdmin();
+                            mainWorkFormAdmin.Show();
+                            this.Hide();
+                        }
                     }
                     else
                         MessageBox.Show("Введен неправильный логин/пароль!", 
@@ -164,12 +213,23 @@ namespace Napitki_Altay2
             }
             catch(Exception ex)
             {
-                MessageBox.Show(ex.Message, "Ошибка", 
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(ex.Message, 
+                    "Ошибка", 
+                    MessageBoxButtons.OK, 
+                    MessageBoxIcon.Error);
             }
             finally // Закрытие соединения с БД
             {
                 datebaseCon.closeConnection();
+            }
+        }
+        #endregion
+        #region [Метод проверки роли пользователя]
+        private void CheckUserRole(SqlDataReader dataReader)
+        {
+            if (dataReader.HasRows)
+            {
+                RoleString = dataReader.GetValue(3).ToString();
             }
         }
         #endregion
