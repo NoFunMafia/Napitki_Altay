@@ -30,13 +30,27 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainWorkFormAdmin));
-            this.CustomFormForAllProject = new Napitki_Altay2.DesignComponents.CustomForm(this.components);
+            this.CustomFormForAllProject = new Napitki_Altay2.Components.FormStyleCustom(this.components);
             this.SuspendLayout();
             // 
             // CustomFormForAllProject
             // 
+            this.CustomFormForAllProject.AllowUserResize = false;
+            this.CustomFormForAllProject.BackColor = System.Drawing.Color.White;
+            this.CustomFormForAllProject.ContextMenuForm = null;
+            this.CustomFormForAllProject.ControlBoxButtonsWidth = 20;
+            this.CustomFormForAllProject.EnableControlBoxIconsLight = true;
+            this.CustomFormForAllProject.EnableControlBoxMouseLight = false;
             this.CustomFormForAllProject.Form = this;
-            this.CustomFormForAllProject.FormStyle = Napitki_Altay2.DesignComponents.CustomForm.fStyle.None;
+            this.CustomFormForAllProject.FormStyle = Napitki_Altay2.Components.FormStyleCustom.fStyle.None;
+            this.CustomFormForAllProject.HeaderColor = System.Drawing.Color.RoyalBlue;
+            this.CustomFormForAllProject.HeaderColorAdditional = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
+            this.CustomFormForAllProject.HeaderColorGradientEnable = true;
+            this.CustomFormForAllProject.HeaderColorGradientMode = System.Drawing.Drawing2D.LinearGradientMode.Vertical;
+            this.CustomFormForAllProject.HeaderHeight = 29;
+            this.CustomFormForAllProject.HeaderImage = null;
+            this.CustomFormForAllProject.HeaderTextColor = System.Drawing.Color.White;
+            this.CustomFormForAllProject.HeaderTextFont = new System.Drawing.Font("Segoe UI", 12F);
             // 
             // MainWorkFormAdmin
             // 
@@ -53,6 +67,6 @@
 
         #endregion
 
-        private DesignComponents.CustomForm CustomFormForAllProject;
+        private Components.FormStyleCustom CustomFormForAllProject;
     }
 }

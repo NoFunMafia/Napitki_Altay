@@ -288,12 +288,46 @@ namespace Napitki_Altay2.Forms
         }
         private void AnswerToApplicationButton_Click(object sender, EventArgs e)
         {
-            SelectedRowID = DataGridViewAnswer.CurrentRow.Cells[0].Value.ToString();
-            this.Hide();
-            UserApplicationInfoForWorkerForm
+            SelectedRowID = DataGridViewAnswer.CurrentRow.
+                Cells[0].Value.ToString();
+            try
+            {
+                bool successLoad;
+                string sqlComUserFIO = $"update Application_To_Company" +
+                    $" set FK_Status_Application = " +
+                    $"'2' where ID_Application = '{SelectedRowID}'";
+                SqlCommand check = Check(sqlComUserFIO);
+                dataBaseCon.openConnection();
+                using (var datareader = check.ExecuteReader())
+                {
+                    successLoad = datareader.Read();
+                }
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message,
+                    "Ошибка",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+            }
+            finally
+            {
+                dataBaseCon.closeConnection();
+            }
+            if (Application.OpenForms["UserApplicationInfoForWorkerForm"] == null)
+            {
+                UserApplicationInfoForWorkerForm
                 userApplicationInfoForWorkerForm =
                 new UserApplicationInfoForWorkerForm();
-            userApplicationInfoForWorkerForm.Show();
+                userApplicationInfoForWorkerForm.Show();
+            }
+            if (Application.OpenForms["AnswerToUserApplicationForm"] == null)
+            {
+                AnswerToUserApplicationForm
+                answerToUserApplicationForm =
+                new AnswerToUserApplicationForm();
+                answerToUserApplicationForm.Show();
+            }
         }
     }
 }

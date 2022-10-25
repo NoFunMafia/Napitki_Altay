@@ -17,16 +17,13 @@ namespace Napitki_Altay2.Forms
         DataBaseCon dataBaseCon = new DataBaseCon();
         public UserApplicationInfoForWorkerForm()
         {
+            this.Location = new Point(40, 90);
             InitializeComponent();
             DoubleBuffered = true; // Включение двойной буферизации
         }
         private void CloseApplicWorkButton_Click(object sender, EventArgs e)
         {
-            this.Hide();
-            MainWorkFormWorker 
-                mainWorkFormWorker = 
-                new MainWorkFormWorker();
-            mainWorkFormWorker.Show();
+            this.Close();
         }
         private void CheckDataReaderRowsInfo(SqlDataReader datareader)
         {
@@ -150,7 +147,8 @@ namespace Napitki_Altay2.Forms
                     var name = dataReader["Document_Name"].ToString();
                     var data = (byte[])dataReader["Document_Data"];
                     var extn = dataReader["Document_Extension"].ToString();
-                    var newFileName = name.Replace(extn, DateTime.Now.ToString("ddMMyyyyhhmmss")) + extn;
+                    var newFileName = name.Replace(extn, 
+                        DateTime.Now.ToString("ddMMyyyyhhmmss")) + extn;
                     File.WriteAllBytes(newFileName, data);
                     System.Diagnostics.Process.Start(newFileName);
                 }

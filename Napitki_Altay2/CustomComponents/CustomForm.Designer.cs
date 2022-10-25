@@ -1,6 +1,6 @@
-﻿namespace Napitki_Altay2.DesignComponents
+﻿namespace Napitki_Altay2.Components
 {
-    partial class CustomForm
+    partial class FormStyleCustom
     {
         /// <summary>
         /// Обязательная переменная конструктора.

@@ -30,11 +30,8 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainWorkFormWorker));
-            this.CustomFormForAllProject = new Napitki_Altay2.DesignComponents.CustomForm(this.components);
             this.MainWorkWorkerTabControl = new System.Windows.Forms.TabControl();
             this.AnswerToApplicationPage = new System.Windows.Forms.TabPage();
-            this.UpdateAnswerInDGW = new Napitki_Altay2.Design.CustomButton();
-            this.AnswerToApplicationButton = new Napitki_Altay2.Design.CustomButton();
             this.InfoAnswerLabel = new System.Windows.Forms.Label();
             this.DataGridViewAnswer = new System.Windows.Forms.DataGridView();
             this.DoneApplicationPage = new System.Windows.Forms.TabPage();
@@ -46,23 +43,21 @@
             this.NameWorkInfoLabel = new System.Windows.Forms.Label();
             this.FamWorkInfoLabel = new System.Windows.Forms.Label();
             this.InfoUserLabel = new System.Windows.Forms.Label();
+            this.UpdateAnswerInDGW = new Napitki_Altay2.Design.CustomButton();
+            this.AnswerToApplicationButton = new Napitki_Altay2.Design.CustomButton();
             this.UpdLogPassButton = new Napitki_Altay2.Design.CustomButton();
             this.CreateUserFIOButton = new Napitki_Altay2.Design.CustomButton();
             this.PassWorkCreaUpdaTextBox = new Napitki_Altay2.Design.CustomTextBox();
             this.PatrWorkCreateTextBox = new Napitki_Altay2.Design.CustomTextBox();
             this.NameWorkCreateTextBox = new Napitki_Altay2.Design.CustomTextBox();
             this.FamWorkCreateTextBox = new Napitki_Altay2.Design.CustomTextBox();
+            this.CustomFormForAllProject = new Napitki_Altay2.Components.FormStyleCustom(this.components);
             this.MainWorkWorkerTabControl.SuspendLayout();
             this.AnswerToApplicationPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DataGridViewAnswer)).BeginInit();
             this.WorkerDataPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.MainWorkFormWorkerPictureBox)).BeginInit();
             this.SuspendLayout();
-            // 
-            // CustomFormForAllProject
-            // 
-            this.CustomFormForAllProject.Form = this;
-            this.CustomFormForAllProject.FormStyle = Napitki_Altay2.DesignComponents.CustomForm.fStyle.None;
             // 
             // MainWorkWorkerTabControl
             // 
@@ -92,48 +87,6 @@
             this.AnswerToApplicationPage.Size = new System.Drawing.Size(1011, 520);
             this.AnswerToApplicationPage.TabIndex = 1;
             this.AnswerToApplicationPage.Text = "Дать ответ на обращение";
-            // 
-            // UpdateAnswerInDGW
-            // 
-            this.UpdateAnswerInDGW.BackColor = System.Drawing.Color.RoyalBlue;
-            this.UpdateAnswerInDGW.BackgroundColor = System.Drawing.Color.RoyalBlue;
-            this.UpdateAnswerInDGW.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
-            this.UpdateAnswerInDGW.BorderRadius = 0;
-            this.UpdateAnswerInDGW.BorderSize = 0;
-            this.UpdateAnswerInDGW.FlatAppearance.BorderSize = 0;
-            this.UpdateAnswerInDGW.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.UpdateAnswerInDGW.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
-            this.UpdateAnswerInDGW.ForeColor = System.Drawing.Color.White;
-            this.UpdateAnswerInDGW.Location = new System.Drawing.Point(144, 9);
-            this.UpdateAnswerInDGW.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.UpdateAnswerInDGW.Name = "UpdateAnswerInDGW";
-            this.UpdateAnswerInDGW.Size = new System.Drawing.Size(207, 43);
-            this.UpdateAnswerInDGW.TabIndex = 17;
-            this.UpdateAnswerInDGW.Text = "Обновить данные";
-            this.UpdateAnswerInDGW.TextColor = System.Drawing.Color.White;
-            this.UpdateAnswerInDGW.UseVisualStyleBackColor = false;
-            this.UpdateAnswerInDGW.Click += new System.EventHandler(this.UpdateAnswerInDGW_Click);
-            // 
-            // AnswerToApplicationButton
-            // 
-            this.AnswerToApplicationButton.BackColor = System.Drawing.Color.RoyalBlue;
-            this.AnswerToApplicationButton.BackgroundColor = System.Drawing.Color.RoyalBlue;
-            this.AnswerToApplicationButton.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
-            this.AnswerToApplicationButton.BorderRadius = 0;
-            this.AnswerToApplicationButton.BorderSize = 0;
-            this.AnswerToApplicationButton.FlatAppearance.BorderSize = 0;
-            this.AnswerToApplicationButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.AnswerToApplicationButton.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.AnswerToApplicationButton.ForeColor = System.Drawing.Color.White;
-            this.AnswerToApplicationButton.Location = new System.Drawing.Point(5, 9);
-            this.AnswerToApplicationButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.AnswerToApplicationButton.Name = "AnswerToApplicationButton";
-            this.AnswerToApplicationButton.Size = new System.Drawing.Size(133, 43);
-            this.AnswerToApplicationButton.TabIndex = 16;
-            this.AnswerToApplicationButton.Text = "Ответить";
-            this.AnswerToApplicationButton.TextColor = System.Drawing.Color.White;
-            this.AnswerToApplicationButton.UseVisualStyleBackColor = false;
-            this.AnswerToApplicationButton.Click += new System.EventHandler(this.AnswerToApplicationButton_Click);
             // 
             // InfoAnswerLabel
             // 
@@ -266,6 +219,48 @@
             this.InfoUserLabel.TabIndex = 26;
             this.InfoUserLabel.Text = "ИНФОРМАЦИЯ О СОТРУДНИКЕ";
             // 
+            // UpdateAnswerInDGW
+            // 
+            this.UpdateAnswerInDGW.BackColor = System.Drawing.Color.RoyalBlue;
+            this.UpdateAnswerInDGW.BackgroundColor = System.Drawing.Color.RoyalBlue;
+            this.UpdateAnswerInDGW.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
+            this.UpdateAnswerInDGW.BorderRadius = 0;
+            this.UpdateAnswerInDGW.BorderSize = 0;
+            this.UpdateAnswerInDGW.FlatAppearance.BorderSize = 0;
+            this.UpdateAnswerInDGW.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.UpdateAnswerInDGW.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
+            this.UpdateAnswerInDGW.ForeColor = System.Drawing.Color.White;
+            this.UpdateAnswerInDGW.Location = new System.Drawing.Point(144, 9);
+            this.UpdateAnswerInDGW.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.UpdateAnswerInDGW.Name = "UpdateAnswerInDGW";
+            this.UpdateAnswerInDGW.Size = new System.Drawing.Size(207, 43);
+            this.UpdateAnswerInDGW.TabIndex = 17;
+            this.UpdateAnswerInDGW.Text = "Обновить данные";
+            this.UpdateAnswerInDGW.TextColor = System.Drawing.Color.White;
+            this.UpdateAnswerInDGW.UseVisualStyleBackColor = false;
+            this.UpdateAnswerInDGW.Click += new System.EventHandler(this.UpdateAnswerInDGW_Click);
+            // 
+            // AnswerToApplicationButton
+            // 
+            this.AnswerToApplicationButton.BackColor = System.Drawing.Color.RoyalBlue;
+            this.AnswerToApplicationButton.BackgroundColor = System.Drawing.Color.RoyalBlue;
+            this.AnswerToApplicationButton.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
+            this.AnswerToApplicationButton.BorderRadius = 0;
+            this.AnswerToApplicationButton.BorderSize = 0;
+            this.AnswerToApplicationButton.FlatAppearance.BorderSize = 0;
+            this.AnswerToApplicationButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.AnswerToApplicationButton.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.AnswerToApplicationButton.ForeColor = System.Drawing.Color.White;
+            this.AnswerToApplicationButton.Location = new System.Drawing.Point(5, 9);
+            this.AnswerToApplicationButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.AnswerToApplicationButton.Name = "AnswerToApplicationButton";
+            this.AnswerToApplicationButton.Size = new System.Drawing.Size(133, 43);
+            this.AnswerToApplicationButton.TabIndex = 16;
+            this.AnswerToApplicationButton.Text = "Ответить";
+            this.AnswerToApplicationButton.TextColor = System.Drawing.Color.White;
+            this.AnswerToApplicationButton.UseVisualStyleBackColor = false;
+            this.AnswerToApplicationButton.Click += new System.EventHandler(this.AnswerToApplicationButton_Click);
+            // 
             // UpdLogPassButton
             // 
             this.UpdLogPassButton.BackColor = System.Drawing.Color.RoyalBlue;
@@ -383,6 +378,25 @@
             this.FamWorkCreateTextBox.Texts = "";
             this.FamWorkCreateTextBox.UnderlinedStyle = false;
             // 
+            // CustomFormForAllProject
+            // 
+            this.CustomFormForAllProject.AllowUserResize = false;
+            this.CustomFormForAllProject.BackColor = System.Drawing.Color.White;
+            this.CustomFormForAllProject.ContextMenuForm = null;
+            this.CustomFormForAllProject.ControlBoxButtonsWidth = 20;
+            this.CustomFormForAllProject.EnableControlBoxIconsLight = true;
+            this.CustomFormForAllProject.EnableControlBoxMouseLight = false;
+            this.CustomFormForAllProject.Form = this;
+            this.CustomFormForAllProject.FormStyle = Napitki_Altay2.Components.FormStyleCustom.fStyle.UserStyle;
+            this.CustomFormForAllProject.HeaderColor = System.Drawing.Color.RoyalBlue;
+            this.CustomFormForAllProject.HeaderColorAdditional = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
+            this.CustomFormForAllProject.HeaderColorGradientEnable = true;
+            this.CustomFormForAllProject.HeaderColorGradientMode = System.Drawing.Drawing2D.LinearGradientMode.Vertical;
+            this.CustomFormForAllProject.HeaderHeight = 29;
+            this.CustomFormForAllProject.HeaderImage = null;
+            this.CustomFormForAllProject.HeaderTextColor = System.Drawing.Color.White;
+            this.CustomFormForAllProject.HeaderTextFont = new System.Drawing.Font("Segoe UI", 12F);
+            // 
             // MainWorkFormWorker
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -407,7 +421,7 @@
 
         #endregion
 
-        private DesignComponents.CustomForm CustomFormForAllProject;
+        private Components.FormStyleCustom CustomFormForAllProject;
         private System.Windows.Forms.TabControl MainWorkWorkerTabControl;
         private System.Windows.Forms.TabPage DoneApplicationPage;
         private System.Windows.Forms.TabPage AnswerToApplicationPage;

@@ -31,19 +31,19 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UserApplicationInfoForWorkerForm));
             this.OpenDocumentWorkLabel = new System.Windows.Forms.Label();
-            this.OpenDocumentWorkButton = new Napitki_Altay2.Design.CustomButton();
-            this.DocumentWorkTextBox = new Napitki_Altay2.Design.CustomTextBox();
             this.DateTimeDescrWorkLabel = new System.Windows.Forms.Label();
             this.DescripApplWorkLabel = new System.Windows.Forms.Label();
             this.TypeApplWorkLabel = new System.Windows.Forms.Label();
             this.CompanyNameWorkLabel = new System.Windows.Forms.Label();
             this.ApplWorkDTP = new System.Windows.Forms.DateTimePicker();
+            this.ApplPictureBox = new System.Windows.Forms.PictureBox();
+            this.OpenDocumentWorkButton = new Napitki_Altay2.Design.CustomButton();
+            this.DocumentWorkTextBox = new Napitki_Altay2.Design.CustomTextBox();
+            this.CloseApplicWorkButton = new Napitki_Altay2.Design.CustomButton();
             this.DescripWorkTextBox = new Napitki_Altay2.Design.CustomTextBox();
             this.TypeApplWorkTextBox = new Napitki_Altay2.Design.CustomTextBox();
             this.CompanyWorkTextBox = new Napitki_Altay2.Design.CustomTextBox();
-            this.ApplPictureBox = new System.Windows.Forms.PictureBox();
-            this.CreateApplicationForm = new Napitki_Altay2.DesignComponents.CustomForm(this.components);
-            this.CloseApplicWorkButton = new Napitki_Altay2.Design.CustomButton();
+            this.CustomFormForAllProject = new Napitki_Altay2.Components.FormStyleCustom(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.ApplPictureBox)).BeginInit();
             this.SuspendLayout();
             // 
@@ -56,47 +56,6 @@
             this.OpenDocumentWorkLabel.Size = new System.Drawing.Size(214, 25);
             this.OpenDocumentWorkLabel.TabIndex = 36;
             this.OpenDocumentWorkLabel.Text = "Прикрепленный файл:";
-            // 
-            // OpenDocumentWorkButton
-            // 
-            this.OpenDocumentWorkButton.BackColor = System.Drawing.Color.RoyalBlue;
-            this.OpenDocumentWorkButton.BackgroundColor = System.Drawing.Color.RoyalBlue;
-            this.OpenDocumentWorkButton.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
-            this.OpenDocumentWorkButton.BorderRadius = 0;
-            this.OpenDocumentWorkButton.BorderSize = 0;
-            this.OpenDocumentWorkButton.FlatAppearance.BorderSize = 0;
-            this.OpenDocumentWorkButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.OpenDocumentWorkButton.Font = new System.Drawing.Font("Segoe UI Semibold", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.OpenDocumentWorkButton.ForeColor = System.Drawing.Color.White;
-            this.OpenDocumentWorkButton.Location = new System.Drawing.Point(531, 257);
-            this.OpenDocumentWorkButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.OpenDocumentWorkButton.Name = "OpenDocumentWorkButton";
-            this.OpenDocumentWorkButton.Size = new System.Drawing.Size(237, 67);
-            this.OpenDocumentWorkButton.TabIndex = 35;
-            this.OpenDocumentWorkButton.Text = "Открыть файл";
-            this.OpenDocumentWorkButton.TextColor = System.Drawing.Color.White;
-            this.OpenDocumentWorkButton.UseVisualStyleBackColor = false;
-            this.OpenDocumentWorkButton.Click += new System.EventHandler(this.OpenDocumentWorkButton_Click);
-            // 
-            // DocumentWorkTextBox
-            // 
-            this.DocumentWorkTextBox.BackColor = System.Drawing.Color.White;
-            this.DocumentWorkTextBox.BorderColor = System.Drawing.Color.RoyalBlue;
-            this.DocumentWorkTextBox.BorderFocusColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
-            this.DocumentWorkTextBox.BorderSize = 2;
-            this.DocumentWorkTextBox.Enabled = false;
-            this.DocumentWorkTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F);
-            this.DocumentWorkTextBox.ForeColor = System.Drawing.Color.Black;
-            this.DocumentWorkTextBox.Location = new System.Drawing.Point(457, 206);
-            this.DocumentWorkTextBox.Margin = new System.Windows.Forms.Padding(5);
-            this.DocumentWorkTextBox.Multiline = false;
-            this.DocumentWorkTextBox.Name = "DocumentWorkTextBox";
-            this.DocumentWorkTextBox.Padding = new System.Windows.Forms.Padding(7);
-            this.DocumentWorkTextBox.PasswordChar = false;
-            this.DocumentWorkTextBox.Size = new System.Drawing.Size(383, 35);
-            this.DocumentWorkTextBox.TabIndex = 34;
-            this.DocumentWorkTextBox.Texts = "";
-            this.DocumentWorkTextBox.UnderlinedStyle = false;
             // 
             // DateTimeDescrWorkLabel
             // 
@@ -148,6 +107,80 @@
             this.ApplWorkDTP.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.ApplWorkDTP.Size = new System.Drawing.Size(285, 38);
             this.ApplWorkDTP.TabIndex = 26;
+            // 
+            // ApplPictureBox
+            // 
+            this.ApplPictureBox.BackColor = System.Drawing.Color.White;
+            this.ApplPictureBox.Image = global::Napitki_Altay2.Properties.Resources.PictureLoginForm;
+            this.ApplPictureBox.Location = new System.Drawing.Point(327, 4);
+            this.ApplPictureBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.ApplPictureBox.Name = "ApplPictureBox";
+            this.ApplPictureBox.Size = new System.Drawing.Size(239, 210);
+            this.ApplPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.ApplPictureBox.TabIndex = 22;
+            this.ApplPictureBox.TabStop = false;
+            // 
+            // OpenDocumentWorkButton
+            // 
+            this.OpenDocumentWorkButton.BackColor = System.Drawing.Color.RoyalBlue;
+            this.OpenDocumentWorkButton.BackgroundColor = System.Drawing.Color.RoyalBlue;
+            this.OpenDocumentWorkButton.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
+            this.OpenDocumentWorkButton.BorderRadius = 0;
+            this.OpenDocumentWorkButton.BorderSize = 0;
+            this.OpenDocumentWorkButton.FlatAppearance.BorderSize = 0;
+            this.OpenDocumentWorkButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.OpenDocumentWorkButton.Font = new System.Drawing.Font("Segoe UI Semibold", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.OpenDocumentWorkButton.ForeColor = System.Drawing.Color.White;
+            this.OpenDocumentWorkButton.Location = new System.Drawing.Point(531, 257);
+            this.OpenDocumentWorkButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.OpenDocumentWorkButton.Name = "OpenDocumentWorkButton";
+            this.OpenDocumentWorkButton.Size = new System.Drawing.Size(237, 67);
+            this.OpenDocumentWorkButton.TabIndex = 35;
+            this.OpenDocumentWorkButton.Text = "Открыть файл";
+            this.OpenDocumentWorkButton.TextColor = System.Drawing.Color.White;
+            this.OpenDocumentWorkButton.UseVisualStyleBackColor = false;
+            this.OpenDocumentWorkButton.Click += new System.EventHandler(this.OpenDocumentWorkButton_Click);
+            // 
+            // DocumentWorkTextBox
+            // 
+            this.DocumentWorkTextBox.BackColor = System.Drawing.Color.White;
+            this.DocumentWorkTextBox.BorderColor = System.Drawing.Color.RoyalBlue;
+            this.DocumentWorkTextBox.BorderFocusColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
+            this.DocumentWorkTextBox.BorderSize = 2;
+            this.DocumentWorkTextBox.Enabled = false;
+            this.DocumentWorkTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F);
+            this.DocumentWorkTextBox.ForeColor = System.Drawing.Color.Black;
+            this.DocumentWorkTextBox.Location = new System.Drawing.Point(457, 206);
+            this.DocumentWorkTextBox.Margin = new System.Windows.Forms.Padding(5);
+            this.DocumentWorkTextBox.Multiline = false;
+            this.DocumentWorkTextBox.Name = "DocumentWorkTextBox";
+            this.DocumentWorkTextBox.Padding = new System.Windows.Forms.Padding(7);
+            this.DocumentWorkTextBox.PasswordChar = false;
+            this.DocumentWorkTextBox.Size = new System.Drawing.Size(383, 35);
+            this.DocumentWorkTextBox.TabIndex = 34;
+            this.DocumentWorkTextBox.Texts = "";
+            this.DocumentWorkTextBox.UnderlinedStyle = false;
+            // 
+            // CloseApplicWorkButton
+            // 
+            this.CloseApplicWorkButton.BackColor = System.Drawing.Color.RoyalBlue;
+            this.CloseApplicWorkButton.BackgroundColor = System.Drawing.Color.RoyalBlue;
+            this.CloseApplicWorkButton.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
+            this.CloseApplicWorkButton.BorderRadius = 0;
+            this.CloseApplicWorkButton.BorderSize = 0;
+            this.CloseApplicWorkButton.FlatAppearance.BorderSize = 0;
+            this.CloseApplicWorkButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.CloseApplicWorkButton.Font = new System.Drawing.Font("Segoe UI Semibold", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.CloseApplicWorkButton.ForeColor = System.Drawing.Color.White;
+            this.CloseApplicWorkButton.Location = new System.Drawing.Point(419, 625);
+            this.CloseApplicWorkButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.CloseApplicWorkButton.Name = "CloseApplicWorkButton";
+            this.CloseApplicWorkButton.Size = new System.Drawing.Size(399, 82);
+            this.CloseApplicWorkButton.TabIndex = 32;
+            this.CloseApplicWorkButton.Text = "Закрыть обращение";
+            this.CloseApplicWorkButton.TextColor = System.Drawing.Color.White;
+            this.CloseApplicWorkButton.UseVisualStyleBackColor = false;
+            this.CloseApplicWorkButton.Click += new System.EventHandler(this.CloseApplicWorkButton_Click);
             // 
             // DescripWorkTextBox
             // 
@@ -209,43 +242,24 @@
             this.CompanyWorkTextBox.Texts = "";
             this.CompanyWorkTextBox.UnderlinedStyle = false;
             // 
-            // ApplPictureBox
+            // CustomFormForAllProject
             // 
-            this.ApplPictureBox.BackColor = System.Drawing.Color.White;
-            this.ApplPictureBox.Image = global::Napitki_Altay2.Properties.Resources.PictureLoginForm;
-            this.ApplPictureBox.Location = new System.Drawing.Point(327, 4);
-            this.ApplPictureBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.ApplPictureBox.Name = "ApplPictureBox";
-            this.ApplPictureBox.Size = new System.Drawing.Size(239, 210);
-            this.ApplPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.ApplPictureBox.TabIndex = 22;
-            this.ApplPictureBox.TabStop = false;
-            // 
-            // CreateApplicationForm
-            // 
-            this.CreateApplicationForm.Form = this;
-            this.CreateApplicationForm.FormStyle = Napitki_Altay2.DesignComponents.CustomForm.fStyle.None;
-            // 
-            // CloseApplicWorkButton
-            // 
-            this.CloseApplicWorkButton.BackColor = System.Drawing.Color.RoyalBlue;
-            this.CloseApplicWorkButton.BackgroundColor = System.Drawing.Color.RoyalBlue;
-            this.CloseApplicWorkButton.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
-            this.CloseApplicWorkButton.BorderRadius = 0;
-            this.CloseApplicWorkButton.BorderSize = 0;
-            this.CloseApplicWorkButton.FlatAppearance.BorderSize = 0;
-            this.CloseApplicWorkButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.CloseApplicWorkButton.Font = new System.Drawing.Font("Segoe UI Semibold", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.CloseApplicWorkButton.ForeColor = System.Drawing.Color.White;
-            this.CloseApplicWorkButton.Location = new System.Drawing.Point(419, 625);
-            this.CloseApplicWorkButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.CloseApplicWorkButton.Name = "CloseApplicWorkButton";
-            this.CloseApplicWorkButton.Size = new System.Drawing.Size(399, 82);
-            this.CloseApplicWorkButton.TabIndex = 32;
-            this.CloseApplicWorkButton.Text = "Закрыть обращение";
-            this.CloseApplicWorkButton.TextColor = System.Drawing.Color.White;
-            this.CloseApplicWorkButton.UseVisualStyleBackColor = false;
-            this.CloseApplicWorkButton.Click += new System.EventHandler(this.CloseApplicWorkButton_Click);
+            this.CustomFormForAllProject.AllowUserResize = false;
+            this.CustomFormForAllProject.BackColor = System.Drawing.Color.White;
+            this.CustomFormForAllProject.ContextMenuForm = null;
+            this.CustomFormForAllProject.ControlBoxButtonsWidth = 20;
+            this.CustomFormForAllProject.EnableControlBoxIconsLight = true;
+            this.CustomFormForAllProject.EnableControlBoxMouseLight = false;
+            this.CustomFormForAllProject.Form = this;
+            this.CustomFormForAllProject.FormStyle = Napitki_Altay2.Components.FormStyleCustom.fStyle.UserStyle;
+            this.CustomFormForAllProject.HeaderColor = System.Drawing.Color.RoyalBlue;
+            this.CustomFormForAllProject.HeaderColorAdditional = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
+            this.CustomFormForAllProject.HeaderColorGradientEnable = true;
+            this.CustomFormForAllProject.HeaderColorGradientMode = System.Drawing.Drawing2D.LinearGradientMode.Vertical;
+            this.CustomFormForAllProject.HeaderHeight = 29;
+            this.CustomFormForAllProject.HeaderImage = null;
+            this.CustomFormForAllProject.HeaderTextColor = System.Drawing.Color.White;
+            this.CustomFormForAllProject.HeaderTextFont = new System.Drawing.Font("Segoe UI", 12F);
             // 
             // UserApplicationInfoForWorkerForm
             // 
@@ -268,7 +282,7 @@
             this.Controls.Add(this.ApplPictureBox);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "UserApplicationInfoForWorkerForm";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "Обращение пользователя";
             this.Load += new System.EventHandler(this.UserApplicationInfoForWorkerForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.ApplPictureBox)).EndInit();
@@ -290,7 +304,7 @@
         private Design.CustomTextBox TypeApplWorkTextBox;
         private Design.CustomTextBox CompanyWorkTextBox;
         private System.Windows.Forms.PictureBox ApplPictureBox;
-        private DesignComponents.CustomForm CreateApplicationForm;
+        private Components.FormStyleCustom CustomFormForAllProject;
         private Design.CustomButton CloseApplicWorkButton;
     }
 }

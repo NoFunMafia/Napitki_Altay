@@ -36,7 +36,7 @@
             this.LogInAppButton = new Napitki_Altay2.Design.CustomButton();
             this.PasswordTextBox = new Napitki_Altay2.Design.CustomTextBox();
             this.LoginTextBox = new Napitki_Altay2.Design.CustomTextBox();
-            this.CustomFormForAllProject = new Napitki_Altay2.DesignComponents.CustomForm(this.components);
+            this.CustomFormForAllProject = new Napitki_Altay2.Components.FormStyleCustom(this.components);
             this.VisiblePassCheck = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.DetailsPictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.LoginPictureBox)).BeginInit();
@@ -107,10 +107,10 @@
             this.PasswordTextBox.Font = new System.Drawing.Font("Segoe UI Variable Text", 10.2F);
             this.PasswordTextBox.ForeColor = System.Drawing.Color.Black;
             this.PasswordTextBox.Location = new System.Drawing.Point(111, 253);
-            this.PasswordTextBox.Margin = new System.Windows.Forms.Padding(4);
+            this.PasswordTextBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.PasswordTextBox.Multiline = false;
             this.PasswordTextBox.Name = "PasswordTextBox";
-            this.PasswordTextBox.Padding = new System.Windows.Forms.Padding(7);
+            this.PasswordTextBox.Padding = new System.Windows.Forms.Padding(7, 7, 7, 7);
             this.PasswordTextBox.PasswordChar = false;
             this.PasswordTextBox.Size = new System.Drawing.Size(239, 37);
             this.PasswordTextBox.TabIndex = 1;
@@ -128,10 +128,10 @@
             this.LoginTextBox.Font = new System.Drawing.Font("Segoe UI Variable Text", 10.2F);
             this.LoginTextBox.ForeColor = System.Drawing.Color.Black;
             this.LoginTextBox.Location = new System.Drawing.Point(111, 201);
-            this.LoginTextBox.Margin = new System.Windows.Forms.Padding(4);
+            this.LoginTextBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.LoginTextBox.Multiline = false;
             this.LoginTextBox.Name = "LoginTextBox";
-            this.LoginTextBox.Padding = new System.Windows.Forms.Padding(7);
+            this.LoginTextBox.Padding = new System.Windows.Forms.Padding(7, 7, 7, 7);
             this.LoginTextBox.PasswordChar = false;
             this.LoginTextBox.Size = new System.Drawing.Size(239, 37);
             this.LoginTextBox.TabIndex = 0;
@@ -142,8 +142,22 @@
             // 
             // CustomFormForAllProject
             // 
+            this.CustomFormForAllProject.AllowUserResize = false;
+            this.CustomFormForAllProject.BackColor = System.Drawing.Color.White;
+            this.CustomFormForAllProject.ContextMenuForm = null;
+            this.CustomFormForAllProject.ControlBoxButtonsWidth = 20;
+            this.CustomFormForAllProject.EnableControlBoxIconsLight = true;
+            this.CustomFormForAllProject.EnableControlBoxMouseLight = false;
             this.CustomFormForAllProject.Form = this;
-            this.CustomFormForAllProject.FormStyle = Napitki_Altay2.DesignComponents.CustomForm.fStyle.None;
+            this.CustomFormForAllProject.FormStyle = Napitki_Altay2.Components.FormStyleCustom.fStyle.UserStyle;
+            this.CustomFormForAllProject.HeaderColor = System.Drawing.Color.RoyalBlue;
+            this.CustomFormForAllProject.HeaderColorAdditional = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
+            this.CustomFormForAllProject.HeaderColorGradientEnable = true;
+            this.CustomFormForAllProject.HeaderColorGradientMode = System.Drawing.Drawing2D.LinearGradientMode.Vertical;
+            this.CustomFormForAllProject.HeaderHeight = 29;
+            this.CustomFormForAllProject.HeaderImage = null;
+            this.CustomFormForAllProject.HeaderTextColor = System.Drawing.Color.White;
+            this.CustomFormForAllProject.HeaderTextFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             // 
             // VisiblePassCheck
             // 
@@ -186,7 +200,7 @@
         }
 
         #endregion
-        private DesignComponents.CustomForm CustomFormForAllProject;
+        private Components.FormStyleCustom CustomFormForAllProject;
         private Design.CustomTextBox PasswordTextBox;
         private Design.CustomTextBox LoginTextBox;
         private Design.CustomButton LogInAppButton;

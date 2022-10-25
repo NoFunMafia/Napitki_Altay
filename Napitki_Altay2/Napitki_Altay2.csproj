@@ -56,6 +56,15 @@
     <Compile Include="CustomComponents\CustomForm.Designer.cs">
       <DependentUpon>CustomForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="CustomComponents\Drawer.cs" />
+    <Compile Include="CustomComponents\StylesForForm.cs" />
+    <Compile Include="CustomComponents\TestColors.cs" />
+    <Compile Include="Forms\AnswerToUserApplicationForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\AnswerToUserApplicationForm.Designer.cs">
+      <DependentUpon>AnswerToUserApplicationForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\AuthForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -106,6 +115,9 @@
     <Compile Include="Forms\RegistrationForm.Designer.cs">
       <DependentUpon>RegistrationForm.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Forms\AnswerToUserApplicationForm.resx">
+      <DependentUpon>AnswerToUserApplicationForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\AuthForm.resx">
       <DependentUpon>AuthForm.cs</DependentUpon>
     </EmbeddedResource>

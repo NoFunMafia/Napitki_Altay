@@ -41,18 +41,23 @@
             this.DocumentTypeInfoPage = new System.Windows.Forms.TabPage();
             this.Sout2021Panel = new System.Windows.Forms.Panel();
             this.Sout2021ResultLabel = new System.Windows.Forms.Label();
+            this.Sout2021PictureBox = new System.Windows.Forms.PictureBox();
             this.Sout2018Panel = new System.Windows.Forms.Panel();
             this.Sout2018ResultLabel = new System.Windows.Forms.Label();
+            this.Sout2018PictureBox = new System.Windows.Forms.PictureBox();
             this.Sout2016Panel = new System.Windows.Forms.Panel();
             this.Sout2016ResultLabel = new System.Windows.Forms.Label();
+            this.Sout2016PictureBox = new System.Windows.Forms.PictureBox();
             this.PriceListPanel = new System.Windows.Forms.Panel();
             this.PriceListInfoLabel = new System.Windows.Forms.Label();
+            this.PriceListPictureBox = new System.Windows.Forms.PictureBox();
             this.OpenSout2021Button = new Napitki_Altay2.Design.CustomButton();
             this.OpenSout2018Button = new Napitki_Altay2.Design.CustomButton();
             this.OpenSout2016Button = new Napitki_Altay2.Design.CustomButton();
             this.OpenPriceListButton = new Napitki_Altay2.Design.CustomButton();
             this.DocumentInfoLabel = new System.Windows.Forms.Label();
             this.UserDataPage = new System.Windows.Forms.TabPage();
+            this.MainWorkFormPictureBox = new System.Windows.Forms.PictureBox();
             this.PasswordWorkInfoLabel = new System.Windows.Forms.Label();
             this.SurnameWorkInfoLabel = new System.Windows.Forms.Label();
             this.NameWorkInfoLabel = new System.Windows.Forms.Label();
@@ -65,31 +70,26 @@
             this.NameCreateTextBox = new Napitki_Altay2.Design.CustomTextBox();
             this.FamCreateTextBox = new Napitki_Altay2.Design.CustomTextBox();
             this.AboutOurCompanyPage = new System.Windows.Forms.TabPage();
+            this.MainWorkFormPictureBox3 = new System.Windows.Forms.PictureBox();
             this.ContactInfoLabel = new System.Windows.Forms.Label();
             this.AboutOurCompanyLabel = new System.Windows.Forms.Label();
-            this.CustomFormForAllProject = new Napitki_Altay2.DesignComponents.CustomForm(this.components);
-            this.Sout2021PictureBox = new System.Windows.Forms.PictureBox();
-            this.Sout2018PictureBox = new System.Windows.Forms.PictureBox();
-            this.Sout2016PictureBox = new System.Windows.Forms.PictureBox();
-            this.PriceListPictureBox = new System.Windows.Forms.PictureBox();
-            this.MainWorkFormPictureBox = new System.Windows.Forms.PictureBox();
-            this.MainWorkFormPictureBox3 = new System.Windows.Forms.PictureBox();
             this.MainWorkFormPictureBox2 = new System.Windows.Forms.PictureBox();
+            this.CustomFormForAllProject = new Napitki_Altay2.Components.FormStyleCustom(this.components);
             this.MainWorkTabControl.SuspendLayout();
             this.ApplicationPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DataGridViewApplication)).BeginInit();
             this.DocumentTypeInfoPage.SuspendLayout();
             this.Sout2021Panel.SuspendLayout();
-            this.Sout2018Panel.SuspendLayout();
-            this.Sout2016Panel.SuspendLayout();
-            this.PriceListPanel.SuspendLayout();
-            this.UserDataPage.SuspendLayout();
-            this.AboutOurCompanyPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Sout2021PictureBox)).BeginInit();
+            this.Sout2018Panel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Sout2018PictureBox)).BeginInit();
+            this.Sout2016Panel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Sout2016PictureBox)).BeginInit();
+            this.PriceListPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PriceListPictureBox)).BeginInit();
+            this.UserDataPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.MainWorkFormPictureBox)).BeginInit();
+            this.AboutOurCompanyPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.MainWorkFormPictureBox3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.MainWorkFormPictureBox2)).BeginInit();
             this.SuspendLayout();
@@ -268,6 +268,16 @@
             this.Sout2021ResultLabel.Text = "Результаты \r\nСОУТ 2021";
             this.Sout2021ResultLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // Sout2021PictureBox
+            // 
+            this.Sout2021PictureBox.Image = global::Napitki_Altay2.Properties.Resources.Picture4MainWorkForm;
+            this.Sout2021PictureBox.Location = new System.Drawing.Point(15, 5);
+            this.Sout2021PictureBox.Name = "Sout2021PictureBox";
+            this.Sout2021PictureBox.Size = new System.Drawing.Size(222, 240);
+            this.Sout2021PictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.Sout2021PictureBox.TabIndex = 13;
+            this.Sout2021PictureBox.TabStop = false;
+            // 
             // Sout2018Panel
             // 
             this.Sout2018Panel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
@@ -288,6 +298,16 @@
             this.Sout2018ResultLabel.TabIndex = 16;
             this.Sout2018ResultLabel.Text = "Результаты \r\nСОУТ 2018";
             this.Sout2018ResultLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // Sout2018PictureBox
+            // 
+            this.Sout2018PictureBox.Image = global::Napitki_Altay2.Properties.Resources.Picture4MainWorkForm;
+            this.Sout2018PictureBox.Location = new System.Drawing.Point(12, 5);
+            this.Sout2018PictureBox.Name = "Sout2018PictureBox";
+            this.Sout2018PictureBox.Size = new System.Drawing.Size(222, 240);
+            this.Sout2018PictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.Sout2018PictureBox.TabIndex = 2;
+            this.Sout2018PictureBox.TabStop = false;
             // 
             // Sout2016Panel
             // 
@@ -310,6 +330,16 @@
             this.Sout2016ResultLabel.Text = "Результаты \r\nСОУТ 2016-2017";
             this.Sout2016ResultLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // Sout2016PictureBox
+            // 
+            this.Sout2016PictureBox.Image = global::Napitki_Altay2.Properties.Resources.Picture4MainWorkForm;
+            this.Sout2016PictureBox.Location = new System.Drawing.Point(13, 4);
+            this.Sout2016PictureBox.Name = "Sout2016PictureBox";
+            this.Sout2016PictureBox.Size = new System.Drawing.Size(222, 240);
+            this.Sout2016PictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.Sout2016PictureBox.TabIndex = 1;
+            this.Sout2016PictureBox.TabStop = false;
+            // 
             // PriceListPanel
             // 
             this.PriceListPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
@@ -329,6 +359,16 @@
             this.PriceListInfoLabel.Size = new System.Drawing.Size(184, 41);
             this.PriceListInfoLabel.TabIndex = 14;
             this.PriceListInfoLabel.Text = "Прайс-Лист";
+            // 
+            // PriceListPictureBox
+            // 
+            this.PriceListPictureBox.Image = global::Napitki_Altay2.Properties.Resources.Picture4MainWorkForm;
+            this.PriceListPictureBox.Location = new System.Drawing.Point(12, 3);
+            this.PriceListPictureBox.Name = "PriceListPictureBox";
+            this.PriceListPictureBox.Size = new System.Drawing.Size(222, 240);
+            this.PriceListPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.PriceListPictureBox.TabIndex = 0;
+            this.PriceListPictureBox.TabStop = false;
             // 
             // OpenSout2021Button
             // 
@@ -446,6 +486,16 @@
             this.UserDataPage.Size = new System.Drawing.Size(1011, 520);
             this.UserDataPage.TabIndex = 2;
             this.UserDataPage.Text = "Данные о пользователе";
+            // 
+            // MainWorkFormPictureBox
+            // 
+            this.MainWorkFormPictureBox.Image = global::Napitki_Altay2.Properties.Resources.PictureMainWorkForm;
+            this.MainWorkFormPictureBox.Location = new System.Drawing.Point(502, 264);
+            this.MainWorkFormPictureBox.Name = "MainWorkFormPictureBox";
+            this.MainWorkFormPictureBox.Size = new System.Drawing.Size(507, 255);
+            this.MainWorkFormPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.MainWorkFormPictureBox.TabIndex = 21;
+            this.MainWorkFormPictureBox.TabStop = false;
             // 
             // PasswordWorkInfoLabel
             // 
@@ -630,6 +680,16 @@
             this.AboutOurCompanyPage.TabIndex = 3;
             this.AboutOurCompanyPage.Text = "О нашей компании";
             // 
+            // MainWorkFormPictureBox3
+            // 
+            this.MainWorkFormPictureBox3.Image = ((System.Drawing.Image)(resources.GetObject("MainWorkFormPictureBox3.Image")));
+            this.MainWorkFormPictureBox3.Location = new System.Drawing.Point(495, 19);
+            this.MainWorkFormPictureBox3.Name = "MainWorkFormPictureBox3";
+            this.MainWorkFormPictureBox3.Size = new System.Drawing.Size(510, 405);
+            this.MainWorkFormPictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.MainWorkFormPictureBox3.TabIndex = 2;
+            this.MainWorkFormPictureBox3.TabStop = false;
+            // 
             // ContactInfoLabel
             // 
             this.ContactInfoLabel.AutoSize = true;
@@ -651,71 +711,6 @@
             this.AboutOurCompanyLabel.TabIndex = 3;
             this.AboutOurCompanyLabel.Text = resources.GetString("AboutOurCompanyLabel.Text");
             // 
-            // CustomFormForAllProject
-            // 
-            this.CustomFormForAllProject.Form = this;
-            this.CustomFormForAllProject.FormStyle = Napitki_Altay2.DesignComponents.CustomForm.fStyle.None;
-            // 
-            // Sout2021PictureBox
-            // 
-            this.Sout2021PictureBox.Image = global::Napitki_Altay2.Properties.Resources.Picture4MainWorkForm;
-            this.Sout2021PictureBox.Location = new System.Drawing.Point(15, 5);
-            this.Sout2021PictureBox.Name = "Sout2021PictureBox";
-            this.Sout2021PictureBox.Size = new System.Drawing.Size(222, 240);
-            this.Sout2021PictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.Sout2021PictureBox.TabIndex = 13;
-            this.Sout2021PictureBox.TabStop = false;
-            // 
-            // Sout2018PictureBox
-            // 
-            this.Sout2018PictureBox.Image = global::Napitki_Altay2.Properties.Resources.Picture4MainWorkForm;
-            this.Sout2018PictureBox.Location = new System.Drawing.Point(12, 5);
-            this.Sout2018PictureBox.Name = "Sout2018PictureBox";
-            this.Sout2018PictureBox.Size = new System.Drawing.Size(222, 240);
-            this.Sout2018PictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.Sout2018PictureBox.TabIndex = 2;
-            this.Sout2018PictureBox.TabStop = false;
-            // 
-            // Sout2016PictureBox
-            // 
-            this.Sout2016PictureBox.Image = global::Napitki_Altay2.Properties.Resources.Picture4MainWorkForm;
-            this.Sout2016PictureBox.Location = new System.Drawing.Point(13, 4);
-            this.Sout2016PictureBox.Name = "Sout2016PictureBox";
-            this.Sout2016PictureBox.Size = new System.Drawing.Size(222, 240);
-            this.Sout2016PictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.Sout2016PictureBox.TabIndex = 1;
-            this.Sout2016PictureBox.TabStop = false;
-            // 
-            // PriceListPictureBox
-            // 
-            this.PriceListPictureBox.Image = global::Napitki_Altay2.Properties.Resources.Picture4MainWorkForm;
-            this.PriceListPictureBox.Location = new System.Drawing.Point(12, 3);
-            this.PriceListPictureBox.Name = "PriceListPictureBox";
-            this.PriceListPictureBox.Size = new System.Drawing.Size(222, 240);
-            this.PriceListPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.PriceListPictureBox.TabIndex = 0;
-            this.PriceListPictureBox.TabStop = false;
-            // 
-            // MainWorkFormPictureBox
-            // 
-            this.MainWorkFormPictureBox.Image = global::Napitki_Altay2.Properties.Resources.PictureMainWorkForm;
-            this.MainWorkFormPictureBox.Location = new System.Drawing.Point(502, 264);
-            this.MainWorkFormPictureBox.Name = "MainWorkFormPictureBox";
-            this.MainWorkFormPictureBox.Size = new System.Drawing.Size(507, 255);
-            this.MainWorkFormPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.MainWorkFormPictureBox.TabIndex = 21;
-            this.MainWorkFormPictureBox.TabStop = false;
-            // 
-            // MainWorkFormPictureBox3
-            // 
-            this.MainWorkFormPictureBox3.Image = ((System.Drawing.Image)(resources.GetObject("MainWorkFormPictureBox3.Image")));
-            this.MainWorkFormPictureBox3.Location = new System.Drawing.Point(495, 19);
-            this.MainWorkFormPictureBox3.Name = "MainWorkFormPictureBox3";
-            this.MainWorkFormPictureBox3.Size = new System.Drawing.Size(510, 405);
-            this.MainWorkFormPictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.MainWorkFormPictureBox3.TabIndex = 2;
-            this.MainWorkFormPictureBox3.TabStop = false;
-            // 
             // MainWorkFormPictureBox2
             // 
             this.MainWorkFormPictureBox2.Image = global::Napitki_Altay2.Properties.Resources.Picture2MainWorkForm;
@@ -724,6 +719,25 @@
             this.MainWorkFormPictureBox2.Size = new System.Drawing.Size(851, 236);
             this.MainWorkFormPictureBox2.TabIndex = 0;
             this.MainWorkFormPictureBox2.TabStop = false;
+            // 
+            // CustomFormForAllProject
+            // 
+            this.CustomFormForAllProject.AllowUserResize = false;
+            this.CustomFormForAllProject.BackColor = System.Drawing.Color.White;
+            this.CustomFormForAllProject.ContextMenuForm = null;
+            this.CustomFormForAllProject.ControlBoxButtonsWidth = 20;
+            this.CustomFormForAllProject.EnableControlBoxIconsLight = true;
+            this.CustomFormForAllProject.EnableControlBoxMouseLight = false;
+            this.CustomFormForAllProject.Form = this;
+            this.CustomFormForAllProject.FormStyle = Napitki_Altay2.Components.FormStyleCustom.fStyle.UserStyle;
+            this.CustomFormForAllProject.HeaderColor = System.Drawing.Color.RoyalBlue;
+            this.CustomFormForAllProject.HeaderColorAdditional = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
+            this.CustomFormForAllProject.HeaderColorGradientEnable = true;
+            this.CustomFormForAllProject.HeaderColorGradientMode = System.Drawing.Drawing2D.LinearGradientMode.Vertical;
+            this.CustomFormForAllProject.HeaderHeight = 29;
+            this.CustomFormForAllProject.HeaderImage = null;
+            this.CustomFormForAllProject.HeaderTextColor = System.Drawing.Color.White;
+            this.CustomFormForAllProject.HeaderTextFont = new System.Drawing.Font("Segoe UI", 12F);
             // 
             // MainWorkForm
             // 
@@ -746,21 +760,21 @@
             this.DocumentTypeInfoPage.PerformLayout();
             this.Sout2021Panel.ResumeLayout(false);
             this.Sout2021Panel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.Sout2021PictureBox)).EndInit();
             this.Sout2018Panel.ResumeLayout(false);
             this.Sout2018Panel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.Sout2018PictureBox)).EndInit();
             this.Sout2016Panel.ResumeLayout(false);
             this.Sout2016Panel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.Sout2016PictureBox)).EndInit();
             this.PriceListPanel.ResumeLayout(false);
             this.PriceListPanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.PriceListPictureBox)).EndInit();
             this.UserDataPage.ResumeLayout(false);
             this.UserDataPage.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.MainWorkFormPictureBox)).EndInit();
             this.AboutOurCompanyPage.ResumeLayout(false);
             this.AboutOurCompanyPage.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.Sout2021PictureBox)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Sout2018PictureBox)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Sout2016PictureBox)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PriceListPictureBox)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.MainWorkFormPictureBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.MainWorkFormPictureBox3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.MainWorkFormPictureBox2)).EndInit();
             this.ResumeLayout(false);
@@ -769,7 +783,7 @@
 
         #endregion
 
-        private DesignComponents.CustomForm CustomFormForAllProject;
+        private Components.FormStyleCustom CustomFormForAllProject;
         private System.Windows.Forms.TabControl MainWorkTabControl;
         private System.Windows.Forms.TabPage ApplicationPage;
         private System.Windows.Forms.TabPage AnswerForUserApplicPage;
