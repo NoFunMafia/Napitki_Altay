@@ -32,10 +32,16 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainWorkFormWorker));
             this.MainWorkWorkerTabControl = new System.Windows.Forms.TabControl();
             this.AnswerToApplicationPage = new System.Windows.Forms.TabPage();
+            this.UpdateAnswerInDGW = new Napitki_Altay2.Design.CustomButton();
+            this.AnswerToApplicationButton = new Napitki_Altay2.Design.CustomButton();
             this.InfoAnswerLabel = new System.Windows.Forms.Label();
             this.DataGridViewAnswer = new System.Windows.Forms.DataGridView();
             this.DoneApplicationPage = new System.Windows.Forms.TabPage();
-            this.HelpToApplicationPage = new System.Windows.Forms.TabPage();
+            this.FilePathChooseButton = new Napitki_Altay2.Design.CustomButton();
+            this.FilePathTextBox = new Napitki_Altay2.Design.CustomTextBox();
+            this.UpdateDataDGWAnswer = new Napitki_Altay2.Design.CustomButton();
+            this.GenerateRaportButton = new Napitki_Altay2.Design.CustomButton();
+            this.CompleteApplicationDGW = new System.Windows.Forms.DataGridView();
             this.WorkerDataPage = new System.Windows.Forms.TabPage();
             this.MainWorkFormWorkerPictureBox = new System.Windows.Forms.PictureBox();
             this.PasswordWorkInfoLabel = new System.Windows.Forms.Label();
@@ -43,8 +49,6 @@
             this.NameWorkInfoLabel = new System.Windows.Forms.Label();
             this.FamWorkInfoLabel = new System.Windows.Forms.Label();
             this.InfoUserLabel = new System.Windows.Forms.Label();
-            this.UpdateAnswerInDGW = new Napitki_Altay2.Design.CustomButton();
-            this.AnswerToApplicationButton = new Napitki_Altay2.Design.CustomButton();
             this.UpdLogPassButton = new Napitki_Altay2.Design.CustomButton();
             this.CreateUserFIOButton = new Napitki_Altay2.Design.CustomButton();
             this.PassWorkCreaUpdaTextBox = new Napitki_Altay2.Design.CustomTextBox();
@@ -52,9 +56,12 @@
             this.NameWorkCreateTextBox = new Napitki_Altay2.Design.CustomTextBox();
             this.FamWorkCreateTextBox = new Napitki_Altay2.Design.CustomTextBox();
             this.CustomFormForAllProject = new Napitki_Altay2.Components.FormStyleCustom(this.components);
+            this.FolderPathBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
             this.MainWorkWorkerTabControl.SuspendLayout();
             this.AnswerToApplicationPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DataGridViewAnswer)).BeginInit();
+            this.DoneApplicationPage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.CompleteApplicationDGW)).BeginInit();
             this.WorkerDataPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.MainWorkFormWorkerPictureBox)).BeginInit();
             this.SuspendLayout();
@@ -63,7 +70,6 @@
             // 
             this.MainWorkWorkerTabControl.Controls.Add(this.AnswerToApplicationPage);
             this.MainWorkWorkerTabControl.Controls.Add(this.DoneApplicationPage);
-            this.MainWorkWorkerTabControl.Controls.Add(this.HelpToApplicationPage);
             this.MainWorkWorkerTabControl.Controls.Add(this.WorkerDataPage);
             this.MainWorkWorkerTabControl.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
             this.MainWorkWorkerTabControl.ItemSize = new System.Drawing.Size(130, 23);
@@ -88,6 +94,48 @@
             this.AnswerToApplicationPage.TabIndex = 1;
             this.AnswerToApplicationPage.Text = "Дать ответ на обращение";
             // 
+            // UpdateAnswerInDGW
+            // 
+            this.UpdateAnswerInDGW.BackColor = System.Drawing.Color.RoyalBlue;
+            this.UpdateAnswerInDGW.BackgroundColor = System.Drawing.Color.RoyalBlue;
+            this.UpdateAnswerInDGW.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
+            this.UpdateAnswerInDGW.BorderRadius = 0;
+            this.UpdateAnswerInDGW.BorderSize = 0;
+            this.UpdateAnswerInDGW.FlatAppearance.BorderSize = 0;
+            this.UpdateAnswerInDGW.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.UpdateAnswerInDGW.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
+            this.UpdateAnswerInDGW.ForeColor = System.Drawing.Color.White;
+            this.UpdateAnswerInDGW.Location = new System.Drawing.Point(144, 9);
+            this.UpdateAnswerInDGW.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.UpdateAnswerInDGW.Name = "UpdateAnswerInDGW";
+            this.UpdateAnswerInDGW.Size = new System.Drawing.Size(207, 43);
+            this.UpdateAnswerInDGW.TabIndex = 17;
+            this.UpdateAnswerInDGW.Text = "Обновить данные";
+            this.UpdateAnswerInDGW.TextColor = System.Drawing.Color.White;
+            this.UpdateAnswerInDGW.UseVisualStyleBackColor = false;
+            this.UpdateAnswerInDGW.Click += new System.EventHandler(this.UpdateAnswerInDGW_Click);
+            // 
+            // AnswerToApplicationButton
+            // 
+            this.AnswerToApplicationButton.BackColor = System.Drawing.Color.RoyalBlue;
+            this.AnswerToApplicationButton.BackgroundColor = System.Drawing.Color.RoyalBlue;
+            this.AnswerToApplicationButton.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
+            this.AnswerToApplicationButton.BorderRadius = 0;
+            this.AnswerToApplicationButton.BorderSize = 0;
+            this.AnswerToApplicationButton.FlatAppearance.BorderSize = 0;
+            this.AnswerToApplicationButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.AnswerToApplicationButton.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.AnswerToApplicationButton.ForeColor = System.Drawing.Color.White;
+            this.AnswerToApplicationButton.Location = new System.Drawing.Point(5, 9);
+            this.AnswerToApplicationButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.AnswerToApplicationButton.Name = "AnswerToApplicationButton";
+            this.AnswerToApplicationButton.Size = new System.Drawing.Size(133, 43);
+            this.AnswerToApplicationButton.TabIndex = 16;
+            this.AnswerToApplicationButton.Text = "Ответить";
+            this.AnswerToApplicationButton.TextColor = System.Drawing.Color.White;
+            this.AnswerToApplicationButton.UseVisualStyleBackColor = false;
+            this.AnswerToApplicationButton.Click += new System.EventHandler(this.AnswerToApplicationButton_Click);
+            // 
             // InfoAnswerLabel
             // 
             this.InfoAnswerLabel.AutoSize = true;
@@ -103,6 +151,8 @@
             // 
             // DataGridViewAnswer
             // 
+            this.DataGridViewAnswer.AllowUserToAddRows = false;
+            this.DataGridViewAnswer.AllowUserToDeleteRows = false;
             this.DataGridViewAnswer.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.DataGridViewAnswer.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.DataGridViewAnswer.Dock = System.Windows.Forms.DockStyle.Bottom;
@@ -117,6 +167,11 @@
             // DoneApplicationPage
             // 
             this.DoneApplicationPage.BackColor = System.Drawing.Color.White;
+            this.DoneApplicationPage.Controls.Add(this.FilePathChooseButton);
+            this.DoneApplicationPage.Controls.Add(this.FilePathTextBox);
+            this.DoneApplicationPage.Controls.Add(this.UpdateDataDGWAnswer);
+            this.DoneApplicationPage.Controls.Add(this.GenerateRaportButton);
+            this.DoneApplicationPage.Controls.Add(this.CompleteApplicationDGW);
             this.DoneApplicationPage.Location = new System.Drawing.Point(4, 27);
             this.DoneApplicationPage.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.DoneApplicationPage.Name = "DoneApplicationPage";
@@ -125,15 +180,103 @@
             this.DoneApplicationPage.TabIndex = 0;
             this.DoneApplicationPage.Text = "Завершенные обращения";
             // 
-            // HelpToApplicationPage
+            // FilePathChooseButton
             // 
-            this.HelpToApplicationPage.BackColor = System.Drawing.Color.White;
-            this.HelpToApplicationPage.Location = new System.Drawing.Point(4, 27);
-            this.HelpToApplicationPage.Name = "HelpToApplicationPage";
-            this.HelpToApplicationPage.Padding = new System.Windows.Forms.Padding(3);
-            this.HelpToApplicationPage.Size = new System.Drawing.Size(1011, 520);
-            this.HelpToApplicationPage.TabIndex = 2;
-            this.HelpToApplicationPage.Text = "Справка по ответам на обращения";
+            this.FilePathChooseButton.BackColor = System.Drawing.Color.RoyalBlue;
+            this.FilePathChooseButton.BackgroundColor = System.Drawing.Color.RoyalBlue;
+            this.FilePathChooseButton.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
+            this.FilePathChooseButton.BorderRadius = 0;
+            this.FilePathChooseButton.BorderSize = 0;
+            this.FilePathChooseButton.FlatAppearance.BorderSize = 0;
+            this.FilePathChooseButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.FilePathChooseButton.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
+            this.FilePathChooseButton.ForeColor = System.Drawing.Color.White;
+            this.FilePathChooseButton.Location = new System.Drawing.Point(488, 9);
+            this.FilePathChooseButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.FilePathChooseButton.Name = "FilePathChooseButton";
+            this.FilePathChooseButton.Size = new System.Drawing.Size(175, 70);
+            this.FilePathChooseButton.TabIndex = 24;
+            this.FilePathChooseButton.Text = "Выбрать путь сохранения";
+            this.FilePathChooseButton.TextColor = System.Drawing.Color.White;
+            this.FilePathChooseButton.UseVisualStyleBackColor = false;
+            this.FilePathChooseButton.Click += new System.EventHandler(this.FilePathChooseButton_Click);
+            // 
+            // FilePathTextBox
+            // 
+            this.FilePathTextBox.BackColor = System.Drawing.Color.White;
+            this.FilePathTextBox.BorderColor = System.Drawing.Color.RoyalBlue;
+            this.FilePathTextBox.BorderFocusColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
+            this.FilePathTextBox.BorderSize = 2;
+            this.FilePathTextBox.Enabled = false;
+            this.FilePathTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.FilePathTextBox.ForeColor = System.Drawing.Color.Black;
+            this.FilePathTextBox.Location = new System.Drawing.Point(10, 19);
+            this.FilePathTextBox.Margin = new System.Windows.Forms.Padding(7);
+            this.FilePathTextBox.Multiline = false;
+            this.FilePathTextBox.Name = "FilePathTextBox";
+            this.FilePathTextBox.Padding = new System.Windows.Forms.Padding(10);
+            this.FilePathTextBox.PasswordChar = false;
+            this.FilePathTextBox.Size = new System.Drawing.Size(468, 50);
+            this.FilePathTextBox.TabIndex = 23;
+            this.FilePathTextBox.Texts = "";
+            this.FilePathTextBox.UnderlinedStyle = false;
+            // 
+            // UpdateDataDGWAnswer
+            // 
+            this.UpdateDataDGWAnswer.BackColor = System.Drawing.Color.RoyalBlue;
+            this.UpdateDataDGWAnswer.BackgroundColor = System.Drawing.Color.RoyalBlue;
+            this.UpdateDataDGWAnswer.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
+            this.UpdateDataDGWAnswer.BorderRadius = 0;
+            this.UpdateDataDGWAnswer.BorderSize = 0;
+            this.UpdateDataDGWAnswer.FlatAppearance.BorderSize = 0;
+            this.UpdateDataDGWAnswer.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.UpdateDataDGWAnswer.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
+            this.UpdateDataDGWAnswer.ForeColor = System.Drawing.Color.White;
+            this.UpdateDataDGWAnswer.Location = new System.Drawing.Point(865, 9);
+            this.UpdateDataDGWAnswer.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.UpdateDataDGWAnswer.Name = "UpdateDataDGWAnswer";
+            this.UpdateDataDGWAnswer.Size = new System.Drawing.Size(137, 70);
+            this.UpdateDataDGWAnswer.TabIndex = 18;
+            this.UpdateDataDGWAnswer.Text = "Обновить данные";
+            this.UpdateDataDGWAnswer.TextColor = System.Drawing.Color.White;
+            this.UpdateDataDGWAnswer.UseVisualStyleBackColor = false;
+            this.UpdateDataDGWAnswer.Click += new System.EventHandler(this.UpdateDataDGWAnswer_Click);
+            // 
+            // GenerateRaportButton
+            // 
+            this.GenerateRaportButton.BackColor = System.Drawing.Color.RoyalBlue;
+            this.GenerateRaportButton.BackgroundColor = System.Drawing.Color.RoyalBlue;
+            this.GenerateRaportButton.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
+            this.GenerateRaportButton.BorderRadius = 0;
+            this.GenerateRaportButton.BorderSize = 0;
+            this.GenerateRaportButton.FlatAppearance.BorderSize = 0;
+            this.GenerateRaportButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.GenerateRaportButton.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.GenerateRaportButton.ForeColor = System.Drawing.Color.White;
+            this.GenerateRaportButton.Location = new System.Drawing.Point(669, 9);
+            this.GenerateRaportButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.GenerateRaportButton.Name = "GenerateRaportButton";
+            this.GenerateRaportButton.Size = new System.Drawing.Size(190, 70);
+            this.GenerateRaportButton.TabIndex = 17;
+            this.GenerateRaportButton.Text = "Сформировать отчёт";
+            this.GenerateRaportButton.TextColor = System.Drawing.Color.White;
+            this.GenerateRaportButton.UseVisualStyleBackColor = false;
+            this.GenerateRaportButton.Click += new System.EventHandler(this.GenerateRaportButton_Click);
+            // 
+            // CompleteApplicationDGW
+            // 
+            this.CompleteApplicationDGW.AllowUserToAddRows = false;
+            this.CompleteApplicationDGW.AllowUserToDeleteRows = false;
+            this.CompleteApplicationDGW.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.CompleteApplicationDGW.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.CompleteApplicationDGW.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.CompleteApplicationDGW.Location = new System.Drawing.Point(3, 93);
+            this.CompleteApplicationDGW.Name = "CompleteApplicationDGW";
+            this.CompleteApplicationDGW.ReadOnly = true;
+            this.CompleteApplicationDGW.RowHeadersWidth = 51;
+            this.CompleteApplicationDGW.RowTemplate.Height = 24;
+            this.CompleteApplicationDGW.Size = new System.Drawing.Size(1005, 425);
+            this.CompleteApplicationDGW.TabIndex = 1;
             // 
             // WorkerDataPage
             // 
@@ -218,48 +361,6 @@
             this.InfoUserLabel.Size = new System.Drawing.Size(598, 50);
             this.InfoUserLabel.TabIndex = 26;
             this.InfoUserLabel.Text = "ИНФОРМАЦИЯ О СОТРУДНИКЕ";
-            // 
-            // UpdateAnswerInDGW
-            // 
-            this.UpdateAnswerInDGW.BackColor = System.Drawing.Color.RoyalBlue;
-            this.UpdateAnswerInDGW.BackgroundColor = System.Drawing.Color.RoyalBlue;
-            this.UpdateAnswerInDGW.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
-            this.UpdateAnswerInDGW.BorderRadius = 0;
-            this.UpdateAnswerInDGW.BorderSize = 0;
-            this.UpdateAnswerInDGW.FlatAppearance.BorderSize = 0;
-            this.UpdateAnswerInDGW.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.UpdateAnswerInDGW.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
-            this.UpdateAnswerInDGW.ForeColor = System.Drawing.Color.White;
-            this.UpdateAnswerInDGW.Location = new System.Drawing.Point(144, 9);
-            this.UpdateAnswerInDGW.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.UpdateAnswerInDGW.Name = "UpdateAnswerInDGW";
-            this.UpdateAnswerInDGW.Size = new System.Drawing.Size(207, 43);
-            this.UpdateAnswerInDGW.TabIndex = 17;
-            this.UpdateAnswerInDGW.Text = "Обновить данные";
-            this.UpdateAnswerInDGW.TextColor = System.Drawing.Color.White;
-            this.UpdateAnswerInDGW.UseVisualStyleBackColor = false;
-            this.UpdateAnswerInDGW.Click += new System.EventHandler(this.UpdateAnswerInDGW_Click);
-            // 
-            // AnswerToApplicationButton
-            // 
-            this.AnswerToApplicationButton.BackColor = System.Drawing.Color.RoyalBlue;
-            this.AnswerToApplicationButton.BackgroundColor = System.Drawing.Color.RoyalBlue;
-            this.AnswerToApplicationButton.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
-            this.AnswerToApplicationButton.BorderRadius = 0;
-            this.AnswerToApplicationButton.BorderSize = 0;
-            this.AnswerToApplicationButton.FlatAppearance.BorderSize = 0;
-            this.AnswerToApplicationButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.AnswerToApplicationButton.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.AnswerToApplicationButton.ForeColor = System.Drawing.Color.White;
-            this.AnswerToApplicationButton.Location = new System.Drawing.Point(5, 9);
-            this.AnswerToApplicationButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.AnswerToApplicationButton.Name = "AnswerToApplicationButton";
-            this.AnswerToApplicationButton.Size = new System.Drawing.Size(133, 43);
-            this.AnswerToApplicationButton.TabIndex = 16;
-            this.AnswerToApplicationButton.Text = "Ответить";
-            this.AnswerToApplicationButton.TextColor = System.Drawing.Color.White;
-            this.AnswerToApplicationButton.UseVisualStyleBackColor = false;
-            this.AnswerToApplicationButton.Click += new System.EventHandler(this.AnswerToApplicationButton_Click);
             // 
             // UpdLogPassButton
             // 
@@ -389,7 +490,7 @@
             this.CustomFormForAllProject.Form = this;
             this.CustomFormForAllProject.FormStyle = Napitki_Altay2.Components.FormStyleCustom.fStyle.UserStyle;
             this.CustomFormForAllProject.HeaderColor = System.Drawing.Color.RoyalBlue;
-            this.CustomFormForAllProject.HeaderColorAdditional = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
+            this.CustomFormForAllProject.HeaderColorAdditional = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(48)))), ((int)(((byte)(207)))));
             this.CustomFormForAllProject.HeaderColorGradientEnable = true;
             this.CustomFormForAllProject.HeaderColorGradientMode = System.Drawing.Drawing2D.LinearGradientMode.Vertical;
             this.CustomFormForAllProject.HeaderHeight = 29;
@@ -407,11 +508,14 @@
             this.Name = "MainWorkFormWorker";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Напитки Алтая";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainWorkFormWorker_FormClosed);
             this.Load += new System.EventHandler(this.MainWorkFormWorker_Load);
             this.MainWorkWorkerTabControl.ResumeLayout(false);
             this.AnswerToApplicationPage.ResumeLayout(false);
             this.AnswerToApplicationPage.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DataGridViewAnswer)).EndInit();
+            this.DoneApplicationPage.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.CompleteApplicationDGW)).EndInit();
             this.WorkerDataPage.ResumeLayout(false);
             this.WorkerDataPage.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.MainWorkFormWorkerPictureBox)).EndInit();
@@ -425,7 +529,6 @@
         private System.Windows.Forms.TabControl MainWorkWorkerTabControl;
         private System.Windows.Forms.TabPage DoneApplicationPage;
         private System.Windows.Forms.TabPage AnswerToApplicationPage;
-        private System.Windows.Forms.TabPage HelpToApplicationPage;
         private System.Windows.Forms.TabPage WorkerDataPage;
         private System.Windows.Forms.DataGridView DataGridViewAnswer;
         private System.Windows.Forms.PictureBox MainWorkFormWorkerPictureBox;
@@ -443,5 +546,11 @@
         private System.Windows.Forms.Label InfoAnswerLabel;
         private Design.CustomButton AnswerToApplicationButton;
         private Design.CustomButton UpdateAnswerInDGW;
+        private System.Windows.Forms.DataGridView CompleteApplicationDGW;
+        private Design.CustomButton GenerateRaportButton;
+        private Design.CustomButton UpdateDataDGWAnswer;
+        private Design.CustomButton FilePathChooseButton;
+        private Design.CustomTextBox FilePathTextBox;
+        private System.Windows.Forms.FolderBrowserDialog FolderPathBrowserDialog;
     }
 }

@@ -365,7 +365,7 @@
             this.CustomFormForAllProject.Form = this;
             this.CustomFormForAllProject.FormStyle = Napitki_Altay2.Components.FormStyleCustom.fStyle.UserStyle;
             this.CustomFormForAllProject.HeaderColor = System.Drawing.Color.RoyalBlue;
-            this.CustomFormForAllProject.HeaderColorAdditional = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
+            this.CustomFormForAllProject.HeaderColorAdditional = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(48)))), ((int)(((byte)(207)))));
             this.CustomFormForAllProject.HeaderColorGradientEnable = true;
             this.CustomFormForAllProject.HeaderColorGradientMode = System.Drawing.Drawing2D.LinearGradientMode.Vertical;
             this.CustomFormForAllProject.HeaderHeight = 29;
@@ -400,6 +400,7 @@
             this.Name = "CreateApplicationForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Создание обращения";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.CreateApplicationForm_FormClosed);
             ((System.ComponentModel.ISupportInitialize)(this.ApplPictureBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ChooseTypeApplPictureBox)).EndInit();
             this.TypeApplMenuStip.ResumeLayout(false);

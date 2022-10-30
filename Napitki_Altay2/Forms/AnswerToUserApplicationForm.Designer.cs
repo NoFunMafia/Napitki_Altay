@@ -30,94 +30,38 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AnswerToUserApplicationForm));
-            this.CustomFormForAllProject = new Napitki_Altay2.Components.FormStyleCustom(this.components);
-            this.DocumentWorkTextBox = new Napitki_Altay2.Design.CustomTextBox();
-            this.CloseApplicWorkButton = new Napitki_Altay2.Design.CustomButton();
-            this.DateTimeDescrWorkLabel = new System.Windows.Forms.Label();
+            this.DateTimeAnsDescrWorkLabel = new System.Windows.Forms.Label();
             this.DescripApplWorkLabel = new System.Windows.Forms.Label();
-            this.CompanyNameWorkLabel = new System.Windows.Forms.Label();
-            this.ApplWorkDTP = new System.Windows.Forms.DateTimePicker();
-            this.DescripWorkTextBox = new Napitki_Altay2.Design.CustomTextBox();
-            this.CompanyWorkTextBox = new Napitki_Altay2.Design.CustomTextBox();
+            this.StatusApplicationLabel = new System.Windows.Forms.Label();
+            this.ApplAnsWorkDTP = new System.Windows.Forms.DateTimePicker();
             this.ApplPictureBox = new System.Windows.Forms.PictureBox();
-            this.RegApplButton = new Napitki_Altay2.Design.CustomButton();
-            this.DeleteDocumentButton = new Napitki_Altay2.Design.CustomButton();
-            this.ChooseDocumentButton = new Napitki_Altay2.Design.CustomButton();
-            this.SelectDocumentLabel = new System.Windows.Forms.Label();
-            this.ChooseTypeApplPictureBox = new System.Windows.Forms.PictureBox();
+            this.SelectAnsWorkDocumentLabel = new System.Windows.Forms.Label();
+            this.ChooseStatusApplPictureBox = new System.Windows.Forms.PictureBox();
+            this.TypeApplWorkMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.завершеноToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.отклоненоToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.DeleteAnsWorkDocumentButton = new Napitki_Altay2.Design.CustomButton();
+            this.ChooseAnsWorkDocumentButton = new Napitki_Altay2.Design.CustomButton();
+            this.AnswerApplButton = new Napitki_Altay2.Design.CustomButton();
+            this.DocumentWorkAnsTextBox = new Napitki_Altay2.Design.CustomTextBox();
+            this.CloseAnsButton = new Napitki_Altay2.Design.CustomButton();
+            this.DescripWorkAnsTextBox = new Napitki_Altay2.Design.CustomTextBox();
+            this.StatusApplicationTextBox = new Napitki_Altay2.Design.CustomTextBox();
+            this.CustomFormForAllProject = new Napitki_Altay2.Components.FormStyleCustom(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.ApplPictureBox)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ChooseTypeApplPictureBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ChooseStatusApplPictureBox)).BeginInit();
+            this.TypeApplWorkMenuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
-            // CustomFormForAllProject
+            // DateTimeAnsDescrWorkLabel
             // 
-            this.CustomFormForAllProject.AllowUserResize = false;
-            this.CustomFormForAllProject.BackColor = System.Drawing.Color.White;
-            this.CustomFormForAllProject.ContextMenuForm = null;
-            this.CustomFormForAllProject.ControlBoxButtonsWidth = 20;
-            this.CustomFormForAllProject.EnableControlBoxIconsLight = true;
-            this.CustomFormForAllProject.EnableControlBoxMouseLight = false;
-            this.CustomFormForAllProject.Form = this;
-            this.CustomFormForAllProject.FormStyle = Napitki_Altay2.Components.FormStyleCustom.fStyle.UserStyle;
-            this.CustomFormForAllProject.HeaderColor = System.Drawing.Color.RoyalBlue;
-            this.CustomFormForAllProject.HeaderColorAdditional = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
-            this.CustomFormForAllProject.HeaderColorGradientEnable = true;
-            this.CustomFormForAllProject.HeaderColorGradientMode = System.Drawing.Drawing2D.LinearGradientMode.Vertical;
-            this.CustomFormForAllProject.HeaderHeight = 29;
-            this.CustomFormForAllProject.HeaderImage = null;
-            this.CustomFormForAllProject.HeaderTextColor = System.Drawing.Color.White;
-            this.CustomFormForAllProject.HeaderTextFont = new System.Drawing.Font("Segoe UI", 12F);
-            // 
-            // DocumentWorkTextBox
-            // 
-            this.DocumentWorkTextBox.BackColor = System.Drawing.Color.White;
-            this.DocumentWorkTextBox.BorderColor = System.Drawing.Color.RoyalBlue;
-            this.DocumentWorkTextBox.BorderFocusColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
-            this.DocumentWorkTextBox.BorderSize = 2;
-            this.DocumentWorkTextBox.Enabled = false;
-            this.DocumentWorkTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F);
-            this.DocumentWorkTextBox.ForeColor = System.Drawing.Color.Black;
-            this.DocumentWorkTextBox.Location = new System.Drawing.Point(450, 230);
-            this.DocumentWorkTextBox.Margin = new System.Windows.Forms.Padding(5);
-            this.DocumentWorkTextBox.Multiline = false;
-            this.DocumentWorkTextBox.Name = "DocumentWorkTextBox";
-            this.DocumentWorkTextBox.Padding = new System.Windows.Forms.Padding(7);
-            this.DocumentWorkTextBox.PasswordChar = false;
-            this.DocumentWorkTextBox.Size = new System.Drawing.Size(383, 35);
-            this.DocumentWorkTextBox.TabIndex = 47;
-            this.DocumentWorkTextBox.Texts = "";
-            this.DocumentWorkTextBox.UnderlinedStyle = false;
-            // 
-            // CloseApplicWorkButton
-            // 
-            this.CloseApplicWorkButton.BackColor = System.Drawing.Color.RoyalBlue;
-            this.CloseApplicWorkButton.BackgroundColor = System.Drawing.Color.RoyalBlue;
-            this.CloseApplicWorkButton.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
-            this.CloseApplicWorkButton.BorderRadius = 0;
-            this.CloseApplicWorkButton.BorderSize = 0;
-            this.CloseApplicWorkButton.FlatAppearance.BorderSize = 0;
-            this.CloseApplicWorkButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.CloseApplicWorkButton.Font = new System.Drawing.Font("Segoe UI Semibold", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.CloseApplicWorkButton.ForeColor = System.Drawing.Color.White;
-            this.CloseApplicWorkButton.Location = new System.Drawing.Point(467, 692);
-            this.CloseApplicWorkButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.CloseApplicWorkButton.Name = "CloseApplicWorkButton";
-            this.CloseApplicWorkButton.Size = new System.Drawing.Size(399, 82);
-            this.CloseApplicWorkButton.TabIndex = 46;
-            this.CloseApplicWorkButton.Text = "Закрыть окно ";
-            this.CloseApplicWorkButton.TextColor = System.Drawing.Color.White;
-            this.CloseApplicWorkButton.UseVisualStyleBackColor = false;
-            this.CloseApplicWorkButton.Click += new System.EventHandler(this.CloseApplicWorkButton_Click);
-            // 
-            // DateTimeDescrWorkLabel
-            // 
-            this.DateTimeDescrWorkLabel.AutoSize = true;
-            this.DateTimeDescrWorkLabel.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
-            this.DateTimeDescrWorkLabel.Location = new System.Drawing.Point(20, 606);
-            this.DateTimeDescrWorkLabel.Name = "DateTimeDescrWorkLabel";
-            this.DateTimeDescrWorkLabel.Size = new System.Drawing.Size(289, 28);
-            this.DateTimeDescrWorkLabel.TabIndex = 45;
-            this.DateTimeDescrWorkLabel.Text = "Время ответа на обращение:";
+            this.DateTimeAnsDescrWorkLabel.AutoSize = true;
+            this.DateTimeAnsDescrWorkLabel.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
+            this.DateTimeAnsDescrWorkLabel.Location = new System.Drawing.Point(20, 606);
+            this.DateTimeAnsDescrWorkLabel.Name = "DateTimeAnsDescrWorkLabel";
+            this.DateTimeAnsDescrWorkLabel.Size = new System.Drawing.Size(289, 28);
+            this.DateTimeAnsDescrWorkLabel.TabIndex = 45;
+            this.DateTimeAnsDescrWorkLabel.Text = "Время ответа на обращение:";
             // 
             // DescripApplWorkLabel
             // 
@@ -129,66 +73,26 @@
             this.DescripApplWorkLabel.TabIndex = 44;
             this.DescripApplWorkLabel.Text = "Ответ на обращение:";
             // 
-            // CompanyNameWorkLabel
+            // StatusApplicationLabel
             // 
-            this.CompanyNameWorkLabel.AutoSize = true;
-            this.CompanyNameWorkLabel.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
-            this.CompanyNameWorkLabel.Location = new System.Drawing.Point(20, 194);
-            this.CompanyNameWorkLabel.Name = "CompanyNameWorkLabel";
-            this.CompanyNameWorkLabel.Size = new System.Drawing.Size(191, 28);
-            this.CompanyNameWorkLabel.TabIndex = 42;
-            this.CompanyNameWorkLabel.Text = "Статус обращения:";
+            this.StatusApplicationLabel.AutoSize = true;
+            this.StatusApplicationLabel.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
+            this.StatusApplicationLabel.Location = new System.Drawing.Point(20, 194);
+            this.StatusApplicationLabel.Name = "StatusApplicationLabel";
+            this.StatusApplicationLabel.Size = new System.Drawing.Size(191, 28);
+            this.StatusApplicationLabel.TabIndex = 42;
+            this.StatusApplicationLabel.Text = "Статус обращения:";
             // 
-            // ApplWorkDTP
+            // ApplAnsWorkDTP
             // 
-            this.ApplWorkDTP.Enabled = false;
-            this.ApplWorkDTP.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.ApplWorkDTP.Location = new System.Drawing.Point(25, 634);
-            this.ApplWorkDTP.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.ApplWorkDTP.Name = "ApplWorkDTP";
-            this.ApplWorkDTP.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.ApplWorkDTP.Size = new System.Drawing.Size(285, 38);
-            this.ApplWorkDTP.TabIndex = 41;
-            // 
-            // DescripWorkTextBox
-            // 
-            this.DescripWorkTextBox.BackColor = System.Drawing.Color.White;
-            this.DescripWorkTextBox.BorderColor = System.Drawing.Color.RoyalBlue;
-            this.DescripWorkTextBox.BorderFocusColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
-            this.DescripWorkTextBox.BorderSize = 2;
-            this.DescripWorkTextBox.Enabled = false;
-            this.DescripWorkTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F);
-            this.DescripWorkTextBox.ForeColor = System.Drawing.Color.Black;
-            this.DescripWorkTextBox.Location = new System.Drawing.Point(27, 348);
-            this.DescripWorkTextBox.Margin = new System.Windows.Forms.Padding(5);
-            this.DescripWorkTextBox.Multiline = true;
-            this.DescripWorkTextBox.Name = "DescripWorkTextBox";
-            this.DescripWorkTextBox.Padding = new System.Windows.Forms.Padding(7);
-            this.DescripWorkTextBox.PasswordChar = false;
-            this.DescripWorkTextBox.Size = new System.Drawing.Size(839, 254);
-            this.DescripWorkTextBox.TabIndex = 40;
-            this.DescripWorkTextBox.Texts = "";
-            this.DescripWorkTextBox.UnderlinedStyle = false;
-            // 
-            // CompanyWorkTextBox
-            // 
-            this.CompanyWorkTextBox.BackColor = System.Drawing.Color.White;
-            this.CompanyWorkTextBox.BorderColor = System.Drawing.Color.RoyalBlue;
-            this.CompanyWorkTextBox.BorderFocusColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
-            this.CompanyWorkTextBox.BorderSize = 2;
-            this.CompanyWorkTextBox.Enabled = false;
-            this.CompanyWorkTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F);
-            this.CompanyWorkTextBox.ForeColor = System.Drawing.Color.Black;
-            this.CompanyWorkTextBox.Location = new System.Drawing.Point(25, 230);
-            this.CompanyWorkTextBox.Margin = new System.Windows.Forms.Padding(5);
-            this.CompanyWorkTextBox.Multiline = false;
-            this.CompanyWorkTextBox.Name = "CompanyWorkTextBox";
-            this.CompanyWorkTextBox.Padding = new System.Windows.Forms.Padding(7);
-            this.CompanyWorkTextBox.PasswordChar = false;
-            this.CompanyWorkTextBox.Size = new System.Drawing.Size(383, 35);
-            this.CompanyWorkTextBox.TabIndex = 38;
-            this.CompanyWorkTextBox.Texts = "";
-            this.CompanyWorkTextBox.UnderlinedStyle = false;
+            this.ApplAnsWorkDTP.Enabled = false;
+            this.ApplAnsWorkDTP.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.ApplAnsWorkDTP.Location = new System.Drawing.Point(25, 634);
+            this.ApplAnsWorkDTP.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.ApplAnsWorkDTP.Name = "ApplAnsWorkDTP";
+            this.ApplAnsWorkDTP.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.ApplAnsWorkDTP.Size = new System.Drawing.Size(285, 38);
+            this.ApplAnsWorkDTP.TabIndex = 41;
             // 
             // ApplPictureBox
             // 
@@ -202,87 +106,214 @@
             this.ApplPictureBox.TabIndex = 37;
             this.ApplPictureBox.TabStop = false;
             // 
-            // RegApplButton
+            // SelectAnsWorkDocumentLabel
             // 
-            this.RegApplButton.BackColor = System.Drawing.Color.RoyalBlue;
-            this.RegApplButton.BackgroundColor = System.Drawing.Color.RoyalBlue;
-            this.RegApplButton.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
-            this.RegApplButton.BorderRadius = 0;
-            this.RegApplButton.BorderSize = 0;
-            this.RegApplButton.FlatAppearance.BorderSize = 0;
-            this.RegApplButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.RegApplButton.Font = new System.Drawing.Font("Segoe UI Semibold", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.RegApplButton.ForeColor = System.Drawing.Color.White;
-            this.RegApplButton.Location = new System.Drawing.Point(25, 692);
-            this.RegApplButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.RegApplButton.Name = "RegApplButton";
-            this.RegApplButton.Size = new System.Drawing.Size(399, 82);
-            this.RegApplButton.TabIndex = 50;
-            this.RegApplButton.Text = "Ответить на обращение";
-            this.RegApplButton.TextColor = System.Drawing.Color.White;
-            this.RegApplButton.UseVisualStyleBackColor = false;
+            this.SelectAnsWorkDocumentLabel.AutoSize = true;
+            this.SelectAnsWorkDocumentLabel.Font = new System.Drawing.Font("Segoe UI Semibold", 10.5F, System.Drawing.FontStyle.Bold);
+            this.SelectAnsWorkDocumentLabel.Location = new System.Drawing.Point(445, 175);
+            this.SelectAnsWorkDocumentLabel.Name = "SelectAnsWorkDocumentLabel";
+            this.SelectAnsWorkDocumentLabel.Size = new System.Drawing.Size(349, 50);
+            this.SelectAnsWorkDocumentLabel.TabIndex = 53;
+            this.SelectAnsWorkDocumentLabel.Text = "Прикрепить файл \r\nк ответу на обращение (опционально):";
             // 
-            // DeleteDocumentButton
+            // ChooseStatusApplPictureBox
             // 
-            this.DeleteDocumentButton.BackColor = System.Drawing.Color.RoyalBlue;
-            this.DeleteDocumentButton.BackgroundColor = System.Drawing.Color.RoyalBlue;
-            this.DeleteDocumentButton.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
-            this.DeleteDocumentButton.BorderRadius = 0;
-            this.DeleteDocumentButton.BorderSize = 0;
-            this.DeleteDocumentButton.FlatAppearance.BorderSize = 0;
-            this.DeleteDocumentButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.DeleteDocumentButton.Font = new System.Drawing.Font("Segoe UI Semibold", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.DeleteDocumentButton.ForeColor = System.Drawing.Color.White;
-            this.DeleteDocumentButton.Location = new System.Drawing.Point(654, 278);
-            this.DeleteDocumentButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.DeleteDocumentButton.Name = "DeleteDocumentButton";
-            this.DeleteDocumentButton.Size = new System.Drawing.Size(179, 56);
-            this.DeleteDocumentButton.TabIndex = 52;
-            this.DeleteDocumentButton.Text = "Удалить файл";
-            this.DeleteDocumentButton.TextColor = System.Drawing.Color.White;
-            this.DeleteDocumentButton.UseVisualStyleBackColor = false;
+            this.ChooseStatusApplPictureBox.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.ChooseStatusApplPictureBox.Image = global::Napitki_Altay2.Properties.Resources.PictureRegForm;
+            this.ChooseStatusApplPictureBox.Location = new System.Drawing.Point(371, 234);
+            this.ChooseStatusApplPictureBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.ChooseStatusApplPictureBox.Name = "ChooseStatusApplPictureBox";
+            this.ChooseStatusApplPictureBox.Size = new System.Drawing.Size(32, 27);
+            this.ChooseStatusApplPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.ChooseStatusApplPictureBox.TabIndex = 54;
+            this.ChooseStatusApplPictureBox.TabStop = false;
+            this.ChooseStatusApplPictureBox.Click += new System.EventHandler(this.ChooseStatusApplPictureBox_Click);
             // 
-            // ChooseDocumentButton
+            // TypeApplWorkMenuStrip
             // 
-            this.ChooseDocumentButton.BackColor = System.Drawing.Color.RoyalBlue;
-            this.ChooseDocumentButton.BackgroundColor = System.Drawing.Color.RoyalBlue;
-            this.ChooseDocumentButton.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
-            this.ChooseDocumentButton.BorderRadius = 0;
-            this.ChooseDocumentButton.BorderSize = 0;
-            this.ChooseDocumentButton.FlatAppearance.BorderSize = 0;
-            this.ChooseDocumentButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.ChooseDocumentButton.Font = new System.Drawing.Font("Segoe UI Semibold", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.ChooseDocumentButton.ForeColor = System.Drawing.Color.White;
-            this.ChooseDocumentButton.Location = new System.Drawing.Point(450, 278);
-            this.ChooseDocumentButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.ChooseDocumentButton.Name = "ChooseDocumentButton";
-            this.ChooseDocumentButton.Size = new System.Drawing.Size(179, 56);
-            this.ChooseDocumentButton.TabIndex = 51;
-            this.ChooseDocumentButton.Text = "Выбрать файл";
-            this.ChooseDocumentButton.TextColor = System.Drawing.Color.White;
-            this.ChooseDocumentButton.UseVisualStyleBackColor = false;
+            this.TypeApplWorkMenuStrip.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
+            this.TypeApplWorkMenuStrip.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.TypeApplWorkMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.завершеноToolStripMenuItem,
+            this.отклоненоToolStripMenuItem});
+            this.TypeApplWorkMenuStrip.Name = "TypeApplWorkMenuStrip";
+            this.TypeApplWorkMenuStrip.Size = new System.Drawing.Size(158, 52);
             // 
-            // SelectDocumentLabel
+            // завершеноToolStripMenuItem
             // 
-            this.SelectDocumentLabel.AutoSize = true;
-            this.SelectDocumentLabel.Font = new System.Drawing.Font("Segoe UI Semibold", 10.5F, System.Drawing.FontStyle.Bold);
-            this.SelectDocumentLabel.Location = new System.Drawing.Point(445, 175);
-            this.SelectDocumentLabel.Name = "SelectDocumentLabel";
-            this.SelectDocumentLabel.Size = new System.Drawing.Size(349, 50);
-            this.SelectDocumentLabel.TabIndex = 53;
-            this.SelectDocumentLabel.Text = "Прикрепить файл \r\nк ответу на обращение (опционально):";
+            this.завершеноToolStripMenuItem.Name = "завершеноToolStripMenuItem";
+            this.завершеноToolStripMenuItem.Size = new System.Drawing.Size(157, 24);
+            this.завершеноToolStripMenuItem.Text = "Завершено";
+            this.завершеноToolStripMenuItem.Click += new System.EventHandler(this.завершеноToolStripMenuItem_Click);
             // 
-            // ChooseTypeApplPictureBox
+            // отклоненоToolStripMenuItem
             // 
-            this.ChooseTypeApplPictureBox.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.ChooseTypeApplPictureBox.Image = global::Napitki_Altay2.Properties.Resources.PictureRegForm;
-            this.ChooseTypeApplPictureBox.Location = new System.Drawing.Point(371, 234);
-            this.ChooseTypeApplPictureBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.ChooseTypeApplPictureBox.Name = "ChooseTypeApplPictureBox";
-            this.ChooseTypeApplPictureBox.Size = new System.Drawing.Size(32, 27);
-            this.ChooseTypeApplPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.ChooseTypeApplPictureBox.TabIndex = 54;
-            this.ChooseTypeApplPictureBox.TabStop = false;
+            this.отклоненоToolStripMenuItem.Name = "отклоненоToolStripMenuItem";
+            this.отклоненоToolStripMenuItem.Size = new System.Drawing.Size(157, 24);
+            this.отклоненоToolStripMenuItem.Text = "Отклонено";
+            this.отклоненоToolStripMenuItem.Click += new System.EventHandler(this.отклоненоToolStripMenuItem_Click);
+            // 
+            // DeleteAnsWorkDocumentButton
+            // 
+            this.DeleteAnsWorkDocumentButton.BackColor = System.Drawing.Color.RoyalBlue;
+            this.DeleteAnsWorkDocumentButton.BackgroundColor = System.Drawing.Color.RoyalBlue;
+            this.DeleteAnsWorkDocumentButton.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
+            this.DeleteAnsWorkDocumentButton.BorderRadius = 0;
+            this.DeleteAnsWorkDocumentButton.BorderSize = 0;
+            this.DeleteAnsWorkDocumentButton.FlatAppearance.BorderSize = 0;
+            this.DeleteAnsWorkDocumentButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.DeleteAnsWorkDocumentButton.Font = new System.Drawing.Font("Segoe UI Semibold", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.DeleteAnsWorkDocumentButton.ForeColor = System.Drawing.Color.White;
+            this.DeleteAnsWorkDocumentButton.Location = new System.Drawing.Point(654, 278);
+            this.DeleteAnsWorkDocumentButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.DeleteAnsWorkDocumentButton.Name = "DeleteAnsWorkDocumentButton";
+            this.DeleteAnsWorkDocumentButton.Size = new System.Drawing.Size(179, 56);
+            this.DeleteAnsWorkDocumentButton.TabIndex = 52;
+            this.DeleteAnsWorkDocumentButton.Text = "Удалить файл";
+            this.DeleteAnsWorkDocumentButton.TextColor = System.Drawing.Color.White;
+            this.DeleteAnsWorkDocumentButton.UseVisualStyleBackColor = false;
+            this.DeleteAnsWorkDocumentButton.Click += new System.EventHandler(this.DeleteAnsWorkDocumentButton_Click);
+            // 
+            // ChooseAnsWorkDocumentButton
+            // 
+            this.ChooseAnsWorkDocumentButton.BackColor = System.Drawing.Color.RoyalBlue;
+            this.ChooseAnsWorkDocumentButton.BackgroundColor = System.Drawing.Color.RoyalBlue;
+            this.ChooseAnsWorkDocumentButton.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
+            this.ChooseAnsWorkDocumentButton.BorderRadius = 0;
+            this.ChooseAnsWorkDocumentButton.BorderSize = 0;
+            this.ChooseAnsWorkDocumentButton.FlatAppearance.BorderSize = 0;
+            this.ChooseAnsWorkDocumentButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ChooseAnsWorkDocumentButton.Font = new System.Drawing.Font("Segoe UI Semibold", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.ChooseAnsWorkDocumentButton.ForeColor = System.Drawing.Color.White;
+            this.ChooseAnsWorkDocumentButton.Location = new System.Drawing.Point(450, 278);
+            this.ChooseAnsWorkDocumentButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.ChooseAnsWorkDocumentButton.Name = "ChooseAnsWorkDocumentButton";
+            this.ChooseAnsWorkDocumentButton.Size = new System.Drawing.Size(179, 56);
+            this.ChooseAnsWorkDocumentButton.TabIndex = 51;
+            this.ChooseAnsWorkDocumentButton.Text = "Выбрать файл";
+            this.ChooseAnsWorkDocumentButton.TextColor = System.Drawing.Color.White;
+            this.ChooseAnsWorkDocumentButton.UseVisualStyleBackColor = false;
+            this.ChooseAnsWorkDocumentButton.Click += new System.EventHandler(this.ChooseAnsWorkDocumentButton_Click);
+            // 
+            // AnswerApplButton
+            // 
+            this.AnswerApplButton.BackColor = System.Drawing.Color.RoyalBlue;
+            this.AnswerApplButton.BackgroundColor = System.Drawing.Color.RoyalBlue;
+            this.AnswerApplButton.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
+            this.AnswerApplButton.BorderRadius = 0;
+            this.AnswerApplButton.BorderSize = 0;
+            this.AnswerApplButton.FlatAppearance.BorderSize = 0;
+            this.AnswerApplButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.AnswerApplButton.Font = new System.Drawing.Font("Segoe UI Semibold", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.AnswerApplButton.ForeColor = System.Drawing.Color.White;
+            this.AnswerApplButton.Location = new System.Drawing.Point(25, 692);
+            this.AnswerApplButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.AnswerApplButton.Name = "AnswerApplButton";
+            this.AnswerApplButton.Size = new System.Drawing.Size(399, 82);
+            this.AnswerApplButton.TabIndex = 50;
+            this.AnswerApplButton.Text = "Ответить на обращение";
+            this.AnswerApplButton.TextColor = System.Drawing.Color.White;
+            this.AnswerApplButton.UseVisualStyleBackColor = false;
+            this.AnswerApplButton.Click += new System.EventHandler(this.AnswerApplButton_Click);
+            // 
+            // DocumentWorkAnsTextBox
+            // 
+            this.DocumentWorkAnsTextBox.BackColor = System.Drawing.Color.White;
+            this.DocumentWorkAnsTextBox.BorderColor = System.Drawing.Color.RoyalBlue;
+            this.DocumentWorkAnsTextBox.BorderFocusColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
+            this.DocumentWorkAnsTextBox.BorderSize = 2;
+            this.DocumentWorkAnsTextBox.Enabled = false;
+            this.DocumentWorkAnsTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F);
+            this.DocumentWorkAnsTextBox.ForeColor = System.Drawing.Color.Black;
+            this.DocumentWorkAnsTextBox.Location = new System.Drawing.Point(450, 230);
+            this.DocumentWorkAnsTextBox.Margin = new System.Windows.Forms.Padding(5);
+            this.DocumentWorkAnsTextBox.Multiline = false;
+            this.DocumentWorkAnsTextBox.Name = "DocumentWorkAnsTextBox";
+            this.DocumentWorkAnsTextBox.Padding = new System.Windows.Forms.Padding(7);
+            this.DocumentWorkAnsTextBox.PasswordChar = false;
+            this.DocumentWorkAnsTextBox.Size = new System.Drawing.Size(383, 35);
+            this.DocumentWorkAnsTextBox.TabIndex = 47;
+            this.DocumentWorkAnsTextBox.Texts = "";
+            this.DocumentWorkAnsTextBox.UnderlinedStyle = false;
+            // 
+            // CloseAnsButton
+            // 
+            this.CloseAnsButton.BackColor = System.Drawing.Color.RoyalBlue;
+            this.CloseAnsButton.BackgroundColor = System.Drawing.Color.RoyalBlue;
+            this.CloseAnsButton.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
+            this.CloseAnsButton.BorderRadius = 0;
+            this.CloseAnsButton.BorderSize = 0;
+            this.CloseAnsButton.FlatAppearance.BorderSize = 0;
+            this.CloseAnsButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.CloseAnsButton.Font = new System.Drawing.Font("Segoe UI Semibold", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.CloseAnsButton.ForeColor = System.Drawing.Color.White;
+            this.CloseAnsButton.Location = new System.Drawing.Point(467, 692);
+            this.CloseAnsButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.CloseAnsButton.Name = "CloseAnsButton";
+            this.CloseAnsButton.Size = new System.Drawing.Size(399, 82);
+            this.CloseAnsButton.TabIndex = 46;
+            this.CloseAnsButton.Text = "Закрыть окно ";
+            this.CloseAnsButton.TextColor = System.Drawing.Color.White;
+            this.CloseAnsButton.UseVisualStyleBackColor = false;
+            this.CloseAnsButton.Click += new System.EventHandler(this.CloseApplicWorkButton_Click);
+            // 
+            // DescripWorkAnsTextBox
+            // 
+            this.DescripWorkAnsTextBox.BackColor = System.Drawing.Color.White;
+            this.DescripWorkAnsTextBox.BorderColor = System.Drawing.Color.RoyalBlue;
+            this.DescripWorkAnsTextBox.BorderFocusColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
+            this.DescripWorkAnsTextBox.BorderSize = 2;
+            this.DescripWorkAnsTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F);
+            this.DescripWorkAnsTextBox.ForeColor = System.Drawing.Color.Black;
+            this.DescripWorkAnsTextBox.Location = new System.Drawing.Point(27, 348);
+            this.DescripWorkAnsTextBox.Margin = new System.Windows.Forms.Padding(5);
+            this.DescripWorkAnsTextBox.Multiline = true;
+            this.DescripWorkAnsTextBox.Name = "DescripWorkAnsTextBox";
+            this.DescripWorkAnsTextBox.Padding = new System.Windows.Forms.Padding(7);
+            this.DescripWorkAnsTextBox.PasswordChar = false;
+            this.DescripWorkAnsTextBox.Size = new System.Drawing.Size(839, 254);
+            this.DescripWorkAnsTextBox.TabIndex = 40;
+            this.DescripWorkAnsTextBox.Texts = "";
+            this.DescripWorkAnsTextBox.UnderlinedStyle = false;
+            // 
+            // StatusApplicationTextBox
+            // 
+            this.StatusApplicationTextBox.BackColor = System.Drawing.Color.White;
+            this.StatusApplicationTextBox.BorderColor = System.Drawing.Color.RoyalBlue;
+            this.StatusApplicationTextBox.BorderFocusColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
+            this.StatusApplicationTextBox.BorderSize = 2;
+            this.StatusApplicationTextBox.Enabled = false;
+            this.StatusApplicationTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F);
+            this.StatusApplicationTextBox.ForeColor = System.Drawing.Color.Black;
+            this.StatusApplicationTextBox.Location = new System.Drawing.Point(25, 230);
+            this.StatusApplicationTextBox.Margin = new System.Windows.Forms.Padding(5);
+            this.StatusApplicationTextBox.Multiline = false;
+            this.StatusApplicationTextBox.Name = "StatusApplicationTextBox";
+            this.StatusApplicationTextBox.Padding = new System.Windows.Forms.Padding(7);
+            this.StatusApplicationTextBox.PasswordChar = false;
+            this.StatusApplicationTextBox.Size = new System.Drawing.Size(383, 35);
+            this.StatusApplicationTextBox.TabIndex = 38;
+            this.StatusApplicationTextBox.Texts = "";
+            this.StatusApplicationTextBox.UnderlinedStyle = false;
+            // 
+            // CustomFormForAllProject
+            // 
+            this.CustomFormForAllProject.AllowUserResize = false;
+            this.CustomFormForAllProject.BackColor = System.Drawing.Color.White;
+            this.CustomFormForAllProject.ContextMenuForm = null;
+            this.CustomFormForAllProject.ControlBoxButtonsWidth = 20;
+            this.CustomFormForAllProject.EnableControlBoxIconsLight = true;
+            this.CustomFormForAllProject.EnableControlBoxMouseLight = false;
+            this.CustomFormForAllProject.Form = this;
+            this.CustomFormForAllProject.FormStyle = Napitki_Altay2.Components.FormStyleCustom.fStyle.UserStyle;
+            this.CustomFormForAllProject.HeaderColor = System.Drawing.Color.RoyalBlue;
+            this.CustomFormForAllProject.HeaderColorAdditional = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(48)))), ((int)(((byte)(207)))));
+            this.CustomFormForAllProject.HeaderColorGradientEnable = true;
+            this.CustomFormForAllProject.HeaderColorGradientMode = System.Drawing.Drawing2D.LinearGradientMode.Vertical;
+            this.CustomFormForAllProject.HeaderHeight = 29;
+            this.CustomFormForAllProject.HeaderImage = null;
+            this.CustomFormForAllProject.HeaderTextColor = System.Drawing.Color.White;
+            this.CustomFormForAllProject.HeaderTextFont = new System.Drawing.Font("Segoe UI", 12F);
             // 
             // AnswerToUserApplicationForm
             // 
@@ -290,26 +321,27 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(877, 790);
-            this.Controls.Add(this.ChooseTypeApplPictureBox);
-            this.Controls.Add(this.SelectDocumentLabel);
-            this.Controls.Add(this.DeleteDocumentButton);
-            this.Controls.Add(this.ChooseDocumentButton);
-            this.Controls.Add(this.RegApplButton);
-            this.Controls.Add(this.DocumentWorkTextBox);
-            this.Controls.Add(this.CloseApplicWorkButton);
-            this.Controls.Add(this.DateTimeDescrWorkLabel);
+            this.Controls.Add(this.ChooseStatusApplPictureBox);
+            this.Controls.Add(this.SelectAnsWorkDocumentLabel);
+            this.Controls.Add(this.DeleteAnsWorkDocumentButton);
+            this.Controls.Add(this.ChooseAnsWorkDocumentButton);
+            this.Controls.Add(this.AnswerApplButton);
+            this.Controls.Add(this.DocumentWorkAnsTextBox);
+            this.Controls.Add(this.CloseAnsButton);
+            this.Controls.Add(this.DateTimeAnsDescrWorkLabel);
             this.Controls.Add(this.DescripApplWorkLabel);
-            this.Controls.Add(this.CompanyNameWorkLabel);
-            this.Controls.Add(this.ApplWorkDTP);
-            this.Controls.Add(this.DescripWorkTextBox);
-            this.Controls.Add(this.CompanyWorkTextBox);
+            this.Controls.Add(this.StatusApplicationLabel);
+            this.Controls.Add(this.ApplAnsWorkDTP);
+            this.Controls.Add(this.DescripWorkAnsTextBox);
+            this.Controls.Add(this.StatusApplicationTextBox);
             this.Controls.Add(this.ApplPictureBox);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "AnswerToUserApplicationForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "Ответ на обращение пользователя";
             ((System.ComponentModel.ISupportInitialize)(this.ApplPictureBox)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ChooseTypeApplPictureBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ChooseStatusApplPictureBox)).EndInit();
+            this.TypeApplWorkMenuStrip.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -318,19 +350,22 @@
         #endregion
 
         private Components.FormStyleCustom CustomFormForAllProject;
-        private Design.CustomTextBox DocumentWorkTextBox;
-        private Design.CustomButton CloseApplicWorkButton;
-        private System.Windows.Forms.Label DateTimeDescrWorkLabel;
+        private Design.CustomTextBox DocumentWorkAnsTextBox;
+        private Design.CustomButton CloseAnsButton;
+        private System.Windows.Forms.Label DateTimeAnsDescrWorkLabel;
         private System.Windows.Forms.Label DescripApplWorkLabel;
-        private System.Windows.Forms.Label CompanyNameWorkLabel;
-        private System.Windows.Forms.DateTimePicker ApplWorkDTP;
-        private Design.CustomTextBox DescripWorkTextBox;
-        private Design.CustomTextBox CompanyWorkTextBox;
+        private System.Windows.Forms.Label StatusApplicationLabel;
+        private System.Windows.Forms.DateTimePicker ApplAnsWorkDTP;
+        private Design.CustomTextBox DescripWorkAnsTextBox;
+        private Design.CustomTextBox StatusApplicationTextBox;
         private System.Windows.Forms.PictureBox ApplPictureBox;
-        private Design.CustomButton RegApplButton;
-        private Design.CustomButton DeleteDocumentButton;
-        private Design.CustomButton ChooseDocumentButton;
-        private System.Windows.Forms.Label SelectDocumentLabel;
-        private System.Windows.Forms.PictureBox ChooseTypeApplPictureBox;
+        private Design.CustomButton AnswerApplButton;
+        private Design.CustomButton DeleteAnsWorkDocumentButton;
+        private Design.CustomButton ChooseAnsWorkDocumentButton;
+        private System.Windows.Forms.Label SelectAnsWorkDocumentLabel;
+        private System.Windows.Forms.PictureBox ChooseStatusApplPictureBox;
+        private System.Windows.Forms.ContextMenuStrip TypeApplWorkMenuStrip;
+        private System.Windows.Forms.ToolStripMenuItem завершеноToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem отклоненоToolStripMenuItem;
     }
 }

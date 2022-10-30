@@ -44,7 +44,7 @@
             this.CustomFormForAllProject.Form = this;
             this.CustomFormForAllProject.FormStyle = Napitki_Altay2.Components.FormStyleCustom.fStyle.None;
             this.CustomFormForAllProject.HeaderColor = System.Drawing.Color.RoyalBlue;
-            this.CustomFormForAllProject.HeaderColorAdditional = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
+            this.CustomFormForAllProject.HeaderColorAdditional = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(48)))), ((int)(((byte)(207)))));
             this.CustomFormForAllProject.HeaderColorGradientEnable = true;
             this.CustomFormForAllProject.HeaderColorGradientMode = System.Drawing.Drawing2D.LinearGradientMode.Vertical;
             this.CustomFormForAllProject.HeaderHeight = 29;

@@ -38,6 +38,8 @@
             this.CreateApplicationButton = new Napitki_Altay2.Design.CustomButton();
             this.DataGridViewApplication = new System.Windows.Forms.DataGridView();
             this.AnswerForUserApplicPage = new System.Windows.Forms.TabPage();
+            this.OpenWorkerMessage = new Napitki_Altay2.Design.CustomButton();
+            this.CompleteApplicationDGWUser = new System.Windows.Forms.DataGridView();
             this.DocumentTypeInfoPage = new System.Windows.Forms.TabPage();
             this.Sout2021Panel = new System.Windows.Forms.Panel();
             this.Sout2021ResultLabel = new System.Windows.Forms.Label();
@@ -51,11 +53,11 @@
             this.PriceListPanel = new System.Windows.Forms.Panel();
             this.PriceListInfoLabel = new System.Windows.Forms.Label();
             this.PriceListPictureBox = new System.Windows.Forms.PictureBox();
+            this.DocumentInfoLabel = new System.Windows.Forms.Label();
             this.OpenSout2021Button = new Napitki_Altay2.Design.CustomButton();
             this.OpenSout2018Button = new Napitki_Altay2.Design.CustomButton();
             this.OpenSout2016Button = new Napitki_Altay2.Design.CustomButton();
             this.OpenPriceListButton = new Napitki_Altay2.Design.CustomButton();
-            this.DocumentInfoLabel = new System.Windows.Forms.Label();
             this.UserDataPage = new System.Windows.Forms.TabPage();
             this.MainWorkFormPictureBox = new System.Windows.Forms.PictureBox();
             this.PasswordWorkInfoLabel = new System.Windows.Forms.Label();
@@ -78,6 +80,8 @@
             this.MainWorkTabControl.SuspendLayout();
             this.ApplicationPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DataGridViewApplication)).BeginInit();
+            this.AnswerForUserApplicPage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.CompleteApplicationDGWUser)).BeginInit();
             this.DocumentTypeInfoPage.SuspendLayout();
             this.Sout2021Panel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Sout2021PictureBox)).BeginInit();
@@ -220,6 +224,8 @@
             // AnswerForUserApplicPage
             // 
             this.AnswerForUserApplicPage.BackColor = System.Drawing.Color.White;
+            this.AnswerForUserApplicPage.Controls.Add(this.OpenWorkerMessage);
+            this.AnswerForUserApplicPage.Controls.Add(this.CompleteApplicationDGWUser);
             this.AnswerForUserApplicPage.Location = new System.Drawing.Point(4, 27);
             this.AnswerForUserApplicPage.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.AnswerForUserApplicPage.Name = "AnswerForUserApplicPage";
@@ -228,6 +234,43 @@
             this.AnswerForUserApplicPage.TabIndex = 1;
             this.AnswerForUserApplicPage.Text = "Ответы на обращения";
             // 
+            // OpenWorkerMessage
+            // 
+            this.OpenWorkerMessage.BackColor = System.Drawing.Color.RoyalBlue;
+            this.OpenWorkerMessage.BackgroundColor = System.Drawing.Color.RoyalBlue;
+            this.OpenWorkerMessage.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
+            this.OpenWorkerMessage.BorderRadius = 0;
+            this.OpenWorkerMessage.BorderSize = 0;
+            this.OpenWorkerMessage.FlatAppearance.BorderSize = 0;
+            this.OpenWorkerMessage.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.OpenWorkerMessage.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.OpenWorkerMessage.ForeColor = System.Drawing.Color.White;
+            this.OpenWorkerMessage.Location = new System.Drawing.Point(5, 9);
+            this.OpenWorkerMessage.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.OpenWorkerMessage.Name = "OpenWorkerMessage";
+            this.OpenWorkerMessage.Size = new System.Drawing.Size(407, 43);
+            this.OpenWorkerMessage.TabIndex = 11;
+            this.OpenWorkerMessage.Text = "Открыть ответное сообщение";
+            this.OpenWorkerMessage.TextColor = System.Drawing.Color.White;
+            this.OpenWorkerMessage.UseVisualStyleBackColor = false;
+            this.OpenWorkerMessage.Click += new System.EventHandler(this.OpenWorkerMessage_Click);
+            // 
+            // CompleteApplicationDGWUser
+            // 
+            this.CompleteApplicationDGWUser.AllowUserToAddRows = false;
+            this.CompleteApplicationDGWUser.AllowUserToDeleteRows = false;
+            this.CompleteApplicationDGWUser.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.CompleteApplicationDGWUser.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.CompleteApplicationDGWUser.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.CompleteApplicationDGWUser.Location = new System.Drawing.Point(3, 60);
+            this.CompleteApplicationDGWUser.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.CompleteApplicationDGWUser.Name = "CompleteApplicationDGWUser";
+            this.CompleteApplicationDGWUser.ReadOnly = true;
+            this.CompleteApplicationDGWUser.RowHeadersWidth = 51;
+            this.CompleteApplicationDGWUser.RowTemplate.Height = 24;
+            this.CompleteApplicationDGWUser.Size = new System.Drawing.Size(1005, 458);
+            this.CompleteApplicationDGWUser.TabIndex = 1;
+            // 
             // DocumentTypeInfoPage
             // 
             this.DocumentTypeInfoPage.BackColor = System.Drawing.Color.White;
@@ -235,11 +278,11 @@
             this.DocumentTypeInfoPage.Controls.Add(this.Sout2018Panel);
             this.DocumentTypeInfoPage.Controls.Add(this.Sout2016Panel);
             this.DocumentTypeInfoPage.Controls.Add(this.PriceListPanel);
+            this.DocumentTypeInfoPage.Controls.Add(this.DocumentInfoLabel);
             this.DocumentTypeInfoPage.Controls.Add(this.OpenSout2021Button);
             this.DocumentTypeInfoPage.Controls.Add(this.OpenSout2018Button);
             this.DocumentTypeInfoPage.Controls.Add(this.OpenSout2016Button);
             this.DocumentTypeInfoPage.Controls.Add(this.OpenPriceListButton);
-            this.DocumentTypeInfoPage.Controls.Add(this.DocumentInfoLabel);
             this.DocumentTypeInfoPage.Location = new System.Drawing.Point(4, 27);
             this.DocumentTypeInfoPage.Name = "DocumentTypeInfoPage";
             this.DocumentTypeInfoPage.Padding = new System.Windows.Forms.Padding(3);
@@ -370,6 +413,17 @@
             this.PriceListPictureBox.TabIndex = 0;
             this.PriceListPictureBox.TabStop = false;
             // 
+            // DocumentInfoLabel
+            // 
+            this.DocumentInfoLabel.AutoSize = true;
+            this.DocumentInfoLabel.Font = new System.Drawing.Font("Segoe UI", 22.2F, System.Drawing.FontStyle.Bold);
+            this.DocumentInfoLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(9)))), ((int)(((byte)(64)))), ((int)(((byte)(127)))));
+            this.DocumentInfoLabel.Location = new System.Drawing.Point(368, 33);
+            this.DocumentInfoLabel.Name = "DocumentInfoLabel";
+            this.DocumentInfoLabel.Size = new System.Drawing.Size(264, 50);
+            this.DocumentInfoLabel.TabIndex = 12;
+            this.DocumentInfoLabel.Text = "ДОКУМЕНТЫ";
+            // 
             // OpenSout2021Button
             // 
             this.OpenSout2021Button.BackColor = System.Drawing.Color.RoyalBlue;
@@ -452,17 +506,6 @@
             this.OpenPriceListButton.TextColor = System.Drawing.Color.White;
             this.OpenPriceListButton.UseVisualStyleBackColor = false;
             this.OpenPriceListButton.Click += new System.EventHandler(this.OpenPriceListButton_Click);
-            // 
-            // DocumentInfoLabel
-            // 
-            this.DocumentInfoLabel.AutoSize = true;
-            this.DocumentInfoLabel.Font = new System.Drawing.Font("Segoe UI", 22.2F, System.Drawing.FontStyle.Bold);
-            this.DocumentInfoLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(9)))), ((int)(((byte)(64)))), ((int)(((byte)(127)))));
-            this.DocumentInfoLabel.Location = new System.Drawing.Point(368, 33);
-            this.DocumentInfoLabel.Name = "DocumentInfoLabel";
-            this.DocumentInfoLabel.Size = new System.Drawing.Size(264, 50);
-            this.DocumentInfoLabel.TabIndex = 12;
-            this.DocumentInfoLabel.Text = "ДОКУМЕНТЫ";
             // 
             // UserDataPage
             // 
@@ -731,7 +774,7 @@
             this.CustomFormForAllProject.Form = this;
             this.CustomFormForAllProject.FormStyle = Napitki_Altay2.Components.FormStyleCustom.fStyle.UserStyle;
             this.CustomFormForAllProject.HeaderColor = System.Drawing.Color.RoyalBlue;
-            this.CustomFormForAllProject.HeaderColorAdditional = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
+            this.CustomFormForAllProject.HeaderColorAdditional = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(48)))), ((int)(((byte)(207)))));
             this.CustomFormForAllProject.HeaderColorGradientEnable = true;
             this.CustomFormForAllProject.HeaderColorGradientMode = System.Drawing.Drawing2D.LinearGradientMode.Vertical;
             this.CustomFormForAllProject.HeaderHeight = 29;
@@ -751,11 +794,14 @@
             this.Name = "MainWorkForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Напитки Алтая";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainWorkForm_FormClosed);
             this.Load += new System.EventHandler(this.MainWorkForm_Load);
             this.MainWorkTabControl.ResumeLayout(false);
             this.ApplicationPage.ResumeLayout(false);
             this.ApplicationPage.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DataGridViewApplication)).EndInit();
+            this.AnswerForUserApplicPage.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.CompleteApplicationDGWUser)).EndInit();
             this.DocumentTypeInfoPage.ResumeLayout(false);
             this.DocumentTypeInfoPage.PerformLayout();
             this.Sout2021Panel.ResumeLayout(false);
@@ -828,5 +874,7 @@
         private System.Windows.Forms.Panel Sout2016Panel;
         private System.Windows.Forms.Panel Sout2018Panel;
         private System.Windows.Forms.Panel Sout2021Panel;
+        private Design.CustomButton OpenWorkerMessage;
+        private System.Windows.Forms.DataGridView CompleteApplicationDGWUser;
     }
 }

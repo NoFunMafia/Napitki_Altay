@@ -33,7 +33,6 @@
             this.RegPictureBox = new System.Windows.Forms.PictureBox();
             this.ChoosePictureBox = new System.Windows.Forms.PictureBox();
             this.RoleContextMenuStip = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.администраторToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.сотрудникToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.заказчикToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.DetailsPictureBox = new System.Windows.Forms.PictureBox();
@@ -79,30 +78,22 @@
             this.RoleContextMenuStip.Font = new System.Drawing.Font("Segoe UI Variable Text", 10.2F);
             this.RoleContextMenuStip.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.RoleContextMenuStip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.администраторToolStripMenuItem,
             this.сотрудникToolStripMenuItem,
             this.заказчикToolStripMenuItem});
             this.RoleContextMenuStip.Name = "RoleContextMenuStip";
-            this.RoleContextMenuStip.Size = new System.Drawing.Size(204, 82);
-            // 
-            // администраторToolStripMenuItem
-            // 
-            this.администраторToolStripMenuItem.Name = "администраторToolStripMenuItem";
-            this.администраторToolStripMenuItem.Size = new System.Drawing.Size(203, 26);
-            this.администраторToolStripMenuItem.Text = "Администратор";
-            this.администраторToolStripMenuItem.Click += new System.EventHandler(this.администраторToolStripMenuItem_Click);
+            this.RoleContextMenuStip.Size = new System.Drawing.Size(164, 56);
             // 
             // сотрудникToolStripMenuItem
             // 
             this.сотрудникToolStripMenuItem.Name = "сотрудникToolStripMenuItem";
-            this.сотрудникToolStripMenuItem.Size = new System.Drawing.Size(203, 26);
+            this.сотрудникToolStripMenuItem.Size = new System.Drawing.Size(163, 26);
             this.сотрудникToolStripMenuItem.Text = "Сотрудник";
             this.сотрудникToolStripMenuItem.Click += new System.EventHandler(this.сотрудникToolStripMenuItem_Click);
             // 
             // заказчикToolStripMenuItem
             // 
             this.заказчикToolStripMenuItem.Name = "заказчикToolStripMenuItem";
-            this.заказчикToolStripMenuItem.Size = new System.Drawing.Size(203, 26);
+            this.заказчикToolStripMenuItem.Size = new System.Drawing.Size(163, 26);
             this.заказчикToolStripMenuItem.Text = "Заявитель";
             this.заказчикToolStripMenuItem.Click += new System.EventHandler(this.заказчикToolStripMenuItem_Click);
             // 
@@ -240,7 +231,7 @@
             this.CustomFormForAllProject.Form = this;
             this.CustomFormForAllProject.FormStyle = Napitki_Altay2.Components.FormStyleCustom.fStyle.UserStyle;
             this.CustomFormForAllProject.HeaderColor = System.Drawing.Color.RoyalBlue;
-            this.CustomFormForAllProject.HeaderColorAdditional = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
+            this.CustomFormForAllProject.HeaderColorAdditional = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(48)))), ((int)(((byte)(207)))));
             this.CustomFormForAllProject.HeaderColorGradientEnable = true;
             this.CustomFormForAllProject.HeaderColorGradientMode = System.Drawing.Drawing2D.LinearGradientMode.Vertical;
             this.CustomFormForAllProject.HeaderHeight = 29;
@@ -285,7 +276,6 @@
         private System.Windows.Forms.PictureBox ChoosePictureBox;
         private Design.CustomTextBox ChooseRoleTextBox;
         private System.Windows.Forms.ContextMenuStrip RoleContextMenuStip;
-        private System.Windows.Forms.ToolStripMenuItem администраторToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem сотрудникToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem заказчикToolStripMenuItem;
         private Design.CustomButton RegisterAccountButton;

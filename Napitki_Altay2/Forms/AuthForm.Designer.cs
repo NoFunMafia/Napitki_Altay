@@ -107,10 +107,10 @@
             this.PasswordTextBox.Font = new System.Drawing.Font("Segoe UI Variable Text", 10.2F);
             this.PasswordTextBox.ForeColor = System.Drawing.Color.Black;
             this.PasswordTextBox.Location = new System.Drawing.Point(111, 253);
-            this.PasswordTextBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.PasswordTextBox.Margin = new System.Windows.Forms.Padding(4);
             this.PasswordTextBox.Multiline = false;
             this.PasswordTextBox.Name = "PasswordTextBox";
-            this.PasswordTextBox.Padding = new System.Windows.Forms.Padding(7, 7, 7, 7);
+            this.PasswordTextBox.Padding = new System.Windows.Forms.Padding(7);
             this.PasswordTextBox.PasswordChar = false;
             this.PasswordTextBox.Size = new System.Drawing.Size(239, 37);
             this.PasswordTextBox.TabIndex = 1;
@@ -128,10 +128,10 @@
             this.LoginTextBox.Font = new System.Drawing.Font("Segoe UI Variable Text", 10.2F);
             this.LoginTextBox.ForeColor = System.Drawing.Color.Black;
             this.LoginTextBox.Location = new System.Drawing.Point(111, 201);
-            this.LoginTextBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.LoginTextBox.Margin = new System.Windows.Forms.Padding(4);
             this.LoginTextBox.Multiline = false;
             this.LoginTextBox.Name = "LoginTextBox";
-            this.LoginTextBox.Padding = new System.Windows.Forms.Padding(7, 7, 7, 7);
+            this.LoginTextBox.Padding = new System.Windows.Forms.Padding(7);
             this.LoginTextBox.PasswordChar = false;
             this.LoginTextBox.Size = new System.Drawing.Size(239, 37);
             this.LoginTextBox.TabIndex = 0;
@@ -151,7 +151,7 @@
             this.CustomFormForAllProject.Form = this;
             this.CustomFormForAllProject.FormStyle = Napitki_Altay2.Components.FormStyleCustom.fStyle.UserStyle;
             this.CustomFormForAllProject.HeaderColor = System.Drawing.Color.RoyalBlue;
-            this.CustomFormForAllProject.HeaderColorAdditional = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
+            this.CustomFormForAllProject.HeaderColorAdditional = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(48)))), ((int)(((byte)(207)))));
             this.CustomFormForAllProject.HeaderColorGradientEnable = true;
             this.CustomFormForAllProject.HeaderColorGradientMode = System.Drawing.Drawing2D.LinearGradientMode.Vertical;
             this.CustomFormForAllProject.HeaderHeight = 29;

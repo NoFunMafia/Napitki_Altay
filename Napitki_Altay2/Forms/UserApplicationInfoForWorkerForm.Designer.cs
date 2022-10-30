@@ -33,17 +33,17 @@
             this.OpenDocumentWorkLabel = new System.Windows.Forms.Label();
             this.DateTimeDescrWorkLabel = new System.Windows.Forms.Label();
             this.DescripApplWorkLabel = new System.Windows.Forms.Label();
-            this.TypeApplWorkLabel = new System.Windows.Forms.Label();
-            this.CompanyNameWorkLabel = new System.Windows.Forms.Label();
             this.ApplWorkDTP = new System.Windows.Forms.DateTimePicker();
-            this.ApplPictureBox = new System.Windows.Forms.PictureBox();
             this.OpenDocumentWorkButton = new Napitki_Altay2.Design.CustomButton();
             this.DocumentWorkTextBox = new Napitki_Altay2.Design.CustomTextBox();
             this.CloseApplicWorkButton = new Napitki_Altay2.Design.CustomButton();
             this.DescripWorkTextBox = new Napitki_Altay2.Design.CustomTextBox();
-            this.TypeApplWorkTextBox = new Napitki_Altay2.Design.CustomTextBox();
-            this.CompanyWorkTextBox = new Napitki_Altay2.Design.CustomTextBox();
             this.CustomFormForAllProject = new Napitki_Altay2.Components.FormStyleCustom(this.components);
+            this.ApplPictureBox = new System.Windows.Forms.PictureBox();
+            this.CompanyWorkTextBox = new Napitki_Altay2.Design.CustomTextBox();
+            this.CompanyNameWorkLabel = new System.Windows.Forms.Label();
+            this.TypeApplWorkTextBox = new Napitki_Altay2.Design.CustomTextBox();
+            this.TypeApplWorkLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.ApplPictureBox)).BeginInit();
             this.SuspendLayout();
             // 
@@ -77,26 +77,6 @@
             this.DescripApplWorkLabel.TabIndex = 29;
             this.DescripApplWorkLabel.Text = "Описание обращения:";
             // 
-            // TypeApplWorkLabel
-            // 
-            this.TypeApplWorkLabel.AutoSize = true;
-            this.TypeApplWorkLabel.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
-            this.TypeApplWorkLabel.Location = new System.Drawing.Point(20, 246);
-            this.TypeApplWorkLabel.Name = "TypeApplWorkLabel";
-            this.TypeApplWorkLabel.Size = new System.Drawing.Size(165, 28);
-            this.TypeApplWorkLabel.TabIndex = 28;
-            this.TypeApplWorkLabel.Text = "Тип обращения:";
-            // 
-            // CompanyNameWorkLabel
-            // 
-            this.CompanyNameWorkLabel.AutoSize = true;
-            this.CompanyNameWorkLabel.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
-            this.CompanyNameWorkLabel.Location = new System.Drawing.Point(20, 170);
-            this.CompanyNameWorkLabel.Name = "CompanyNameWorkLabel";
-            this.CompanyNameWorkLabel.Size = new System.Drawing.Size(262, 28);
-            this.CompanyNameWorkLabel.TabIndex = 27;
-            this.CompanyNameWorkLabel.Text = "Наименование компании:";
-            // 
             // ApplWorkDTP
             // 
             this.ApplWorkDTP.Enabled = false;
@@ -107,18 +87,6 @@
             this.ApplWorkDTP.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.ApplWorkDTP.Size = new System.Drawing.Size(285, 38);
             this.ApplWorkDTP.TabIndex = 26;
-            // 
-            // ApplPictureBox
-            // 
-            this.ApplPictureBox.BackColor = System.Drawing.Color.White;
-            this.ApplPictureBox.Image = global::Napitki_Altay2.Properties.Resources.PictureLoginForm;
-            this.ApplPictureBox.Location = new System.Drawing.Point(327, 4);
-            this.ApplPictureBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.ApplPictureBox.Name = "ApplPictureBox";
-            this.ApplPictureBox.Size = new System.Drawing.Size(239, 210);
-            this.ApplPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.ApplPictureBox.TabIndex = 22;
-            this.ApplPictureBox.TabStop = false;
             // 
             // OpenDocumentWorkButton
             // 
@@ -202,25 +170,36 @@
             this.DescripWorkTextBox.Texts = "";
             this.DescripWorkTextBox.UnderlinedStyle = false;
             // 
-            // TypeApplWorkTextBox
+            // CustomFormForAllProject
             // 
-            this.TypeApplWorkTextBox.BackColor = System.Drawing.Color.White;
-            this.TypeApplWorkTextBox.BorderColor = System.Drawing.Color.RoyalBlue;
-            this.TypeApplWorkTextBox.BorderFocusColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
-            this.TypeApplWorkTextBox.BorderSize = 2;
-            this.TypeApplWorkTextBox.Enabled = false;
-            this.TypeApplWorkTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F);
-            this.TypeApplWorkTextBox.ForeColor = System.Drawing.Color.Black;
-            this.TypeApplWorkTextBox.Location = new System.Drawing.Point(25, 278);
-            this.TypeApplWorkTextBox.Margin = new System.Windows.Forms.Padding(5);
-            this.TypeApplWorkTextBox.Multiline = false;
-            this.TypeApplWorkTextBox.Name = "TypeApplWorkTextBox";
-            this.TypeApplWorkTextBox.Padding = new System.Windows.Forms.Padding(7);
-            this.TypeApplWorkTextBox.PasswordChar = false;
-            this.TypeApplWorkTextBox.Size = new System.Drawing.Size(383, 35);
-            this.TypeApplWorkTextBox.TabIndex = 24;
-            this.TypeApplWorkTextBox.Texts = "";
-            this.TypeApplWorkTextBox.UnderlinedStyle = false;
+            this.CustomFormForAllProject.AllowUserResize = false;
+            this.CustomFormForAllProject.BackColor = System.Drawing.Color.White;
+            this.CustomFormForAllProject.ContextMenuForm = null;
+            this.CustomFormForAllProject.ControlBoxButtonsWidth = 20;
+            this.CustomFormForAllProject.EnableControlBoxIconsLight = true;
+            this.CustomFormForAllProject.EnableControlBoxMouseLight = false;
+            this.CustomFormForAllProject.Form = this;
+            this.CustomFormForAllProject.FormStyle = Napitki_Altay2.Components.FormStyleCustom.fStyle.UserStyle;
+            this.CustomFormForAllProject.HeaderColor = System.Drawing.Color.RoyalBlue;
+            this.CustomFormForAllProject.HeaderColorAdditional = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(48)))), ((int)(((byte)(207)))));
+            this.CustomFormForAllProject.HeaderColorGradientEnable = true;
+            this.CustomFormForAllProject.HeaderColorGradientMode = System.Drawing.Drawing2D.LinearGradientMode.Vertical;
+            this.CustomFormForAllProject.HeaderHeight = 29;
+            this.CustomFormForAllProject.HeaderImage = null;
+            this.CustomFormForAllProject.HeaderTextColor = System.Drawing.Color.White;
+            this.CustomFormForAllProject.HeaderTextFont = new System.Drawing.Font("Segoe UI", 12F);
+            // 
+            // ApplPictureBox
+            // 
+            this.ApplPictureBox.BackColor = System.Drawing.Color.White;
+            this.ApplPictureBox.Image = global::Napitki_Altay2.Properties.Resources.PictureLoginForm;
+            this.ApplPictureBox.Location = new System.Drawing.Point(327, 4);
+            this.ApplPictureBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.ApplPictureBox.Name = "ApplPictureBox";
+            this.ApplPictureBox.Size = new System.Drawing.Size(239, 210);
+            this.ApplPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.ApplPictureBox.TabIndex = 22;
+            this.ApplPictureBox.TabStop = false;
             // 
             // CompanyWorkTextBox
             // 
@@ -242,24 +221,45 @@
             this.CompanyWorkTextBox.Texts = "";
             this.CompanyWorkTextBox.UnderlinedStyle = false;
             // 
-            // CustomFormForAllProject
+            // CompanyNameWorkLabel
             // 
-            this.CustomFormForAllProject.AllowUserResize = false;
-            this.CustomFormForAllProject.BackColor = System.Drawing.Color.White;
-            this.CustomFormForAllProject.ContextMenuForm = null;
-            this.CustomFormForAllProject.ControlBoxButtonsWidth = 20;
-            this.CustomFormForAllProject.EnableControlBoxIconsLight = true;
-            this.CustomFormForAllProject.EnableControlBoxMouseLight = false;
-            this.CustomFormForAllProject.Form = this;
-            this.CustomFormForAllProject.FormStyle = Napitki_Altay2.Components.FormStyleCustom.fStyle.UserStyle;
-            this.CustomFormForAllProject.HeaderColor = System.Drawing.Color.RoyalBlue;
-            this.CustomFormForAllProject.HeaderColorAdditional = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
-            this.CustomFormForAllProject.HeaderColorGradientEnable = true;
-            this.CustomFormForAllProject.HeaderColorGradientMode = System.Drawing.Drawing2D.LinearGradientMode.Vertical;
-            this.CustomFormForAllProject.HeaderHeight = 29;
-            this.CustomFormForAllProject.HeaderImage = null;
-            this.CustomFormForAllProject.HeaderTextColor = System.Drawing.Color.White;
-            this.CustomFormForAllProject.HeaderTextFont = new System.Drawing.Font("Segoe UI", 12F);
+            this.CompanyNameWorkLabel.AutoSize = true;
+            this.CompanyNameWorkLabel.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
+            this.CompanyNameWorkLabel.Location = new System.Drawing.Point(20, 170);
+            this.CompanyNameWorkLabel.Name = "CompanyNameWorkLabel";
+            this.CompanyNameWorkLabel.Size = new System.Drawing.Size(262, 28);
+            this.CompanyNameWorkLabel.TabIndex = 27;
+            this.CompanyNameWorkLabel.Text = "Наименование компании:";
+            // 
+            // TypeApplWorkTextBox
+            // 
+            this.TypeApplWorkTextBox.BackColor = System.Drawing.Color.White;
+            this.TypeApplWorkTextBox.BorderColor = System.Drawing.Color.RoyalBlue;
+            this.TypeApplWorkTextBox.BorderFocusColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
+            this.TypeApplWorkTextBox.BorderSize = 2;
+            this.TypeApplWorkTextBox.Enabled = false;
+            this.TypeApplWorkTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F);
+            this.TypeApplWorkTextBox.ForeColor = System.Drawing.Color.Black;
+            this.TypeApplWorkTextBox.Location = new System.Drawing.Point(25, 278);
+            this.TypeApplWorkTextBox.Margin = new System.Windows.Forms.Padding(5);
+            this.TypeApplWorkTextBox.Multiline = false;
+            this.TypeApplWorkTextBox.Name = "TypeApplWorkTextBox";
+            this.TypeApplWorkTextBox.Padding = new System.Windows.Forms.Padding(7);
+            this.TypeApplWorkTextBox.PasswordChar = false;
+            this.TypeApplWorkTextBox.Size = new System.Drawing.Size(383, 35);
+            this.TypeApplWorkTextBox.TabIndex = 24;
+            this.TypeApplWorkTextBox.Texts = "";
+            this.TypeApplWorkTextBox.UnderlinedStyle = false;
+            // 
+            // TypeApplWorkLabel
+            // 
+            this.TypeApplWorkLabel.AutoSize = true;
+            this.TypeApplWorkLabel.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
+            this.TypeApplWorkLabel.Location = new System.Drawing.Point(20, 246);
+            this.TypeApplWorkLabel.Name = "TypeApplWorkLabel";
+            this.TypeApplWorkLabel.Size = new System.Drawing.Size(165, 28);
+            this.TypeApplWorkLabel.TabIndex = 28;
+            this.TypeApplWorkLabel.Text = "Тип обращения:";
             // 
             // UserApplicationInfoForWorkerForm
             // 
@@ -297,14 +297,14 @@
         private Design.CustomTextBox DocumentWorkTextBox;
         private System.Windows.Forms.Label DateTimeDescrWorkLabel;
         private System.Windows.Forms.Label DescripApplWorkLabel;
-        private System.Windows.Forms.Label TypeApplWorkLabel;
-        private System.Windows.Forms.Label CompanyNameWorkLabel;
         private System.Windows.Forms.DateTimePicker ApplWorkDTP;
         private Design.CustomTextBox DescripWorkTextBox;
-        private Design.CustomTextBox TypeApplWorkTextBox;
-        private Design.CustomTextBox CompanyWorkTextBox;
         private System.Windows.Forms.PictureBox ApplPictureBox;
         private Components.FormStyleCustom CustomFormForAllProject;
         private Design.CustomButton CloseApplicWorkButton;
+        private System.Windows.Forms.Label CompanyNameWorkLabel;
+        private Design.CustomTextBox CompanyWorkTextBox;
+        private System.Windows.Forms.Label TypeApplWorkLabel;
+        private Design.CustomTextBox TypeApplWorkTextBox;
     }
 }

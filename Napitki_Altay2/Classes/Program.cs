@@ -1,4 +1,5 @@
-﻿using Napitki_Altay2.Forms;
+﻿using DocumentFormat.OpenXml.Drawing.Charts;
+using Napitki_Altay2.Forms;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,7 +18,12 @@ namespace Napitki_Altay2
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new AuthForm());
+            if (Classes.InternetCheck.CheckConnection() == true)
+            {
+                Application.Run(new AuthForm());
+            }
+            else
+                Application.Run(new NoInternetForm());
         }
     }
 }

@@ -2,19 +2,30 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.Common;
 using System.Data.SqlClient;
 using System.Drawing;
+using System.Globalization;
+using System.IO;
+using System.Reflection;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using ClosedXML.Excel;
+using DataTable = System.Data.DataTable;
 
 namespace Napitki_Altay2.Forms
 {
     public partial class MainWorkFormWorker : Form
     {
+        #region [Подключение к БД, инициализация переменных string]
         DataBaseCon dataBaseCon = new DataBaseCon();
         public static string SelectedRowID;
+        public static string SurnameWorkerString;
+        public static string NameWorkerString;
+        public static string PatrWorkerString;
+        #endregion
         public MainWorkFormWorker()
         {
             InitializeComponent();
@@ -55,6 +66,7 @@ namespace Napitki_Altay2.Forms
                 dataBaseCon.closeConnection();
             }
             LoadDataInDWG();
+            LoadDataInDWGComplete();
         }
         #endregion
         #region [Метод проверки наличия у пользователя заполненного ФИО в БД]
@@ -222,6 +234,40 @@ namespace Napitki_Altay2.Forms
                 return false;
         }
         #endregion
+        #region [Вывод данных в CompleteAnswerDGW]
+        public void LoadDataInDWGComplete()
+        {
+            try
+            {
+                dataBaseCon.openConnection();
+                SqlDataAdapter dataAdapter = new SqlDataAdapter
+                    ("select FK_ID_Application, " +
+                    "User_Surname, User_Name, " +
+                    "User_Patronymic, " +
+                    "Date_Of_Answer " +
+                    "from Ready_Application " +
+                    "join Info_About_User on " +
+                    "Ready_Application.FK_Info_User " +
+                    "= Info_About_User.ID_Info_User",
+                    dataBaseCon.sqlConnection());
+                DataTable dataTable = new DataTable();
+                dataAdapter.Fill(dataTable);
+                OutputInTableSettingTwo(dataTable);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message,
+                    "Ошибка",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+            }
+            finally
+            {
+                dataBaseCon.closeConnection();
+            }
+        }
+        #endregion
+        #region [Вывод данных в DataGridViewApplication]
         public void LoadDataInDWG()
         {
             try
@@ -241,12 +287,21 @@ namespace Napitki_Altay2.Forms
                     "Application_To_Company.FK_Status_Application" +
                     " = Status_Application.ID_Status full join " +
                     "Application_Document_From_User on " +
-                    "Application_To_Company.FK_Application_Document_From_User" +
-                    " = Application_Document_From_User.ID_Document_From_User",
+                    "Application_To_Company." +
+                    "FK_Application_Document_From_User" +
+                    " = Application_Document_From_User." +
+                    "ID_Document_From_User " +
+                    "where Application_To_Company." +
+                    "FK_Status_Application " +
+                    "= '1' or " +
+                    "Application_To_Company.FK_Status_Application = '2'",
                     dataBaseCon.sqlConnection());
                 DataTable dataTable = new DataTable();
                 dataAdapter.Fill(dataTable);
                 OutputInTableSetting(dataTable);
+                SurnameWorkerString = FamWorkCreateTextBox.Texts;
+                NameWorkerString = NameWorkCreateTextBox.Texts;
+                PatrWorkerString = PatrWorkCreateTextBox.Texts;
             }
             catch (Exception ex)
             {
@@ -260,6 +315,7 @@ namespace Napitki_Altay2.Forms
                 dataBaseCon.closeConnection();
             }
         }
+        #endregion
         #region [Настройки вывода информации в DataGridViewAnswer]
         /// <summary>
         /// Настройки вывода информации в DataGridViewApplication
@@ -268,7 +324,7 @@ namespace Napitki_Altay2.Forms
         private void OutputInTableSetting(DataTable dataTable)
         {
             DataGridViewAnswer.DataSource = dataTable;
-            DataGridViewAnswer.Columns[0].HeaderText = "Номер заявки";
+            DataGridViewAnswer.Columns[0].HeaderText = "Номер обращения";
             DataGridViewAnswer.Columns[0].Width = 60;
             DataGridViewAnswer.Columns[1].HeaderText = "Компания заявителя";
             DataGridViewAnswer.Columns[1].Width = 140;
@@ -282,52 +338,141 @@ namespace Napitki_Altay2.Forms
             DataGridViewAnswer.Columns[5].Width = 116;
         }
         #endregion
+        #region [Настройки вывода информации в CompleteApplicationDGW]
+        /// <summary>
+        /// Настройки вывода информации в DataGridViewApplication
+        /// </summary>
+        /// <param name="dataTable"></param>
+        private void OutputInTableSettingTwo(DataTable dataTable)
+        {
+            CompleteApplicationDGW.DataSource = dataTable;
+            CompleteApplicationDGW.Columns[0].HeaderText = 
+                "Номер обращения пользователя";
+            CompleteApplicationDGW.Columns[0].Width = 100;
+            CompleteApplicationDGW.Columns[1].HeaderText = 
+                "Фамилия сотрудника";
+            CompleteApplicationDGW.Columns[1].Width = 150;
+            CompleteApplicationDGW.Columns[2].HeaderText = 
+                "Имя сотрудника";
+            CompleteApplicationDGW.Columns[2].Width = 150;
+            CompleteApplicationDGW.Columns[3].HeaderText = 
+                "Отчество сотрудника";
+            CompleteApplicationDGW.Columns[3].Width = 150;
+            CompleteApplicationDGW.Columns[4].HeaderText = 
+                "Время ответа сотрудника";
+            CompleteApplicationDGW.Columns[4].Width = 148;
+        }
+        #endregion
+        #region [Обновление данных в DataGridViewAnswer]
         private void UpdateAnswerInDGW_Click(object sender, EventArgs e)
         {
             LoadDataInDWG();
         }
+        #endregion
+        #region [Ответ на обращение]
         private void AnswerToApplicationButton_Click(object sender, EventArgs e)
         {
             SelectedRowID = DataGridViewAnswer.CurrentRow.
                 Cells[0].Value.ToString();
-            try
+            if (DataGridViewAnswer.
+                CurrentRow.Cells[5]
+                .Value.ToString() == "На рассмотрении")
             {
-                bool successLoad;
-                string sqlComUserFIO = $"update Application_To_Company" +
-                    $" set FK_Status_Application = " +
-                    $"'2' where ID_Application = '{SelectedRowID}'";
-                SqlCommand check = Check(sqlComUserFIO);
-                dataBaseCon.openConnection();
-                using (var datareader = check.ExecuteReader())
+                try
                 {
-                    successLoad = datareader.Read();
+                    bool successLoad;
+                    string sqlComUserFIO = $"update Application_To_Company" +
+                        $" set FK_Status_Application = " +
+                        $"'2' where ID_Application = '{SelectedRowID}'";
+                    SqlCommand check = Check(sqlComUserFIO);
+                    dataBaseCon.openConnection();
+                    using (var datareader = check.ExecuteReader())
+                    {
+                        successLoad = datareader.Read();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message,
+                        "Ошибка",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error);
+                }
+                finally
+                {
+                    dataBaseCon.closeConnection();
                 }
             }
-            catch(Exception ex)
-            {
-                MessageBox.Show(ex.Message,
-                    "Ошибка",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Error);
-            }
-            finally
-            {
-                dataBaseCon.closeConnection();
-            }
-            if (Application.OpenForms["UserApplicationInfoForWorkerForm"] == null)
-            {
-                UserApplicationInfoForWorkerForm
-                userApplicationInfoForWorkerForm =
-                new UserApplicationInfoForWorkerForm();
-                userApplicationInfoForWorkerForm.Show();
-            }
-            if (Application.OpenForms["AnswerToUserApplicationForm"] == null)
+            else
             {
                 AnswerToUserApplicationForm
-                answerToUserApplicationForm =
-                new AnswerToUserApplicationForm();
+                answerToUserApplicationForm
+                = new AnswerToUserApplicationForm();
                 answerToUserApplicationForm.Show();
+                UserApplicationInfoForWorkerForm
+                    userApplicationInfoForWorkerForm
+                    = new UserApplicationInfoForWorkerForm();
+                userApplicationInfoForWorkerForm.Show();
             }
+        }
+        #endregion
+        #region [Создание Excel документа с таблицей завершённых обращений]
+        private void GenerateRaportButton_Click(object sender, EventArgs e)
+        {
+            DataTable dt = new DataTable();
+            foreach(DataGridViewColumn column 
+                in CompleteApplicationDGW.Columns)
+            {
+                dt.Columns.Add(column.HeaderText, column.ValueType);
+            }
+            foreach(DataGridViewRow row
+                 in CompleteApplicationDGW.Rows)
+            {
+                dt.Rows.Add();
+                foreach(DataGridViewCell cell in row.Cells)
+                {
+                    dt.Rows[dt.Rows.Count - 1][cell.ColumnIndex] 
+                        = cell.Value.ToString();
+                }
+            }
+            string folderpath = FilePathTextBox.Texts;
+            if (!Directory.Exists(folderpath))
+                Directory.CreateDirectory(folderpath);
+            using (XLWorkbook wb = new XLWorkbook())
+            {
+                wb.Worksheets.Add(dt, "Рапорт");
+                string excelfilename = " Отчёт о закрытых обращениях.xlsx";
+                string destfilename = DateTime.Now.ToString
+                    ("dd-MM-yyyy", CultureInfo.InvariantCulture)
+                    + excelfilename;
+                string pathexp = FilePathTextBox.Texts;
+                destfilename = Path.Combine(pathexp, destfilename);
+                wb.SaveAs(destfilename);
+                MessageBox.Show("Отчёт успешно сформирован!", 
+                    "Информация", 
+                    MessageBoxButtons.OK, 
+                    MessageBoxIcon.Information);
+            }
+        }
+        #endregion
+        #region [Обновление данных в DGW]
+        private void UpdateDataDGWAnswer_Click(object sender, EventArgs e)
+        {
+            LoadDataInDWGComplete();
+        }
+        #endregion
+        #region [Выбор пути для сохранения отчёта]
+        private void FilePathChooseButton_Click(object sender, EventArgs e)
+        {
+            if (FolderPathBrowserDialog.ShowDialog()
+                == DialogResult.OK)
+                FilePathTextBox.Texts = 
+                    FolderPathBrowserDialog.SelectedPath.ToString();
+        }
+        #endregion
+        private void MainWorkFormWorker_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Application.Exit();
         }
     }
 }

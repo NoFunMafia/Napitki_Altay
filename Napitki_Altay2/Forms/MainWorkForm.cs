@@ -8,12 +8,14 @@ namespace Napitki_Altay2.Forms
 {
     public partial class MainWorkForm : Form
     {
-        #region [Подключение класса соединения с БД, объявление string переменных ФИО]
+        #region [Подключение класса соединения с БД, объявление string переменных]
         // Использование класса соединения с БД
         DataBaseCon datebaseCon = new DataBaseCon();
         public static string SurnameUserString;
         public static string NameUserString;
         public static string PatronymicUserString;
+        static string fk_info_user_main_form;
+        public static string SelectedROWIDInDGW;
         #endregion
         public MainWorkForm()
         {
@@ -60,9 +62,10 @@ namespace Napitki_Altay2.Forms
                 datebaseCon.closeConnection();
             }
             LoadDataGridView();
+            LoadDataGridViewComplete();
         }
         #endregion
-        #region [Метод обновления данных в DGW]
+        #region [Вывод данных в DGW]
         /// <summary>
         /// Обновление данных в DGW
         /// </summary>
@@ -108,6 +111,117 @@ namespace Napitki_Altay2.Forms
             finally
             {
                 datebaseCon.closeConnection();
+            }
+        }
+        #endregion
+        #region [Вывод данных в DGWC]
+        /// <summary>
+        /// Обновление данных в DGW
+        /// </summary>
+        private void LoadDataGridViewComplete()
+        {
+            bool successFK_Info_User;
+            try
+            {
+                string sqlComFK_Info_User = $"select * " +
+                    $"from Info_About_User " +
+                    $"where User_Surname = " +
+                    $"'{MainWorkForm.SurnameUserString}' " +
+                    $"and User_Name = '{MainWorkForm.NameUserString}' " +
+                    $"and User_Patronymic = " +
+                    $"'{MainWorkForm.PatronymicUserString}'";
+                SqlCommand check = Check(sqlComFK_Info_User);
+                datebaseCon.openConnection();
+                using (var datareader = check.ExecuteReader())
+                {
+                    successFK_Info_User = datareader.Read();
+                    {
+                        CheckDataReaderRowsIDUser(datareader);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message,
+                    "Ошибка",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+            }
+            finally
+            {
+                datebaseCon.closeConnection();
+            }
+            try
+            {
+                datebaseCon.openConnection();
+                SqlDataAdapter dataAdapter = new SqlDataAdapter
+                    ("select FK_ID_Application, " +
+                    "User_Surname, User_Name, " +
+                    "User_Patronymic, " +
+                    "Date_Of_Answer " +
+                    "from Ready_Application " +
+                    "join Info_About_User on " +
+                    "Ready_Application.FK_Info_User " +
+                    "= Info_About_User.ID_Info_User " +
+                    "join Application_To_Company " +
+                    "on Application_To_Company.ID_Application " +
+                    "= Ready_Application.FK_ID_Application " +
+                    $"where Application_To_Company.FK_Info_User = " +
+                    $"'{fk_info_user_main_form}'",
+                    datebaseCon.sqlConnection());
+                DataTable dataTable = new DataTable();
+                dataAdapter.Fill(dataTable);
+                OutputInTableSettingTwo(dataTable);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message,
+                    "Ошибка",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+            }
+            finally
+            {
+                datebaseCon.closeConnection();
+            }
+        }
+        #endregion
+
+        #region [Настройки вывода информации в CompleteApplicationDGW]
+        /// <summary>
+        /// Настройки вывода информации в DataGridViewApplication
+        /// </summary>
+        /// <param name="dataTable"></param>
+        private void OutputInTableSettingTwo(DataTable dataTable)
+        {
+            CompleteApplicationDGWUser.DataSource = dataTable;
+            CompleteApplicationDGWUser.Columns[0].HeaderText =
+                "Номер вашего обращения";
+            CompleteApplicationDGWUser.Columns[0].Width = 100;
+            CompleteApplicationDGWUser.Columns[1].HeaderText =
+                "Фамилия сотрудника";
+            CompleteApplicationDGWUser.Columns[1].Width = 150;
+            CompleteApplicationDGWUser.Columns[2].HeaderText =
+                "Имя сотрудника";
+            CompleteApplicationDGWUser.Columns[2].Width = 150;
+            CompleteApplicationDGWUser.Columns[3].HeaderText =
+                "Отчество сотрудника";
+            CompleteApplicationDGWUser.Columns[3].Width = 150;
+            CompleteApplicationDGWUser.Columns[4].HeaderText =
+                "Время ответа сотрудника";
+            CompleteApplicationDGWUser.Columns[4].Width = 148;
+        }
+        #endregion
+        #region [Метод получения ID пользователя при составлении обращения]
+        /// <summary>
+        /// Метод получения ID пользователя при составлении обращения
+        /// </summary>
+        /// <param name="datareader"></param>
+        private void CheckDataReaderRowsIDUser(SqlDataReader datareader)
+        {
+            if (datareader.HasRows)
+            {
+                fk_info_user_main_form = datareader.GetValue(0).ToString();
             }
         }
         #endregion
@@ -415,7 +529,8 @@ namespace Napitki_Altay2.Forms
                 }
                 catch(Exception ex)
                 {
-                    MessageBox.Show(ex.Message, 
+                    MessageBox.Show("Невозможно удалить " +
+                        "завершенное обращение!", 
                         "Ошибка", 
                         MessageBoxButtons.OK, 
                         MessageBoxIcon.Error);
@@ -458,5 +573,22 @@ namespace Napitki_Altay2.Forms
                 "-условий-труда-01.11.2021г.pdf");
         }
         #endregion
+        #region [Закрытие приложения при закрытии формы]
+        private void MainWorkForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Application.Exit();
+        }
+        #endregion
+        private void OpenWorkerMessage_Click(object sender, EventArgs e)
+        {
+            SelectedROWIDInDGW = CompleteApplicationDGWUser.
+                CurrentRow.
+                Cells[0].Value.ToString();
+            ReadyApplicationInfoForUserForm 
+                readyApplicationInfoForUserForm 
+                = new ReadyApplicationInfoForUserForm();
+            readyApplicationInfoForUserForm.Show();
+            this.Hide();
+        }
     }
 }

@@ -28,7 +28,7 @@ namespace Napitki_Altay2.Forms
         {
             MainWorkForm mainWorkForm = new MainWorkForm();
             mainWorkForm.Show();
-            this.Hide();
+            this.Close();
         }
         #endregion
         #region [Создание обращения]
@@ -452,5 +452,11 @@ namespace Napitki_Altay2.Forms
             DocumentTextBox.Texts = "";
         }
         #endregion
+        private void CreateApplicationForm_FormClosed
+            (object sender, FormClosedEventArgs e)
+        {
+            MainWorkForm mainWorkForm = new MainWorkForm();
+            mainWorkForm.Show();
+        }
     }
 }
