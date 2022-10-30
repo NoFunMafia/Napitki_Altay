@@ -6,8 +6,10 @@ namespace Napitki_Altay2
         #region [Выбор БД для дома/учёбы]
          //БД для тестирования в домашних условиях
         SqlConnection con = new SqlConnection(@"Data Source=MYHOMIES;
-        Initial Catalog=Altai_ZavodBackup;
-        Integrated Security=True");
+        Initial Catalog=Altai_zavodBackup;
+        Persist Security Info=True;
+        User ID=Admin;
+        Password=Admin");
 
         // БД для тестирования в учебных условиях
         /*SqlConnection con = new SqlConnection(@"Data Source=62.78.81.19;

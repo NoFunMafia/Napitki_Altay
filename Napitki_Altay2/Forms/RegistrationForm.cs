@@ -204,9 +204,9 @@ namespace Napitki_Altay2
                     }
                 }
             }
-            catch(Exception)
+            catch(Exception ex)
             {
-                MessageBox.Show("Ошибка подключения к базе данных!",
+                MessageBox.Show(ex.Message,
                     "Ошибка",
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Error);

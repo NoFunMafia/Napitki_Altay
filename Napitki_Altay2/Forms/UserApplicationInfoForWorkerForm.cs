@@ -30,7 +30,7 @@ namespace Napitki_Altay2.Forms
             if (datareader.HasRows)
             {
                 CompanyWorkTextBox.Texts = 
-                    datareader.GetValue(0).ToString();
+                    datareader.GetValue(1).ToString();
             }
             else
             {
@@ -39,7 +39,7 @@ namespace Napitki_Altay2.Forms
             if (datareader.HasRows)
             {
                 TypeApplWorkTextBox.Texts = 
-                    datareader.GetValue(1).ToString();
+                    datareader.GetValue(2).ToString();
             }
             else
             {
@@ -48,7 +48,7 @@ namespace Napitki_Altay2.Forms
             if (datareader.HasRows)
             {
                 DescripWorkTextBox.Texts = 
-                    datareader.GetValue(2).ToString();
+                    datareader.GetValue(3).ToString();
             }
             else
             {
@@ -57,7 +57,7 @@ namespace Napitki_Altay2.Forms
             if (datareader.HasRows)
             {
                 ApplWorkDTP.Text =
-                    datareader.GetDateTime(3).ToString();
+                    datareader.GetDateTime(4).ToString();
             }
             else
             {
@@ -66,7 +66,7 @@ namespace Napitki_Altay2.Forms
             if (datareader.HasRows)
             {
                 DocumentWorkTextBox.Texts = 
-                    datareader.GetValue(4).ToString();
+                    datareader.GetValue(5).ToString();
             }
         }
         private void UserApplicationInfoForWorkerForm_Load(object sender, EventArgs e)

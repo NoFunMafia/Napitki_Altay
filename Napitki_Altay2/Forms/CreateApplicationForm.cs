@@ -302,7 +302,7 @@ namespace Napitki_Altay2.Forms
             int chooseDepartment;
             if (chooseType == 2 || chooseType == 4)
             {
-                chooseDepartment = 3;
+                chooseDepartment = 4;
             }
             else
                 chooseDepartment = 2;

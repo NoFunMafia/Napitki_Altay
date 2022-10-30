@@ -436,22 +436,32 @@ namespace Napitki_Altay2.Forms
                 }
             }
             string folderpath = FilePathTextBox.Texts;
-            if (!Directory.Exists(folderpath))
-                Directory.CreateDirectory(folderpath);
-            using (XLWorkbook wb = new XLWorkbook())
+            if(FilePathTextBox.Texts == "")
             {
-                wb.Worksheets.Add(dt, "Рапорт");
-                string excelfilename = " Отчёт о закрытых обращениях.xlsx";
-                string destfilename = DateTime.Now.ToString
-                    ("dd-MM-yyyy", CultureInfo.InvariantCulture)
-                    + excelfilename;
-                string pathexp = FilePathTextBox.Texts;
-                destfilename = Path.Combine(pathexp, destfilename);
-                wb.SaveAs(destfilename);
-                MessageBox.Show("Отчёт успешно сформирован!", 
-                    "Информация", 
+                MessageBox.Show("Путь сохранения не определен!", 
+                    "Ошибка", 
                     MessageBoxButtons.OK, 
-                    MessageBoxIcon.Information);
+                    MessageBoxIcon.Error);
+            }
+            else
+            {
+                if (!Directory.Exists(folderpath))
+                    Directory.CreateDirectory(folderpath);
+                using (XLWorkbook wb = new XLWorkbook())
+                {
+                    wb.Worksheets.Add(dt, "Рапорт");
+                    string excelfilename = " Отчёт о закрытых обращениях.xlsx";
+                    string destfilename = DateTime.Now.ToString
+                        ("dd-MM-yyyy", CultureInfo.InvariantCulture)
+                        + excelfilename;
+                    string pathexp = FilePathTextBox.Texts;
+                    destfilename = Path.Combine(pathexp, destfilename);
+                    wb.SaveAs(destfilename);
+                    MessageBox.Show("Отчёт успешно сформирован!",
+                        "Информация",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Information);
+                }
             }
         }
         #endregion
