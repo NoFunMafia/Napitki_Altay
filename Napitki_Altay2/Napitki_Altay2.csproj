@@ -124,18 +124,18 @@
   <ItemGroup>
     <Compile Include="Classes\DataBaseCon.cs" />
     <Compile Include="Classes\InternetCheck.cs" />
-    <Compile Include="CustomComponents\CustomButton.cs">
+    <Compile Include="Custom Components and Classes\CustomButton.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="CustomComponents\CustomForm.cs">
+    <Compile Include="Custom Components and Classes\CustomForm.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="CustomComponents\CustomForm.Designer.cs">
+    <Compile Include="Custom Components and Classes\CustomForm.Designer.cs">
       <DependentUpon>CustomForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="CustomComponents\Drawer.cs" />
-    <Compile Include="CustomComponents\StylesForForm.cs" />
-    <Compile Include="CustomComponents\TestColors.cs" />
+    <Compile Include="Custom Components and Classes\Drawer.cs" />
+    <Compile Include="Custom Components and Classes\StylesForForm.cs" />
+    <Compile Include="Custom Components and Classes\TestColors.cs" />
     <Compile Include="Forms\AnswerToUserApplicationForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -149,10 +149,10 @@
       <DependentUpon>AuthForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Classes\Program.cs" />
-    <Compile Include="CustomComponents\CustomTextBox.cs">
+    <Compile Include="Custom Components and Classes\CustomTextBox.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="CustomComponents\CustomTextBox.Designer.cs">
+    <Compile Include="Custom Components and Classes\CustomTextBox.Designer.cs">
       <DependentUpon>CustomTextBox.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\CreateApplicationForm.cs">
@@ -210,7 +210,7 @@
     <EmbeddedResource Include="Forms\AuthForm.resx">
       <DependentUpon>AuthForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="CustomComponents\CustomTextBox.resx">
+    <EmbeddedResource Include="Custom Components and Classes\CustomTextBox.resx">
       <DependentUpon>CustomTextBox.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\CreateApplicationForm.resx">
@@ -284,6 +284,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Picture4MainWorkForm.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Picture2RegForm.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

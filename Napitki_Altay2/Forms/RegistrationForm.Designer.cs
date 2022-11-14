@@ -38,6 +38,7 @@
             this.DetailsPictureBox = new System.Windows.Forms.PictureBox();
             this.VisiblePassCheckRegForm = new System.Windows.Forms.CheckBox();
             this.OpenFormLogin = new System.Windows.Forms.LinkLabel();
+            this.InfoPictureBox = new System.Windows.Forms.PictureBox();
             this.RegisterAccountButton = new Napitki_Altay2.Design.CustomButton();
             this.ChooseRoleTextBox = new Napitki_Altay2.Design.CustomTextBox();
             this.PasswordCreateTextBox = new Napitki_Altay2.Design.CustomTextBox();
@@ -47,6 +48,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.ChoosePictureBox)).BeginInit();
             this.RoleContextMenuStip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DetailsPictureBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.InfoPictureBox)).BeginInit();
             this.SuspendLayout();
             // 
             // RegPictureBox
@@ -137,6 +139,18 @@
             this.OpenFormLogin.Text = "Уже есть аккаунт? Войдите!";
             this.OpenFormLogin.VisitedLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
             this.OpenFormLogin.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.OpenFormLogin_LinkClicked);
+            // 
+            // InfoPictureBox
+            // 
+            this.InfoPictureBox.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.InfoPictureBox.Image = global::Napitki_Altay2.Properties.Resources.Picture2RegForm;
+            this.InfoPictureBox.Location = new System.Drawing.Point(72, 259);
+            this.InfoPictureBox.Name = "InfoPictureBox";
+            this.InfoPictureBox.Size = new System.Drawing.Size(32, 27);
+            this.InfoPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.InfoPictureBox.TabIndex = 13;
+            this.InfoPictureBox.TabStop = false;
+            this.InfoPictureBox.Click += new System.EventHandler(this.InfoPictureBox_Click);
             // 
             // RegisterAccountButton
             // 
@@ -245,6 +259,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(461, 516);
+            this.Controls.Add(this.InfoPictureBox);
             this.Controls.Add(this.OpenFormLogin);
             this.Controls.Add(this.VisiblePassCheckRegForm);
             this.Controls.Add(this.RegisterAccountButton);
@@ -258,10 +273,12 @@
             this.Name = "RegistrationForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Регистрация";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.RegistrationForm_FormClosed);
             ((System.ComponentModel.ISupportInitialize)(this.RegPictureBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ChoosePictureBox)).EndInit();
             this.RoleContextMenuStip.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.DetailsPictureBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.InfoPictureBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -282,5 +299,6 @@
         private System.Windows.Forms.PictureBox DetailsPictureBox;
         private System.Windows.Forms.CheckBox VisiblePassCheckRegForm;
         private System.Windows.Forms.LinkLabel OpenFormLogin;
+        private System.Windows.Forms.PictureBox InfoPictureBox;
     }
 }

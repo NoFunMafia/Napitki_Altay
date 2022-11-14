@@ -3,6 +3,7 @@ using System;
 using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
+using System.Runtime.Remoting.Messaging;
 using System.Windows.Forms;
 #endregion
 
@@ -172,14 +173,18 @@ namespace Napitki_Altay2
                 {
                     if(LoginCreateTextBox.Texts == "Создание логина" || 
                         PasswordCreateTextBox.Texts == "Создание пароля")
+                    {
                         MessageBox.Show
                             ("Поля данных не заполнены до конца!",
-                            "Ошибка", 
-                            MessageBoxButtons.OK, 
+                            "Ошибка",
+                            MessageBoxButtons.OK,
                             MessageBoxIcon.Error);
+                    }
                     else
                     {
                         if (CheckLoginUserInDB())
+                            return;
+                        if (CheckPass(PasswordCreateTextBox.Texts, 8, 15))
                             return;
                         int chooseRole = CheckUserRole();
                         string sqlCom = "insert " +
@@ -251,15 +256,57 @@ namespace Napitki_Altay2
             if (dataTable.Rows.Count > 0)
             {
                 MessageBox.Show("Данный логин занят, используйте другой!",
-                                    "Ошибка",
-                                    MessageBoxButtons.OK,
-                                    MessageBoxIcon.Error);
+                    "Ошибка", 
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
                 return true;
             }
             else
                 return false;
         }
         #endregion
+        public Boolean CheckPass(string inputPass, 
+            int minLenght, int maxLenght)
+        {
+            bool hasNum = true, 
+                hasCap = true, 
+                hasLow = true, 
+                hasSpec = true;
+            char currentCharacter;
+            if (!(inputPass.Length <= minLenght
+                || inputPass.Length >= maxLenght))
+            {
+                hasNum = false;
+            }
+            else
+            {
+                MessageBox.Show("Пароль не соответствует требованиям!",
+                    "Ошибка",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+                return true;
+            }
+            for(int i = 0; i < inputPass.Length; i++)
+            {
+                currentCharacter = inputPass[i];
+                if (char.IsDigit(currentCharacter))
+                    hasNum = true;
+                else if(char.IsUpper(currentCharacter))
+                    hasCap = true;
+                else if(char.IsLower(currentCharacter))
+                    hasLow = true;
+                else if(!char.IsLetterOrDigit(currentCharacter))
+                    hasSpec = true;
+            }
+            if (hasNum && hasCap && hasLow && hasSpec)
+                return false;
+            else
+                MessageBox.Show("Пароль не соответствует требованиям!", 
+                    "Ошибка", 
+                    MessageBoxButtons.OK, 
+                    MessageBoxIcon.Error);
+            return true;
+        }
         #region [Событие перехода на форму AuthForm]
         /// <summary>
         /// Открытие формы авторизации, 
@@ -274,5 +321,20 @@ namespace Napitki_Altay2
             this.Hide();
         }
         #endregion
+        private void RegistrationForm_FormClosed
+            (object sender, FormClosedEventArgs e)
+        {
+            Application.Exit();
+        }
+        private void InfoPictureBox_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("• Пароль должен содержать " +
+                "не менее 8 и не более 15 символов" +
+                "\n• Пароль должен содержать минимум 1 цифру" +
+                "\n• Пароль должен содержать 1 букву нижнего регистра" +
+                "\n• Пароль должен содержать 1 букву верхнего регистра" +
+                "\n• Пароль должен содержать 1 спецсимвол", "Информация", 
+                MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
     }
 }
