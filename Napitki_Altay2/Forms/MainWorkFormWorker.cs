@@ -1,19 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Data.Common;
 using System.Data.SqlClient;
-using System.Drawing;
 using System.Globalization;
 using System.IO;
-using System.Reflection;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using ClosedXML.Excel;
+using Excel = Microsoft.Office.Interop.Excel;
 using DataTable = System.Data.DataTable;
+using System.Drawing;
 
 namespace Napitki_Altay2.Forms
 {
@@ -390,6 +384,15 @@ namespace Napitki_Altay2.Forms
                     {
                         successLoad = datareader.Read();
                     }
+                    LoadDataInDWG();
+                    AnswerToUserApplicationForm
+                        answerToUserApplicationForm
+                        = new AnswerToUserApplicationForm();
+                    answerToUserApplicationForm.Show();
+                    UserApplicationInfoForWorkerForm
+                        userApplicationInfoForWorkerForm
+                        = new UserApplicationInfoForWorkerForm();
+                    userApplicationInfoForWorkerForm.Show();
                 }
                 catch (Exception ex)
                 {
@@ -419,49 +422,61 @@ namespace Napitki_Altay2.Forms
         #region [Создание Excel документа с таблицей завершённых обращений]
         private void GenerateRaportButton_Click(object sender, EventArgs e)
         {
-            DataTable dt = new DataTable();
-            foreach(DataGridViewColumn column 
-                in CompleteApplicationDGW.Columns)
+            Excel.Application xlApp;
+            Excel.Workbook xlWorkBook;
+            Excel.Worksheet xlWorkSheet;
+            object misValue = System.Reflection.Missing.Value;
+            xlApp = new Excel.Application();
+            xlWorkBook = xlApp.Workbooks.Add(misValue);
+            xlWorkSheet = (Excel.Worksheet)xlWorkBook.Worksheets.get_Item(1);
+            for(int i = 0; i < CompleteApplicationDGW.Columns.Count; i++)
             {
-                dt.Columns.Add(column.HeaderText, column.ValueType);
+                xlWorkSheet.Cells[3, i + 1] 
+                    = CompleteApplicationDGW.Columns[i].HeaderText;
             }
-            foreach(DataGridViewRow row
-                 in CompleteApplicationDGW.Rows)
+            for(int j = 0; 
+                j < CompleteApplicationDGW.Rows.Count; j++)
             {
-                dt.Rows.Add();
-                foreach(DataGridViewCell cell in row.Cells)
+                for(int i = 0; 
+                    i < CompleteApplicationDGW.Columns.Count; i++)
                 {
-                    dt.Rows[dt.Rows.Count - 1][cell.ColumnIndex] 
-                        = cell.Value.ToString();
+                    xlWorkSheet.Cells[j + 4, i + 1]
+                        = CompleteApplicationDGW.
+                        Rows[j].Cells[i].Value.ToString();
                 }
             }
-            string folderpath = FilePathTextBox.Texts;
-            if(FilePathTextBox.Texts == "")
+            xlWorkSheet.UsedRange.Borders.Color = Color.Black;
+            xlWorkSheet.Cells[1, 3].Font.Size = 20;
+            xlWorkSheet.Cells[3, 7].Font.Size = 16;
+            xlWorkSheet.Cells[6, 7].Font.Size = 16;
+            xlWorkSheet.Cells[2, 1].Font.Size = 14;
+            xlWorkSheet.Cells[1, 3] = "Отчёт о проделанной работе";
+            xlWorkSheet.Cells[3, 7] = "Подпись главы отдела_____________";
+            xlWorkSheet.Cells[6, 7] = "М.П";
+            xlWorkSheet.Cells[2, 1] = "Все завершенные обращения сотрудников";
+            xlWorkSheet.Columns.AutoFit();
+            string excelfilename = " Отчёт о закрытых обращениях.xlsx";
+            string destfilename = DateTime.Now.ToString
+                        ("dd-MM-yyyy", CultureInfo.InvariantCulture)
+                        + excelfilename;
+            string pathexp = FilePathTextBox.Texts;
+            if (FilePathTextBox.Texts == "")
             {
-                MessageBox.Show("Путь сохранения не определен!", 
-                    "Ошибка", 
-                    MessageBoxButtons.OK, 
+                MessageBox.Show("Путь сохранения не определен!",
+                    "Ошибка",
+                    MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
             }
             else
             {
-                if (!Directory.Exists(folderpath))
-                    Directory.CreateDirectory(folderpath);
-                using (XLWorkbook wb = new XLWorkbook())
-                {
-                    wb.Worksheets.Add(dt, "Рапорт");
-                    string excelfilename = " Отчёт о закрытых обращениях.xlsx";
-                    string destfilename = DateTime.Now.ToString
-                        ("dd-MM-yyyy", CultureInfo.InvariantCulture)
-                        + excelfilename;
-                    string pathexp = FilePathTextBox.Texts;
-                    destfilename = Path.Combine(pathexp, destfilename);
-                    wb.SaveAs(destfilename);
-                    MessageBox.Show("Отчёт успешно сформирован!",
-                        "Информация",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Information);
-                }
+                destfilename = Path.Combine(pathexp, destfilename);
+                xlWorkBook.SaveAs(destfilename);
+                MessageBox.Show("Отчёт успешно сформирован!",
+                            "Информация",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Information);
+                xlWorkBook.Close(true, misValue, misValue);
+                xlApp.Quit();
             }
         }
         #endregion

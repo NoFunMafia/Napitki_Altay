@@ -172,7 +172,7 @@
             // 
             this.письмопритензияToolStripMenuItem.Name = "письмопритензияToolStripMenuItem";
             this.письмопритензияToolStripMenuItem.Size = new System.Drawing.Size(306, 24);
-            this.письмопритензияToolStripMenuItem.Text = "Письмо-притензия";
+            this.письмопритензияToolStripMenuItem.Text = "Письмо-претензия";
             this.письмопритензияToolStripMenuItem.Click += new System.EventHandler(this.письмопритензияToolStripMenuItem_Click);
             // 
             // письмоблагодарностьToolStripMenuItem

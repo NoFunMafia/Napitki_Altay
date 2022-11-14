@@ -233,7 +233,7 @@ namespace Napitki_Altay2.Forms
         private void OutputInTableSetting(DataTable dataTable)
         {
             DataGridViewApplication.DataSource = dataTable;
-            DataGridViewApplication.Columns[0].HeaderText = "Номер заявки";
+            DataGridViewApplication.Columns[0].HeaderText = "Номер обращения";
             DataGridViewApplication.Columns[0].Width = 60;
             DataGridViewApplication.Columns[1].HeaderText = "Компания заявителя";
             DataGridViewApplication.Columns[1].Width = 140;
