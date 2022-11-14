@@ -86,9 +86,29 @@ namespace Napitki_Altay2
             (object sender, EventArgs e)
         {
             if (LoginCreateTextBox.Texts.Equals(@"Создание логина"))
-            {
                 LoginCreateTextBox.Texts = "";
-            }
+        }
+        /// <summary>
+        /// Событие при котором пользователь, 
+        /// входит в зону взаимодействия с EmailTextBox
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void User_Enter_In_TextBox_Email_Create(object sender, EventArgs e)
+        {
+            if (EmailTextBox.Texts.Equals(@"Ваш Email"))
+                EmailTextBox.Texts = "";
+        }
+        /// <summary>
+        /// Событие при котором пользователь,
+        /// выходит из зоны взаимодействия с EmailTextBox
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void User_Leave_From_TextBox_Email_Create(object sender, EventArgs e)
+        {
+            if (EmailTextBox.Texts.Equals(""))
+                EmailTextBox.Texts = "Ваш Email";
         }
         /// <summary>
         /// Событие при котором пользователь,
@@ -100,9 +120,7 @@ namespace Napitki_Altay2
             (object sender, EventArgs e)
         {
             if (LoginCreateTextBox.Texts.Equals(""))
-            {
                 LoginCreateTextBox.Texts = "Создание логина";
-            }
         }
         /// <summary>
         /// Событие при котором пользователь, 
@@ -172,7 +190,8 @@ namespace Napitki_Altay2
                     || ChooseRoleTextBox.Texts == "Заявитель")
                 {
                     if(LoginCreateTextBox.Texts == "Создание логина" || 
-                        PasswordCreateTextBox.Texts == "Создание пароля")
+                        PasswordCreateTextBox.Texts == "Создание пароля" ||
+                        EmailTextBox.Texts == "Ваш Email")
                     {
                         MessageBox.Show
                             ("Поля данных не заполнены до конца!",
@@ -189,10 +208,11 @@ namespace Napitki_Altay2
                         int chooseRole = CheckUserRole();
                         string sqlCom = "insert " +
                                 "into Authentication_" +
-                                "(Login_User, Password_User, FK_Role_User) " +
+                                "(Login_User, Password_User, " +
+                                "FK_Role_User, Email) " +
                                 $"values ('{LoginCreateTextBox.Texts}', " +
                                 $"'{PasswordCreateTextBox.Texts}', " +
-                                $"{chooseRole})";
+                                $"'{chooseRole}', '{EmailTextBox.Texts}')";
                         SqlCommand check = Check(sqlCom);
                         datebaseCon.openConnection();
                         using (var datareader = check.ExecuteReader())

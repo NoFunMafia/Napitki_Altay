@@ -39,6 +39,7 @@
             this.VisiblePassCheckRegForm = new System.Windows.Forms.CheckBox();
             this.OpenFormLogin = new System.Windows.Forms.LinkLabel();
             this.InfoPictureBox = new System.Windows.Forms.PictureBox();
+            this.EmailTextBox = new Napitki_Altay2.Design.CustomTextBox();
             this.RegisterAccountButton = new Napitki_Altay2.Design.CustomButton();
             this.ChooseRoleTextBox = new Napitki_Altay2.Design.CustomTextBox();
             this.PasswordCreateTextBox = new Napitki_Altay2.Design.CustomTextBox();
@@ -66,7 +67,7 @@
             // 
             this.ChoosePictureBox.Cursor = System.Windows.Forms.Cursors.Hand;
             this.ChoosePictureBox.Image = global::Napitki_Altay2.Properties.Resources.PictureRegForm;
-            this.ChoosePictureBox.Location = new System.Drawing.Point(313, 311);
+            this.ChoosePictureBox.Location = new System.Drawing.Point(313, 362);
             this.ChoosePictureBox.Name = "ChoosePictureBox";
             this.ChoosePictureBox.Size = new System.Drawing.Size(32, 27);
             this.ChoosePictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -102,7 +103,7 @@
             // DetailsPictureBox
             // 
             this.DetailsPictureBox.Image = ((System.Drawing.Image)(resources.GetObject("DetailsPictureBox.Image")));
-            this.DetailsPictureBox.Location = new System.Drawing.Point(2, 387);
+            this.DetailsPictureBox.Location = new System.Drawing.Point(2, 449);
             this.DetailsPictureBox.Name = "DetailsPictureBox";
             this.DetailsPictureBox.Size = new System.Drawing.Size(457, 128);
             this.DetailsPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -131,7 +132,7 @@
             this.OpenFormLogin.AutoSize = true;
             this.OpenFormLogin.Font = new System.Drawing.Font("Segoe UI Variable Text", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.OpenFormLogin.LinkColor = System.Drawing.Color.RoyalBlue;
-            this.OpenFormLogin.Location = new System.Drawing.Point(136, 413);
+            this.OpenFormLogin.Location = new System.Drawing.Point(136, 477);
             this.OpenFormLogin.Name = "OpenFormLogin";
             this.OpenFormLogin.Size = new System.Drawing.Size(174, 17);
             this.OpenFormLogin.TabIndex = 12;
@@ -144,13 +145,34 @@
             // 
             this.InfoPictureBox.Cursor = System.Windows.Forms.Cursors.Hand;
             this.InfoPictureBox.Image = global::Napitki_Altay2.Properties.Resources.Picture2RegForm;
-            this.InfoPictureBox.Location = new System.Drawing.Point(72, 259);
+            this.InfoPictureBox.Location = new System.Drawing.Point(70, 261);
             this.InfoPictureBox.Name = "InfoPictureBox";
             this.InfoPictureBox.Size = new System.Drawing.Size(32, 27);
             this.InfoPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.InfoPictureBox.TabIndex = 13;
             this.InfoPictureBox.TabStop = false;
             this.InfoPictureBox.Click += new System.EventHandler(this.InfoPictureBox_Click);
+            // 
+            // EmailTextBox
+            // 
+            this.EmailTextBox.BackColor = System.Drawing.Color.White;
+            this.EmailTextBox.BorderColor = System.Drawing.Color.RoyalBlue;
+            this.EmailTextBox.BorderFocusColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
+            this.EmailTextBox.BorderSize = 2;
+            this.EmailTextBox.Font = new System.Drawing.Font("Segoe UI Variable Text", 10.2F);
+            this.EmailTextBox.ForeColor = System.Drawing.Color.Black;
+            this.EmailTextBox.Location = new System.Drawing.Point(111, 305);
+            this.EmailTextBox.Margin = new System.Windows.Forms.Padding(4);
+            this.EmailTextBox.Multiline = false;
+            this.EmailTextBox.Name = "EmailTextBox";
+            this.EmailTextBox.Padding = new System.Windows.Forms.Padding(7);
+            this.EmailTextBox.PasswordChar = false;
+            this.EmailTextBox.Size = new System.Drawing.Size(239, 37);
+            this.EmailTextBox.TabIndex = 14;
+            this.EmailTextBox.Texts = "Ваш Email";
+            this.EmailTextBox.UnderlinedStyle = false;
+            this.EmailTextBox.Enter += new System.EventHandler(this.User_Enter_In_TextBox_Email_Create);
+            this.EmailTextBox.Leave += new System.EventHandler(this.User_Leave_From_TextBox_Email_Create);
             // 
             // RegisterAccountButton
             // 
@@ -163,7 +185,7 @@
             this.RegisterAccountButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.RegisterAccountButton.Font = new System.Drawing.Font("Segoe UI Semibold", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.RegisterAccountButton.ForeColor = System.Drawing.Color.White;
-            this.RegisterAccountButton.Location = new System.Drawing.Point(167, 354);
+            this.RegisterAccountButton.Location = new System.Drawing.Point(167, 413);
             this.RegisterAccountButton.Name = "RegisterAccountButton";
             this.RegisterAccountButton.Size = new System.Drawing.Size(126, 54);
             this.RegisterAccountButton.TabIndex = 9;
@@ -181,7 +203,7 @@
             this.ChooseRoleTextBox.Enabled = false;
             this.ChooseRoleTextBox.Font = new System.Drawing.Font("Segoe UI Variable Text", 10.2F);
             this.ChooseRoleTextBox.ForeColor = System.Drawing.Color.Black;
-            this.ChooseRoleTextBox.Location = new System.Drawing.Point(111, 305);
+            this.ChooseRoleTextBox.Location = new System.Drawing.Point(111, 357);
             this.ChooseRoleTextBox.Margin = new System.Windows.Forms.Padding(4);
             this.ChooseRoleTextBox.Multiline = false;
             this.ChooseRoleTextBox.Name = "ChooseRoleTextBox";
@@ -258,7 +280,8 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(461, 516);
+            this.ClientSize = new System.Drawing.Size(461, 579);
+            this.Controls.Add(this.EmailTextBox);
             this.Controls.Add(this.InfoPictureBox);
             this.Controls.Add(this.OpenFormLogin);
             this.Controls.Add(this.VisiblePassCheckRegForm);
@@ -300,5 +323,6 @@
         private System.Windows.Forms.CheckBox VisiblePassCheckRegForm;
         private System.Windows.Forms.LinkLabel OpenFormLogin;
         private System.Windows.Forms.PictureBox InfoPictureBox;
+        private Design.CustomTextBox EmailTextBox;
     }
 }
