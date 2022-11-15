@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
 using System.Runtime.Remoting.Messaging;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 #endregion
 
@@ -205,6 +206,8 @@ namespace Napitki_Altay2
                             return;
                         if (CheckPass(PasswordCreateTextBox.Texts, 8, 15))
                             return;
+                        if (IsValidEmail(EmailTextBox.Texts))
+                            return;
                         int chooseRole = CheckUserRole();
                         string sqlCom = "insert " +
                                 "into Authentication_" +
@@ -285,6 +288,25 @@ namespace Napitki_Altay2
                 return false;
         }
         #endregion
+        public Boolean IsValidEmail(string email)
+        {
+            Regex emailRegex = new Regex
+                (@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$", 
+                RegexOptions.IgnoreCase);
+            if (emailRegex.IsMatch(email)) 
+            {
+                return false;
+            }
+            else
+            {
+                MessageBox.Show("Email введен некорректно!",
+                    "Ошибка",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+                return true;
+            }
+        }
+        #region [Проверка пароля (надёжность)]
         public Boolean CheckPass(string inputPass, 
             int minLenght, int maxLenght)
         {
@@ -327,6 +349,7 @@ namespace Napitki_Altay2
                     MessageBoxIcon.Error);
             return true;
         }
+        #endregion
         #region [Событие перехода на форму AuthForm]
         /// <summary>
         /// Открытие формы авторизации, 
@@ -341,11 +364,14 @@ namespace Napitki_Altay2
             this.Hide();
         }
         #endregion
+        #region [Закрытие формы]
         private void RegistrationForm_FormClosed
             (object sender, FormClosedEventArgs e)
         {
             Application.Exit();
         }
+        #endregion
+        #region [Подсказка к паролю]
         private void InfoPictureBox_Click(object sender, EventArgs e)
         {
             MessageBox.Show("• Пароль должен содержать " +
@@ -356,5 +382,6 @@ namespace Napitki_Altay2
                 "\n• Пароль должен содержать 1 спецсимвол", "Информация", 
                 MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
+        #endregion
     }
 }
