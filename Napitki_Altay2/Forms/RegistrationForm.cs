@@ -215,49 +215,7 @@ namespace Napitki_Altay2
                         if (IsValidEmail(EmailTextBox.Texts))
                             return;
                         this.Enabled = false;
-                        MimeMessage mimeMessage = new MimeMessage();
-                        mimeMessage.From.Add(new MailboxAddress
-                            ("Волчихинский Пивоваренный Завод", 
-                            "napitki-altay@mail.ru"));
-                        mimeMessage.To.Add
-                            (MailboxAddress.Parse(EmailTextBox.Texts));
-                        mimeMessage.Subject 
-                            = $"Код подтверждения: {unicCode}";
-                        mimeMessage.Body = new TextPart("html")
-                        {
-                            Text = "<b>Мы очень рады, что Вы, решили " +
-                            "воспользоваться нашим приложением!</b>" +
-                            $"<br>Ваш код подтверждения: " +
-                            $"<b>{unicCode}</b>"
-                        };
-                        SmtpClient smtpClient = new SmtpClient();
-                        try
-                        {
-                            smtpClient.Connect
-                                ("smtp.mail.ru", 465, true);
-                            smtpClient.Authenticate
-                                ("napitki-altay@mail.ru", 
-                                "5TGsxjXKrXYpVxeajrgY");
-                            smtpClient.Send(mimeMessage);
-                            AuthEmailForm authEmailForm 
-                                = new AuthEmailForm();
-                            authEmailForm.FormClosed 
-                                += new FormClosedEventHandler
-                                (AuthEmailForm_FormClosed);
-                            authEmailForm.Show();
-                        }
-                        catch(Exception ex)
-                        {
-                            MessageBox.Show(ex.Message, 
-                                "Ошибка", 
-                                MessageBoxButtons.OK, 
-                                MessageBoxIcon.Error);
-                        }
-                        finally
-                        {
-                            smtpClient.Disconnect(true);
-                            smtpClient.Dispose();
-                        }
+                        SMTPCon();
                     }
                 }
             }
@@ -273,11 +231,57 @@ namespace Napitki_Altay2
                 datebaseCon.closeConnection();
             }
         }
+
+        private void SMTPCon()
+        {
+            MimeMessage mimeMessage = new MimeMessage();
+            mimeMessage.From.Add(new MailboxAddress
+                ("Волчихинский Пивоваренный Завод",
+                "napitki-altay@mail.ru"));
+            mimeMessage.To.Add
+                (MailboxAddress.Parse(EmailTextBox.Texts));
+            mimeMessage.Subject
+                = $"Код подтверждения: {unicCode}";
+            mimeMessage.Body = new TextPart("html")
+            {
+                Text = "<b>Мы очень рады, что Вы, решили " +
+                "воспользоваться нашим приложением!</b>" +
+                $"<br>Ваш код подтверждения: " +
+                $"<b>{unicCode}</b>"
+            };
+            SmtpClient smtpClient = new SmtpClient();
+            try
+            {
+                smtpClient.Connect
+                    ("smtp.mail.ru", 465, true);
+                smtpClient.Authenticate
+                    ("napitki-altay@mail.ru",
+                    "5TGsxjXKrXYpVxeajrgY");
+                smtpClient.Send(mimeMessage);
+                AuthEmailForm authEmailForm
+                    = new AuthEmailForm();
+                authEmailForm.FormClosed
+                    += new FormClosedEventHandler
+                    (AuthEmailForm_FormClosed);
+                authEmailForm.Show();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message,
+                    "Ошибка",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+            }
+            finally
+            {
+                smtpClient.Disconnect(true);
+                smtpClient.Dispose();
+            }
+        }
+
         void AuthEmailForm_FormClosed(object sender, FormClosedEventArgs e)
         {
             this.Enabled = true;
-            AuthEmailForm authEmailForm 
-                = new AuthEmailForm();
             bool rightCode = (sender as AuthEmailForm).rightCode;
             if (rightCode == true)
             {
@@ -307,7 +311,7 @@ namespace Napitki_Altay2
         }
         private int CheckUserRole()
         {
-            int chooseRole = 0;
+            int chooseRole;
             if (ChooseRoleTextBox.Texts == "Администратор")
                 chooseRole = 1;
             else if (ChooseRoleTextBox.Texts == "Сотрудник")
