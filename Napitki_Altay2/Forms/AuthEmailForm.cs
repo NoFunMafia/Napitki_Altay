@@ -32,9 +32,6 @@ namespace Napitki_Altay2.Forms
             else
             {
                 rightCode = false;
-                MessageBox.Show("Неверный код подтверждения!", 
-                    "Ошибка", MessageBoxButtons.OK, 
-                    MessageBoxIcon.Error);
             }
         }
     }

@@ -304,14 +304,6 @@ namespace Napitki_Altay2
                     this.Hide();
                 }
             }
-            else if (rightCode == false)
-            {
-                MessageBox.Show("Не удалось " +
-                    "проверить код подтверждения, " +
-                    "повторите попытку позже!",
-                    "Ошибка", MessageBoxButtons.OK,
-                    MessageBoxIcon.Error);
-            }
         }
         private int CheckUserRole()
         {
