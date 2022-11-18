@@ -30,50 +30,27 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RegistrationForm));
-            this.RegPictureBox = new System.Windows.Forms.PictureBox();
-            this.ChoosePictureBox = new System.Windows.Forms.PictureBox();
             this.RoleContextMenuStip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.сотрудникToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.заказчикToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.DetailsPictureBox = new System.Windows.Forms.PictureBox();
             this.VisiblePassCheckRegForm = new System.Windows.Forms.CheckBox();
             this.OpenFormLogin = new System.Windows.Forms.LinkLabel();
-            this.InfoPictureBox = new System.Windows.Forms.PictureBox();
             this.EmailTextBox = new Napitki_Altay2.Design.CustomTextBox();
             this.RegisterAccountButton = new Napitki_Altay2.Design.CustomButton();
             this.ChooseRoleTextBox = new Napitki_Altay2.Design.CustomTextBox();
             this.PasswordCreateTextBox = new Napitki_Altay2.Design.CustomTextBox();
             this.LoginCreateTextBox = new Napitki_Altay2.Design.CustomTextBox();
             this.CustomFormForAllProject = new Napitki_Altay2.Components.FormStyleCustom(this.components);
-            ((System.ComponentModel.ISupportInitialize)(this.RegPictureBox)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ChoosePictureBox)).BeginInit();
+            this.InfoPictureBox = new System.Windows.Forms.PictureBox();
+            this.ChoosePictureBox = new System.Windows.Forms.PictureBox();
+            this.RegPictureBox = new System.Windows.Forms.PictureBox();
+            this.DetailsPictureBox = new System.Windows.Forms.PictureBox();
             this.RoleContextMenuStip.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.DetailsPictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.InfoPictureBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ChoosePictureBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.RegPictureBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.DetailsPictureBox)).BeginInit();
             this.SuspendLayout();
-            // 
-            // RegPictureBox
-            // 
-            this.RegPictureBox.BackColor = System.Drawing.Color.White;
-            this.RegPictureBox.Image = global::Napitki_Altay2.Properties.Resources.PictureLoginForm;
-            this.RegPictureBox.Location = new System.Drawing.Point(111, 10);
-            this.RegPictureBox.Name = "RegPictureBox";
-            this.RegPictureBox.Size = new System.Drawing.Size(239, 211);
-            this.RegPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.RegPictureBox.TabIndex = 4;
-            this.RegPictureBox.TabStop = false;
-            // 
-            // ChoosePictureBox
-            // 
-            this.ChoosePictureBox.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.ChoosePictureBox.Image = global::Napitki_Altay2.Properties.Resources.PictureRegForm;
-            this.ChoosePictureBox.Location = new System.Drawing.Point(313, 362);
-            this.ChoosePictureBox.Name = "ChoosePictureBox";
-            this.ChoosePictureBox.Size = new System.Drawing.Size(32, 27);
-            this.ChoosePictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.ChoosePictureBox.TabIndex = 8;
-            this.ChoosePictureBox.TabStop = false;
-            this.ChoosePictureBox.Click += new System.EventHandler(this.ChoosePictureBox_Click);
             // 
             // RoleContextMenuStip
             // 
@@ -99,16 +76,6 @@
             this.заказчикToolStripMenuItem.Size = new System.Drawing.Size(163, 26);
             this.заказчикToolStripMenuItem.Text = "Заявитель";
             this.заказчикToolStripMenuItem.Click += new System.EventHandler(this.заказчикToolStripMenuItem_Click);
-            // 
-            // DetailsPictureBox
-            // 
-            this.DetailsPictureBox.Image = ((System.Drawing.Image)(resources.GetObject("DetailsPictureBox.Image")));
-            this.DetailsPictureBox.Location = new System.Drawing.Point(2, 449);
-            this.DetailsPictureBox.Name = "DetailsPictureBox";
-            this.DetailsPictureBox.Size = new System.Drawing.Size(457, 128);
-            this.DetailsPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.DetailsPictureBox.TabIndex = 10;
-            this.DetailsPictureBox.TabStop = false;
             // 
             // VisiblePassCheckRegForm
             // 
@@ -140,18 +107,6 @@
             this.OpenFormLogin.Text = "Уже есть аккаунт? Войдите!";
             this.OpenFormLogin.VisitedLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
             this.OpenFormLogin.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.OpenFormLogin_LinkClicked);
-            // 
-            // InfoPictureBox
-            // 
-            this.InfoPictureBox.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.InfoPictureBox.Image = global::Napitki_Altay2.Properties.Resources.Picture2RegForm;
-            this.InfoPictureBox.Location = new System.Drawing.Point(70, 261);
-            this.InfoPictureBox.Name = "InfoPictureBox";
-            this.InfoPictureBox.Size = new System.Drawing.Size(32, 27);
-            this.InfoPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.InfoPictureBox.TabIndex = 13;
-            this.InfoPictureBox.TabStop = false;
-            this.InfoPictureBox.Click += new System.EventHandler(this.InfoPictureBox_Click);
             // 
             // EmailTextBox
             // 
@@ -275,6 +230,51 @@
             this.CustomFormForAllProject.HeaderTextColor = System.Drawing.Color.White;
             this.CustomFormForAllProject.HeaderTextFont = new System.Drawing.Font("Segoe UI", 12F);
             // 
+            // InfoPictureBox
+            // 
+            this.InfoPictureBox.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.InfoPictureBox.Image = global::Napitki_Altay2.Properties.Resources.Picture2RegForm;
+            this.InfoPictureBox.Location = new System.Drawing.Point(70, 261);
+            this.InfoPictureBox.Name = "InfoPictureBox";
+            this.InfoPictureBox.Size = new System.Drawing.Size(32, 27);
+            this.InfoPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.InfoPictureBox.TabIndex = 13;
+            this.InfoPictureBox.TabStop = false;
+            this.InfoPictureBox.Click += new System.EventHandler(this.InfoPictureBox_Click);
+            // 
+            // ChoosePictureBox
+            // 
+            this.ChoosePictureBox.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.ChoosePictureBox.Image = global::Napitki_Altay2.Properties.Resources.PictureRegForm;
+            this.ChoosePictureBox.Location = new System.Drawing.Point(313, 362);
+            this.ChoosePictureBox.Name = "ChoosePictureBox";
+            this.ChoosePictureBox.Size = new System.Drawing.Size(32, 27);
+            this.ChoosePictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.ChoosePictureBox.TabIndex = 8;
+            this.ChoosePictureBox.TabStop = false;
+            this.ChoosePictureBox.Click += new System.EventHandler(this.ChoosePictureBox_Click);
+            // 
+            // RegPictureBox
+            // 
+            this.RegPictureBox.BackColor = System.Drawing.Color.White;
+            this.RegPictureBox.Image = global::Napitki_Altay2.Properties.Resources.PictureLoginForm;
+            this.RegPictureBox.Location = new System.Drawing.Point(111, 10);
+            this.RegPictureBox.Name = "RegPictureBox";
+            this.RegPictureBox.Size = new System.Drawing.Size(239, 211);
+            this.RegPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.RegPictureBox.TabIndex = 4;
+            this.RegPictureBox.TabStop = false;
+            // 
+            // DetailsPictureBox
+            // 
+            this.DetailsPictureBox.Image = ((System.Drawing.Image)(resources.GetObject("DetailsPictureBox.Image")));
+            this.DetailsPictureBox.Location = new System.Drawing.Point(2, 449);
+            this.DetailsPictureBox.Name = "DetailsPictureBox";
+            this.DetailsPictureBox.Size = new System.Drawing.Size(457, 128);
+            this.DetailsPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.DetailsPictureBox.TabIndex = 10;
+            this.DetailsPictureBox.TabStop = false;
+            // 
             // RegistrationForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -297,11 +297,11 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Регистрация";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.RegistrationForm_FormClosed);
-            ((System.ComponentModel.ISupportInitialize)(this.RegPictureBox)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ChoosePictureBox)).EndInit();
             this.RoleContextMenuStip.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.DetailsPictureBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.InfoPictureBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ChoosePictureBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.RegPictureBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.DetailsPictureBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

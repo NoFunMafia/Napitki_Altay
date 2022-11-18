@@ -1,11 +1,15 @@
 ﻿#region [using's]
+using Napitki_Altay2.Forms;
 using System;
 using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
-using System.Runtime.Remoting.Messaging;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
+using System.Threading.Tasks;
+using MailKit.Net.Smtp;
+using MailKit;
+using MimeKit;
 #endregion
 
 namespace Napitki_Altay2
@@ -15,6 +19,7 @@ namespace Napitki_Altay2
         #region [Подключение класса соединения с БД]
         // Использование класса соединения с БД
         DataBaseCon datebaseCon = new DataBaseCon();
+        public static int unicCode;
         #endregion
         public RegistrationForm()
         {
@@ -175,7 +180,6 @@ namespace Napitki_Altay2
         private void RegisterAccountButton_Click
             (object sender, EventArgs e)
         {
-            bool success;
             try // Открытие соединения, проверка работы БД
             {
                 if (ChooseRoleTextBox.Texts == "Роль пользователя")
@@ -202,32 +206,57 @@ namespace Napitki_Altay2
                     }
                     else
                     {
+                        Random rand = new Random();
+                        unicCode = rand.Next(100000, 999999);
                         if (CheckLoginUserInDB())
                             return;
                         if (CheckPass(PasswordCreateTextBox.Texts, 8, 15))
                             return;
                         if (IsValidEmail(EmailTextBox.Texts))
                             return;
-                        int chooseRole = CheckUserRole();
-                        string sqlCom = "insert " +
-                                "into Authentication_" +
-                                "(Login_User, Password_User, " +
-                                "FK_Role_User, Email) " +
-                                $"values ('{LoginCreateTextBox.Texts}', " +
-                                $"'{PasswordCreateTextBox.Texts}', " +
-                                $"'{chooseRole}', '{EmailTextBox.Texts}')";
-                        SqlCommand check = Check(sqlCom);
-                        datebaseCon.openConnection();
-                        using (var datareader = check.ExecuteReader())
+                        this.Enabled = false;
+                        MimeMessage mimeMessage = new MimeMessage();
+                        mimeMessage.From.Add(new MailboxAddress
+                            ("Волчихинский Пивоваренный Завод", 
+                            "napitki-altay@mail.ru"));
+                        mimeMessage.To.Add
+                            (MailboxAddress.Parse(EmailTextBox.Texts));
+                        mimeMessage.Subject 
+                            = $"Код подтверждения: {unicCode}";
+                        mimeMessage.Body = new TextPart("html")
                         {
-                            success = datareader.Read();
-                            MessageBox.Show
-                                ("Пользователь успешно добавлен!",
-                            "Информация", MessageBoxButtons.OK,
-                            MessageBoxIcon.Information);
-                            AuthForm authForm = new AuthForm();
-                            authForm.Show();
-                            this.Hide();
+                            Text = "<b>Мы очень рады, что Вы, решили " +
+                            "воспользоваться нашим приложением!</b>" +
+                            $"<br>Ваш код подтверждения: " +
+                            $"<b>{unicCode}</b>"
+                        };
+                        SmtpClient smtpClient = new SmtpClient();
+                        try
+                        {
+                            smtpClient.Connect
+                                ("smtp.mail.ru", 465, true);
+                            smtpClient.Authenticate
+                                ("napitki-altay@mail.ru", 
+                                "5TGsxjXKrXYpVxeajrgY");
+                            smtpClient.Send(mimeMessage);
+                            AuthEmailForm authEmailForm 
+                                = new AuthEmailForm();
+                            authEmailForm.FormClosed 
+                                += new FormClosedEventHandler
+                                (AuthEmailForm_FormClosed);
+                            authEmailForm.Show();
+                        }
+                        catch(Exception ex)
+                        {
+                            MessageBox.Show(ex.Message, 
+                                "Ошибка", 
+                                MessageBoxButtons.OK, 
+                                MessageBoxIcon.Error);
+                        }
+                        finally
+                        {
+                            smtpClient.Disconnect(true);
+                            smtpClient.Dispose();
                         }
                     }
                 }
@@ -242,6 +271,46 @@ namespace Napitki_Altay2
             finally // Закрытие соединения с БД
             {
                 datebaseCon.closeConnection();
+            }
+        }
+        void AuthEmailForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            this.Enabled = true;
+            AuthEmailForm authEmailForm 
+                = new AuthEmailForm();
+            bool rightCode = (sender as AuthEmailForm).rightCode;
+            if (rightCode == true)
+            {
+                int chooseRole = CheckUserRole();
+                string sqlCom = "insert " +
+                "into Authentication_" +
+                "(Login_User, Password_User, " +
+                "FK_Role_User, Email) " +
+                $"values ('{LoginCreateTextBox.Texts}', " +
+                $"'{PasswordCreateTextBox.Texts}', " +
+                $"'{chooseRole}', '{EmailTextBox.Texts}')";
+                SqlCommand check = Check(sqlCom);
+                datebaseCon.openConnection();
+                using (var datareader
+                    = check.ExecuteReader())
+                {
+                    datareader.Read();
+                    MessageBox.Show
+                        ("Пользователь успешно добавлен!",
+                        "Информация", MessageBoxButtons.OK,
+                        MessageBoxIcon.Information);
+                    AuthForm authForm = new AuthForm();
+                    authForm.Show();
+                    this.Hide();
+                }
+            }
+            else if (rightCode == false)
+            {
+                MessageBox.Show("Не удалось " +
+                    "проверить код подтверждения, " +
+                    "повторите попытку позже!",
+                    "Ошибка", MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
             }
         }
         private int CheckUserRole()
@@ -288,6 +357,7 @@ namespace Napitki_Altay2
                 return false;
         }
         #endregion
+        #region [Проверка правильности ввода Email адреса]
         public Boolean IsValidEmail(string email)
         {
             Regex emailRegex = new Regex
@@ -306,6 +376,7 @@ namespace Napitki_Altay2
                 return true;
             }
         }
+        #endregion
         #region [Проверка пароля (надёжность)]
         public Boolean CheckPass(string inputPass, 
             int minLenght, int maxLenght)

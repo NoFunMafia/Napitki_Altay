@@ -527,7 +527,7 @@ namespace Napitki_Altay2.Forms
                         sqlCommand.ExecuteReader();
                     }
                 }
-                catch(Exception ex)
+                catch
                 {
                     MessageBox.Show("Невозможно удалить " +
                         "завершенное обращение!", 
