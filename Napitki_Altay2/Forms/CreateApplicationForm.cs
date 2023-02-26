@@ -5,13 +5,16 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.Data.SqlClient;
 using System.IO;
+using Napitki_Altay2.Classes;
+using System.Data.Common;
 #endregion
 namespace Napitki_Altay2.Forms
 {
     public partial class CreateApplicationForm : Form
     {
         #region [Переменные для работы с БД]
-        DataBaseCon dateBaseCon = new DataBaseCon();
+        DataBaseWork dateBaseCon = new DataBaseWork();
+        //DataBaseCom dataGridFill = new DataBaseCom();
         public string fk_info_user;
         public string fk_application_to_company;
         public string fk_application_document_from_user;
@@ -45,7 +48,7 @@ namespace Napitki_Altay2.Forms
                     $"and User_Patronymic = " +
                     $"'{MainWorkForm.PatronymicUserString}'";
                 SqlCommand check = Check(sqlComFK_Info_User);
-                dateBaseCon.openConnection();
+                dateBaseCon.OpenConnection();
                 using (var datareader = check.ExecuteReader())
                 {
                     successFK_Info_User = datareader.Read();
@@ -63,7 +66,7 @@ namespace Napitki_Altay2.Forms
             }
             finally
             {
-                dateBaseCon.closeConnection();
+                dateBaseCon.CloseConnection();
             }
             string filepath = DocumentTextBox.Texts;
             if(DocumentTextBox.Texts == "")
@@ -99,7 +102,7 @@ namespace Napitki_Altay2.Forms
                         SqlDataAdapter sqlDataAdapter = new SqlDataAdapter();
                         DataTable dataTable = new DataTable();
                         SqlCommand check = Check(sqlComApplCreate);
-                        dateBaseCon.openConnection();
+                        dateBaseCon.OpenConnection();
                         using (var datareader = check.ExecuteReader())
                         {
                             successApplCreate = datareader.Read();
@@ -121,7 +124,7 @@ namespace Napitki_Altay2.Forms
                     }
                     finally
                     {
-                        dateBaseCon.closeConnection();
+                        dateBaseCon.CloseConnection();
                     }
                 }
             }
@@ -155,9 +158,9 @@ namespace Napitki_Altay2.Forms
                             $"'{fk_info_user}')";
                         try
                         {
-                            dateBaseCon.openConnection();
+                            dateBaseCon.OpenConnection();
                             SqlCommand command = new SqlCommand
-                                (sqlQueryInsertFile, dateBaseCon.sqlConnection());
+                                (sqlQueryInsertFile, dateBaseCon.GetConnection());
                             command.Parameters.Add("@filename",
                                 SqlDbType.VarChar).Value = name;
                             DocName = name;
@@ -177,38 +180,21 @@ namespace Napitki_Altay2.Forms
                         }
                         finally
                         {
-                            dateBaseCon.closeConnection();
+                            dateBaseCon.CloseConnection();
                         }
                     }
-                    try
-                    {
-                        bool successFK_Application_Document_From_User;
-                        string sqlComFK_Application_From_User = $"select * " +
+                    // 777
+                    /*string sqlComFK_Application_From_User = $"select * " +
                             $"from Application_Document_From_User " +
                             $"where Document_Name = '{DocName}' " +
                             $"and Document_Extension = '{DocExtn}'";
-                        SqlCommand check = Check(sqlComFK_Application_From_User);
-                        dateBaseCon.openConnection();
-                        using (var datareader = check.ExecuteReader())
-                        {
-                            successFK_Application_Document_From_User
-                                = datareader.Read();
-                            {
-                                CheckDataRowsIDDocument(datareader);
-                            }
-                        }
-                    }
-                    catch (Exception ex)
+                    dataGridFill.FillTable(sqlComFK_Application_From_User);
+                    if (dataGridFill.dataReader.HasRows)
                     {
-                        MessageBox.Show(ex.Message,
-                                "Ошибка",
-                                MessageBoxButtons.OK,
-                                MessageBoxIcon.Error);
-                    }
-                    finally
-                    {
-                        dateBaseCon.closeConnection();
-                    }
+                        fk_application_document_from_user = 
+                            dataGridFill.dataReader.GetValue(0).ToString();
+                    }*/
+                    // 777
                     try
                     {
                         bool successApplCreate;
@@ -231,7 +217,7 @@ namespace Napitki_Altay2.Forms
                         SqlDataAdapter sqlDataAdapter = new SqlDataAdapter();
                         DataTable dataTable = new DataTable();
                         SqlCommand check = Check(sqlComApplCreate);
-                        dateBaseCon.openConnection();
+                        dateBaseCon.OpenConnection();
                         using (var datareader = check.ExecuteReader())
                         {
                             successApplCreate = datareader.Read();
@@ -253,7 +239,7 @@ namespace Napitki_Altay2.Forms
                     }
                     finally
                     {
-                        dateBaseCon.closeConnection();
+                        dateBaseCon.CloseConnection();
                     }
                 }
             }
@@ -269,12 +255,12 @@ namespace Napitki_Altay2.Forms
                 stream.Read(buffer, 0, buffer.Length);
                 var fileInfo = new FileInfo(filepath);
                 string name = fileInfo.Name;
-                DataBaseCon dataBaseCon = new DataBaseCon();
+                DataBaseWork dataBaseCon = new DataBaseWork();
                 DataTable dataTable = new DataTable();
                 SqlCommand command = new SqlCommand
                     ("select * from Application_Document_From_User " +
                     "where Document_Name=@docName",
-                    dataBaseCon.sqlConnection());
+                    dataBaseCon.GetConnection());
                 command.Parameters.Add
                     ("@docName", SqlDbType.VarChar).Value
                     = name;
@@ -300,7 +286,7 @@ namespace Napitki_Altay2.Forms
         private static int CheckDepartment(int chooseType)
         {
             int chooseDepartment;
-            if (chooseType == 2 || chooseType == 4)
+            if (chooseType == 1 || chooseType == 2)
             {
                 chooseDepartment = 4;
             }
@@ -366,7 +352,7 @@ namespace Napitki_Altay2.Forms
         /// <returns></returns>
         private SqlCommand Check(string command)
         {
-            return new SqlCommand(command, dateBaseCon.sqlConnection());
+            return new SqlCommand(command, dateBaseCon.GetConnection());
         }
         #endregion
         #region [Работа с ToolStripMenu, выбор типа обращения]

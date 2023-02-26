@@ -3,18 +3,25 @@ using System;
 using System.Data;
 using System.Windows.Forms;
 using System.Data.SqlClient;
+using Napitki_Altay2.Classes;
+using System.Collections.Generic;
+using System.Data.Common;
+using System.Linq;
+using System.Threading;
+using ClosedXML.Report.Utils;
 #endregion
 namespace Napitki_Altay2.Forms
 {
     public partial class MainWorkForm : Form
     {
-        #region [Подключение класса соединения с БД, объявление string переменных]
-        // Использование класса соединения с БД
-        DataBaseCon datebaseCon = new DataBaseCon();
+        #region [Подключение классов, объявление переменных]
+        // Класс запросов в БД
+        SqlQueries SqlQueries = new SqlQueries();
+        // Использование класса работы с БД
+        DataBaseWork dataBaseWork = new DataBaseWork();
         public static string SurnameUserString;
         public static string NameUserString;
         public static string PatronymicUserString;
-        static string fk_info_user_main_form;
         public static string SelectedROWIDInDGW;
         #endregion
         public MainWorkForm()
@@ -30,163 +37,47 @@ namespace Napitki_Altay2.Forms
         /// <param name="e"></param>
         private void MainWorkForm_Load(object sender, EventArgs e)
         {
-            try
-            {
-                bool successLoad;
-                // Передача значения Пароля из формы AuthForm
-                PassCreaUpdaTextBox.Texts = AuthForm.PasswordString;
-                string sqlComUserFIO = $"select * from Info_About_User " +
-                    $"join Authentication_ on Authentication_.FK_Info_User " +
-                    $"= Info_About_User.ID_Info_User " +
-                    $"where Authentication_.Login_User = " +
-                    $"'{AuthForm.LoginString}'";
-                SqlCommand check = Check(sqlComUserFIO);
-                datebaseCon.openConnection();
-                using (var datareader = check.ExecuteReader())
-                {
-                    successLoad = datareader.Read();
-                    {
-                        CheckDataReaderRowsInfo(datareader);
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message,
-                    "Ошибка",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Error);
-            }
-            finally
-            {
-                datebaseCon.closeConnection();
-            }
+            // Передача значения Пароля из формы AuthForm
+            PassCreaUpdaTextBox.Texts = AuthForm.PasswordString;
+            List<string[]> listSearch = 
+                dataBaseWork.GetMultiList(SqlQueries.sqlComRecFIO, 4);
+            CheckFIOinList(listSearch);
             LoadDataGridView();
             LoadDataGridViewComplete();
         }
         #endregion
         #region [Вывод данных в DGW]
         /// <summary>
-        /// Обновление данных в DGW
+        /// Вывод данных в DGW (обращения)
         /// </summary>
         private void LoadDataGridView()
         {
-            try
-            {
-                datebaseCon.openConnection();
-                SqlDataAdapter dataAdapter = new SqlDataAdapter
-                    ("select Id_Application, " +
-                    "Applicant_Company, User_Surname, " +
-                    "User_Name, " +
-                    "User_Patronymic, " +
-                    "Status_Name " +
-                    "from Application_To_Company" +
-                    " join Info_About_User on " +
-                    "Application_To_Company.FK_Info_User = " +
-                    "Info_About_User.ID_Info_User join " +
-                    "Status_Application on " +
-                    "Application_To_Company.FK_Status_Application" +
-                    " = Status_Application.ID_Status " +
-                    $"where Info_About_User.User_Name = " +
-                    $"'{NameCreateTextBox.Texts}' and " +
-                    $"Info_About_User.User_Surname = " +
-                    $"'{FamCreateTextBox.Texts}' and " +
-                    $"Info_About_User.User_Patronymic = " +
-                    $"'{PatrCreateTextBox.Texts}'",
-                    datebaseCon.sqlConnection());
-                DataTable dataTable = new DataTable();
-                dataAdapter.Fill(dataTable);
-                OutputInTableSetting(dataTable);
-                SurnameUserString = FamCreateTextBox.Texts;
-                NameUserString = NameCreateTextBox.Texts;
-                PatronymicUserString = PatrCreateTextBox.Texts;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message,
-                    "Ошибка",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Error);
-            }
-            finally
-            {
-                datebaseCon.closeConnection();
-            }
+            SurnameUserString = FamCreateTextBox.Texts;
+            NameUserString = NameCreateTextBox.Texts;
+            PatronymicUserString = PatrCreateTextBox.Texts;
+            OutputInTableSetting(dataBaseWork.OutputQuery
+                (SqlQueries.sqlOutputMWF
+                (NameUserString,
+                SurnameUserString,
+                PatronymicUserString)));
         }
         #endregion
         #region [Вывод данных в DGWC]
         /// <summary>
-        /// Обновление данных в DGW
+        /// Вывод данных в DGW (завершенные обращения)
         /// </summary>
         private void LoadDataGridViewComplete()
         {
-            bool successFK_Info_User;
-            try
-            {
-                string sqlComFK_Info_User = $"select * " +
-                    $"from Info_About_User " +
-                    $"where User_Surname = " +
-                    $"'{MainWorkForm.SurnameUserString}' " +
-                    $"and User_Name = '{MainWorkForm.NameUserString}' " +
-                    $"and User_Patronymic = " +
-                    $"'{MainWorkForm.PatronymicUserString}'";
-                SqlCommand check = Check(sqlComFK_Info_User);
-                datebaseCon.openConnection();
-                using (var datareader = check.ExecuteReader())
-                {
-                    successFK_Info_User = datareader.Read();
-                    {
-                        CheckDataReaderRowsIDUser(datareader);
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message,
-                    "Ошибка",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Error);
-            }
-            finally
-            {
-                datebaseCon.closeConnection();
-            }
-            try
-            {
-                datebaseCon.openConnection();
-                SqlDataAdapter dataAdapter = new SqlDataAdapter
-                    ("select FK_ID_Application, " +
-                    "User_Surname, User_Name, " +
-                    "User_Patronymic, " +
-                    "Date_Of_Answer " +
-                    "from Ready_Application " +
-                    "join Info_About_User on " +
-                    "Ready_Application.FK_Info_User " +
-                    "= Info_About_User.ID_Info_User " +
-                    "join Application_To_Company " +
-                    "on Application_To_Company.ID_Application " +
-                    "= Ready_Application.FK_ID_Application " +
-                    $"where Application_To_Company.FK_Info_User = " +
-                    $"'{fk_info_user_main_form}'",
-                    datebaseCon.sqlConnection());
-                DataTable dataTable = new DataTable();
-                dataAdapter.Fill(dataTable);
-                OutputInTableSettingTwo(dataTable);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message,
-                    "Ошибка",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Error);
-            }
-            finally
-            {
-                datebaseCon.closeConnection();
-            }
+            string fkInfoUser = dataBaseWork.GetString
+                (SqlQueries.sqlComIDUser
+                (SurnameUserString, 
+                NameUserString, 
+                PatronymicUserString));
+            OutputInTableSettingTwo
+                (dataBaseWork.OutputQuery
+                (SqlQueries.sqlComFKInfo(fkInfoUser)));
         }
         #endregion
-
         #region [Настройки вывода информации в CompleteApplicationDGW]
         /// <summary>
         /// Настройки вывода информации в DataGridViewApplication
@@ -210,19 +101,6 @@ namespace Napitki_Altay2.Forms
             CompleteApplicationDGWUser.Columns[4].HeaderText =
                 "Время ответа сотрудника";
             CompleteApplicationDGWUser.Columns[4].Width = 148;
-        }
-        #endregion
-        #region [Метод получения ID пользователя при составлении обращения]
-        /// <summary>
-        /// Метод получения ID пользователя при составлении обращения
-        /// </summary>
-        /// <param name="datareader"></param>
-        private void CheckDataReaderRowsIDUser(SqlDataReader datareader)
-        {
-            if (datareader.HasRows)
-            {
-                fk_info_user_main_form = datareader.GetValue(0).ToString();
-            }
         }
         #endregion
         #region [Настройки вывода информации в DataGridViewApplication]
@@ -251,44 +129,28 @@ namespace Napitki_Altay2.Forms
         /// <summary>
         /// Метод проверки наличия у пользователя заполненного ФИО в БД
         /// </summary>
-        /// <param name="datareader"></param>
-        private void CheckDataReaderRowsInfo(SqlDataReader datareader)
+        /// <param name="strings">Коллекция значений 
+        /// полученных из запроса в БД</param>
+        public void CheckFIOinList(List<string[]> strings)
         {
-            if (datareader.HasRows)
+            if(strings != null)
             {
-                FamCreateTextBox.Texts =
-                    datareader.GetValue(1).ToString();
-                CreateUserFIOButton.Enabled = false;
-                ((Control)this.ApplicationPage).Enabled = true;
+                foreach (string[] item in strings)
+                {
+                    FamCreateTextBox.Texts =
+                    item.GetValue(1).ToString();
+                    NameCreateTextBox.Texts =
+                    item.GetValue(2).ToString();
+                    PatrCreateTextBox.Texts =
+                    item.GetValue(3).ToString();
+                    CreateUserFIOButton.Enabled = false;
+                    ((Control)this.ApplicationPage).Enabled = true;
+                }
             }
             else
             {
                 FamCreateTextBox.Texts = "";
-                ((Control)this.ApplicationPage).Enabled = false;
-                InfoApplicationLabel.Visible = true;
-            }
-            if (datareader.HasRows)
-            {
-                NameCreateTextBox.Texts =
-                    datareader.GetValue(2).ToString();
-                CreateUserFIOButton.Enabled = false;
-                ((Control)this.ApplicationPage).Enabled = true;
-            }
-            else
-            {
                 NameCreateTextBox.Texts = "";
-                ((Control)this.ApplicationPage).Enabled = false;
-                InfoApplicationLabel.Visible = true;
-            }
-            if (datareader.HasRows)
-            {
-                PatrCreateTextBox.Texts =
-                    datareader.GetValue(3).ToString();
-                CreateUserFIOButton.Enabled = false;
-                ((Control)this.ApplicationPage).Enabled = true;
-            }
-            else
-            {
                 PatrCreateTextBox.Texts = "";
                 ((Control)this.ApplicationPage).Enabled = false;
                 InfoApplicationLabel.Visible = true;
@@ -298,18 +160,15 @@ namespace Napitki_Altay2.Forms
         #region [Изменение пароля пользователя]
         private void UpdLogPassButton_Click(object sender, EventArgs e)
         {
+
             bool success;
             try
             {
                 string sqlCom = "update Authentication_ " +
                     "set Password_User = " +
-                    "@updPass where Login_User = @oldLog";
+                    $"{PassCreaUpdaTextBox.Texts} where Login_User = {AuthForm.LoginString}";
                 SqlCommand check = Check(sqlCom);
-                check.Parameters.AddWithValue("@updPass", 
-                    PassCreaUpdaTextBox.Texts);
-                check.Parameters.AddWithValue("@oldLog", 
-                    AuthForm.LoginString);
-                datebaseCon.openConnection();
+                dataBaseWork.OpenConnection();
                 using (var dataReader = check.ExecuteReader())
                 {
                     success = dataReader.Read();
@@ -329,7 +188,7 @@ namespace Napitki_Altay2.Forms
             }
             finally
             {
-                datebaseCon.closeConnection();
+                dataBaseWork.CloseConnection();
             }
         }
         #endregion
@@ -341,7 +200,7 @@ namespace Napitki_Altay2.Forms
         /// <returns></returns>
         private SqlCommand Check(string command)
         {
-            return new SqlCommand(command, datebaseCon.sqlConnection());
+            return new SqlCommand(command, dataBaseWork.GetConnection());
         }
         #endregion
         #region [Событие нажатия на кнопку CreateUserFIOButton]
@@ -383,7 +242,7 @@ namespace Napitki_Altay2.Forms
                         $"'{AuthForm.LoginString}'";
                     SqlCommand check = Check(sqlComFIO);
                     SqlCommand check2 = Check(sqlComFIO2);
-                    datebaseCon.openConnection();
+                    dataBaseWork.OpenConnection();
                     using (var datareader = check.ExecuteReader())
                     {
                         success = datareader.Read();
@@ -408,7 +267,7 @@ namespace Napitki_Altay2.Forms
             }
             finally
             {
-                datebaseCon.closeConnection();
+                dataBaseWork.CloseConnection();
             }
         }
         #endregion
@@ -419,12 +278,12 @@ namespace Napitki_Altay2.Forms
         /// <returns>True - занят, false - свободен</returns>
         public Boolean CheckFIOUserInDB()
         {
-            DataBaseCon dataBaseCon = new DataBaseCon();
+            DataBaseWork dataBaseCon = new DataBaseWork();
             DataTable dataTable = new DataTable();
             SqlCommand command = new SqlCommand
                 ("select * from Info_About_User where User_Surname=@usSur " +
                 "and User_Name=@usName and User_Patronymic=@usPat",
-                dataBaseCon.sqlConnection());
+                dataBaseCon.GetConnection());
             command.Parameters.Add
                 ("@usSur", SqlDbType.VarChar).Value
                 = FamCreateTextBox.Texts;
@@ -464,7 +323,7 @@ namespace Napitki_Altay2.Forms
         {
             try
             {
-                datebaseCon.openConnection();
+                dataBaseWork.OpenConnection();
                 SqlDataAdapter dataAdapter = new SqlDataAdapter
                     ("select Id_Application, " +
                     "Applicant_Company, User_Surname, " +
@@ -483,7 +342,7 @@ namespace Napitki_Altay2.Forms
                     $"'{FamCreateTextBox.Texts}' and " +
                     $"Info_About_User.User_Patronymic = " +
                     $"'{PatrCreateTextBox.Texts}'",
-                    datebaseCon.sqlConnection());
+                    dataBaseWork.GetConnection());
                 DataTable dataTable = new DataTable();
                 dataAdapter.Fill(dataTable);
                 OutputInTableSetting(dataTable);
@@ -497,7 +356,7 @@ namespace Napitki_Altay2.Forms
             }
             finally
             {
-                datebaseCon.closeConnection();
+                dataBaseWork.CloseConnection();
             }
         }
         #endregion
@@ -518,10 +377,10 @@ namespace Napitki_Altay2.Forms
                     $"'{DataGridViewApplication.CurrentRow.Cells[0].Value}'";
                 SqlCommand sqlCommand = new SqlCommand
                     (sqlComDelete, 
-                    datebaseCon.sqlConnection());
+                    dataBaseWork.GetConnection());
                 try
                 {
-                    datebaseCon.openConnection();
+                    dataBaseWork.OpenConnection();
                     using(var datareader = sqlCommand)
                     {
                         sqlCommand.ExecuteReader();
@@ -537,7 +396,7 @@ namespace Napitki_Altay2.Forms
                 }
                 finally
                 {
-                    datebaseCon.closeConnection();
+                    dataBaseWork.CloseConnection();
                 }
                 LoadDataGridView();
             }

@@ -14,7 +14,7 @@ namespace Napitki_Altay2.Forms
     public partial class MainWorkFormWorker : Form
     {
         #region [Подключение к БД, инициализация переменных string]
-        DataBaseCon dataBaseCon = new DataBaseCon();
+        DataBaseWork dataBaseCon = new DataBaseWork();
         public static string SelectedRowID;
         public static string SurnameWorkerString;
         public static string NameWorkerString;
@@ -39,7 +39,7 @@ namespace Napitki_Altay2.Forms
                     $"where Authentication_.Login_User = " +
                     $"'{AuthForm.LoginString}'";
                 SqlCommand check = Check(sqlComUserFIO);
-                dataBaseCon.openConnection();
+                dataBaseCon.OpenConnection();
                 using (var datareader = check.ExecuteReader())
                 {
                     successLoad = datareader.Read();
@@ -57,7 +57,7 @@ namespace Napitki_Altay2.Forms
             }
             finally
             {
-                dataBaseCon.closeConnection();
+                dataBaseCon.CloseConnection();
             }
             LoadDataInDWG();
             LoadDataInDWGComplete();
@@ -119,7 +119,7 @@ namespace Napitki_Altay2.Forms
         /// <returns></returns>
         private SqlCommand Check(string command)
         {
-            return new SqlCommand(command, dataBaseCon.sqlConnection());
+            return new SqlCommand(command, dataBaseCon.GetConnection());
         }
         #endregion
         #region [Создание ФИО сотрудника]
@@ -161,7 +161,7 @@ namespace Napitki_Altay2.Forms
                         $"'{AuthForm.LoginString}'";
                     SqlCommand check = Check(sqlComFIO);
                     SqlCommand check2 = Check(sqlComFIO2);
-                    dataBaseCon.openConnection();
+                    dataBaseCon.OpenConnection();
                     using (var datareader = check.ExecuteReader())
                     {
                         success = datareader.Read();
@@ -186,7 +186,7 @@ namespace Napitki_Altay2.Forms
             }
             finally
             {
-                dataBaseCon.closeConnection();
+                dataBaseCon.CloseConnection();
             }
         }
         #endregion
@@ -197,12 +197,12 @@ namespace Napitki_Altay2.Forms
         /// <returns>True - занят, false - свободен</returns>
         public Boolean CheckFIOUserInDB()
         {
-            DataBaseCon dataBaseCon = new DataBaseCon();
+            DataBaseWork dataBaseCon = new DataBaseWork();
             DataTable dataTable = new DataTable();
             SqlCommand command = new SqlCommand
                 ("select * from Info_About_User where User_Surname=@usSur " +
                 "and User_Name=@usName and User_Patronymic=@usPat",
-                dataBaseCon.sqlConnection());
+                dataBaseCon.GetConnection());
             command.Parameters.Add
                 ("@usSur", SqlDbType.VarChar).Value
                 = FamWorkCreateTextBox.Texts;
@@ -233,7 +233,7 @@ namespace Napitki_Altay2.Forms
         {
             try
             {
-                dataBaseCon.openConnection();
+                dataBaseCon.OpenConnection();
                 SqlDataAdapter dataAdapter = new SqlDataAdapter
                     ("select FK_ID_Application, " +
                     "User_Surname, User_Name, " +
@@ -243,7 +243,7 @@ namespace Napitki_Altay2.Forms
                     "join Info_About_User on " +
                     "Ready_Application.FK_Info_User " +
                     "= Info_About_User.ID_Info_User",
-                    dataBaseCon.sqlConnection());
+                    dataBaseCon.GetConnection());
                 DataTable dataTable = new DataTable();
                 dataAdapter.Fill(dataTable);
                 OutputInTableSettingTwo(dataTable);
@@ -257,7 +257,7 @@ namespace Napitki_Altay2.Forms
             }
             finally
             {
-                dataBaseCon.closeConnection();
+                dataBaseCon.CloseConnection();
             }
         }
         #endregion
@@ -266,7 +266,7 @@ namespace Napitki_Altay2.Forms
         {
             try
             {
-                dataBaseCon.openConnection();
+                dataBaseCon.OpenConnection();
                 SqlDataAdapter dataAdapter = new SqlDataAdapter
                     ("select Id_Application, " +
                     "Applicant_Company, User_Surname, " +
@@ -289,7 +289,7 @@ namespace Napitki_Altay2.Forms
                     "FK_Status_Application " +
                     "= '1' or " +
                     "Application_To_Company.FK_Status_Application = '2'",
-                    dataBaseCon.sqlConnection());
+                    dataBaseCon.GetConnection());
                 DataTable dataTable = new DataTable();
                 dataAdapter.Fill(dataTable);
                 OutputInTableSetting(dataTable);
@@ -306,7 +306,7 @@ namespace Napitki_Altay2.Forms
             }
             finally
             {
-                dataBaseCon.closeConnection();
+                dataBaseCon.CloseConnection();
             }
         }
         #endregion
@@ -379,7 +379,7 @@ namespace Napitki_Altay2.Forms
                         $" set FK_Status_Application = " +
                         $"'2' where ID_Application = '{SelectedRowID}'";
                     SqlCommand check = Check(sqlComUserFIO);
-                    dataBaseCon.openConnection();
+                    dataBaseCon.OpenConnection();
                     using (var datareader = check.ExecuteReader())
                     {
                         successLoad = datareader.Read();
@@ -403,7 +403,7 @@ namespace Napitki_Altay2.Forms
                 }
                 finally
                 {
-                    dataBaseCon.closeConnection();
+                    dataBaseCon.CloseConnection();
                 }
             }
             else

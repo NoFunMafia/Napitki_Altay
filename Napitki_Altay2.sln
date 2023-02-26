@@ -5,6 +5,8 @@ VisualStudioVersion = 17.3.32922.545
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Napitki_Altay2", "Napitki_Altay2\Napitki_Altay2.csproj", "{E99D02F3-7141-40AC-AA9A-05AE774499D6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestForNapitki", "TestForNapitki\TestForNapitki.csproj", "{E363641F-0198-499C-8A1A-1BF9261E380C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{E99D02F3-7141-40AC-AA9A-05AE774499D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E99D02F3-7141-40AC-AA9A-05AE774499D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E99D02F3-7141-40AC-AA9A-05AE774499D6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E363641F-0198-499C-8A1A-1BF9261E380C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E363641F-0198-499C-8A1A-1BF9261E380C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E363641F-0198-499C-8A1A-1BF9261E380C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E363641F-0198-499C-8A1A-1BF9261E380C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

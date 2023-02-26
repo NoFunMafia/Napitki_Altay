@@ -6,9 +6,7 @@ using System.Data.SqlClient;
 using System.Drawing;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
-using System.Threading.Tasks;
 using MailKit.Net.Smtp;
-using MailKit;
 using MimeKit;
 #endregion
 
@@ -18,7 +16,7 @@ namespace Napitki_Altay2
     {
         #region [Подключение класса соединения с БД]
         // Использование класса соединения с БД
-        DataBaseCon datebaseCon = new DataBaseCon();
+        DataBaseWork datebaseCon = new DataBaseWork();
         public static int unicCode;
         #endregion
         public RegistrationForm()
@@ -34,7 +32,7 @@ namespace Napitki_Altay2
         /// <returns></returns>
         private SqlCommand Check(string dbQuery)
         {
-            return new SqlCommand(dbQuery, datebaseCon.sqlConnection());
+            return new SqlCommand(dbQuery, datebaseCon.GetConnection());
         }
         #endregion
         #region [Работа с ToolStripMenu, выбор прав пользователя]
@@ -228,10 +226,9 @@ namespace Napitki_Altay2
             }
             finally // Закрытие соединения с БД
             {
-                datebaseCon.closeConnection();
+                datebaseCon.CloseConnection();
             }
         }
-
         private void SMTPCon()
         {
             MimeMessage mimeMessage = new MimeMessage();
@@ -278,11 +275,10 @@ namespace Napitki_Altay2
                 smtpClient.Dispose();
             }
         }
-
         void AuthEmailForm_FormClosed(object sender, FormClosedEventArgs e)
         {
             this.Enabled = true;
-            bool rightCode = (sender as AuthEmailForm).rightCode;
+            bool rightCode = (sender as AuthEmailForm).RightCode;
             if (rightCode == true)
             {
                 int chooseRole = CheckUserRole();
@@ -294,7 +290,7 @@ namespace Napitki_Altay2
                 $"'{PasswordCreateTextBox.Texts}', " +
                 $"'{chooseRole}', '{EmailTextBox.Texts}')";
                 SqlCommand check = Check(sqlCom);
-                datebaseCon.openConnection();
+                datebaseCon.OpenConnection();
                 using (var datareader
                     = check.ExecuteReader())
                 {
@@ -329,12 +325,12 @@ namespace Napitki_Altay2
         /// ложь - свободен</returns>
         public Boolean CheckLoginUserInDB()
         {
-            DataBaseCon dataBaseCon = new DataBaseCon();
+            DataBaseWork dataBaseCon = new DataBaseWork();
             DataTable dataTable = new DataTable();
             SqlCommand command = new SqlCommand
                 ("select * from Authentication_ " +
                 "where Login_User=@usLog", 
-                dataBaseCon.sqlConnection());
+                dataBaseCon.GetConnection());
             command.Parameters.Add
                 ("@usLog", SqlDbType.VarChar).Value 
                 = LoginCreateTextBox.Texts;

@@ -10,9 +10,9 @@ namespace Napitki_Altay2
 {
     public partial class AuthForm : Form
     {
-        #region [Использование переменных и класса подключения к БД]
-        // Использование класса соединения с БД
-        DataBaseCon datebaseCon = new DataBaseCon();
+        #region [Использование переменных и класса работы с БД]
+        // Использование класса работы с БД
+        DataBaseWork datebaseWork = new DataBaseWork();
         /// <summary>
         /// Переменная хранащая логин пользователя для 
         /// передачи его в карточку на форме MainWorkForm
@@ -38,7 +38,7 @@ namespace Napitki_Altay2
         /// <returns></returns>
         private SqlCommand Check(string dbQuery)
         {
-            return new SqlCommand(dbQuery, datebaseCon.sqlConnection());
+            return new SqlCommand(dbQuery, datebaseWork.GetConnection());
         }
         #endregion
         #region [События фокусировки с TextBox'ами]
@@ -146,7 +146,7 @@ namespace Napitki_Altay2
                             $"'{LoginTextBox.Texts}' and " +
                             $"Password_User = '{PasswordTextBox.Texts}'";
                         SqlCommand checkRole = Check(sqlComRoleUser);
-                        datebaseCon.openConnection();
+                        datebaseWork.OpenConnection();
                         using (var datareader = checkRole.ExecuteReader())
                         {
                             successLoad = datareader.Read();
@@ -164,7 +164,7 @@ namespace Napitki_Altay2
                     }
                     finally
                     {
-                        datebaseCon.closeConnection();
+                        datebaseWork.CloseConnection();
                     }
                     string sqlComRole 
                         = $"select * from Authentication_ " +
@@ -172,12 +172,13 @@ namespace Napitki_Altay2
                         $"Password_User=@password and " +
                         $"FK_Role_User = '{RoleString}'";
                     SqlCommand check = Check(sqlComRole);
-                    check.Parameters.AddWithValue("@login",
+                    SqlCommand sqlCommand = new SqlCommand(sqlComRole, datebaseWork.GetConnection());
+                    sqlCommand.Parameters.AddWithValue("@login",
                         LoginTextBox.Texts);
-                    check.Parameters.AddWithValue("@password",
+                    sqlCommand.Parameters.AddWithValue("@password",
                         PasswordTextBox.Texts);
-                    datebaseCon.openConnection();
-                    using (var dataReader = check.ExecuteReader())
+                    datebaseWork.OpenConnection();
+                    using (var dataReader = sqlCommand.ExecuteReader())
                     {
                         LoginString = LoginTextBox.Texts;
                         PasswordString = PasswordTextBox.Texts;
@@ -220,7 +221,7 @@ namespace Napitki_Altay2
             }
             finally // Закрытие соединения с БД
             {
-                datebaseCon.closeConnection();
+                datebaseWork.CloseConnection();
             }
         }
         #endregion

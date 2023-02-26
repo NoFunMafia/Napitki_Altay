@@ -12,7 +12,7 @@ namespace Napitki_Altay2.Forms
 {
     public partial class AuthEmailForm : Form
     {
-        public bool rightCode { get; set; }
+        public bool RightCode { get; set; }
         public AuthEmailForm()
         {
             InitializeComponent();
@@ -26,12 +26,12 @@ namespace Napitki_Altay2.Forms
             if(EnterCodeTextBox.Texts 
                 == RegistrationForm.unicCode.ToString())
             {
-                rightCode = true;
+                RightCode = true;
                 this.Close();
             }
             else
             {
-                rightCode = false;
+                RightCode = false;
             }
         }
     }

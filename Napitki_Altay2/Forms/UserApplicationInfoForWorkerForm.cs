@@ -14,7 +14,7 @@ namespace Napitki_Altay2.Forms
 {
     public partial class UserApplicationInfoForWorkerForm : Form
     {
-        DataBaseCon dataBaseCon = new DataBaseCon();
+        DataBaseWork dataBaseCon = new DataBaseWork();
         public UserApplicationInfoForWorkerForm()
         {
             this.Location = new Point(40, 90);
@@ -90,7 +90,7 @@ namespace Napitki_Altay2.Forms
                     $"Id_Application = " +
                     $"'{MainWorkFormWorker.SelectedRowID}'";
                 SqlCommand check = Check(sqlComUserFIO);
-                dataBaseCon.openConnection();
+                dataBaseCon.OpenConnection();
                 using (var datareader = check.ExecuteReader())
                 {
                     successLoad = datareader.Read();
@@ -108,7 +108,7 @@ namespace Napitki_Altay2.Forms
             }
             finally
             {
-                dataBaseCon.closeConnection();
+                dataBaseCon.CloseConnection();
             }
         }
         #region [Проверка входящего запроса в БД]
@@ -119,7 +119,7 @@ namespace Napitki_Altay2.Forms
         /// <returns></returns>
         private SqlCommand Check(string command)
         {
-            return new SqlCommand(command, dataBaseCon.sqlConnection());
+            return new SqlCommand(command, dataBaseCon.GetConnection());
         }
         #endregion
         private void OpenDocumentWorkButton_Click(object sender, EventArgs e)
@@ -140,8 +140,8 @@ namespace Napitki_Altay2.Forms
                 $"ID_Document_From_User where ID_Application = " +
                 $"{MainWorkFormWorker.SelectedRowID}";
                 SqlCommand command = new 
-                    SqlCommand(sqlQuery, dataBaseCon.sqlConnection());
-                dataBaseCon.openConnection();
+                    SqlCommand(sqlQuery, dataBaseCon.GetConnection());
+                dataBaseCon.OpenConnection();
                 var dataReader = command.ExecuteReader();
                 if (dataReader.Read())
                 {
@@ -163,7 +163,7 @@ namespace Napitki_Altay2.Forms
             }
             finally
             {
-                dataBaseCon.closeConnection();
+                dataBaseCon.CloseConnection();
             }
         }
     }

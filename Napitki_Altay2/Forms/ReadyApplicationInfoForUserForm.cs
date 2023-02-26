@@ -14,7 +14,7 @@ namespace Napitki_Altay2.Forms
 {   
     public partial class ReadyApplicationInfoForUserForm : Form
     {
-        DataBaseCon dataBaseCon = new DataBaseCon();
+        DataBaseWork dataBaseCon = new DataBaseWork();
         public ReadyApplicationInfoForUserForm()
         {
             InitializeComponent();
@@ -45,8 +45,8 @@ namespace Napitki_Altay2.Forms
                     $"ID_Application = " +
                     $"'{MainWorkForm.SelectedROWIDInDGW}'";
                 SqlCommand command = new SqlCommand
-                    (sqlQuery, dataBaseCon.sqlConnection());
-                dataBaseCon.openConnection();
+                    (sqlQuery, dataBaseCon.GetConnection());
+                dataBaseCon.OpenConnection();
                 var dataReader = command.ExecuteReader();
                 if (dataReader.Read())
                 {
@@ -68,7 +68,7 @@ namespace Napitki_Altay2.Forms
             }
             finally
             {
-                dataBaseCon.closeConnection();
+                dataBaseCon.CloseConnection();
             }
         }
         private void CheckDataReaderRowsInfo(SqlDataReader datareader)
@@ -119,7 +119,7 @@ namespace Napitki_Altay2.Forms
         /// <returns></returns>
         private SqlCommand Check(string command)
         {
-            return new SqlCommand(command, dataBaseCon.sqlConnection());
+            return new SqlCommand(command, dataBaseCon.GetConnection());
         }
         #endregion
         private void ReadyApplicationInfoForUserForm_Load(object sender, EventArgs e)
@@ -147,7 +147,7 @@ namespace Napitki_Altay2.Forms
                     $"where FK_ID_Application = " +
                     $"'{MainWorkForm.SelectedROWIDInDGW}'";
                 SqlCommand check = Check(sqlComUserFIO);
-                dataBaseCon.openConnection();
+                dataBaseCon.OpenConnection();
                 using (var datareader = check.ExecuteReader())
                 {
                     successLoad = datareader.Read();
@@ -165,7 +165,7 @@ namespace Napitki_Altay2.Forms
             }
             finally
             {
-                dataBaseCon.closeConnection();
+                dataBaseCon.CloseConnection();
             }
         }
         private void CloseCompleteApplicationButton_Click(object sender, EventArgs e)

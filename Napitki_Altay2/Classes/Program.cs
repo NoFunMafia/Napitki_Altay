@@ -18,7 +18,7 @@ namespace Napitki_Altay2
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            if (Classes.InternetCheck.CheckConnection() == true)
+            if (Classes.InternetCheck.CheckConnection())
             {
                 Application.Run(new AuthForm());
             }

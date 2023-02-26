@@ -144,8 +144,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Classes\DataBaseCon.cs" />
+    <Compile Include="Classes\DataBaseWork.cs" />
     <Compile Include="Classes\InternetCheck.cs" />
+    <Compile Include="Classes\SqlQueries.cs" />
     <Compile Include="Custom Components and Classes\CustomButton.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -319,5 +320,6 @@
   <ItemGroup>
     <None Include="Resources\Picture2RegForm.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
