@@ -43,7 +43,7 @@ namespace Napitki_Altay2.Forms
                     "= Application_To_Company." +
                     "ID_Application where " +
                     $"ID_Application = " +
-                    $"'{MainWorkForm.SelectedROWIDInDGW}'";
+                    $"'{MainWorkForm.SelectedRowIDInDGW}'";
                 SqlCommand command = new SqlCommand
                     (sqlQuery, dataBaseCon.GetConnection());
                 dataBaseCon.OpenConnection();
@@ -145,7 +145,7 @@ namespace Napitki_Altay2.Forms
                     "Application_To_Company.FK_Status_Application" +
                     $" = Status_Application.ID_Status " +
                     $"where FK_ID_Application = " +
-                    $"'{MainWorkForm.SelectedROWIDInDGW}'";
+                    $"'{MainWorkForm.SelectedRowIDInDGW}'";
                 SqlCommand check = Check(sqlComUserFIO);
                 dataBaseCon.OpenConnection();
                 using (var datareader = check.ExecuteReader())

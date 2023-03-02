@@ -55,11 +55,12 @@ namespace Napitki_Altay2
             return con;
         }
         #endregion
+        #region [Методы для непосредственной работой с БД]
         /// <summary>
         /// Метод для заполнения типизированного 
-        /// списка объектов полученными данными из запроса в БД
+        /// списка объектов полученными данными из SQL - запроса
         /// </summary>
-        /// <param name="sqlQuery">Запрос в БД</param>
+        /// <param name="sqlQuery">Строка запроса для БД</param>
         /// <param name="col">Количество столбцов 
         /// для заполнения в список объектов</param>
         /// <returns></returns>
@@ -67,8 +68,8 @@ namespace Napitki_Altay2
         {
             try
             {
-                SqlCommand sqlCommand = new SqlCommand(sqlQuery, GetConnection());
                 OpenConnection();
+                SqlCommand sqlCommand = new SqlCommand(sqlQuery, GetConnection());
                 SqlDataReader sqlDataReader = sqlCommand.ExecuteReader();
                 List<string[]> sqlList = new List<string[]>();
                 while (sqlDataReader.Read())
@@ -89,15 +90,22 @@ namespace Napitki_Altay2
                     return null;
                 }
             }
-            catch(Exception ex)
+            catch(Exception)
             {
-                MessageBox.Show(ex.Message,
+                CloseConnection();
+                MessageBox.Show("Возникла непредвиденная ошибка!",
                     "Ошибка",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
                 return null;
             }
         }
+        /// <summary>
+        /// Метод для вывода получаемых 
+        /// значений из SQL - запроса в DataGridView
+        /// </summary>
+        /// <param name="sqlQuery">Строка запроса для БД</param>
+        /// <returns></returns>
         public DataTable OutputQuery(string sqlQuery)
         {
             try
@@ -109,9 +117,10 @@ namespace Napitki_Altay2
                 sqlDataAdapter.Fill(dataTable);
                 return dataTable;
             }
-            catch(Exception ex)
+            catch(Exception)
             {
-                MessageBox.Show(ex.Message,
+                CloseConnection();
+                MessageBox.Show("Возникла непредвиденная ошибка!",
                     "Ошибка",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
@@ -122,6 +131,11 @@ namespace Napitki_Altay2
                 CloseConnection(); 
             }
         }
+        /// <summary>
+        /// Метод для получения единичного значения из SQL - запроса
+        /// </summary>
+        /// <param name="sqlQuery">Строка запроса для БД</param>
+        /// <returns></returns>
         public string GetString(string sqlQuery) 
         {
             try
@@ -139,7 +153,8 @@ namespace Napitki_Altay2
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message,
+                CloseConnection();
+                MessageBox.Show("Возникла непредвиденная ошибка!",
                     "Ошибка",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
@@ -150,5 +165,39 @@ namespace Napitki_Altay2
                 CloseConnection();
             }
         }
+        /// <summary>
+        /// Метод, осуществляющий обработку 
+        /// SQL - запроса для 
+        /// добавления/удаления/редактирования данных
+        /// </summary>
+        /// <param name="sqlQuery">Строка запроса для БД</param>
+        public Boolean WithoutOutputQuery(string sqlQuery)
+        {
+            try
+            {
+                OpenConnection();
+                SqlCommand sqlCommand = new SqlCommand(sqlQuery, GetConnection());
+                sqlCommand.ExecuteNonQuery();
+                MessageBox.Show("Операция с данными проведена!", 
+                    "Информация", 
+                    MessageBoxButtons.OK, 
+                    MessageBoxIcon.Information);
+                return true;
+            }
+            catch(Exception)
+            {
+                CloseConnection();
+                MessageBox.Show("Возникла непредвиденная ошибка!",
+                    "Ошибка",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+                return false;
+            }
+            finally
+            {
+                CloseConnection();
+            }
+        }
+        #endregion
     }
 }

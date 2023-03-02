@@ -2,13 +2,9 @@
 using System;
 using System.Data;
 using System.Windows.Forms;
-using System.Data.SqlClient;
 using Napitki_Altay2.Classes;
 using System.Collections.Generic;
-using System.Data.Common;
 using System.Linq;
-using System.Threading;
-using ClosedXML.Report.Utils;
 #endregion
 namespace Napitki_Altay2.Forms
 {
@@ -16,22 +12,23 @@ namespace Napitki_Altay2.Forms
     {
         #region [Подключение классов, объявление переменных]
         // Класс запросов в БД
-        SqlQueries SqlQueries = new SqlQueries();
+        SqlQueries sqlQueries = new SqlQueries();
         // Использование класса работы с БД
         DataBaseWork dataBaseWork = new DataBaseWork();
         public static string SurnameUserString;
         public static string NameUserString;
         public static string PatronymicUserString;
-        public static string SelectedROWIDInDGW;
+        public static string SelectedRowIDInDGW;
+        public static string DeletedRow;
         #endregion
         public MainWorkForm()
         {
             InitializeComponent();
             DoubleBuffered = true; // Включение двойной буферизации
         }
-        #region [Загрузка формы]
+        #region [Событие загрузки формы]
         /// <summary>
-        /// Загрузка формы
+        /// Событие загрузки формы
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -39,50 +36,52 @@ namespace Napitki_Altay2.Forms
         {
             // Передача значения Пароля из формы AuthForm
             PassCreaUpdaTextBox.Texts = AuthForm.PasswordString;
-            List<string[]> listSearch = 
-                dataBaseWork.GetMultiList(SqlQueries.sqlComRecFIO, 4);
+            string sqlQuery = sqlQueries.sqlComRecFIO;
+            List<string[]> listSearch = dataBaseWork.GetMultiList(sqlQuery, 4);
             CheckFIOinList(listSearch);
             LoadDataGridView();
             LoadDataGridViewComplete();
         }
         #endregion
-        #region [Вывод данных в DGW]
+        #region [Вывод данных в таблицу DataGridViewApplication]
         /// <summary>
-        /// Вывод данных в DGW (обращения)
+        /// Вывод данных в таблицу DataGridViewApplication
         /// </summary>
         private void LoadDataGridView()
+        {
+            FillStrings();
+            string sqlQuery = sqlQueries.SqlOutputMWF
+                (NameUserString, SurnameUserString, PatronymicUserString);
+            DataTable dataTable = dataBaseWork.OutputQuery(sqlQuery);
+            OutputInTableSetting(dataTable);
+        }
+        private void FillStrings()
         {
             SurnameUserString = FamCreateTextBox.Texts;
             NameUserString = NameCreateTextBox.Texts;
             PatronymicUserString = PatrCreateTextBox.Texts;
-            OutputInTableSetting(dataBaseWork.OutputQuery
-                (SqlQueries.sqlOutputMWF
-                (NameUserString,
-                SurnameUserString,
-                PatronymicUserString)));
         }
         #endregion
-        #region [Вывод данных в DGWC]
+        #region [Вывод данных в таблицу CompleteApplicationDGWUser]
         /// <summary>
-        /// Вывод данных в DGW (завершенные обращения)
+        /// Вывод данных в таблицу CompleteApplicationDGWUser
         /// </summary>
         private void LoadDataGridViewComplete()
         {
-            string fkInfoUser = dataBaseWork.GetString
-                (SqlQueries.sqlComIDUser
-                (SurnameUserString, 
-                NameUserString, 
-                PatronymicUserString));
-            OutputInTableSettingTwo
-                (dataBaseWork.OutputQuery
-                (SqlQueries.sqlComFKInfo(fkInfoUser)));
+            string sqlQuery = sqlQueries.SqlComIDUser
+                (SurnameUserString, NameUserString, PatronymicUserString);
+            string stringFromQuery = dataBaseWork.GetString(sqlQuery);
+            string stringResultFK = sqlQueries.SqlComFKInfo(stringFromQuery);
+            DataTable dataTable = dataBaseWork.OutputQuery(stringResultFK);
+            OutputInTableSettingTwo(dataTable);
         }
         #endregion
-        #region [Настройки вывода информации в CompleteApplicationDGW]
+        #region [Настройка отображения выводимых данных в таблицу CompleteApplicationDGWUser]
         /// <summary>
-        /// Настройки вывода информации в DataGridViewApplication
+        /// Настройка отображения выводимых 
+        /// данных в таблицу CompleteApplicationDGWUser
         /// </summary>
-        /// <param name="dataTable"></param>
+        /// <param name="dataTable">Передаваемая таблица с данными</param>
         private void OutputInTableSettingTwo(DataTable dataTable)
         {
             CompleteApplicationDGWUser.DataSource = dataTable;
@@ -103,11 +102,12 @@ namespace Napitki_Altay2.Forms
             CompleteApplicationDGWUser.Columns[4].Width = 148;
         }
         #endregion
-        #region [Настройки вывода информации в DataGridViewApplication]
+        #region [Настройка отображения выводимых данных в таблицу DataGridViewApplication]
         /// <summary>
-        /// Настройки вывода информации в DataGridViewApplication
+        /// Настройка отображения выводимых 
+        /// данных в таблицу DataGridViewApplication
         /// </summary>
-        /// <param name="dataTable"></param>
+        /// <param name="dataTable">Передаваемая таблица с данными</param>
         private void OutputInTableSetting(DataTable dataTable)
         {
             DataGridViewApplication.DataSource = dataTable;
@@ -125,9 +125,10 @@ namespace Napitki_Altay2.Forms
             DataGridViewApplication.Columns[5].Width = 116;
         }
         #endregion
-        #region [Метод проверки наличия у пользователя заполненного ФИО в БД]
+        #region [Метод, проверяющий наличие у пользователя заполненного ФИО в БД]
         /// <summary>
-        /// Метод проверки наличия у пользователя заполненного ФИО в БД
+        /// Метод, проверяющий наличие у 
+        /// пользователя заполненного ФИО в БД
         /// </summary>
         /// <param name="strings">Коллекция значений 
         /// полученных из запроса в БД</param>
@@ -137,14 +138,25 @@ namespace Napitki_Altay2.Forms
             {
                 foreach (string[] item in strings)
                 {
-                    FamCreateTextBox.Texts =
-                    item.GetValue(1).ToString();
-                    NameCreateTextBox.Texts =
-                    item.GetValue(2).ToString();
-                    PatrCreateTextBox.Texts =
-                    item.GetValue(3).ToString();
-                    CreateUserFIOButton.Enabled = false;
-                    ((Control)this.ApplicationPage).Enabled = true;
+                    if(item.Contains(""))
+                    {
+                        FamCreateTextBox.Texts = "";
+                        NameCreateTextBox.Texts = "";
+                        PatrCreateTextBox.Texts = "";
+                        ((Control)ApplicationPage).Enabled = false;
+                        InfoApplicationLabel.Visible = true;
+                    }
+                    else
+                    {
+                        FamCreateTextBox.Texts =
+                            item.GetValue(1).ToString();
+                        NameCreateTextBox.Texts =
+                            item.GetValue(2).ToString();
+                        PatrCreateTextBox.Texts =
+                            item.GetValue(3).ToString();
+                        CreateUserFIOButton.Enabled = false;
+                        ((Control)ApplicationPage).Enabled = true;
+                    }
                 }
             }
             else
@@ -152,164 +164,95 @@ namespace Napitki_Altay2.Forms
                 FamCreateTextBox.Texts = "";
                 NameCreateTextBox.Texts = "";
                 PatrCreateTextBox.Texts = "";
-                ((Control)this.ApplicationPage).Enabled = false;
+                ((Control)ApplicationPage).Enabled = false;
                 InfoApplicationLabel.Visible = true;
             }
         }
         #endregion
-        #region [Изменение пароля пользователя]
+        #region [Событие нажатия на кнопку UpdLogPassButton]
+        /// <summary>
+        /// Событие нажатия на кнопку UpdLogPassButton
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void UpdLogPassButton_Click(object sender, EventArgs e)
         {
-
-            bool success;
-            try
-            {
-                string sqlCom = "update Authentication_ " +
-                    "set Password_User = " +
-                    $"{PassCreaUpdaTextBox.Texts} where Login_User = {AuthForm.LoginString}";
-                SqlCommand check = Check(sqlCom);
-                dataBaseWork.OpenConnection();
-                using (var dataReader = check.ExecuteReader())
-                {
-                    success = dataReader.Read();
-                    MessageBox.Show("Данные успешно изменены!",
-                        "Информация", 
-                        MessageBoxButtons.OK, 
-                        MessageBoxIcon.Information);
-                    UpdLogPassButton.Enabled = false;
-                }
-            }
-            catch(Exception ex)
-            {
-                MessageBox.Show(ex.Message, 
-                    "Ошибка", 
-                    MessageBoxButtons.OK, 
-                    MessageBoxIcon.Error);
-            }
-            finally
-            {
-                dataBaseWork.CloseConnection();
-            }
-        }
-        #endregion
-        #region [Проверка входящего запроса в БД]
-        /// <summary>
-        /// Проверка работы входящего запроса в базу данных
-        /// </summary>
-        /// <param name="command">Запрос в базу данных</param>
-        /// <returns></returns>
-        private SqlCommand Check(string command)
-        {
-            return new SqlCommand(command, dataBaseWork.GetConnection());
+            string sqlQuery = sqlQueries.SqlComUpdPass
+                (PassCreaUpdaTextBox.Texts);
+            bool checkSql = dataBaseWork.WithoutOutputQuery(sqlQuery);
+            if (checkSql != false)
+                UpdLogPassButton.Enabled = false;
         }
         #endregion
         #region [Событие нажатия на кнопку CreateUserFIOButton]
+        /// <summary>
+        /// Событие нажатия на кнопку CreateUserFIOButton
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CreateUserFIOButton_Click(object sender, EventArgs e)
         {
-            bool success;
-            try
-            {
-                if (FamCreateTextBox.Texts == ""
-                || NameCreateTextBox.Texts == ""
-                || PatrCreateTextBox.Texts == "")
-                    MessageBox.Show("Поля данных не заполнены до конца!",
-                        "Ошибка",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Error);
-                else
-                {
-                    if (CheckFIOUserInDB())
-                        return;
-                    string sqlComFIO = "insert into Info_About_User" +
-                        "(User_Surname, User_Name, User_Patronymic) " +
-                        "values ('"
-                        + FamCreateTextBox.Texts
-                        + "','"
-                        + NameCreateTextBox.Texts
-                        + "','"
-                        + PatrCreateTextBox.Texts
-                        + "')";
-                    string sqlComFIO2 = $"update Authentication_ " +
-                        $"set FK_Info_User = Info_About_User.ID_Info_User " +
-                        $"from Info_About_User where " +
-                        $"Info_About_User.User_Surname = " +
-                        $"'{FamCreateTextBox.Texts}' " +
-                        $"and Info_About_User.User_Name = " +
-                        $"'{NameCreateTextBox.Texts}' " +
-                        $"and Info_About_User.User_Patronymic = " +
-                        $"'{PatrCreateTextBox.Texts}' " +
-                        $"and Authentication_.Login_User = " +
-                        $"'{AuthForm.LoginString}'";
-                    SqlCommand check = Check(sqlComFIO);
-                    SqlCommand check2 = Check(sqlComFIO2);
-                    dataBaseWork.OpenConnection();
-                    using (var datareader = check.ExecuteReader())
-                    {
-                        success = datareader.Read();
-                        MessageBox.Show
-                            ("Пользователь успешно добавлен!",
-                        "Информация", MessageBoxButtons.OK,
-                        MessageBoxIcon.Information);
-                        CreateUserFIOButton.Enabled = false;
-                    }
-                    using (var datareader = check2.ExecuteReader())
-                    {
-                        success = datareader.Read();
-                    }
-                }
-            }
-            catch(Exception ex)
-            {
-                MessageBox.Show(ex.Message, 
-                    "Ошибка", 
-                    MessageBoxButtons.OK, 
+            if (string.IsNullOrEmpty(FamCreateTextBox.Texts) || 
+                string.IsNullOrEmpty(NameCreateTextBox.Texts) || 
+                string.IsNullOrEmpty(PatrCreateTextBox.Texts))
+                MessageBox.Show("Поля данных не заполнены до конца!",
+                    "Ошибка",
+                    MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
-            }
-            finally
+            else
             {
-                dataBaseWork.CloseConnection();
+                if (CheckFIOUserInDB())
+                    return;
+                string sqlQueryFirst = sqlQueries.SqlComInsFIO
+                    (FamCreateTextBox.Texts, 
+                    NameCreateTextBox.Texts, 
+                    PatrCreateTextBox.Texts);
+                string sqlQuerySecond = sqlQueries.SqlComInsFIOSec
+                    (FamCreateTextBox.Texts,
+                    NameCreateTextBox.Texts,
+                    PatrCreateTextBox.Texts);
+                bool checkQueryFirst = dataBaseWork.WithoutOutputQuery(sqlQueryFirst);
+                if (checkQueryFirst != false)
+                {
+                    CreateUserFIOButton.Enabled = false;
+                    ((Control)ApplicationPage).Enabled = true;
+                    InfoApplicationLabel.Visible = false;
+                }
+                dataBaseWork.WithoutOutputQuery(sqlQuerySecond);
             }
         }
         #endregion
-        #region [Метод проверки занятости ФИО в БД]
+        #region [Метод, проверяющий занятость ФИО в БД]
         /// <summary>
-        /// Метод проверки занятости ФИО в БД
+        /// Метод, проверяющий занятость ФИО в БД
         /// </summary>
-        /// <returns>True - занят, false - свободен</returns>
+        /// <returns>True - ФИО занято, False - ФИО свободно</returns>
         public Boolean CheckFIOUserInDB()
         {
-            DataBaseWork dataBaseCon = new DataBaseWork();
-            DataTable dataTable = new DataTable();
-            SqlCommand command = new SqlCommand
-                ("select * from Info_About_User where User_Surname=@usSur " +
-                "and User_Name=@usName and User_Patronymic=@usPat",
-                dataBaseCon.GetConnection());
-            command.Parameters.Add
-                ("@usSur", SqlDbType.VarChar).Value
-                = FamCreateTextBox.Texts;
-            command.Parameters.Add
-                ("@usName", SqlDbType.VarChar).Value
-                = NameCreateTextBox.Texts;
-            command.Parameters.Add
-                ("@usPat", SqlDbType.VarChar).Value 
-                = PatrCreateTextBox.Texts;
-            SqlDataAdapter adapter = new SqlDataAdapter();
-            adapter.SelectCommand = command;
-            adapter.Fill(dataTable);
-            if (dataTable.Rows.Count > 0)
+            string sqlQuery = sqlQueries.SqlComCheckINFOonFIO
+                (FamCreateTextBox.Texts, 
+                NameCreateTextBox.Texts, 
+                PatrCreateTextBox.Texts);
+            DataTable dataTable = dataBaseWork.OutputQuery(sqlQuery);
+            if (dataTable != null && dataTable.Rows.Count > 0)
             {
                 MessageBox.Show("Данное ФИО уже зарегистрировано " +
                     "в системе, используйте другое!",
-                                    "Ошибка",
-                                    MessageBoxButtons.OK,
-                                    MessageBoxIcon.Error);
+                    "Ошибка",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
                 return true;
             }
             else
                 return false;
         }
         #endregion
-        #region [Открытие формы создания обращения]
+        #region [Событие нажатия на кнопку CreateApplicationButton]
+        /// <summary>
+        /// Событие нажатия на кнопку CreateApplicationButton
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CreateApplicationButton_Click(object sender, EventArgs e)
         {
             CreateApplicationForm createApplicationForm
@@ -318,49 +261,26 @@ namespace Napitki_Altay2.Forms
             this.Hide();
         }
         #endregion
-        #region [Событие нажатия на кнопку перезагрузки данных в DGW]
+        #region [Событие нажатия на кнопку UpdateDataInDGW]
+        /// <summary>
+        /// Событие нажатия на кнопку UpdateDataInDGW
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void UpdateDataInDGW_Click(object sender, EventArgs e)
         {
-            try
-            {
-                dataBaseWork.OpenConnection();
-                SqlDataAdapter dataAdapter = new SqlDataAdapter
-                    ("select Id_Application, " +
-                    "Applicant_Company, User_Surname, " +
-                    "User_Name, " +
-                    "User_Patronymic, Status_Name " +
-                    "from Application_To_Company" +
-                    " join Info_About_User on " +
-                    "Application_To_Company.FK_Info_User = " +
-                    "Info_About_User.ID_Info_User join " +
-                    "Status_Application on " +
-                    "Application_To_Company.FK_Status_Application" +
-                    " = Status_Application.ID_Status " +
-                    $"where Info_About_User.User_Name = " +
-                    $"'{NameCreateTextBox.Texts}' and " +
-                    $"Info_About_User.User_Surname = " +
-                    $"'{FamCreateTextBox.Texts}' and " +
-                    $"Info_About_User.User_Patronymic = " +
-                    $"'{PatrCreateTextBox.Texts}'",
-                    dataBaseWork.GetConnection());
-                DataTable dataTable = new DataTable();
-                dataAdapter.Fill(dataTable);
-                OutputInTableSetting(dataTable);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message,
-                    "Ошибка",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Error);
-            }
-            finally
-            {
-                dataBaseWork.CloseConnection();
-            }
+            string sqlQuery = sqlQueries.SqlComUpdateDGW
+                (FamCreateTextBox.Texts, NameCreateTextBox.Texts, PatrCreateTextBox.Texts);
+            DataTable dataTable = dataBaseWork.OutputQuery(sqlQuery);
+            OutputInTableSetting(dataTable);
         }
         #endregion
-        #region [Удаление заявки]
+        #region [Событие нажатия на кнопку DeleteApplicationButton]
+        /// <summary>
+        /// Событие нажатия на кнопку DeleteApplicationButton
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void DeleteApplicationButton_Click(object sender, EventArgs e)
         {
             DialogResult result = MessageBox.Show
@@ -370,39 +290,24 @@ namespace Napitki_Altay2.Forms
                 MessageBoxIcon.Warning);
             if(result == DialogResult.Yes)
             {
-                string sqlComDelete = "delete from " +
-                    "Application_To_Company " +
-                    "where ID_Application " +
-                    $"= " +
-                    $"'{DataGridViewApplication.CurrentRow.Cells[0].Value}'";
-                SqlCommand sqlCommand = new SqlCommand
-                    (sqlComDelete, 
-                    dataBaseWork.GetConnection());
-                try
-                {
-                    dataBaseWork.OpenConnection();
-                    using(var datareader = sqlCommand)
-                    {
-                        sqlCommand.ExecuteReader();
-                    }
-                }
-                catch
-                {
-                    MessageBox.Show("Невозможно удалить " +
-                        "завершенное обращение!", 
+                DeletedRow = DataGridViewApplication.CurrentRow.Cells[0].Value.ToString();
+                string sqlQuery = sqlQueries.SqlComDelete(DeletedRow);
+                bool checkDelete = dataBaseWork.WithoutOutputQuery(sqlQuery);
+                if(checkDelete != true)
+                    MessageBox.Show("Завершенные обращения удалять нельзя!", 
                         "Ошибка", 
                         MessageBoxButtons.OK, 
                         MessageBoxIcon.Error);
-                }
-                finally
-                {
-                    dataBaseWork.CloseConnection();
-                }
                 LoadDataGridView();
             }
         }
         #endregion
-        #region [Открытие прайс-листа]
+        #region [Событие нажатия на кнопку OpenPriceListButton]
+        /// <summary>
+        /// Событие нажатия на кнопку OpenPriceListButton
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OpenPriceListButton_Click(object sender, EventArgs e)
         {
             System.Diagnostics.Process.Start
@@ -410,19 +315,34 @@ namespace Napitki_Altay2.Forms
                 "Прайс-лист-01.11.2021-3.pdf");
         }
         #endregion
-        #region [Открытие СОУТов 2016-2021]
+        #region [События нажатия на кнопки открытия СОУТов]
+        /// <summary>
+        /// Событие нажатия на кнопку OpenSout2016Button
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OpenSout2016Button_Click(object sender, EventArgs e)
         {
             System.Diagnostics.Process.Start
                 ("https://napitki-altay.ru/wp-content/uploads/2018/09/" +
                 "результаты-СОУТ-2016-2017.pdf");
         }
+        /// <summary>
+        /// Событие нажатия на кнопку OpenSout2018Button
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OpenSout2018Button_Click(object sender, EventArgs e)
         {
             System.Diagnostics.Process.Start
                 ("https://napitki-altay.ru/wp-content/uploads/2018/09/" +
                 "результаты-СОУТ-2018.pdf");
         }
+        /// <summary>
+        /// Событие нажатия на кнопку OpenSout2021Button
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OpenSout2021Button_Click(object sender, EventArgs e)
         {
             System.Diagnostics.Process.Start
@@ -438,16 +358,44 @@ namespace Napitki_Altay2.Forms
             Application.Exit();
         }
         #endregion
+        #region [Событие нажатия на кнопку OpenWorkerMessage]
+        /// <summary>
+        /// Событие нажатия на кнопку OpenWorkerMessage
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OpenWorkerMessage_Click(object sender, EventArgs e)
         {
-            SelectedROWIDInDGW = CompleteApplicationDGWUser.
-                CurrentRow.
-                Cells[0].Value.ToString();
-            ReadyApplicationInfoForUserForm 
-                readyApplicationInfoForUserForm 
-                = new ReadyApplicationInfoForUserForm();
-            readyApplicationInfoForUserForm.Show();
-            this.Hide();
+            OpenMessageFromWorker();
         }
+        /// <summary>
+        /// Метод, осуществляющий открытие 
+        /// формы ReadyApplicationInfoForUserForm
+        /// </summary>
+        private void OpenMessageFromWorker()
+        {
+            try
+            {
+                if (CompleteApplicationDGWUser.RowCount != 0)
+                {
+                    SelectedRowIDInDGW = CompleteApplicationDGWUser.CurrentRow.Cells[0].Value.ToString();
+                    ReadyApplicationInfoForUserForm
+                        readyApplicationInfoForUserForm =
+                        new ReadyApplicationInfoForUserForm();
+                    readyApplicationInfoForUserForm.Show();
+                    Hide();
+                }
+                else
+                    throw new Exception();
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Невозможно открыть не выделенное обращение!",
+                    "Ошибка",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+            }
+        }
+        #endregion
     }
 }

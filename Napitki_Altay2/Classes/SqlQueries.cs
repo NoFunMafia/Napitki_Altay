@@ -1,4 +1,5 @@
-﻿using Napitki_Altay2.Forms;
+﻿using DocumentFormat.OpenXml.Office.CoverPageProps;
+using Napitki_Altay2.Forms;
 
 namespace Napitki_Altay2.Classes
 {
@@ -12,7 +13,7 @@ namespace Napitki_Altay2.Classes
                 $"'{AuthForm.LoginString}'";
 
         // MainWorkForm - LoadDataGridView
-        public string sqlOutputMWF(string name, string fam, string otch)
+        public string SqlOutputMWF(string name, string fam, string otch)
         {
             string sqlCom = "select Id_Application, " +
                     "Applicant_Company, User_Surname, " +
@@ -36,7 +37,7 @@ namespace Napitki_Altay2.Classes
         }
 
         // MainWorkForm - LoadDataGridViewComplete
-        public string sqlComIDUser(string fam, string name, string otch)
+        public string SqlComIDUser(string fam, string name, string otch)
         {
             string sqlCom = $"select * " +
                     $"from Info_About_User " +
@@ -49,7 +50,7 @@ namespace Napitki_Altay2.Classes
         }
 
         // MainWorkForm - LoadDataGridViewComplete2
-        public string sqlComFKInfo(string fkInfoUser)
+        public string SqlComFKInfo(string fkInfoUser)
         {
             string sqlCom = "select FK_ID_Application, " +
                     "User_Surname, User_Name, " +
@@ -66,5 +67,79 @@ namespace Napitki_Altay2.Classes
                     $"'{fkInfoUser}'";
             return sqlCom;
         }
+
+        // MainWorkForm - UpdLogPassButton_Click
+        public string SqlComUpdPass(string pass)
+        {
+            string sqlCom = "update Authentication_ " +
+                "set Password_User = " +
+                $"'{pass}' where Login_User = '{AuthForm.LoginString}'";
+            return sqlCom;
+        }
+        
+        // MainWorkForm - CheckFIOUserInDB
+        public string SqlComCheckINFOonFIO(string fam, string name, string otch)
+        {
+            string sqlCom = "select * from Info_About_User " +
+                $"where User_Surname = '{fam}' " +
+                $"and User_Name = '{name}' " +
+                $"and User_Patronymic = '{otch}'";
+            return sqlCom;
+        }
+
+        // MainWorkForm - CreateUserFIOButton_Click
+        public string SqlComInsFIO(string fam, string name, string otch)
+        {
+            string sqlQuery = "insert into Info_About_User " +
+            "(User_Surname, User_Name, User_Patronymic) " +
+            $"values ('{fam}', '{name}', '{otch}')";
+            return sqlQuery;
+        }
+
+        // MainWorkForm - CreateUserFIOButton_Click
+        public string SqlComInsFIOSec(string fam, string name, string otch)
+        {
+            string sqlQuery = "update Authentication_ " +
+                $"set FK_Info_User = Info_About_User.ID_Info_User " +
+                $"from Info_About_User where " +
+                $"Info_About_User.User_Surname = '{fam}' " +
+                $"and Info_About_User.User_Name = '{name}' " +
+                $"and Info_About_User.User_Patronymic = '{otch}' " +
+                $"and Authentication_.Login_User = '{AuthForm.LoginString}'";
+            return sqlQuery;
+        }
+
+        // MainWorkForm - UpdateDataInDGW_Click
+        public string SqlComUpdateDGW(string fam, string name, string otch)
+        {
+            string sqlCom = "select Id_Application, " +
+                "Applicant_Company, User_Surname, " +
+                "User_Name, " +
+                "User_Patronymic, Status_Name " +
+                "from Application_To_Company" +
+                " join Info_About_User on " +
+                "Application_To_Company.FK_Info_User = " +
+                "Info_About_User.ID_Info_User join " +
+                "Status_Application on " +
+                "Application_To_Company.FK_Status_Application" +
+                " = Status_Application.ID_Status " +
+                "where Info_About_User.User_Name = " +
+                $"'{name}' and " +
+                $"Info_About_User.User_Surname = " +
+                $"'{fam}' and " +
+                $"Info_About_User.User_Patronymic = " +
+                $"'{otch}'";
+            return sqlCom;
+        } 
+
+        // MainWorkForm - DeleteApplicationButton_Click
+        public string SqlComDelete(string deleteRow)
+        {
+            string sqlCom = "delete from " +
+                "Application_To_Company " +
+                "where ID_Application " +
+                $"= '{deleteRow}'";
+            return sqlCom;
+        } 
     }
 }
