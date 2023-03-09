@@ -1,10 +1,8 @@
-﻿using DocumentFormat.OpenXml.Office.CoverPageProps;
-using Napitki_Altay2.Forms;
-
-namespace Napitki_Altay2.Classes
+﻿namespace Napitki_Altay2.Classes
 {
     internal class SqlQueries
     {
+        #region [MainWorkForm]
         // MainWorkForm - MainWorkForm_Load
         public string sqlComRecFIO = $"select * from Info_About_User " +
                 $"join Authentication_ on Authentication_.FK_Info_User " +
@@ -140,6 +138,31 @@ namespace Napitki_Altay2.Classes
                 "where ID_Application " +
                 $"= '{deleteRow}'";
             return sqlCom;
-        } 
+        }
+        #endregion
+        #region [AuthForm]
+        // AuthForm - LogInAppButton_Click
+        public string SqlComRoleUser(string login, string pass)
+        {
+            string sqlCom = "select * from Authentication_ " +
+                $"where Login_User = '{login}' and Password_User = '{pass}'";
+            return sqlCom;
+        }
+        // AuthForm - LogInAppButton_Click
+        public string SqlComRole(string login, string pass, string role)
+        {
+            string sqlCom = "select * from Authentication_ " +
+                $"where Login_User = '{login}' and Password_User = '{pass}' " +
+                $"and FK_Role_User = '{role}'";
+            return sqlCom;
+        }
+        // AuthForm - OpenSpecificForm
+        public string SqlComTitleRole(string role)
+        {
+            string sqlCom = $"select Role_Title from Role_User " +
+                $"where ID_Role_User = '{role}'";
+            return sqlCom;
+        }
+        #endregion
     }
 }

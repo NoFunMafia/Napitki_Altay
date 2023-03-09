@@ -1,27 +1,23 @@
 ﻿#region [using's]
+using Microsoft.VisualBasic.ApplicationServices;
+using Napitki_Altay2.Classes;
 using Napitki_Altay2.Forms;
 using System;
-using System.Data;
-using System.Data.Common;
+using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Linq;
 using System.Windows.Forms;
 #endregion
 namespace Napitki_Altay2
 {
     public partial class AuthForm : Form
     {
-        #region [Использование переменных и класса работы с БД]
+        #region [Подключение классов, объявление переменных]
+        // Класс запросов в БД
+        SqlQueries sqlQueries = new SqlQueries();
         // Использование класса работы с БД
-        DataBaseWork datebaseWork = new DataBaseWork();
-        /// <summary>
-        /// Переменная хранащая логин пользователя для 
-        /// передачи его в карточку на форме MainWorkForm
-        /// </summary>
+        DataBaseWork dataBaseWork = new DataBaseWork();
         public static string LoginString;
-        /// <summary>
-        /// Переменная хранащая пароль пользователя для 
-        /// передачи его в карточку на форме MainWorkForm
-        /// </summary>
         public static string PasswordString;
         public static string RoleString;
         #endregion
@@ -30,17 +26,6 @@ namespace Napitki_Altay2
             InitializeComponent();
             DoubleBuffered = true; // Включение двойной буферизации
         }
-        #region [Проверка входящего запроса в БД]
-        /// <summary>
-        /// Проверка отправки запроса в БД
-        /// </summary>
-        /// <param name="dbQuery">Запрос в БД</param>
-        /// <returns></returns>
-        private SqlCommand Check(string dbQuery)
-        {
-            return new SqlCommand(dbQuery, datebaseWork.GetConnection());
-        }
-        #endregion
         #region [События фокусировки с TextBox'ами]
         /// <summary>
         /// Событие при котором пользователь, 
@@ -106,16 +91,16 @@ namespace Napitki_Altay2
         /// <param name="sender"></param>
         /// <param name="e"></param>
         #endregion
-        #region [Открытие формы регистрации аккаунтов]
+        #region [Событие нажатия на кнопочную-ссылку OpenFormRegistration]
         private void OpenFormRegistration_LinkClicked(object sender,
             LinkLabelLinkClickedEventArgs e)
         {
             RegistrationForm RegForm = new RegistrationForm();
             RegForm.Show();
-            this.Hide();
+            Hide();
         }
         #endregion
-        #region [Вход в приложение, сверка логина/пароля с данными в БД]
+        #region [Событие нажатия на кнопку LogInAppButton]
         /// <summary>
         /// Событие входа в приложение, открытие главной формы
         /// </summary>
@@ -124,117 +109,81 @@ namespace Napitki_Altay2
         private void LogInAppButton_Click
             (object sender, EventArgs e)
         {
-            bool success;
-            try // Открытие соединения, проверка работы БД
+            if (LoginTextBox.Texts.Equals("Логин") || 
+                PasswordTextBox.Texts.Equals("Пароль"))
+                MessageBox.Show("Данные для входа не введены!",
+                    "Ошибка",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+            else
             {
-                if (LoginTextBox.Texts == "Логин" || 
-                    PasswordTextBox.Texts == "Пароль")
+                string sqlQueryFirst = sqlQueries.SqlComRoleUser
+                    (LoginTextBox.Texts, PasswordTextBox.Texts);
+                List<string[]> listSearch = dataBaseWork.GetMultiList(sqlQueryFirst, 4);
+                if (listSearch != null)
                 {
-                    MessageBox.Show("Данные для входа не введены!",
-                        "Ошибка", 
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Error);
-                }
-                else
-                {
-                    try
-                    {
-                        bool successLoad;
-                        string sqlComRoleUser = $"select * " +
-                            $"from Authentication_ " +
-                            $"where Login_User = " +
-                            $"'{LoginTextBox.Texts}' and " +
-                            $"Password_User = '{PasswordTextBox.Texts}'";
-                        SqlCommand checkRole = Check(sqlComRoleUser);
-                        datebaseWork.OpenConnection();
-                        using (var datareader = checkRole.ExecuteReader())
-                        {
-                            successLoad = datareader.Read();
-                            {
-                                CheckUserRole(datareader);
-                            }
-                        }
-                    }
-                    catch(Exception ex)
-                    {
-                        MessageBox.Show(ex.Message, 
-                            "Ошибка", 
-                            MessageBoxButtons.OK, 
-                            MessageBoxIcon.Error);
-                    }
-                    finally
-                    {
-                        datebaseWork.CloseConnection();
-                    }
-                    string sqlComRole 
-                        = $"select * from Authentication_ " +
-                        $"where Login_User=@login and " +
-                        $"Password_User=@password and " +
-                        $"FK_Role_User = '{RoleString}'";
-                    SqlCommand check = Check(sqlComRole);
-                    SqlCommand sqlCommand = new SqlCommand(sqlComRole, datebaseWork.GetConnection());
-                    sqlCommand.Parameters.AddWithValue("@login",
-                        LoginTextBox.Texts);
-                    sqlCommand.Parameters.AddWithValue("@password",
-                        PasswordTextBox.Texts);
-                    datebaseWork.OpenConnection();
-                    using (var dataReader = sqlCommand.ExecuteReader())
+                    CheckUserRole(listSearch);
+                    string sqlQuerySecond = sqlQueries.SqlComRole
+                        (LoginTextBox.Texts, PasswordTextBox.Texts, RoleString);
+                    bool check = dataBaseWork.WithoutOutputQuery(sqlQuerySecond);
+                    if (check != false)
                     {
                         LoginString = LoginTextBox.Texts;
                         PasswordString = PasswordTextBox.Texts;
-                        success = dataReader.Read();
+                        string sqlQueryThree = sqlQueries.SqlComTitleRole(RoleString);
+                        string TitleRole = dataBaseWork.GetString(sqlQueryThree);
+                        if (TitleRole != null)
+                            OpenSpecificForm(TitleRole);
                     }
-                    if (success)
-                    {
-                        if(RoleString == "3")
-                        {
-                            MainWorkForm mainWorkForm = new MainWorkForm();
-                            mainWorkForm.Show();
-                            this.Hide();
-                        }
-                        else if(RoleString == "2")
-                        {
-                            MainWorkFormWorker mainWorkFormWorker = new MainWorkFormWorker();
-                            mainWorkFormWorker.Show();
-                            this.Hide();
-                        }
-                        else
-                        {
-                            MainWorkFormAdmin mainWorkFormAdmin = new MainWorkFormAdmin();
-                            mainWorkFormAdmin.Show();
-                            this.Hide();
-                        }
-                    }
-                    else
-                        MessageBox.Show("Введен неправильный логин/пароль!", 
-                            "Ошибка",
-                        MessageBoxButtons.OK, 
+                }
+                else
+                    MessageBox.Show("Введен неправильный логин/пароль!",
+                        "Ошибка",
+                        MessageBoxButtons.OK,
                         MessageBoxIcon.Error);
+            }
+        }
+        #endregion
+        #region [Метод, открывающий определенную форму по роли пользователя]
+        private void OpenSpecificForm(string TitleRole)
+        {
+            if (TitleRole.Equals("Заявитель"))
+            {
+                MainWorkForm mainWorkForm = new MainWorkForm();
+                mainWorkForm.Show();
+                Hide();
+            }
+            else if (TitleRole.Equals("Сотрудник"))
+            {
+                MainWorkFormWorker mainWorkFormWorker = new MainWorkFormWorker();
+                mainWorkFormWorker.Show();
+                Hide();
+            }
+            else if (TitleRole.Equals("Администратор"))
+            {
+                MainWorkFormAdmin mainWorkFormAdmin = new MainWorkFormAdmin();
+                mainWorkFormAdmin.Show();
+                Hide();
+            }
+        }
+        #endregion
+        #region [Метод, проверяющий пользовательскую роль в приложении]
+        /// <summary>
+        /// Метод, проверяющий пользовательскую роль в приложении
+        /// </summary>
+        /// <param name="strings"></param>
+        private void CheckUserRole(List<string[]> strings)
+        {
+            if (strings != null)
+            {
+                foreach (string[] item in strings)
+                {
+                    RoleString = item[3].ToString();
                 }
             }
-            catch(Exception ex)
-            {
-                MessageBox.Show(ex.Message, 
-                    "Ошибка", 
-                    MessageBoxButtons.OK, 
-                    MessageBoxIcon.Error);
-            }
-            finally // Закрытие соединения с БД
-            {
-                datebaseWork.CloseConnection();
-            }
         }
         #endregion
-        #region [Метод проверки роли пользователя]
-        private void CheckUserRole(SqlDataReader dataReader)
-        {
-            if (dataReader.HasRows)
-            {
-                RoleString = dataReader.GetValue(3).ToString();
-            }
-        }
-        #endregion
-        #region [Показ/скрытие пароля]
+        #region [Метод, показывающий/скрывающий видимость пароля]
         /// <summary>
         /// Состояние показа пароля при 
         /// разных переключателях CheckBox

@@ -151,7 +151,7 @@ namespace Napitki_Altay2
                 sqlDataReader.Close();
                 return responce;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 CloseConnection();
                 MessageBox.Show("Возникла непредвиденная ошибка!",
@@ -178,10 +178,6 @@ namespace Napitki_Altay2
                 OpenConnection();
                 SqlCommand sqlCommand = new SqlCommand(sqlQuery, GetConnection());
                 sqlCommand.ExecuteNonQuery();
-                MessageBox.Show("Операция с данными проведена!", 
-                    "Информация", 
-                    MessageBoxButtons.OK, 
-                    MessageBoxIcon.Information);
                 return true;
             }
             catch(Exception)

@@ -181,7 +181,13 @@ namespace Napitki_Altay2.Forms
                 (PassCreaUpdaTextBox.Texts);
             bool checkSql = dataBaseWork.WithoutOutputQuery(sqlQuery);
             if (checkSql != false)
+            {
+                MessageBox.Show("Операция с данными проведена успешно!",
+                    "Информация",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
                 UpdLogPassButton.Enabled = false;
+            }
         }
         #endregion
         #region [Событие нажатия на кнопку CreateUserFIOButton]
@@ -212,6 +218,10 @@ namespace Napitki_Altay2.Forms
                     NameCreateTextBox.Texts,
                     PatrCreateTextBox.Texts);
                 bool checkQueryFirst = dataBaseWork.WithoutOutputQuery(sqlQueryFirst);
+                MessageBox.Show("Операция с данными проведена успешно!",
+                    "Информация",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
                 if (checkQueryFirst != false)
                 {
                     CreateUserFIOButton.Enabled = false;
