@@ -31,6 +31,10 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainWorkFormAdmin));
             this.CustomFormForAllProject = new Napitki_Altay2.Components.FormStyleCustom(this.components);
+            this.MainWorkAdminTabControl = new System.Windows.Forms.TabControl();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.MainWorkAdminTabControl.SuspendLayout();
             this.SuspendLayout();
             // 
             // CustomFormForAllProject
@@ -52,15 +56,48 @@
             this.CustomFormForAllProject.HeaderTextColor = System.Drawing.Color.White;
             this.CustomFormForAllProject.HeaderTextFont = new System.Drawing.Font("Segoe UI", 12F);
             // 
+            // MainWorkAdminTabControl
+            // 
+            this.MainWorkAdminTabControl.Controls.Add(this.tabPage1);
+            this.MainWorkAdminTabControl.Controls.Add(this.tabPage2);
+            this.MainWorkAdminTabControl.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
+            this.MainWorkAdminTabControl.Location = new System.Drawing.Point(4, 5);
+            this.MainWorkAdminTabControl.Name = "MainWorkAdminTabControl";
+            this.MainWorkAdminTabControl.SelectedIndex = 0;
+            this.MainWorkAdminTabControl.Size = new System.Drawing.Size(1019, 551);
+            this.MainWorkAdminTabControl.TabIndex = 0;
+            // 
+            // tabPage1
+            // 
+            this.tabPage1.Location = new System.Drawing.Point(4, 27);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(1011, 520);
+            this.tabPage1.TabIndex = 0;
+            this.tabPage1.Text = "tabPage1";
+            this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // tabPage2
+            // 
+            this.tabPage2.Location = new System.Drawing.Point(4, 25);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(192, 71);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "tabPage2";
+            this.tabPage2.UseVisualStyleBackColor = true;
+            // 
             // MainWorkFormAdmin
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(1025, 561);
+            this.Controls.Add(this.MainWorkAdminTabControl);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MainWorkFormAdmin";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Админ-панель";
+            this.Text = "Админ-панель «Напитки Алтая»";
+            this.MainWorkAdminTabControl.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -68,5 +105,8 @@
         #endregion
 
         private Components.FormStyleCustom CustomFormForAllProject;
+        private System.Windows.Forms.TabControl MainWorkAdminTabControl;
+        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.TabPage tabPage2;
     }
 }
