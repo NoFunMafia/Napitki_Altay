@@ -164,5 +164,13 @@
             return sqlCom;
         }
         #endregion
+        #region [MainWorkFormAdmin]
+        // MainWorkFormAdmin - MainWorkFormAdmin_Load
+        public string sqlComOutputUsers = "select ID_User, Login_User, Password_User, " +
+            "User_Surname, User_Name, User_Patronymic, Role_Title, Email " +
+            "from Authentication_ join Role_User on " +
+            "Authentication_.FK_Role_User = Role_User.ID_Role_User left join " +
+            "Info_About_User on Authentication_.FK_Info_User = Info_About_User.ID_Info_User";
+        #endregion
     }
 }

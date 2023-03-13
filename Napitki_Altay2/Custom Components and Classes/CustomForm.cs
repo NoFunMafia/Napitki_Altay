@@ -1,16 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using TestColors;
-using System.Drawing.Imaging;
-using Napitki_Altay2;
-using Napitki_Altay2.Components;
 
 namespace Napitki_Altay2.Components
 {
