@@ -159,6 +159,12 @@
     <Compile Include="Custom Components and Classes\Drawer.cs" />
     <Compile Include="Custom Components and Classes\StylesForForm.cs" />
     <Compile Include="Custom Components and Classes\TestColors.cs" />
+    <Compile Include="Forms\AddUserForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\AddUserForm.Designer.cs">
+      <DependentUpon>AddUserForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\AnswerToUserApplicationForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -233,6 +239,9 @@
     <Compile Include="Forms\RegistrationForm.Designer.cs">
       <DependentUpon>RegistrationForm.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Forms\AddUserForm.resx">
+      <DependentUpon>AddUserForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\AnswerToUserApplicationForm.resx">
       <DependentUpon>AnswerToUserApplicationForm.cs</DependentUpon>
     </EmbeddedResource>

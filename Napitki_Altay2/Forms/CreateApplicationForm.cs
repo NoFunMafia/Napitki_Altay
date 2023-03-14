@@ -365,7 +365,7 @@ namespace Napitki_Altay2.Forms
         private void ChooseTypeApplPictureBox_Click
             (object sender, EventArgs e)
         {
-            TypeApplMenuStip.Show(ChooseTypeApplPictureBox,
+            TypeApplMenuStrip.Show(ChooseTypeApplPictureBox,
                 new Point(0, ChooseTypeApplPictureBox.Height));
         }
         /// <summary>

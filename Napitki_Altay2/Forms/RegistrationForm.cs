@@ -212,7 +212,7 @@ namespace Napitki_Altay2
                             return;
                         if (IsValidEmail(EmailTextBox.Texts))
                             return;
-                        this.Enabled = false;
+                        Enabled = false;
                         SMTPCon();
                     }
                 }
@@ -349,19 +349,19 @@ namespace Napitki_Altay2
                 return false;
         }
         #endregion
-        #region [Проверка правильности ввода Email адреса]
+        #region [Метод, проверяющий правильность ввода адреса электронной почты]
         public Boolean IsValidEmail(string email)
         {
             Regex emailRegex = new Regex
-                (@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$", 
+                (@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$",
                 RegexOptions.IgnoreCase);
-            if (emailRegex.IsMatch(email)) 
+            if (emailRegex.IsMatch(email))
             {
                 return false;
             }
             else
             {
-                MessageBox.Show("Email введен некорректно!",
+                MessageBox.Show("Адрес электронной почты введен некорректно!",
                     "Ошибка",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);

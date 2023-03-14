@@ -33,11 +33,11 @@
             this.MainWorkAdminTabControl = new System.Windows.Forms.TabControl();
             this.AllUsersPage = new System.Windows.Forms.TabPage();
             this.InfoUsersLabel = new System.Windows.Forms.Label();
-            this.DataGridViewUsers = new System.Windows.Forms.DataGridView();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
             this.UpdateUserButton = new Napitki_Altay2.Design.CustomButton();
             this.DeleteUserButton = new Napitki_Altay2.Design.CustomButton();
             this.CreateUserButton = new Napitki_Altay2.Design.CustomButton();
+            this.DataGridViewUsers = new System.Windows.Forms.DataGridView();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
             this.CustomFormForAllProject = new Napitki_Altay2.Components.FormStyleCustom(this.components);
             this.MainWorkAdminTabControl.SuspendLayout();
             this.AllUsersPage.SuspendLayout();
@@ -81,29 +81,6 @@
             this.InfoUsersLabel.TabIndex = 17;
             this.InfoUsersLabel.Text = "Внимание! Удаление сотрудников и заявителей которые\r\nучаствовали в документооборо" +
     "те недопустимо!";
-            // 
-            // DataGridViewUsers
-            // 
-            this.DataGridViewUsers.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.DataGridViewUsers.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.DataGridViewUsers.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.DataGridViewUsers.Location = new System.Drawing.Point(3, 59);
-            this.DataGridViewUsers.Name = "DataGridViewUsers";
-            this.DataGridViewUsers.RowHeadersWidth = 51;
-            this.DataGridViewUsers.RowTemplate.Height = 24;
-            this.DataGridViewUsers.Size = new System.Drawing.Size(1005, 458);
-            this.DataGridViewUsers.TabIndex = 0;
-            // 
-            // tabPage2
-            // 
-            this.tabPage2.Location = new System.Drawing.Point(4, 27);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(1011, 520);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "tabPage2";
-            this.tabPage2.UseVisualStyleBackColor = true;
             // 
             // UpdateUserButton
             // 
@@ -166,6 +143,29 @@
             this.CreateUserButton.TextColor = System.Drawing.Color.White;
             this.CreateUserButton.UseVisualStyleBackColor = false;
             this.CreateUserButton.Click += new System.EventHandler(this.CreateUserButton_Click);
+            // 
+            // DataGridViewUsers
+            // 
+            this.DataGridViewUsers.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.DataGridViewUsers.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.DataGridViewUsers.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.DataGridViewUsers.Location = new System.Drawing.Point(3, 59);
+            this.DataGridViewUsers.Name = "DataGridViewUsers";
+            this.DataGridViewUsers.RowHeadersWidth = 51;
+            this.DataGridViewUsers.RowTemplate.Height = 24;
+            this.DataGridViewUsers.Size = new System.Drawing.Size(1005, 458);
+            this.DataGridViewUsers.TabIndex = 0;
+            // 
+            // tabPage2
+            // 
+            this.tabPage2.Location = new System.Drawing.Point(4, 27);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(1011, 520);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "В разработке";
+            this.tabPage2.UseVisualStyleBackColor = true;
             // 
             // CustomFormForAllProject
             // 

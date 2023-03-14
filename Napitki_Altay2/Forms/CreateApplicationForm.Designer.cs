@@ -37,7 +37,7 @@
             this.DescripApplLabel = new System.Windows.Forms.Label();
             this.DateTimeDescrLabel = new System.Windows.Forms.Label();
             this.ChooseTypeApplPictureBox = new System.Windows.Forms.PictureBox();
-            this.TypeApplMenuStip = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.TypeApplMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.сотрудничествоToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.обсуждениеПроблемыToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ознакомлениеСКаталогомПродукцииToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -55,7 +55,7 @@
             this.CustomFormForAllProject = new Napitki_Altay2.Components.FormStyleCustom(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.ApplPictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ChooseTypeApplPictureBox)).BeginInit();
-            this.TypeApplMenuStip.SuspendLayout();
+            this.TypeApplMenuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // ApplPictureBox
@@ -134,18 +134,18 @@
             this.ChooseTypeApplPictureBox.TabStop = false;
             this.ChooseTypeApplPictureBox.Click += new System.EventHandler(this.ChooseTypeApplPictureBox_Click);
             // 
-            // TypeApplMenuStip
+            // TypeApplMenuStrip
             // 
-            this.TypeApplMenuStip.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
-            this.TypeApplMenuStip.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.TypeApplMenuStip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.TypeApplMenuStrip.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
+            this.TypeApplMenuStrip.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.TypeApplMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.сотрудничествоToolStripMenuItem,
             this.обсуждениеПроблемыToolStripMenuItem,
             this.ознакомлениеСКаталогомПродукцииToolStripMenuItem,
             this.письмопритензияToolStripMenuItem,
             this.письмоблагодарностьToolStripMenuItem});
-            this.TypeApplMenuStip.Name = "TypeApplMenuStip";
-            this.TypeApplMenuStip.Size = new System.Drawing.Size(307, 124);
+            this.TypeApplMenuStrip.Name = "TypeApplMenuStip";
+            this.TypeApplMenuStrip.Size = new System.Drawing.Size(307, 124);
             // 
             // сотрудничествоToolStripMenuItem
             // 
@@ -403,7 +403,7 @@
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.CreateApplicationForm_FormClosed);
             ((System.ComponentModel.ISupportInitialize)(this.ApplPictureBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ChooseTypeApplPictureBox)).EndInit();
-            this.TypeApplMenuStip.ResumeLayout(false);
+            this.TypeApplMenuStrip.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -424,7 +424,7 @@
         private Design.CustomButton RegApplButton;
         private Design.CustomButton CancelApplButton;
         private System.Windows.Forms.PictureBox ChooseTypeApplPictureBox;
-        private System.Windows.Forms.ContextMenuStrip TypeApplMenuStip;
+        private System.Windows.Forms.ContextMenuStrip TypeApplMenuStrip;
         private System.Windows.Forms.ToolStripMenuItem сотрудничествоToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem обсуждениеПроблемыToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem ознакомлениеСКаталогомПродукцииToolStripMenuItem;

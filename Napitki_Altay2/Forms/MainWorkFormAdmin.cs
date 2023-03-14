@@ -29,6 +29,11 @@ namespace Napitki_Altay2.Forms
         {
             LoadDataGridViewUsers();
         }
+        #endregion
+        #region [Вывод данных в таблицу DataGridViewUsers]
+        /// <summary>
+        /// Вывод данных в таблицу DataGridViewUsers
+        /// </summary>
         private void LoadDataGridViewUsers()
         {
             string sqlQuery = sqlQueries.sqlComOutputUsers;
@@ -36,10 +41,10 @@ namespace Napitki_Altay2.Forms
             OutputInTableSetting(dataTable);
         }
         #endregion
-        #region [Настройка отображения выводимых данных в таблицу DataGridViewApplication]
+        #region [Настройка отображения выводимых данных в таблицу DataGridViewUsers]
         /// <summary>
         /// Настройка отображения выводимых 
-        /// данных в таблицу DataGridViewApplication
+        /// данных в таблицу DataGridViewUsers
         /// </summary>
         /// <param name="dataTable">Передаваемая таблица с данными</param>
         private void OutputInTableSetting(DataTable dataTable)
@@ -63,10 +68,25 @@ namespace Napitki_Altay2.Forms
             DataGridViewUsers.Columns[7].Width = 116;
         }
         #endregion
+        #region [Событие нажатия на кнопку CreateUserButton]
+        /// <summary>
+        /// Событие нажатия на кнопку CreateUserButton
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CreateUserButton_Click(object sender, EventArgs e)
         {
-
+            AddUserForm addUserForm = new AddUserForm();
+            addUserForm.Show();
         }
+        #endregion
+        #region [Событие, при котором меняются размеры элементов при развороте приложения]
+        /// <summary>
+        /// Событие, при котором меняются 
+        /// размеры элементов при развороте приложения
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void MainWorkFormAdmin_Resize(object sender, EventArgs e)
         {
             if(WindowState == FormWindowState.Maximized)
@@ -80,15 +100,28 @@ namespace Napitki_Altay2.Forms
                 DataGridViewUsers.Size = new Size(754, 372);
             }
         }
+        #endregion
         #region [Закрытие приложения при закрытии формы]
+        /// <summary>
+        /// Закрытие приложения при закрытии формы
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void MainWorkFormAdmin_FormClosed(object sender, FormClosedEventArgs e)
         {
             Application.Exit();
         }
         #endregion
+        #region [Событие нажатия на кнопку UpdateUserButton]
+        /// <summary>
+        /// Событие нажатия на кнопку UpdateUserButton
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void UpdateUserButton_Click(object sender, EventArgs e)
         {
             LoadDataGridViewUsers();
         }
+        #endregion
     }
 }
