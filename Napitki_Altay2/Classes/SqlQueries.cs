@@ -172,5 +172,48 @@
             "Authentication_.FK_Role_User = Role_User.ID_Role_User left join " +
             "Info_About_User on Authentication_.FK_Info_User = Info_About_User.ID_Info_User";
         #endregion
+        #region [AddUserForm]
+        // AddUserForm - InputUsersButton
+        public string SqlComRoleAddUser(string role)
+        {
+            string sqlCom = $"select ID_Role_User from Role_User where Role_Title = '{role}'";
+            return sqlCom;
+        }
+        // AddUserForm - InputUsersButton
+        public string SqlComCheckLogin(string login)
+        {
+            string sqlCom = $"select * from Authentication_ where Login_User = '{login}'";
+            return sqlCom;
+        }
+        // AddUserForm - InputUsersButton
+        public string SqlComInsertUser(string login, string pass, string role, string email)
+        {
+            string sqlCom = "insert into Authentication_" +
+                "(Login_User, Password_User, FK_Role_User, Email) " +
+                $"values('{login}', '{pass}', '{role}', '{email}')";
+            return sqlCom;
+        }
+        // AddUserForm - CheckTextBoxIsNull
+        public string SqlComInsertFio(string name, string fam, string otch)
+        {
+            string sqlCom = $"insert into Info_About_User(User_Surname, User_Name, User_Patronymic) " +
+                $"values ('{fam}', '{name}', '{otch}')";
+            return sqlCom;
+        }
+        // AddUserForm - InputUsersButton
+        public string SqlComTakeFKFio(string name, string fam, string otch)
+        {
+            string sqlCom = "select * from Info_About_User where " +
+                $"User_Surname = '{fam}' and User_Name = '{name}' and User_Patronymic = '{otch}'";
+            return sqlCom;
+        }
+        // AddUserForm - InputUsersButton
+        public string SqlComUpdateAuth(string fioFK, string login)
+        {
+            string sqlCom = $"update Authentication_ set " +
+                $"FK_Info_User = '{fioFK}' where Login_User = '{login}'";
+            return sqlCom;
+        }
+        #endregion
     }
 }
