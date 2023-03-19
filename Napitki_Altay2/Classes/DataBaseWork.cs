@@ -1,37 +1,31 @@
-﻿using System;
+﻿#region [using's]
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Windows.Forms;
-
+#endregion
 namespace Napitki_Altay2
 {
     public class DataBaseWork
     {
         #region [Выбор БД для дома/учёбы]
          //БД для тестирования в домашних условиях
-        SqlConnection con = new SqlConnection(@"Data Source=MYHOMIES;
+        readonly SqlConnection sqlCon = new SqlConnection(@"Data Source=MYHOMIES;
         Initial Catalog=Altai_zavodBackup;
         Persist Security Info=True;
         User ID=Admin;
         Password=Admin");
-
-        // БД для тестирования в учебных условиях
-        /*SqlConnection con = new SqlConnection(@"Data Source=62.78.81.19;
-        Initial Catalog=Altai_zavod;
-        Persist Security Info=True;
-        User ID=25-тпмоксингв;
-        Password=650131");*/
         #endregion
-        #region [Открытие/закрытие соединения с БД]
+        #region [Методы, для открытия/закрытия соединения с БД]
         /// <summary>
         /// Открытие соединения с БД
         /// </summary>
         public void OpenConnection()
         {
-            if(con.State == System.Data.ConnectionState.Closed)
+            if(sqlCon.State == ConnectionState.Closed)
             {
-                con.Open();
+                sqlCon.Open();
             }
         }
         /// <summary>
@@ -39,20 +33,20 @@ namespace Napitki_Altay2
         /// </summary>
         public void CloseConnection()
         {
-            if (con.State == System.Data.ConnectionState.Open)
+            if (sqlCon.State == System.Data.ConnectionState.Open)
             {
-                con.Close();
+                sqlCon.Close();
             }
         }
         #endregion
-        #region [Возврат значение соединения]
+        #region [Метод, получающий значение sqlCon]
         /// <summary>
-        /// Возврат соединения
+        /// Метод, получающий значение sqlCon
         /// </summary>
         /// <returns>Значение соединения</returns>
         public SqlConnection GetConnection()
         {
-            return con;
+            return sqlCon;
         }
         #endregion
         #region [Методы для непосредственной работой с БД]

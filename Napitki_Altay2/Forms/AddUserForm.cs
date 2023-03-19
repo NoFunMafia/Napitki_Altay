@@ -8,7 +8,6 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 #endregion
-
 namespace Napitki_Altay2.Forms
 {
     public partial class AddUserForm : Form
@@ -42,7 +41,7 @@ namespace Napitki_Altay2.Forms
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void администраторToolStripMenuItem_Click(object sender, EventArgs e)
+        private void АдминистраторToolStripMenuItem_Click(object sender, EventArgs e)
         {
             RoleTextBox.Texts = "Администратор";
         }
@@ -53,7 +52,7 @@ namespace Napitki_Altay2.Forms
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void сотрудникToolStripMenuItem_Click(object sender, EventArgs e)
+        private void СотрудникToolStripMenuItem_Click(object sender, EventArgs e)
         {
             RoleTextBox.Texts = "Сотрудник";
         }
@@ -64,7 +63,7 @@ namespace Napitki_Altay2.Forms
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void заявительToolStripMenuItem_Click(object sender, EventArgs e)
+        private void ЗаявительToolStripMenuItem_Click(object sender, EventArgs e)
         {
             RoleTextBox.Texts = "Заявитель";
         }

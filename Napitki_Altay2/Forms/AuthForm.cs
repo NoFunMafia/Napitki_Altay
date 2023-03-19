@@ -14,9 +14,9 @@ namespace Napitki_Altay2
     {
         #region [Подключение классов, объявление переменных]
         // Класс запросов в БД
-        SqlQueries sqlQueries = new SqlQueries();
+        private readonly SqlQueries sqlQueries = new SqlQueries();
         // Использование класса работы с БД
-        DataBaseWork dataBaseWork = new DataBaseWork();
+        private readonly DataBaseWork dataBaseWork = new DataBaseWork();
         public static string LoginString;
         public static string PasswordString;
         public static string RoleString;
@@ -117,21 +117,14 @@ namespace Napitki_Altay2
                     MessageBoxIcon.Error);
             else
             {
-                string sqlQueryFirst = sqlQueries.SqlComRoleUser
-                    (LoginTextBox.Texts, PasswordTextBox.Texts);
-                List<string[]> listSearch = dataBaseWork.GetMultiList(sqlQueryFirst, 4);
+                List<string[]> listSearch = FillListQuery();
                 if (listSearch != null)
                 {
                     CheckUserRole(listSearch);
-                    string sqlQuerySecond = sqlQueries.SqlComRole
-                        (LoginTextBox.Texts, PasswordTextBox.Texts, RoleString);
-                    bool check = dataBaseWork.WithoutOutputQuery(sqlQuerySecond);
+                    bool check = CheckRoleUserQuery();
                     if (check != false)
                     {
-                        LoginString = LoginTextBox.Texts;
-                        PasswordString = PasswordTextBox.Texts;
-                        string sqlQueryThree = sqlQueries.SqlComTitleRole(RoleString);
-                        string TitleRole = dataBaseWork.GetString(sqlQueryThree);
+                        string TitleRole = GetTitleRole();
                         if (TitleRole != null)
                             OpenSpecificForm(TitleRole);
                     }
@@ -142,6 +135,46 @@ namespace Napitki_Altay2
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Error);
             }
+        }
+        #endregion
+        #region [Метод, заполняющий список List из sql-запроса]
+        /// <summary>
+        /// Метод, заполняющий список List из sql-запроса
+        /// </summary>
+        /// <returns></returns>
+        private List<string[]> FillListQuery()
+        {
+            string sqlQueryFirst = sqlQueries.SqlComRoleUser
+                (LoginTextBox.Texts, PasswordTextBox.Texts);
+            List<string[]> listSearch = dataBaseWork.GetMultiList(sqlQueryFirst, 4);
+            return listSearch;
+        }
+        #endregion
+        #region [Метод, проверяющий наличие пользователя в БД]
+        /// <summary>
+        /// Метод, проверяющий наличие пользователя в БД
+        /// </summary>
+        /// <returns></returns>
+        private bool CheckRoleUserQuery()
+        {
+            string sqlQuerySecond = sqlQueries.SqlComRole
+                (LoginTextBox.Texts, PasswordTextBox.Texts, RoleString);
+            bool check = dataBaseWork.WithoutOutputQuery(sqlQuerySecond);
+            return check;
+        }
+        #endregion
+        #region [Метод, получающий название роли пользователя]
+        /// <summary>
+        /// Метод, получающий название роли пользователя
+        /// </summary>
+        /// <returns></returns>
+        private string GetTitleRole()
+        {
+            LoginString = LoginTextBox.Texts;
+            PasswordString = PasswordTextBox.Texts;
+            string sqlQueryThree = sqlQueries.SqlComTitleRole(RoleString);
+            string TitleRole = dataBaseWork.GetString(sqlQueryThree);
+            return TitleRole;
         }
         #endregion
         #region [Метод, открывающий определенную форму по роли пользователя]

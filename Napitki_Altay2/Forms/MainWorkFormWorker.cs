@@ -4,9 +4,7 @@ using System.Data.SqlClient;
 using System.Globalization;
 using System.IO;
 using System.Windows.Forms;
-using ClosedXML.Excel;
 using Excel = Microsoft.Office.Interop.Excel;
-using DataTable = System.Data.DataTable;
 using System.Drawing;
 
 namespace Napitki_Altay2.Forms
@@ -14,7 +12,7 @@ namespace Napitki_Altay2.Forms
     public partial class MainWorkFormWorker : Form
     {
         #region [Подключение к БД, инициализация переменных string]
-        DataBaseWork dataBaseCon = new DataBaseWork();
+        readonly DataBaseWork dataBaseCon = new DataBaseWork();
         public static string SelectedRowID;
         public static string SurnameWorkerString;
         public static string NameWorkerString;
@@ -489,11 +487,10 @@ namespace Napitki_Altay2.Forms
         #region [Выбор пути для сохранения отчёта]
         private void FilePathChooseButton_Click(object sender, EventArgs e)
         {
-            if (FolderPathBrowserDialog.ShowDialog()
-                == DialogResult.OK)
-                FilePathTextBox.Texts = 
-                    FolderPathBrowserDialog.SelectedPath.ToString();
+            if (FolderPathBrowserDialog.ShowDialog() == DialogResult.OK)
+                FilePathTextBox.Texts = FolderPathBrowserDialog.SelectedPath;
         }
+
         #endregion
         private void MainWorkFormWorker_FormClosed(object sender, FormClosedEventArgs e)
         {

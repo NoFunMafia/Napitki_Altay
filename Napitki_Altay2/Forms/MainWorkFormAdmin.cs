@@ -1,18 +1,25 @@
-﻿using Napitki_Altay2.Classes;
+﻿#region [using's]
+using Napitki_Altay2.Classes;
 using System;
 using System.Data;
 using System.Windows.Forms;
 using System.Drawing;
-
+using System.Collections.Generic;
+using System.Text;
+using System.Globalization;
+using Excel = Microsoft.Office.Interop.Excel;
+using ClosedXML.Report.Utils;
+using System.IO;
+#endregion
 namespace Napitki_Altay2.Forms
 {
     public partial class MainWorkFormAdmin : Form
     {
         #region [Подключение классов, объявление переменных]
         // Класс запросов в БД
-        SqlQueries sqlQueries = new SqlQueries();
+        readonly SqlQueries sqlQueries = new SqlQueries();
         // Использование класса работы с БД
-        DataBaseWork dataBaseWork = new DataBaseWork();
+        readonly DataBaseWork dataBaseWork = new DataBaseWork();
         #endregion
         public MainWorkFormAdmin()
         {
@@ -28,44 +35,7 @@ namespace Napitki_Altay2.Forms
         private void MainWorkFormAdmin_Load(object sender, EventArgs e)
         {
             LoadDataGridViewUsers();
-        }
-        #endregion
-        #region [Вывод данных в таблицу DataGridViewUsers]
-        /// <summary>
-        /// Вывод данных в таблицу DataGridViewUsers
-        /// </summary>
-        private void LoadDataGridViewUsers()
-        {
-            string sqlQuery = sqlQueries.sqlComOutputUsers;
-            DataTable dataTable = dataBaseWork.OutputQuery(sqlQuery);
-            OutputInTableSetting(dataTable);
-        }
-        #endregion
-        #region [Настройка отображения выводимых данных в таблицу DataGridViewUsers]
-        /// <summary>
-        /// Настройка отображения выводимых 
-        /// данных в таблицу DataGridViewUsers
-        /// </summary>
-        /// <param name="dataTable">Передаваемая таблица с данными</param>
-        private void OutputInTableSetting(DataTable dataTable)
-        {
-            DataGridViewUsers.DataSource = dataTable;
-            DataGridViewUsers.Columns[0].HeaderText = "ID пользователя";
-            DataGridViewUsers.Columns[0].Width = 60;
-            DataGridViewUsers.Columns[1].HeaderText = "Логин";
-            DataGridViewUsers.Columns[1].Width = 140;
-            DataGridViewUsers.Columns[2].HeaderText = "Пароль";
-            DataGridViewUsers.Columns[2].Width = 120;
-            DataGridViewUsers.Columns[3].HeaderText = "Фамилия";
-            DataGridViewUsers.Columns[3].Width = 130;
-            DataGridViewUsers.Columns[4].HeaderText = "Имя";
-            DataGridViewUsers.Columns[4].Width = 130;
-            DataGridViewUsers.Columns[5].HeaderText = "Отчество";
-            DataGridViewUsers.Columns[5].Width = 116;
-            DataGridViewUsers.Columns[6].HeaderText = "Роль";
-            DataGridViewUsers.Columns[6].Width = 116;
-            DataGridViewUsers.Columns[7].HeaderText = "Email";
-            DataGridViewUsers.Columns[7].Width = 116;
+            LoadDataGridViewApplication();
         }
         #endregion
         #region [Событие нажатия на кнопку CreateUserButton]
@@ -93,15 +63,17 @@ namespace Napitki_Altay2.Forms
             {
                 MainWorkAdminTabControl.Size = new Size(1532, 829);
                 DataGridViewUsers.Size = new Size(1520, 750);
+                DataGridViewApplication.Size = new Size(1520, 750);
             }
             else
             {
                 MainWorkAdminTabControl.Size = new Size(764, 448);
                 DataGridViewUsers.Size = new Size(754, 372);
+                DataGridViewApplication.Size = new Size(754, 340);
             }
         }
         #endregion
-        #region [Закрытие приложения при закрытии формы]
+        #region [Событие закрытия приложения при закрытии формы]
         /// <summary>
         /// Закрытие приложения при закрытии формы
         /// </summary>
@@ -121,6 +93,236 @@ namespace Napitki_Altay2.Forms
         private void UpdateUserButton_Click(object sender, EventArgs e)
         {
             LoadDataGridViewUsers();
+        }
+        #endregion
+        #region [Событие нажатия на кнопку DeleteUserButton]
+        /// <summary>
+        /// Событие нажатия на кнопку DeleteUserButton
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void DeleteUserButton_Click(object sender, EventArgs e)
+        {
+            ReceiveRowAndList(out string rowToDelete, out List<string[]> listSearch);
+            if (SendQueryFromList(listSearch))
+            {
+                SendQueryToDeleteUser(rowToDelete);
+                LoadDataGridViewUsers();
+            }
+        }
+        #endregion
+        #region [Событие нажатия на кнопку UpdateApplicationButton]
+        /// <summary>
+        /// Событие нажатия на кнопку UpdateApplicationButton
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UpdateApplicationButton_Click(object sender, EventArgs e)
+        {
+            LoadDataGridViewApplication();
+        }
+        #endregion
+        #region [Событие нажатия на кнопку FilePathChooseButton]
+        /// <summary>
+        /// Событие нажатия на кнопку FilePathChooseButton
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void FilePathChooseButton_Click(object sender, EventArgs e)
+        {
+            if (FolderPathBrowserDialog.ShowDialog() == DialogResult.OK)
+                FilePathTextBox.Texts = FolderPathBrowserDialog.SelectedPath;
+        }
+        #endregion
+        #region [Событие нажатия на кнопку GenerateRaportButton]
+        /// <summary>
+        /// Событие нажатия на кнопку GenerateRaportButton
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void GenerateRaportButton_Click(object sender, EventArgs e)
+        {
+            GenerateExcelRaport();
+        }
+        #endregion
+        #region [Метод, отправляющий sql-запрос на удаление пользователя]
+        /// <summary>
+        /// Метод, отправляющий sql-запрос на удаление пользователя
+        /// </summary>
+        /// <param name="rowToDelete">Строка, содержащая данные из DataGridView</param>
+        private void SendQueryToDeleteUser(string rowToDelete)
+        {
+            string sqlQueryThree = sqlQueries.SqlComDeleteUser(rowToDelete);
+            bool checkDelete = dataBaseWork.WithoutOutputQuery(sqlQueryThree);
+            if (checkDelete)
+                MessageBox.Show("Пользователь успешно удален!", "Информация",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+        #endregion
+        #region [Метод, создающий запрос в БД из List списка]
+        /// <summary>
+        /// Метод, создающий запрос в БД из List списка
+        /// </summary>
+        /// <param name="listSearch">List список для формирования sql-запроса</param>
+        private bool SendQueryFromList(List<string[]> listSearch)
+        {
+            if (listSearch != null)
+            {
+                StringBuilder sqlQueryBuilder = new StringBuilder();
+                foreach (string[] item in listSearch)
+                {
+                    string name = item[0].ToString();
+                    string fam = item[1].ToString();
+                    string otch = item[2].ToString();
+                    string sqlQueryItem = sqlQueries.SqlComDeleteFio(fam, name, otch);
+                    sqlQueryBuilder.AppendLine(sqlQueryItem);
+                }
+                string sqlQuerySecond = sqlQueryBuilder.ToString();
+                bool checkDeleteFio = dataBaseWork.WithoutOutputQuery(sqlQuerySecond);
+                if (!checkDeleteFio)
+                    return false;
+                return true;
+            }
+            return false;
+        }
+        #endregion
+        #region [Метод, для получения строки из DataGridView и List объекта, содержащего данные из sql-запроса]
+        /// <summary>
+        /// Метод, для получения строки из DataGridView 
+        /// и List объекта, содержащего данные из sql-запроса
+        /// </summary>
+        /// <param name="rowToDelete"></param>
+        /// <param name="listSearch"></param>
+        private void ReceiveRowAndList(out string rowToDelete, out List<string[]> listSearch)
+        {
+            rowToDelete = DataGridViewUsers.CurrentRow.Cells[0].Value.ToString();
+            string sqlQuery = sqlQueries.SqlComTakeFio(rowToDelete);
+            listSearch = dataBaseWork.GetMultiList(sqlQuery, 3);
+        }
+        #endregion
+        #region [Метод, использующийся для вывода данных в таблицу DataGridViewUsers]
+        /// <summary>
+        /// Метод, использующийся для вывода данных в таблицу DataGridViewUsers
+        /// </summary>
+        private void LoadDataGridViewUsers()
+        {
+            string sqlQuery = sqlQueries.sqlComOutputUsers;
+            DataTable dataTable = dataBaseWork.OutputQuery(sqlQuery);
+            OutputSettingDataGridViewUsers(dataTable);
+        }
+        #endregion
+        #region [Метод, настраивающий отображения выводимых данных в таблицу DataGridViewUsers]
+        /// <summary>
+        /// Метод, настроивающий отображения выводимых 
+        /// данных в таблицу DataGridViewUsers
+        /// </summary>
+        /// <param name="dataTable">Передаваемая таблица с данными</param>
+        private void OutputSettingDataGridViewUsers(DataTable dataTable)
+        {
+            DataGridViewUsers.DataSource = dataTable;
+            DataGridViewUsers.Columns[0].HeaderText = "ID пользователя";
+            DataGridViewUsers.Columns[0].Width = 60;
+            DataGridViewUsers.Columns[1].HeaderText = "Логин";
+            DataGridViewUsers.Columns[1].Width = 140;
+            DataGridViewUsers.Columns[2].HeaderText = "Пароль";
+            DataGridViewUsers.Columns[2].Width = 120;
+            DataGridViewUsers.Columns[3].HeaderText = "Фамилия";
+            DataGridViewUsers.Columns[3].Width = 130;
+            DataGridViewUsers.Columns[4].HeaderText = "Имя";
+            DataGridViewUsers.Columns[4].Width = 130;
+            DataGridViewUsers.Columns[5].HeaderText = "Отчество";
+            DataGridViewUsers.Columns[5].Width = 116;
+            DataGridViewUsers.Columns[6].HeaderText = "Роль";
+            DataGridViewUsers.Columns[6].Width = 116;
+            DataGridViewUsers.Columns[7].HeaderText = "Email";
+            DataGridViewUsers.Columns[7].Width = 116;
+        }
+        #endregion
+        #region [Метод, использующийся для вывода данных в таблицу DataGridViewApplication]
+        /// <summary>
+        /// Метод, использующийся для вывода данных в таблицу DataGridViewApplication
+        /// </summary>
+        private void LoadDataGridViewApplication()
+        {
+            string sqlQuery = sqlQueries.sqlComOutputCompleteApplication;
+            DataTable dataTable = dataBaseWork.OutputQuery(sqlQuery);
+            OutputSettingDataGridViewApplication(dataTable);
+        }
+        #endregion
+        #region [Метод, настраивающий отображения выводимых данных в таблицу DataGridViewApplication]
+        /// <summary>
+        /// Метод, настроивающий отображения выводимых 
+        /// данных в таблицу DataGridViewApplication
+        /// </summary>
+        /// <param name="dataTable">Передаваемая таблица с данными</param>
+        private void OutputSettingDataGridViewApplication(DataTable dataTable)
+        {
+            DataGridViewApplication.DataSource = dataTable;
+            DataGridViewApplication.Columns[0].HeaderText =
+                "Номер обращения пользователя";
+            DataGridViewApplication.Columns[0].Width = 100;
+            DataGridViewApplication.Columns[1].HeaderText =
+                "Фамилия сотрудника";
+            DataGridViewApplication.Columns[1].Width = 150;
+            DataGridViewApplication.Columns[2].HeaderText =
+                "Имя сотрудника";
+            DataGridViewApplication.Columns[2].Width = 150;
+            DataGridViewApplication.Columns[3].HeaderText =
+                "Отчество сотрудника";
+            DataGridViewApplication.Columns[3].Width = 150;
+            DataGridViewApplication.Columns[4].HeaderText =
+                "Время ответа сотрудника";
+            DataGridViewApplication.Columns[4].Width = 148;
+        }
+        #endregion
+        #region [Метод, позволяющий сформировать excel рапорт]
+        /// <summary>
+        /// Метод, позволяющий сформировать excel рапорт
+        /// </summary>
+        private void GenerateExcelRaport()
+        {
+            object missingValue = Type.Missing;
+            Excel.Application IApplication = new Excel.Application();
+            Excel.Workbook IWorkbook = IApplication.Workbooks.Add(missingValue);
+            Excel.Worksheet IWorksheet = IWorkbook.Worksheets.get_Item(1);
+            for (int i = 0; i < DataGridViewApplication.Columns.Count; i++)
+            {
+                IWorksheet.Cells[3, i + 1] = DataGridViewApplication.Columns[i].HeaderText;
+            }
+            for (int j = 0; j < DataGridViewApplication.Rows.Count; j++)
+            {
+                for (int i = 0; i < DataGridViewApplication.Columns.Count; i++)
+                {
+                    IWorksheet.Cells[j + 4, i + 1] = Convert.ToString
+                        (DataGridViewApplication.Rows[j].Cells[i].Value);
+                }
+            }
+            IWorksheet.UsedRange.Borders.Color = Color.Black;
+            IWorksheet.Cells[1, 3].Font.Size = 20;
+            IWorksheet.Cells[3, 7].Font.Size = 16;
+            IWorksheet.Cells[6, 7].Font.Size = 16;
+            IWorksheet.Cells[2, 1].Font.Size = 14;
+            IWorksheet.Cells[1, 3] = "Отчёт о проделанной работе";
+            IWorksheet.Cells[3, 7] = "Подпись главы отдела_____________";
+            IWorksheet.Cells[6, 7] = "М.П";
+            IWorksheet.Cells[2, 1] = "Все завершенные обращения сотрудников";
+            IWorksheet.Columns.AutoFit();
+            string excelFileName = " Отчет о завершенных обращениях.xlsx";
+            string finalFileName = DateTime.Now.ToString
+                ("dd-MM-yyyy", CultureInfo.InvariantCulture) + excelFileName;
+            string filePath = FilePathTextBox.Texts;
+            if (FilePathTextBox.Texts.IsNullOrWhiteSpace())
+                MessageBox.Show("Путь сохранения не определен!", "Ошибка",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            else
+            {
+                finalFileName = Path.Combine(filePath, finalFileName);
+                IWorkbook.SaveAs(finalFileName);
+                MessageBox.Show("Отчёт успешно сформирован!", "Информация",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+                IWorkbook.Close(true, missingValue, missingValue);
+                IApplication.Quit();
+            }
         }
         #endregion
     }

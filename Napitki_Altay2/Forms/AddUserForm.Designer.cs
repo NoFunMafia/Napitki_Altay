@@ -335,21 +335,21 @@
             this.администраторToolStripMenuItem.Name = "администраторToolStripMenuItem";
             this.администраторToolStripMenuItem.Size = new System.Drawing.Size(188, 24);
             this.администраторToolStripMenuItem.Text = "Администратор";
-            this.администраторToolStripMenuItem.Click += new System.EventHandler(this.администраторToolStripMenuItem_Click);
+            this.администраторToolStripMenuItem.Click += new System.EventHandler(this.АдминистраторToolStripMenuItem_Click);
             // 
             // сотрудникToolStripMenuItem
             // 
             this.сотрудникToolStripMenuItem.Name = "сотрудникToolStripMenuItem";
             this.сотрудникToolStripMenuItem.Size = new System.Drawing.Size(188, 24);
             this.сотрудникToolStripMenuItem.Text = "Сотрудник";
-            this.сотрудникToolStripMenuItem.Click += new System.EventHandler(this.сотрудникToolStripMenuItem_Click);
+            this.сотрудникToolStripMenuItem.Click += new System.EventHandler(this.СотрудникToolStripMenuItem_Click);
             // 
             // заявительToolStripMenuItem
             // 
             this.заявительToolStripMenuItem.Name = "заявительToolStripMenuItem";
             this.заявительToolStripMenuItem.Size = new System.Drawing.Size(188, 24);
             this.заявительToolStripMenuItem.Text = "Заявитель";
-            this.заявительToolStripMenuItem.Click += new System.EventHandler(this.заявительToolStripMenuItem_Click);
+            this.заявительToolStripMenuItem.Click += new System.EventHandler(this.ЗаявительToolStripMenuItem_Click);
             // 
             // EmailLabel
             // 
@@ -433,7 +433,7 @@
         private Design.CustomTextBox ImyaTextBox;
         private System.Windows.Forms.Label FamLabel;
         private Design.CustomTextBox FamTextBox;
-        private Design.CustomButton CancelButton;
+        private new Design.CustomButton CancelButton;
         private Design.CustomButton InputUsersButton;
         private System.Windows.Forms.ContextMenuStrip RoleMenuStrip;
         private System.Windows.Forms.ToolStripMenuItem администраторToolStripMenuItem;

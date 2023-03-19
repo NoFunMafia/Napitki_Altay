@@ -171,6 +171,35 @@
             "from Authentication_ join Role_User on " +
             "Authentication_.FK_Role_User = Role_User.ID_Role_User left join " +
             "Info_About_User on Authentication_.FK_Info_User = Info_About_User.ID_Info_User";
+        // MainWorkFormAdmin - ReceiveRowAndList
+        public string SqlComTakeFio(string loginID)
+        {
+            string sqlCom = "select User_Surname, User_Name, User_Patronymic " +
+                "from Authentication_ join Info_About_User " +
+                "on Authentication_.FK_Info_User = Info_About_User.ID_Info_User " +
+                $"where ID_User = '{loginID}'";
+            return sqlCom;
+        }
+        // MainWorkFormAdmin - SendQueryFromList
+        public string SqlComDeleteFio(string name, string fam, string otch)
+        {
+            string sqlCom = $"delete from Info_About_User where User_Surname = '{fam}' " +
+                $"and User_Name = '{name}' and User_Patronymic = '{otch}'";
+            return sqlCom;
+        }
+        // MainWorkFormAdmin - SendQueryToDeleteUser
+        public string SqlComDeleteUser(string loginID)
+        {
+            string sqlCom = $"delete from Authentication_ where ID_User = '{loginID}'";
+            return sqlCom;
+        }
+        // MainWorkFormAdmin - LoadDataGridViewApplication
+        public string sqlComOutputCompleteApplication = "select FK_ID_Application, " +
+                    "User_Surname, User_Name, User_Patronymic, Date_Of_Answer " +
+                    "from Ready_Application join Info_About_User on " +
+                    "Ready_Application.FK_Info_User = Info_About_User.ID_Info_User";
+
+
         #endregion
         #region [AddUserForm]
         // AddUserForm - InputUsersButton
