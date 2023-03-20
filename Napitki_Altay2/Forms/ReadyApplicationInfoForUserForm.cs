@@ -170,7 +170,7 @@ namespace Napitki_Altay2.Forms
         }
         private void CloseCompleteApplicationButton_Click(object sender, EventArgs e)
         {
-            this.Close();
+            Close();
         }
         private void OpenPinDocumentButton_Click(object sender, EventArgs e)
         {

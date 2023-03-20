@@ -1,4 +1,8 @@
-﻿namespace Napitki_Altay2.Classes
+﻿using DocumentFormat.OpenXml.Office2010.Word;
+using Napitki_Altay2.Forms;
+using System;
+
+namespace Napitki_Altay2.Classes
 {
     internal class SqlQueries
     {
@@ -241,6 +245,84 @@
         {
             string sqlCom = $"update Authentication_ set " +
                 $"FK_Info_User = '{fioFK}' where Login_User = '{login}'";
+            return sqlCom;
+        }
+        #endregion
+        #region [UserApplicationInfoForWorkerForm]
+        public string sqlComCheckApplicationWorker = "select " +
+                    "ID_Application, Applicant_Company, " +
+                    "Type_Appeal, Description_Of_Appeal, " +
+                    "Date_Of_Request, Document_Name " +
+                    "from Application_To_Company " +
+                    "join Type_Of_Appeal on " +
+                    "Application_To_Company.FK_Type_Of_Appeal " +
+                    "= Type_Of_Appeal.ID_Type_Of_Appeal " +
+                    "full join Application_Document_From_User " +
+                    "on Application_To_Company." +
+                    "FK_Application_Document_From_User = " +
+                    "Application_Document_From_User." +
+                    $"ID_Document_From_User where " +
+                    $"Id_Application = " +
+                    $"'{MainWorkFormWorker.SelectedRowID}'";
+        public string sqlComOpenDocumentWorker = "select " +
+                "Document_Name, Document_Data, " +
+                "Document_Extension from Application_To_Company " +
+                "join Application_Document_From_User " +
+                "on Application_To_Company." +
+                "FK_Application_Document_From_User" +
+                " = Application_Document_From_User." +
+                $"ID_Document_From_User where ID_Application = " +
+                $"'{MainWorkFormWorker.SelectedRowID}'";
+        #endregion
+        #region [CreateApplicationForm]
+        public string sqlComFkInfoUser = "select * from Info_About_User where " +
+            $"User_Surname = '{MainWorkForm.SurnameUserString}' and " +
+            $"User_Name = '{MainWorkForm.NameUserString}' and " +
+            $"User_Patronymic = '{MainWorkForm.PatronymicUserString}'";
+        public string SqlComCheckTypeID(string typeName)
+        {
+            string sqlCom = "select Id_Type_Of_Appeal " +
+                $"from Type_Of_Appeal where Type_Appeal = '{typeName}'";
+            return sqlCom;
+        }
+        public string SqlComAddApplication(string company, string type, 
+            string description, DateTime dateTime, string infoUser)
+        {
+            string sqlCom = "insert into Application_To_Company (Applicant_Company, " +
+                "FK_Type_Of_Appeal, Description_Of_Appeal, Date_Of_Request, " +
+                $"FK_Info_User, FK_Status_Application) values ('{company}', " +
+                $"'{type}', '{description}', '{dateTime}', '{infoUser}', '1')";
+            return sqlCom;
+        }
+        public string SqlComAddDocument(string infoUser)
+        {
+            string sqlCom = "insert into Application_Document_From_User(Document_Name, " +
+                $"Document_Data, Document_Extension, FK_Info_User) values (@fileName, " +
+                $"@data, @extension, '{infoUser}')";
+            return sqlCom;
+        }
+        public string SqlComInfoAboutDocument(string documentName, string documentExtansion)
+        {
+            string sqlCom = "select * from Application_Document_From_User " +
+                $"where Document_Name = '{documentName}' " +
+                $"and Document_Extension = '{documentExtansion}'";
+            return sqlCom;
+        }
+        public string SqlComAddApplicationSecond(string company, string type,
+            string description, DateTime dateTime, string infoUser, string documentId)
+        {
+            string sqlCom = "insert into Application_To_Company (Applicant_Company, " +
+                "FK_Type_Of_Appeal, Description_Of_Appeal, Date_Of_Request, " +
+                "FK_Info_User, FK_Application_Document_From_User, " +
+                $"FK_Status_Application) values ('{company}', " +
+                $"'{type}', '{description}', '{dateTime}', " +
+                $"'{infoUser}', '{documentId}', '1')";
+            return sqlCom;
+        }
+        public string SqlComCheckDocumentName(string name)
+        {
+            string sqlCom = "select * from Application_Document_From_User " +
+                $"where Document_Name = {name}";
             return sqlCom;
         }
         #endregion

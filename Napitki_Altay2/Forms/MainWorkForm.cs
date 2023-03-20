@@ -72,10 +72,9 @@ namespace Napitki_Altay2.Forms
         /// <param name="e"></param>
         private void CreateApplicationButton_Click(object sender, EventArgs e)
         {
-            CreateApplicationForm createApplicationForm
-                = new CreateApplicationForm();
+            CreateApplicationForm createApplicationForm = new CreateApplicationForm();
             createApplicationForm.Show();
-            this.Hide();
+            Hide();
         }
         #endregion
         #region [Событие нажатия на кнопку UpdateDataInDGW]
@@ -416,12 +415,9 @@ namespace Napitki_Altay2.Forms
                     }
                     else
                     {
-                        FamCreateTextBox.Texts =
-                            item.GetValue(1).ToString();
-                        NameCreateTextBox.Texts =
-                            item.GetValue(2).ToString();
-                        PatrCreateTextBox.Texts =
-                            item.GetValue(3).ToString();
+                        FamCreateTextBox.Texts = item.GetValue(1).ToString();
+                        NameCreateTextBox.Texts = item.GetValue(2).ToString();
+                        PatrCreateTextBox.Texts = item.GetValue(3).ToString();
                         CreateUserFIOButton.Enabled = false;
                         ((Control)ApplicationPage).Enabled = true;
                     }

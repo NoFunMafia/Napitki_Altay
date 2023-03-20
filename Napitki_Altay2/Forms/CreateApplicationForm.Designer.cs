@@ -152,35 +152,35 @@
             this.сотрудничествоToolStripMenuItem.Name = "сотрудничествоToolStripMenuItem";
             this.сотрудничествоToolStripMenuItem.Size = new System.Drawing.Size(306, 24);
             this.сотрудничествоToolStripMenuItem.Text = "Сотрудничество";
-            this.сотрудничествоToolStripMenuItem.Click += new System.EventHandler(this.сотрудничествоToolStripMenuItem_Click);
+            this.сотрудничествоToolStripMenuItem.Click += new System.EventHandler(this.СотрудничествоToolStripMenuItem_Click);
             // 
             // обсуждениеПроблемыToolStripMenuItem
             // 
             this.обсуждениеПроблемыToolStripMenuItem.Name = "обсуждениеПроблемыToolStripMenuItem";
             this.обсуждениеПроблемыToolStripMenuItem.Size = new System.Drawing.Size(306, 24);
             this.обсуждениеПроблемыToolStripMenuItem.Text = "Обсуждение проблемы";
-            this.обсуждениеПроблемыToolStripMenuItem.Click += new System.EventHandler(this.обсуждениеПроблемыToolStripMenuItem_Click);
+            this.обсуждениеПроблемыToolStripMenuItem.Click += new System.EventHandler(this.ОбсуждениеПроблемыToolStripMenuItem_Click);
             // 
             // ознакомлениеСКаталогомПродукцииToolStripMenuItem
             // 
             this.ознакомлениеСКаталогомПродукцииToolStripMenuItem.Name = "ознакомлениеСКаталогомПродукцииToolStripMenuItem";
             this.ознакомлениеСКаталогомПродукцииToolStripMenuItem.Size = new System.Drawing.Size(306, 24);
             this.ознакомлениеСКаталогомПродукцииToolStripMenuItem.Text = "Вопросы по каталогу продукции";
-            this.ознакомлениеСКаталогомПродукцииToolStripMenuItem.Click += new System.EventHandler(this.ознакомлениеСКаталогомПродукцииToolStripMenuItem_Click);
+            this.ознакомлениеСКаталогомПродукцииToolStripMenuItem.Click += new System.EventHandler(this.ОзнакомлениеСКаталогомПродукцииToolStripMenuItem_Click);
             // 
             // письмопритензияToolStripMenuItem
             // 
             this.письмопритензияToolStripMenuItem.Name = "письмопритензияToolStripMenuItem";
             this.письмопритензияToolStripMenuItem.Size = new System.Drawing.Size(306, 24);
             this.письмопритензияToolStripMenuItem.Text = "Письмо-претензия";
-            this.письмопритензияToolStripMenuItem.Click += new System.EventHandler(this.письмопритензияToolStripMenuItem_Click);
+            this.письмопритензияToolStripMenuItem.Click += new System.EventHandler(this.ПисьмопритензияToolStripMenuItem_Click);
             // 
             // письмоблагодарностьToolStripMenuItem
             // 
             this.письмоблагодарностьToolStripMenuItem.Name = "письмоблагодарностьToolStripMenuItem";
             this.письмоблагодарностьToolStripMenuItem.Size = new System.Drawing.Size(306, 24);
             this.письмоблагодарностьToolStripMenuItem.Text = "Письмо-благодарность";
-            this.письмоблагодарностьToolStripMenuItem.Click += new System.EventHandler(this.письмоблагодарностьToolStripMenuItem_Click);
+            this.письмоблагодарностьToolStripMenuItem.Click += new System.EventHandler(this.ПисьмоблагодарностьToolStripMenuItem_Click);
             // 
             // SelectDocumentLabel
             // 
