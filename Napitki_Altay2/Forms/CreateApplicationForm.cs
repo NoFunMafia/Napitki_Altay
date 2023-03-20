@@ -6,10 +6,7 @@ using System.Windows.Forms;
 using System.Data.SqlClient;
 using System.IO;
 using Napitki_Altay2.Classes;
-using System.Data.Common;
 using System.Collections.Generic;
-using Microsoft.VisualBasic.ApplicationServices;
-using System.Linq;
 #endregion
 namespace Napitki_Altay2.Forms
 {

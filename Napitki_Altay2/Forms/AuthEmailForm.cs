@@ -1,38 +1,55 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿#region [using's]
+using System;
 using System.Windows.Forms;
-
+#endregion
 namespace Napitki_Altay2.Forms
 {
     public partial class AuthEmailForm : Form
     {
+        #region [Объявление переменной]
         public bool RightCode { get; set; }
+        #endregion
         public AuthEmailForm()
         {
             InitializeComponent();
+            DoubleBuffered = true; // Включение двойной буферизации
         }
+        #region [Событие нажатия на кнопку CancelCodeButton]
+        /// <summary>
+        /// Событие нажатия на кнопку CancelCodeButton
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CancelCodeButton_Click(object sender, EventArgs e)
         {
-            this.Close();
+            Close();
         }
+        #endregion
+        #region [Событие нажатия на кнопку EnterCodeButton]
+        /// <summary>
+        /// Событие нажатия на кнопку EnterCodeButton
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void EnterCodeButton_Click(object sender, EventArgs e)
         {
-            if(EnterCodeTextBox.Texts 
-                == RegistrationForm.unicCode.ToString())
+            CheckCode();
+        }
+        #endregion
+        #region [Метод, проверяющий правильность кода отправленного на email почту]
+        /// <summary>
+        /// Метод, проверяющий правильность кода отправленного на email почту
+        /// </summary>
+        private void CheckCode()
+        {
+            if (EnterCodeTextBox.Texts == RegistrationForm.unicCode.ToString())
             {
                 RightCode = true;
-                this.Close();
+                Close();
             }
             else
-            {
                 RightCode = false;
-            }
         }
+        #endregion
     }
 }
