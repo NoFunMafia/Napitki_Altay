@@ -1,11 +1,8 @@
 ﻿#region [using's]
-using Microsoft.VisualBasic.ApplicationServices;
 using Napitki_Altay2.Classes;
 using Napitki_Altay2.Forms;
 using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
-using System.Linq;
 using System.Windows.Forms;
 #endregion
 namespace Napitki_Altay2

@@ -18,7 +18,7 @@ namespace Napitki_Altay2.Forms
             {
                 AuthForm authForm = new AuthForm();
                 authForm.Show();  
-                this.Hide();
+                Hide();
             }
         }
         #endregion

@@ -1,6 +1,7 @@
-﻿using DocumentFormat.OpenXml.Office2010.Word;
+﻿using Microsoft.SqlServer.Server;
 using Napitki_Altay2.Forms;
 using System;
+using System.Data;
 
 namespace Napitki_Altay2.Classes
 {
@@ -78,7 +79,7 @@ namespace Napitki_Altay2.Classes
                 $"'{pass}' where Login_User = '{AuthForm.LoginString}'";
             return sqlCom;
         }
-        
+
         // MainWorkForm - CheckFIOUserInDB
         public string SqlComCheckINFOonFIO(string fam, string name, string otch)
         {
@@ -132,7 +133,7 @@ namespace Napitki_Altay2.Classes
                 $"Info_About_User.User_Patronymic = " +
                 $"'{otch}'";
             return sqlCom;
-        } 
+        }
 
         // MainWorkForm - DeleteApplicationButton_Click
         public string SqlComDelete(string deleteRow)
@@ -285,7 +286,7 @@ namespace Napitki_Altay2.Classes
                 $"from Type_Of_Appeal where Type_Appeal = '{typeName}'";
             return sqlCom;
         }
-        public string SqlComAddApplication(string company, string type, 
+        public string SqlComAddApplication(string company, string type,
             string description, DateTime dateTime, string infoUser)
         {
             string sqlCom = "insert into Application_To_Company (Applicant_Company, " +
@@ -322,7 +323,69 @@ namespace Napitki_Altay2.Classes
         public string SqlComCheckDocumentName(string name)
         {
             string sqlCom = "select * from Application_Document_From_User " +
-                $"where Document_Name = {name}";
+                $"where Document_Name = '{name}'";
+            return sqlCom;
+        }
+        #endregion
+        #region [AnswerToUserApplicationForm]
+        public string SqlComCheckDocumentNameWorker(string name)
+        {
+            string sqlCom = "select * from Answer_Document_From_Worker " +
+                $"where Document_Name_W = '{name}'";
+            return sqlCom;
+        }
+        public string SqlComTakeFkInfoWorker(string name, string fam, string otch)
+        {
+            string sqlCom = "select * from Info_About_User where " +
+                $"User_Surname = '{fam}' and User_Name = '{name}' " +
+                $"and User_Patronymic = '{otch}'";
+            return sqlCom;
+        }
+        public string SqlComCheckStatusID(string statusName)
+        {
+            string sqlCom = "select ID_Status from Status_Application " +
+                $"where Status_Name = '{statusName}'";
+            return sqlCom;
+        }
+        public string SqlComUpdateStatus(string status, string idRow)
+        {
+            string sqlCom = "update Application_To_Company set " +
+                $"FK_Status_Application = '{status}' where ID_Application = '{idRow}'";
+            return sqlCom;
+        }
+        public string SqlComCreateReadyApplicationWithoutDocument
+            (string idRow, string idUser, string description, DateTime dateTime)
+        {
+            string sqlCom = "insert into Ready_Application(FK_ID_Application, " +
+                "FK_Info_User, Answer_To_Application, Date_Of_Answer) values " +
+                $"('{idRow}', '{idUser}', '{description}', '{dateTime}')";
+            return sqlCom;
+        }
+        public string SqlComInsertWorkerDoc(string infoUser)
+        {
+            string sqlCom = "insert into Answer_Document_From_Worker(Document_Name_W, " +
+                "Document_Data_W, Document_Extension_W, FK_Info_User) values " +
+                $"(@filename, @data, @extn, '{infoUser}')";
+            return sqlCom;
+        }
+        public string SqlComInfoAboutDocumentWorker
+            (string documentName, string documentExtension)
+        {
+            string sqlCom = "select * from Answer_Document_From_Worker where " +
+                $"Document_Name_W = '{documentName}' and " +
+                $"Document_Extension_W = '{documentExtension}'";
+            return sqlCom;
+        }
+        public string SqlComCreateReadyApplicationWithDocument
+            (string idRow, string idUser, string description, 
+            DateTime dateTime, string idDocument)
+        {
+            string sqlCom = "insert into Ready_Application(FK_ID_Application, " +
+                "FK_Info_User, Answer_To_Application, Date_Of_Answer, " +
+                "FK_Answer_Document_From_Worker) values " +
+                $"('{idRow}', '{idUser}', " +
+                $"'{description}', '{dateTime}', " +
+                $"'{idDocument}')";
             return sqlCom;
         }
         #endregion

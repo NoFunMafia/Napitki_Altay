@@ -1,5 +1,7 @@
 ﻿#region [using's]
+using Napitki_Altay2.Classes;
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
@@ -12,19 +14,21 @@ namespace Napitki_Altay2.Forms
     public partial class AnswerToUserApplicationForm : Form
     {
         #region [Подключение класса соединения с БД, объявление string переменных]
-        DataBaseWork dateBaseCon = new DataBaseWork();
-        public string fk_info_user;
-        public string DocName;
-        public string DocExtn;
-        public string fk_application_document_from_worker;
+        readonly DataBaseWork dataBaseWork = new DataBaseWork();
+        readonly SqlQueries sqlQueries = new SqlQueries();
+        string fkInfoUser;
+        string docName;
+        string docExtension;
+        string checkStatus;
+        string fkApplicationDocumentFromWorker;
         #endregion
         public AnswerToUserApplicationForm()
         {
-            this.Location = new Point(740, 90);
+            Location = new Point(740, 90);
             InitializeComponent();
             DoubleBuffered = true; // Включение двойной буферизации
         }
-        #region [Событие нажатия на кнопку закрытия формы]
+        #region [Событие нажатия на кнопку CloseApplicWorkButton]
         /// <summary>
         /// Событие нажатия на кнопку закрытия формы
         /// </summary>
@@ -32,51 +36,10 @@ namespace Napitki_Altay2.Forms
         /// <param name="e"></param>
         private void CloseApplicWorkButton_Click(object sender, EventArgs e)
         {
-            this.Close();
+            Close();
         }
         #endregion
-        #region [Метод проверки уникальности имени прикрепляемого документа]
-        /// <summary>
-        /// Метод проверки уникальности имени прикрепляемого документа
-        /// </summary>
-        /// <returns></returns>
-        public Boolean CheckNameOfUserFile()
-        {
-            string filepath = DocumentWorkAnsTextBox.Texts;
-            using (Stream stream = File.OpenRead(filepath))
-            {
-                byte[] buffer = new byte[stream.Length];
-                stream.Read(buffer, 0, buffer.Length);
-                var fileInfo = new FileInfo(filepath);
-                string name = fileInfo.Name;
-                DataBaseWork dataBaseCon = new DataBaseWork();
-                DataTable dataTable = new DataTable();
-                SqlCommand command = new SqlCommand
-                    ("select * from Answer_Document_From_Worker " +
-                    "where Document_Name_W=@docName",
-                    dataBaseCon.GetConnection());
-                command.Parameters.Add
-                    ("@docName", SqlDbType.VarChar).Value
-                    = name;
-                SqlDataAdapter adapter = new SqlDataAdapter();
-                adapter.SelectCommand = command;
-                adapter.Fill(dataTable);
-                if (dataTable.Rows.Count > 0)
-                {
-                    MessageBox.Show
-                        ("Переименуйте файл! " +
-                        "Данное название уже присутствует в системе!",
-                        "Ошибка",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Error);
-                    return true;
-                }
-                else
-                    return false;
-            }
-        }
-        #endregion
-        #region [Работа с ToolStripMenu, выбор статуса обращения]
+        #region [События работы с ToolStripMenu, выбор статуса обращения]
         /// <summary>
         /// Событие нажатия на картинку с последующим 
         /// действием выпадающего элемента
@@ -97,23 +60,26 @@ namespace Napitki_Altay2.Forms
             StatusApplicationTextBox.Texts = "Отклонено";
         }
         #endregion
-        #region [Событие нажатия на кнопку выбора документа для прикрепления]
+        #region [Событие нажатия на кнопку ChooseAnsWorkDocumentButton]
         /// <summary>
-        /// Событие нажатия на кнопку выбора документа для прикрепления
+        /// Событие нажатия на кнопку ChooseAnsWorkDocumentButton
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void ChooseAnsWorkDocumentButton_Click
             (object sender, EventArgs e)
         {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
+            OpenFileDialog openFileDialog = new OpenFileDialog
+            {
+                Filter = "Documents|*.docx;*.pdf;*.doc;*.xlsx"
+            };
             openFileDialog.ShowDialog();
             DocumentWorkAnsTextBox.Texts = openFileDialog.FileName;
         }
         #endregion
-        #region [Удаление прикреплённого документа]
+        #region [Событие нажатия на кнопку DeleteAnsWorkDocumentButton]
         /// <summary>
-        /// Событие нажатия на удаление прикреплённого документа
+        /// Событие нажатия на кнопку DeleteAnsWorkDocumentButton
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -123,72 +89,162 @@ namespace Napitki_Altay2.Forms
             DocumentWorkAnsTextBox.Texts = "";
         }
         #endregion
-        #region [Проверка входящего запроса в БД]
+        #region [Событие нажатия на кнопку AnswerApplButton]
         /// <summary>
-        /// Проверка работы входящего запроса в базу данных
-        /// </summary>
-        /// <param name="command">Запрос в базу данных</param>
-        /// <returns></returns>
-        private SqlCommand Check(string command)
-        {
-            return new SqlCommand(command, dateBaseCon.GetConnection());
-        }
-        #endregion
-        #region [Метод получения ID пользователя при составлении обращения]
-        /// <summary>
-        /// Метод получения ID пользователя при составлении ответа на обращение
-        /// </summary>
-        /// <param name="datareader"></param>
-        private void CheckDataReaderRowsInfo(SqlDataReader datareader)
-        {
-            if (datareader.HasRows)
-            {
-                fk_info_user = datareader.GetValue(0).ToString();
-            }
-        }
-        #endregion
-        #region [Метод получения ID заявки]
-        /// <summary>
-        /// Метод получения ID пользователя при составлении обращения
-        /// </summary>
-        /// <param name="datareader"></param>
-        private void CheckDataRowsIDDocument(SqlDataReader datareader)
-        {
-            if (datareader.HasRows)
-            {
-                fk_application_document_from_worker = 
-                    datareader.GetValue(0).ToString();
-            }
-        }
-        #endregion
-        #region [Событие нажатия на кнопку дачи ответа]
-        /// <summary>
-        /// Событие нажатия на кнопку дачи ответа
+        /// Событие нажатия на кнопку AnswerApplButton
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void AnswerApplButton_Click(object sender, EventArgs e)
         {
-            bool successFK_Info_User;
+            TakeWorkerId(out List<string[]> listSearch);
+            CheckDataReaderRowsInfo(listSearch);
+            string filepath = DocumentWorkAnsTextBox.Texts;
+            if (string.IsNullOrEmpty(DocumentWorkAnsTextBox.Texts))
+            {
+                CreateAnswerWithoutDocument();
+            }
+            else
+            {
+                if (string.IsNullOrEmpty(StatusApplicationTextBox.Texts)
+                    || string.IsNullOrEmpty(DescripWorkAnsTextBox.Texts))
+                {
+                    MessageBox.Show("Не все поля заполнены!",
+                            "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                using (Stream stream = File.OpenRead(filepath))
+                {
+                    GetDocumentInfo(filepath, stream, out byte[] buffer,
+                        out string extension, out string name);
+                    if (!CheckNameOfWorkerFile(name))
+                        return;
+                    InsertDocumentQuery(buffer, extension, name);
+                }
+                TakeDocumentIdInfo(out List<string[]> listSearchSecond);
+                CheckDataRowsIdDocument(listSearchSecond);
+                CreateAnswerWithDocument();
+            }
+        }
+        #endregion
+        #region [Метод, проверяющий уникальность названия прикрепляемого документа]
+        /// <summary>
+        /// Метод проверки уникальности названия прикрепляемого документа
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public Boolean CheckNameOfWorkerFile(string name)
+        {
+            string filepath = DocumentWorkAnsTextBox.Texts;
+            using (Stream stream = File.OpenRead(filepath))
+            {
+                string sqlQuery = sqlQueries.SqlComCheckDocumentNameWorker(name);
+                List<string[]> listSearch = dataBaseWork.GetMultiList(sqlQuery, 4);
+                if (listSearch != null && listSearch.Count > 0)
+                {
+                    MessageBox.Show("Переименуйте файл! " +
+                        "Данное название уже присутствует в базе данных!",
+                        "Ошибка",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error);
+                    return false;
+                }
+                return true;
+            }
+        }
+        #endregion
+        #region [Метод, получающий ID пользователя при составлении обращения]
+        /// <summary>
+        /// Метод получения ID пользователя при составлении ответа на обращение
+        /// </summary>
+        /// <param name="datareader"></param>
+        private void CheckDataReaderRowsInfo(List<string[]> strings)
+        {
+            if (strings != null)
+            {
+                foreach (string[] item in strings)
+                {
+                    fkInfoUser = item[0];
+                }
+            }
+        }
+        #endregion
+        #region [Метод, получающий ID документа]
+        /// <summary>
+        /// Метод, получающий ID документа
+        /// </summary>
+        /// <param name="strings"></param>
+        private void CheckDataRowsIdDocument(List<string[]> strings)
+        {
+            if (strings != null)
+            {
+                foreach (string[] item in strings)
+                {
+                    fkApplicationDocumentFromWorker = item[0];
+                }
+            }
+        }
+        #endregion
+        #region [Метод, создающий ответ с прикрепленным документом]
+        /// <summary>
+        /// Метод, создающий ответ с прикрепленным документом
+        /// </summary>
+        private void CreateAnswerWithDocument()
+        {
+            string sqlQuerySeven = sqlQueries.SqlComCheckStatusID
+                (StatusApplicationTextBox.Texts);
+            checkStatus = dataBaseWork.GetString(sqlQuerySeven);
+            string sqlQueryEight = sqlQueries.SqlComUpdateStatus
+                (checkStatus, MainWorkFormWorker.SelectedRowID);
+            dataBaseWork.WithoutOutputQuery(sqlQueryEight);
+            string sqlQueryNine = sqlQueries.SqlComCreateReadyApplicationWithDocument
+                (MainWorkFormWorker.SelectedRowID, fkInfoUser,
+                DescripWorkAnsTextBox.Texts, ApplAnsWorkDTP.Value,
+                fkApplicationDocumentFromWorker);
+            bool checkInsertAnswer = dataBaseWork.WithoutOutputQuery(sqlQueryNine);
+            if (checkInsertAnswer)
+            {
+                MessageBox.Show("Ответ на обращение создан!",
+                "Информация", MessageBoxButtons.OK,
+                MessageBoxIcon.Information);
+                Close();
+                Form userForm = Application.OpenForms["UserApplicationInfoForWorkerForm"];
+                userForm?.Close();
+            }
+        }
+        #endregion
+        #region [Метод, заполняющий List список информации о внесенном документе]
+        /// <summary>
+        /// Метод, заполняющий List список информации о внесенном документе
+        /// </summary>
+        /// <param name="listSearchSecond"></param>
+        private void TakeDocumentIdInfo(out List<string[]> listSearchSecond)
+        {
+            string sqlQuerySix = sqlQueries.SqlComInfoAboutDocumentWorker
+                (docName, docExtension);
+            listSearchSecond = dataBaseWork.GetMultiList(sqlQuerySix, 4);
+        }
+        #endregion
+        #region [Метод, вносящий прикрепляемый файл в БД]
+        /// <summary>
+        /// Метод, вносящий прикрепляемый файл в БД
+        /// </summary>
+        /// <param name="buffer"></param>
+        /// <param name="extn"></param>
+        /// <param name="name"></param>
+        private void InsertDocumentQuery(byte[] buffer, string extn, string name)
+        {
+            string sqlQueryFifth = sqlQueries.SqlComInsertWorkerDoc(fkInfoUser);
+            docName = name;
+            docExtension = extn;
             try
             {
-                string sqlComFK_Info_User = $"select * " +
-                    $"from Info_About_User " +
-                    $"where User_Surname = " +
-                    $"'{MainWorkFormWorker.SurnameWorkerString}' " +
-                    $"and User_Name = " +
-                    $"'{MainWorkFormWorker.NameWorkerString}' " +
-                    $"and User_Patronymic = " +
-                    $"'{MainWorkFormWorker.PatrWorkerString}'";
-                SqlCommand check = Check(sqlComFK_Info_User);
-                dateBaseCon.OpenConnection();
-                using (var datareader = check.ExecuteReader())
-                {
-                    successFK_Info_User = datareader.Read();
-                    {
-                        CheckDataReaderRowsInfo(datareader);
-                    }
-                }
+                dataBaseWork.OpenConnection();
+                SqlCommand sqlCommand = new SqlCommand
+                    (sqlQueryFifth, dataBaseWork.GetConnection());
+                sqlCommand.Parameters.Add("@filename", SqlDbType.VarChar).Value = name;
+                sqlCommand.Parameters.Add("@data", SqlDbType.VarBinary).Value = buffer;
+                sqlCommand.Parameters.Add("@extn", SqlDbType.Char).Value = extn;
+                sqlCommand.ExecuteNonQuery();
             }
             catch (Exception ex)
             {
@@ -199,263 +255,62 @@ namespace Napitki_Altay2.Forms
             }
             finally
             {
-                dateBaseCon.CloseConnection();
+                dataBaseWork.CloseConnection();
             }
-            string filepath = DocumentWorkAnsTextBox.Texts;
-            if (DocumentWorkAnsTextBox.Texts == "")
+        }
+        #endregion
+        #region [Метод, создающий ответ без прикрепленного документа]
+        /// <summary>
+        /// Метод, создающий ответ без прикрепленного документа
+        /// </summary>
+        private void CreateAnswerWithoutDocument()
+        {
+            if (string.IsNullOrEmpty(StatusApplicationTextBox.Texts)
+                | string.IsNullOrEmpty(DescripWorkAnsTextBox.Texts))
             {
-                if (StatusApplicationTextBox.Texts == "" ||
-                    DescripWorkAnsTextBox.Texts == "")
-                {
-                    MessageBox.Show("Не все поля заполнены!",
-                        "Ошибка",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Error);
-                }
-                else
-                {
-                    try
-                    {
-                        int UpdateStat;
-                        if (StatusApplicationTextBox.Texts == "Завершено")
-                        {
-                            UpdateStat = 3;
-                        }
-                        else
-                            UpdateStat = 4;
-                        bool success;
-                        string sqlComApplCreate = "update " +
-                            "Application_To_Company " +
-                            $"set FK_Status_Application = '{UpdateStat}' " +
-                            $"where ID_Application = " +
-                            $"'{MainWorkFormWorker.SelectedRowID}'";
-                        SqlCommand check = Check(sqlComApplCreate);
-                        dateBaseCon.OpenConnection();
-                        using (var datareader = check.ExecuteReader())
-                        {
-                            success = datareader.Read();
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show(ex.Message,
-                            "Ошибка",
-                            MessageBoxButtons.OK,
-                            MessageBoxIcon.Error);
-                    }
-                    finally
-                    {
-                        dateBaseCon.CloseConnection();
-                    }
-                    try
-                    {
-                        bool successApplCreate;
-                        string sqlComApplCreate = "insert into " +
-                            "Ready_Application(FK_ID_Application, " +
-                            "FK_Info_User, Answer_To_Application, " +
-                            "Date_Of_Answer) " +
-                            $"values " +
-                            $"('{MainWorkFormWorker.SelectedRowID}', " +
-                            $"'{fk_info_user}', " +
-                            $"'{DescripWorkAnsTextBox.Texts}', " +
-                            $"'{ApplAnsWorkDTP.Value}'" +
-                            $")";
-                        SqlDataAdapter sqlDataAdapter = new SqlDataAdapter();
-                        DataTable dataTable = new DataTable();
-                        SqlCommand check = Check(sqlComApplCreate);
-                        dateBaseCon.OpenConnection();
-                        using (var datareader = check.ExecuteReader())
-                        {
-                            successApplCreate = datareader.Read();
-                            MessageBox.Show("Ответ на обращение дан!",
-                                    "Информация",
-                                    MessageBoxButtons.OK,
-                                    MessageBoxIcon.Information);
-                            this.Close();
-                            Form fc = Application.OpenForms
-                                ["UserApplicationInfoForWorkerForm"];
-                            if(fc != null)
-                                fc.Close(); 
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show(ex.Message,
-                            "Ошибка",
-                            MessageBoxButtons.OK,
-                            MessageBoxIcon.Error);
-                    }
-                    finally
-                    {
-                        dateBaseCon.CloseConnection();
-                    }
-                }
+                MessageBox.Show("Не все поля заполнены!",
+                    "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            else if (DocumentWorkAnsTextBox.Texts.Length > 1)
+            string sqlQuerySecond = sqlQueries.SqlComCheckStatusID
+                (StatusApplicationTextBox.Texts);
+            checkStatus = dataBaseWork.GetString(sqlQuerySecond);
+            string sqlQueryThree = sqlQueries.SqlComUpdateStatus
+                (checkStatus, MainWorkFormWorker.SelectedRowID);
+            dataBaseWork.WithoutOutputQuery(sqlQueryThree);
+            string sqlQueryFourth = sqlQueries.SqlComCreateReadyApplicationWithoutDocument
+                (MainWorkFormWorker.SelectedRowID, fkInfoUser,
+                DescripWorkAnsTextBox.Texts, ApplAnsWorkDTP.Value);
+            bool checkInsert = dataBaseWork.WithoutOutputQuery(sqlQueryFourth);
+            if (checkInsert)
             {
-                if (StatusApplicationTextBox.Texts == "" ||
-                    DescripWorkAnsTextBox.Texts == "")
-                {
-                    MessageBox.Show("Не все поля заполнены!",
-                        "Ошибка",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Error);
-                }
-                else
-                {
-                    using (Stream stream = File.OpenRead(filepath))
-                    {
-                        byte[] buffer = new byte[stream.Length];
-                        stream.Read(buffer, 0, buffer.Length);
-                        var fileInfo = new FileInfo(filepath);
-                        string extn = fileInfo.Extension;
-                        string name = fileInfo.Name;
-                        if (CheckNameOfUserFile())
-                            return;
-                        string sqlQueryInsertFile = "insert into " +
-                            "Answer_Document_From_Worker" +
-                            "(Document_Name_W, Document_Data_W, " +
-                            $"Document_Extension_W, FK_Info_User) " +
-                            $"values (@filename, @data, @extn, " +
-                            $"'{fk_info_user}')";
-                        try
-                        {
-                            dateBaseCon.OpenConnection();
-                            SqlCommand command = new SqlCommand
-                                (sqlQueryInsertFile, 
-                                dateBaseCon.GetConnection());
-                            command.Parameters.Add("@filename",
-                                SqlDbType.VarChar).Value = name;
-                            DocName = name;
-                            command.Parameters.Add("@data",
-                                SqlDbType.VarBinary).Value = buffer;
-                            command.Parameters.Add("@extn",
-                                SqlDbType.Char).Value = extn;
-                            DocExtn = extn;
-                            command.ExecuteNonQuery();
-                        }
-                        catch (Exception ex)
-                        {
-                            MessageBox.Show(ex.Message,
-                                "Ошибка",
-                                MessageBoxButtons.OK,
-                                MessageBoxIcon.Error);
-                        }
-                        finally
-                        {
-                            dateBaseCon.CloseConnection();
-                        }
-                    }
-                    try
-                    {
-                        bool successFK_Application_Document_From_User;
-                        string sqlComFK_Application_From_User 
-                            = $"select * " +
-                            $"from Answer_Document_From_Worker " +
-                            $"where Document_Name_W = '{DocName}' " +
-                            $"and Document_Extension_W = '{DocExtn}'";
-                        SqlCommand check 
-                            = Check(sqlComFK_Application_From_User);
-                        dateBaseCon.OpenConnection();
-                        using (var datareader = check.ExecuteReader())
-                        {
-                            successFK_Application_Document_From_User
-                                = datareader.Read();
-                            {
-                                CheckDataRowsIDDocument(datareader);
-                            }
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show(ex.Message,
-                                "Ошибка",
-                                MessageBoxButtons.OK,
-                                MessageBoxIcon.Error);
-                    }
-                    finally
-                    {
-                        dateBaseCon.CloseConnection();
-                    }
-                    try
-                    {
-                        int UpdateStat;
-                        if (StatusApplicationTextBox.Texts == "Завершено")
-                        {
-                            UpdateStat = 3;
-                        }
-                        else
-                            UpdateStat = 4;
-                        bool success;
-                        string sqlComApplCreate = "update " +
-                            "Application_To_Company " +
-                            $"set FK_Status_Application = '{UpdateStat}' " +
-                            $"where ID_Application = " +
-                            $"'{MainWorkFormWorker.SelectedRowID}'";
-                        SqlCommand check = Check(sqlComApplCreate);
-                        dateBaseCon.OpenConnection();
-                        using(var datareader = check.ExecuteReader())
-                        {
-                            success = datareader.Read();
-                        }
-                    }
-                    catch(Exception ex)
-                    {
-                        MessageBox.Show(ex.Message,
-                            "Ошибка",
-                            MessageBoxButtons.OK,
-                            MessageBoxIcon.Error);
-                    }
-                    finally
-                    {
-                        dateBaseCon.CloseConnection();
-                    }
-                    try
-                    {
-                        bool successApplCreate;
-                        string sqlComApplCreate = "insert into " +
-                            "Ready_Application(FK_ID_Application, " +
-                            "FK_Info_User, Answer_To_Application, " +
-                            "Date_Of_Answer, " +
-                            "FK_Answer_Document_From_Worker) " +
-                            $"values " +
-                            $"('{MainWorkFormWorker.SelectedRowID}', " +
-                            $"'{fk_info_user}', " +
-                            $"'{DescripWorkAnsTextBox.Texts}', " +
-                            $"'{ApplAnsWorkDTP.Value}', " +
-                            $"'{fk_application_document_from_worker}')";
-                        SqlDataAdapter sqlDataAdapter 
-                            = new SqlDataAdapter();
-                        DataTable dataTable = new DataTable();
-                        SqlCommand check = Check(sqlComApplCreate);
-                        dateBaseCon.OpenConnection();
-                        using (var datareader = check.ExecuteReader())
-                        {
-                            successApplCreate = datareader.Read();
-                            MessageBox.Show("Ответ на обращение дан!",
-                                    "Информация",
-                                    MessageBoxButtons.OK,
-                                    MessageBoxIcon.Information);
-                            this.Close();
-                            Form fc = Application.OpenForms
-                                ["UserApplicationInfoForWorkerForm"];
-                            if (fc != null)
-                                fc.Close();
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show(ex.Message,
-                            "Ошибка",
-                            MessageBoxButtons.OK,
-                            MessageBoxIcon.Error);
-                    }
-                    finally
-                    {
-                        dateBaseCon.CloseConnection();
-                    }
-                }
+                MessageBox.Show("Ответ на обращение создан!",
+                    "Информация", MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
+                Close();
+                Form userForm = Application.OpenForms["UserApplicationInfoForWorkerForm"];
+                userForm?.Close();
             }
+        }
+        #endregion
+        #region [Метод, получающий информацию о прикрепляемом документе]
+        private static void GetDocumentInfo(string filepath, Stream stream, 
+            out byte[] buffer, out string extn, out string name)
+        {
+            buffer = new byte[stream.Length];
+            stream.Read(buffer, 0, buffer.Length);
+            var fileInfo = new FileInfo(filepath);
+            extn = fileInfo.Extension;
+            name = fileInfo.Name;
+        }
+        #endregion
+        #region [Метод, получающий ID сотрудника-ответчика]
+        private void TakeWorkerId(out List<string[]> listSearch)
+        {
+            string sqlQueryFirst = sqlQueries.SqlComTakeFkInfoWorker
+                (MainWorkFormWorker.NameWorkerString,
+                MainWorkFormWorker.SurnameWorkerString,
+                MainWorkFormWorker.PatrWorkerString);
+            listSearch = dataBaseWork.GetMultiList(sqlQueryFirst, 4);
         }
         #endregion
     }

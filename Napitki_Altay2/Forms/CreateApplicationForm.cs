@@ -12,17 +12,16 @@ namespace Napitki_Altay2.Forms
 {
     public partial class CreateApplicationForm : Form
     {
-        #region [Переменные для работы с БД]
+        #region [Подключение классов, обьявление переменных]
         // Использование класса работы с БД
         readonly DataBaseWork dataBaseWork = new DataBaseWork();
         // Класс запросов в БД
         readonly SqlQueries sqlQueries = new SqlQueries();
-        public string fkInfoUser;
-        public string fk_application_to_company;
-        public string fkDocumentId;
-        public string checkType;
-        public string documentName;
-        public string documentExtansion;
+        string fkInfoUser;
+        string fkDocumentId;
+        string checkType;
+        string documentName;
+        string documentExtansion;
         #endregion
         public CreateApplicationForm()
         {
@@ -161,7 +160,10 @@ namespace Napitki_Altay2.Forms
         private void ChooseDocumentButton_Click
             (object sender, EventArgs e)
         {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
+            OpenFileDialog openFileDialog = new OpenFileDialog
+            {
+                Filter = "Documents|*.docx;*.pdf;*.doc;*.xlsx"
+            };
             openFileDialog.ShowDialog();
             DocumentTextBox.Texts = openFileDialog.FileName;
         }
@@ -336,16 +338,16 @@ namespace Napitki_Altay2.Forms
             {
                 string sqlQuery = sqlQueries.SqlComCheckDocumentName(name);
                 List<string[]> listSearch = dataBaseWork.GetMultiList(sqlQuery, 4);
-                if(listSearch != null)
+                if(listSearch != null && listSearch.Count > 0)
                 {
-                    return true;
-                }
-                MessageBox.Show("Переименуйте файл! " +
-                        "Данное название уже присутствует в системе!",
+                    MessageBox.Show("Переименуйте файл! " +
+                        "Данное название уже присутствует в базе данных!",
                         "Ошибка",
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Error);
-                return false;
+                    return false;
+                }
+                return true;
             }
         }
         #endregion

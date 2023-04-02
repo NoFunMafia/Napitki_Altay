@@ -14,9 +14,9 @@ namespace Napitki_Altay2.Forms
     {
         #region [Подключение классов, объявление переменных]
         // Класс запросов в БД
-        private readonly SqlQueries sqlQueries = new SqlQueries();
+        readonly SqlQueries sqlQueries = new SqlQueries();
         // Использование класса работы с БД
-        private readonly DataBaseWork dataBaseWork = new DataBaseWork();
+        readonly DataBaseWork dataBaseWork = new DataBaseWork();
         #endregion
         public AddUserForm()
         {

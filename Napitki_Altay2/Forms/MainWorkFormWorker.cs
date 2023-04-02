@@ -1,4 +1,5 @@
-﻿using System;
+﻿#region [using's]
+using System;
 using System.Data;
 using System.Data.SqlClient;
 using System.Globalization;
@@ -6,7 +7,7 @@ using System.IO;
 using System.Windows.Forms;
 using Excel = Microsoft.Office.Interop.Excel;
 using System.Drawing;
-
+#endregion
 namespace Napitki_Altay2.Forms
 {
     public partial class MainWorkFormWorker : Form
