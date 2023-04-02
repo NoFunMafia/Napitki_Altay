@@ -222,8 +222,8 @@ namespace Napitki_Altay2.Forms
         private void CreateUserInfoQuery()
         {
             if (string.IsNullOrEmpty(FamCreateTextBox.Texts) ||
-                            string.IsNullOrEmpty(NameCreateTextBox.Texts) ||
-                            string.IsNullOrEmpty(PatrCreateTextBox.Texts))
+                string.IsNullOrEmpty(NameCreateTextBox.Texts) ||
+                string.IsNullOrEmpty(PatrCreateTextBox.Texts))
                 MessageBox.Show("Поля данных не заполнены до конца!",
                     "Ошибка",
                     MessageBoxButtons.OK,
@@ -262,10 +262,8 @@ namespace Napitki_Altay2.Forms
         private void DeleteApplicationQuery()
         {
             DialogResult result = MessageBox.Show
-                            ("Вы действительно хотите удалить обращение?",
-                            "Внимание",
-                            MessageBoxButtons.YesNo,
-                            MessageBoxIcon.Warning);
+                ("Вы действительно хотите удалить обращение?",
+                "Внимание", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
             if (result == DialogResult.Yes)
             {
                 DeletedRow = DataGridViewApplication.CurrentRow.Cells[0].Value.ToString();

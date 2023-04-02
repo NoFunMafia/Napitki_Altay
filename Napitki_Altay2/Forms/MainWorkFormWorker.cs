@@ -7,13 +7,18 @@ using System.IO;
 using System.Windows.Forms;
 using Excel = Microsoft.Office.Interop.Excel;
 using System.Drawing;
+using Napitki_Altay2.Classes;
+using System.Collections.Generic;
+using System.Linq;
+using ClosedXML.Report.Utils;
 #endregion
 namespace Napitki_Altay2.Forms
 {
     public partial class MainWorkFormWorker : Form
     {
-        #region [Подключение к БД, инициализация переменных string]
-        readonly DataBaseWork dataBaseCon = new DataBaseWork();
+        #region [Подключение классов, обьявление переменных]
+        readonly DataBaseWork dataBaseWork = new DataBaseWork();
+        readonly SqlQueries sqlQueries = new SqlQueries();
         public static string SelectedRowID;
         public static string SurnameWorkerString;
         public static string NameWorkerString;
@@ -24,292 +29,194 @@ namespace Napitki_Altay2.Forms
             InitializeComponent();
             DoubleBuffered = true; // Включение двойной буферизации
         }
-        #region [Загрузка формы]
+        #region [Событие загрузки формы]
         private void MainWorkFormWorker_Load(object sender, EventArgs e)
         {
-            try
-            {
-                bool successLoad;
-                // Передача значения Пароля из формы AuthForm
-                PassWorkCreaUpdaTextBox.Texts = AuthForm.PasswordString;
-                string sqlComUserFIO = $"select * from Info_About_User " +
-                    $"join Authentication_ on Authentication_.FK_Info_User " +
-                    $"= Info_About_User.ID_Info_User " +
-                    $"where Authentication_.Login_User = " +
-                    $"'{AuthForm.LoginString}'";
-                SqlCommand check = Check(sqlComUserFIO);
-                dataBaseCon.OpenConnection();
-                using (var datareader = check.ExecuteReader())
-                {
-                    successLoad = datareader.Read();
-                    {
-                        CheckDataReaderRowsInfo(datareader);
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message,
-                    "Ошибка",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Error);
-            }
-            finally
-            {
-                dataBaseCon.CloseConnection();
-            }
-            LoadDataInDWG();
-            LoadDataInDWGComplete();
+            TakeFioWorker(out List<string[]> listSearch);
+            CheckDataReaderRowsInfo(listSearch);
+            LoadDataInDataGridViewAnswer();
+            LoadDataInCompleteApplicationDGW();
         }
         #endregion
-        #region [Метод проверки наличия у пользователя заполненного ФИО в БД]
+        #region [Событие нажатия на кнопку CreateUserFIOButton]
+        /// <summary>
+        /// Событие нажатия на кнопку CreateUserFIOButton
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void CreateUserFIOButton_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(FamWorkCreateTextBox.Texts) ||
+                string.IsNullOrEmpty(NameWorkCreateTextBox.Texts) ||
+                string.IsNullOrEmpty(PatrWorkCreateTextBox.Texts))
+            {
+                MessageBox.Show("Поля данных не заполнены до конца!",
+                    "Ошибка", MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+            }
+            else
+            {
+                if (!CheckFIOUserInDB())
+                    return;
+                InsertAndUpdateQuery(out bool checkInsertFio,
+                    out bool checkUpdateWorkerFio);
+                if (checkInsertFio && checkUpdateWorkerFio)
+                {
+                    MessageBox.Show("Пользователь успешно добавлен!",
+                        "Информация", MessageBoxButtons.OK,
+                        MessageBoxIcon.Information);
+                    CreateUserFIOButton.Enabled = false;
+                }
+            }
+        }
+        #endregion
+        #region [Событие нажатия на кнопку AnswerToApplicationButton]
+        /// <summary>
+        /// Событие нажатия на кнопку AnswerToApplicationButton
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void AnswerToApplicationButton_Click(object sender, EventArgs e)
+        {
+            OpenAnswerFormAndUpdateStatus();
+        }
+        #endregion
+        #region [Событие нажатия на кнопку GenerateRaportButton]
+        /// <summary>
+        /// Событие нажатия на кнопку GenerateRaportButton
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void GenerateRaportButton_Click(object sender, EventArgs e)
+        {
+            GenerateExcelRaport();
+        }
+        #endregion
+        #region [Событие закрытия формы]
+        /// <summary>
+        /// Событие закрытия формы
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void MainWorkFormWorker_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Application.Exit();
+        }
+        #endregion
+        #region [Метод, получающий ФИО сотрудника]
+        /// <summary>
+        /// Метод, получающий ФИО сотрудника
+        /// </summary>
+        /// <param name="listSearch"></param>
+        private void TakeFioWorker(out List<string[]> listSearch)
+        {
+            string sqlQueryFirst = sqlQueries.SqlComTakeFioWorker(AuthForm.LoginString);
+            listSearch = dataBaseWork.GetMultiList(sqlQueryFirst, 4);
+        }
+        #endregion
+        #region [Метод, проверяющий наличие у пользователя заполненного ФИО в БД]
         /// <summary>
         /// Метод проверки наличия у пользователя заполненного ФИО в БД
         /// </summary>
-        /// <param name="datareader"></param>
-        private void CheckDataReaderRowsInfo(SqlDataReader datareader)
+        /// <param name="strings"></param>
+        private void CheckDataReaderRowsInfo(List<string[]> strings)
         {
-            if (datareader.HasRows)
+            if (strings != null)
             {
-                FamWorkCreateTextBox.Texts =
-                    datareader.GetValue(1).ToString();
-                CreateUserFIOButton.Enabled = false;
-                ((Control)this.AnswerToApplicationPage).Enabled = true;
-            }
-            else
-            {
-                FamWorkCreateTextBox.Texts = "";
-                ((Control)this.AnswerToApplicationPage).Enabled = false;
-                InfoAnswerLabel.Visible = true;
-            }
-            if (datareader.HasRows)
-            {
-                NameWorkCreateTextBox.Texts =
-                    datareader.GetValue(2).ToString();
-                CreateUserFIOButton.Enabled = false;
-                ((Control)this.AnswerToApplicationPage).Enabled = true;
-            }
-            else
-            {
-                NameWorkCreateTextBox.Texts = "";
-                ((Control)this.AnswerToApplicationPage).Enabled = false;
-                InfoAnswerLabel.Visible = true;
-            }
-            if (datareader.HasRows)
-            {
-                PatrWorkCreateTextBox.Texts =
-                    datareader.GetValue(3).ToString();
-                CreateUserFIOButton.Enabled = false;
-                ((Control)this.AnswerToApplicationPage).Enabled = true;
-            }
-            else
-            {
-                PatrWorkCreateTextBox.Texts = "";
-                ((Control)this.AnswerToApplicationPage).Enabled = false;
-                InfoAnswerLabel.Visible = true;
-            }
-        }
-        #endregion
-        #region [Проверка входящего запроса в БД]
-        /// <summary>
-        /// Проверка работы входящего запроса в базу данных
-        /// </summary>
-        /// <param name="command">Запрос в базу данных</param>
-        /// <returns></returns>
-        private SqlCommand Check(string command)
-        {
-            return new SqlCommand(command, dataBaseCon.GetConnection());
-        }
-        #endregion
-        #region [Создание ФИО сотрудника]
-        private void CreateUserFIOButton_Click(object sender, EventArgs e)
-        {
-            bool success;
-            try
-            {
-                if (FamWorkCreateTextBox.Texts == ""
-                || NameWorkCreateTextBox.Texts == ""
-                || PatrWorkCreateTextBox.Texts == "")
-                    MessageBox.Show("Поля данных не заполнены до конца!",
-                        "Ошибка",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Error);
-                else
+                foreach (string[] item in strings)
                 {
-                    if (CheckFIOUserInDB())
-                        return;
-                    string sqlComFIO = "insert into Info_About_User" +
-                        "(User_Surname, User_Name, User_Patronymic) " +
-                        "values ('"
-                        + FamWorkCreateTextBox.Texts
-                        + "','"
-                        + NameWorkCreateTextBox.Texts
-                        + "','"
-                        + PatrWorkCreateTextBox.Texts
-                        + "')";
-                    string sqlComFIO2 = $"update Authentication_ " +
-                        $"set FK_Info_User = Info_About_User.ID_Info_User " +
-                        $"from Info_About_User where " +
-                        $"Info_About_User.User_Surname = " +
-                        $"'{FamWorkCreateTextBox.Texts}' " +
-                        $"and Info_About_User.User_Name = " +
-                        $"'{NameWorkCreateTextBox.Texts}' " +
-                        $"and Info_About_User.User_Patronymic = " +
-                        $"'{PatrWorkCreateTextBox.Texts}' " +
-                        $"and Authentication_.Login_User = " +
-                        $"'{AuthForm.LoginString}'";
-                    SqlCommand check = Check(sqlComFIO);
-                    SqlCommand check2 = Check(sqlComFIO2);
-                    dataBaseCon.OpenConnection();
-                    using (var datareader = check.ExecuteReader())
+                    if (item.Contains(""))
                     {
-                        success = datareader.Read();
-                        MessageBox.Show
-                            ("Пользователь успешно добавлен!",
-                        "Информация", MessageBoxButtons.OK,
-                        MessageBoxIcon.Information);
-                        CreateUserFIOButton.Enabled = false;
+                        FamWorkCreateTextBox.Texts = "";
+                        NameWorkCreateTextBox.Texts = "";
+                        PatrWorkCreateTextBox.Texts = "";
+                        ((Control)AnswerToApplicationPage).Enabled = false;
+                        InfoAnswerLabel.Visible = true;
                     }
-                    using (var datareader = check2.ExecuteReader())
+                    else
                     {
-                        success = datareader.Read();
+                        FamWorkCreateTextBox.Texts = item.GetValue(1).ToString();
+                        NameWorkCreateTextBox.Texts = item.GetValue(2).ToString();
+                        PatrWorkCreateTextBox.Texts = item.GetValue(3).ToString();
+                        CreateUserFIOButton.Enabled = false;
+                        ((Control)AnswerToApplicationPage).Enabled = true;
                     }
                 }
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message,
-                    "Ошибка",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Error);
-            }
-            finally
-            {
-                dataBaseCon.CloseConnection();
-            }
         }
         #endregion
-        #region [Метод проверки занятости ФИО в БД]
+        #region [Метод, вносящий ФИО и добавляющий его к пользователю]
+        /// <summary>
+        /// Метод, вносящий ФИО и добавляющий его к пользователю
+        /// </summary>
+        /// <param name="checkInsertFio"></param>
+        /// <param name="checkUpdateWorkerFio"></param>
+        private void InsertAndUpdateQuery(out bool checkInsertFio, 
+            out bool checkUpdateWorkerFio)
+        {
+            string sqlQuerySecond = sqlQueries.SqlComInsertWorkerFio
+                (NameWorkCreateTextBox.Texts,
+                FamWorkCreateTextBox.Texts,
+                PatrWorkCreateTextBox.Texts);
+            string sqlQueryThree = sqlQueries.SqlComUpdateWorkerForFio
+                (NameWorkCreateTextBox.Texts,
+                FamWorkCreateTextBox.Texts,
+                PatrWorkCreateTextBox.Texts,
+                AuthForm.LoginString);
+            checkInsertFio = dataBaseWork.WithoutOutputQuery(sqlQuerySecond);
+            checkUpdateWorkerFio = dataBaseWork.WithoutOutputQuery(sqlQueryThree);
+        }
+        #endregion
+        #region [Метод, проверяющий занятость ФИО в БД]
         /// <summary>
         /// Метод проверки занятости ФИО в БД
         /// </summary>
-        /// <returns>True - занят, false - свободен</returns>
+        /// <returns>True - свободен, false - занят</returns>
         public Boolean CheckFIOUserInDB()
         {
-            DataBaseWork dataBaseCon = new DataBaseWork();
-            DataTable dataTable = new DataTable();
-            SqlCommand command = new SqlCommand
-                ("select * from Info_About_User where User_Surname=@usSur " +
-                "and User_Name=@usName and User_Patronymic=@usPat",
-                dataBaseCon.GetConnection());
-            command.Parameters.Add
-                ("@usSur", SqlDbType.VarChar).Value
-                = FamWorkCreateTextBox.Texts;
-            command.Parameters.Add
-                ("@usName", SqlDbType.VarChar).Value
-                = NameWorkCreateTextBox.Texts;
-            command.Parameters.Add
-                ("@usPat", SqlDbType.VarChar).Value
-                = PatrWorkCreateTextBox.Texts;
-            SqlDataAdapter adapter = new SqlDataAdapter();
-            adapter.SelectCommand = command;
-            adapter.Fill(dataTable);
-            if (dataTable.Rows.Count > 0)
-            {
-                MessageBox.Show("Данное ФИО уже зарегистрировано " +
-                    "в системе, используйте другое!",
-                    "Ошибка",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Error);
-                return true;
-            }
-            else
+            string sqlQueryFirst = sqlQueries.SqlComCheckWorkerFio
+                (NameWorkCreateTextBox.Texts, 
+                FamWorkCreateTextBox.Texts, 
+                PatrWorkCreateTextBox.Texts);
+            List<string[]> listSearch = dataBaseWork.GetMultiList(sqlQueryFirst, 4);
+            if (listSearch != null)
                 return false;
+            else
+                return true;
         }
         #endregion
-        #region [Вывод данных в CompleteAnswerDGW]
-        public void LoadDataInDWGComplete()
+        #region [Метод, выводящий данные в CompleteApplicationDGW]
+        public void LoadDataInCompleteApplicationDGW()
         {
-            try
-            {
-                dataBaseCon.OpenConnection();
-                SqlDataAdapter dataAdapter = new SqlDataAdapter
-                    ("select FK_ID_Application, " +
-                    "User_Surname, User_Name, " +
-                    "User_Patronymic, " +
-                    "Date_Of_Answer " +
-                    "from Ready_Application " +
-                    "join Info_About_User on " +
-                    "Ready_Application.FK_Info_User " +
-                    "= Info_About_User.ID_Info_User",
-                    dataBaseCon.GetConnection());
-                DataTable dataTable = new DataTable();
-                dataAdapter.Fill(dataTable);
-                OutputInTableSettingTwo(dataTable);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message,
-                    "Ошибка",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Error);
-            }
-            finally
-            {
-                dataBaseCon.CloseConnection();
-            }
+            string sqlQueryFourth = sqlQueries.sqlComOutputAnswers;
+            DataTable dataTable = dataBaseWork.OutputQuery(sqlQueryFourth);
+            OutputInTableSettingTwo(dataTable);
         }
         #endregion
-        #region [Вывод данных в DataGridViewApplication]
-        public void LoadDataInDWG()
+        #region [Метод, выводящий данные в DataGridViewAnswer]
+        /// <summary>
+        /// Метод, выводящий данные в DataGridViewAnswer
+        /// </summary>
+        public void LoadDataInDataGridViewAnswer()
         {
-            try
-            {
-                dataBaseCon.OpenConnection();
-                SqlDataAdapter dataAdapter = new SqlDataAdapter
-                    ("select Id_Application, " +
-                    "Applicant_Company, User_Surname, " +
-                    "User_Name, " +
-                    "User_Patronymic, " +
-                    "Status_Name " +
-                    "from Application_To_Company" +
-                    " join Info_About_User on " +
-                    "Application_To_Company.FK_Info_User = " +
-                    "Info_About_User.ID_Info_User join " +
-                    "Status_Application on " +
-                    "Application_To_Company.FK_Status_Application" +
-                    " = Status_Application.ID_Status full join " +
-                    "Application_Document_From_User on " +
-                    "Application_To_Company." +
-                    "FK_Application_Document_From_User" +
-                    " = Application_Document_From_User." +
-                    "ID_Document_From_User " +
-                    "where Application_To_Company." +
-                    "FK_Status_Application " +
-                    "= '1' or " +
-                    "Application_To_Company.FK_Status_Application = '2'",
-                    dataBaseCon.GetConnection());
-                DataTable dataTable = new DataTable();
-                dataAdapter.Fill(dataTable);
-                OutputInTableSetting(dataTable);
-                SurnameWorkerString = FamWorkCreateTextBox.Texts;
-                NameWorkerString = NameWorkCreateTextBox.Texts;
-                PatrWorkerString = PatrWorkCreateTextBox.Texts;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message,
-                    "Ошибка",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Error);
-            }
-            finally
-            {
-                dataBaseCon.CloseConnection();
-            }
+            string sqlQueryFive = sqlQueries.sqlComOutputApplications;
+            DataTable dataTable = dataBaseWork.OutputQuery(sqlQueryFive);
+            OutputInTableSetting(dataTable);
+            FillStrings();
         }
         #endregion
-        #region [Настройки вывода информации в DataGridViewAnswer]
+        #region [Метод, заполняющий string переменные]
+        /// <summary>
+        /// Метод, заполняющий string переменные
+        /// </summary>
+        private void FillStrings()
+        {
+            SurnameWorkerString = FamWorkCreateTextBox.Texts;
+            NameWorkerString = NameWorkCreateTextBox.Texts;
+            PatrWorkerString = PatrWorkCreateTextBox.Texts;
+        }
+        #endregion
+        #region [Метод, настраивающий вывод информации в DataGridViewAnswer]
         /// <summary>
         /// Настройки вывода информации в DataGridViewApplication
         /// </summary>
@@ -331,7 +238,7 @@ namespace Napitki_Altay2.Forms
             DataGridViewAnswer.Columns[5].Width = 116;
         }
         #endregion
-        #region [Настройки вывода информации в CompleteApplicationDGW]
+        #region [Метод, настраивающий вывод информации в CompleteApplicationDGW]
         /// <summary>
         /// Настройки вывода информации в DataGridViewApplication
         /// </summary>
@@ -356,146 +263,116 @@ namespace Napitki_Altay2.Forms
             CompleteApplicationDGW.Columns[4].Width = 148;
         }
         #endregion
-        #region [Обновление данных в DataGridViewAnswer]
+        #region [Метод, обновляющий данные в DataGridViewAnswer]
         private void UpdateAnswerInDGW_Click(object sender, EventArgs e)
         {
-            LoadDataInDWG();
+            LoadDataInDataGridViewAnswer();
         }
         #endregion
-        #region [Ответ на обращение]
-        private void AnswerToApplicationButton_Click(object sender, EventArgs e)
+        #region [Метод, открывающий форму ответа на заявление и обновление статуса]
+        /// <summary>
+        /// Метод, открывающий форму ответа на заявление и обновление статуса
+        /// </summary>
+        private void OpenAnswerFormAndUpdateStatus()
         {
-            SelectedRowID = DataGridViewAnswer.CurrentRow.
-                Cells[0].Value.ToString();
-            if (DataGridViewAnswer.
-                CurrentRow.Cells[5]
-                .Value.ToString() == "На рассмотрении")
+            SelectedRowID = DataGridViewAnswer.CurrentRow.Cells[0].Value.ToString();
+            if (DataGridViewAnswer.CurrentRow.Cells[5].Value.ToString() == "На рассмотрении")
             {
-                try
+                string sqlQuerySix = sqlQueries.sqlComCheckStatusId;
+                string statusName = dataBaseWork.GetString(sqlQuerySix);
+                string sqlQuerySeven = sqlQueries.SqlComUpdateStatusApplication
+                    (statusName, SelectedRowID);
+                bool checkInsert = dataBaseWork.WithoutOutputQuery(sqlQuerySeven);
+                if (checkInsert)
                 {
-                    bool successLoad;
-                    string sqlComUserFIO = $"update Application_To_Company" +
-                        $" set FK_Status_Application = " +
-                        $"'2' where ID_Application = '{SelectedRowID}'";
-                    SqlCommand check = Check(sqlComUserFIO);
-                    dataBaseCon.OpenConnection();
-                    using (var datareader = check.ExecuteReader())
-                    {
-                        successLoad = datareader.Read();
-                    }
-                    LoadDataInDWG();
-                    AnswerToUserApplicationForm
-                        answerToUserApplicationForm
-                        = new AnswerToUserApplicationForm();
-                    answerToUserApplicationForm.Show();
-                    UserApplicationInfoForWorkerForm
-                        userApplicationInfoForWorkerForm
-                        = new UserApplicationInfoForWorkerForm();
-                    userApplicationInfoForWorkerForm.Show();
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message,
-                        "Ошибка",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Error);
-                }
-                finally
-                {
-                    dataBaseCon.CloseConnection();
+                    LoadDataInDataGridViewAnswer();
+                    AnswerToUserApplicationForm answerForm = new AnswerToUserApplicationForm();
+                    answerForm.Show();
+                    UserApplicationInfoForWorkerForm userForm = new UserApplicationInfoForWorkerForm();
+                    userForm.Show();
                 }
             }
             else
             {
-                AnswerToUserApplicationForm
-                answerToUserApplicationForm
-                = new AnswerToUserApplicationForm();
-                answerToUserApplicationForm.Show();
-                UserApplicationInfoForWorkerForm
-                    userApplicationInfoForWorkerForm
-                    = new UserApplicationInfoForWorkerForm();
-                userApplicationInfoForWorkerForm.Show();
+                AnswerToUserApplicationForm answerForm = new AnswerToUserApplicationForm();
+                answerForm.Show();
+                UserApplicationInfoForWorkerForm userForm = new UserApplicationInfoForWorkerForm();
+                userForm.Show();
             }
         }
         #endregion
-        #region [Создание Excel документа с таблицей завершённых обращений]
-        private void GenerateRaportButton_Click(object sender, EventArgs e)
+        #region [Метод, позволяющий сформировать excel рапорт]
+        /// <summary>
+        /// Метод, позволяющий сформировать excel рапорт
+        /// </summary>
+        private void GenerateExcelRaport()
         {
-            Excel.Application xlApp;
-            Excel.Workbook xlWorkBook;
-            Excel.Worksheet xlWorkSheet;
-            object misValue = System.Reflection.Missing.Value;
-            xlApp = new Excel.Application();
-            xlWorkBook = xlApp.Workbooks.Add(misValue);
-            xlWorkSheet = (Excel.Worksheet)xlWorkBook.Worksheets.get_Item(1);
-            for(int i = 0; i < CompleteApplicationDGW.Columns.Count; i++)
+            object missingValue = Type.Missing;
+            Excel.Application IApplication = new Excel.Application();
+            Excel.Workbook IWorkbook = IApplication.Workbooks.Add(missingValue);
+            Excel.Worksheet IWorksheet = IWorkbook.Worksheets.get_Item(1);
+            for (int i = 0; i < CompleteApplicationDGW.Columns.Count; i++)
             {
-                xlWorkSheet.Cells[3, i + 1] 
-                    = CompleteApplicationDGW.Columns[i].HeaderText;
+                IWorksheet.Cells[3, i + 1] = CompleteApplicationDGW.Columns[i].HeaderText;
             }
-            for(int j = 0; 
-                j < CompleteApplicationDGW.Rows.Count; j++)
+            for (int j = 0; j < CompleteApplicationDGW.Rows.Count; j++)
             {
-                for(int i = 0; 
-                    i < CompleteApplicationDGW.Columns.Count; i++)
+                for (int i = 0; i < CompleteApplicationDGW.Columns.Count; i++)
                 {
-                    xlWorkSheet.Cells[j + 4, i + 1]
-                        = CompleteApplicationDGW.
-                        Rows[j].Cells[i].Value.ToString();
+                    IWorksheet.Cells[j + 4, i + 1] = Convert.ToString
+                        (CompleteApplicationDGW.Rows[j].Cells[i].Value);
                 }
             }
-            xlWorkSheet.UsedRange.Borders.Color = Color.Black;
-            xlWorkSheet.Cells[1, 3].Font.Size = 20;
-            xlWorkSheet.Cells[3, 7].Font.Size = 16;
-            xlWorkSheet.Cells[6, 7].Font.Size = 16;
-            xlWorkSheet.Cells[2, 1].Font.Size = 14;
-            xlWorkSheet.Cells[1, 3] = "Отчёт о проделанной работе";
-            xlWorkSheet.Cells[3, 7] = "Подпись главы отдела_____________";
-            xlWorkSheet.Cells[6, 7] = "М.П";
-            xlWorkSheet.Cells[2, 1] = "Все завершенные обращения сотрудников";
-            xlWorkSheet.Columns.AutoFit();
-            string excelfilename = " Отчёт о закрытых обращениях.xlsx";
-            string destfilename = DateTime.Now.ToString
-                        ("dd-MM-yyyy", CultureInfo.InvariantCulture)
-                        + excelfilename;
-            string pathexp = FilePathTextBox.Texts;
-            if (FilePathTextBox.Texts == "")
-            {
-                MessageBox.Show("Путь сохранения не определен!",
-                    "Ошибка",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Error);
-            }
+            IWorksheet.UsedRange.Borders.Color = Color.Black;
+            IWorksheet.Cells[1, 3].Font.Size = 20;
+            IWorksheet.Cells[3, 7].Font.Size = 16;
+            IWorksheet.Cells[6, 7].Font.Size = 16;
+            IWorksheet.Cells[2, 1].Font.Size = 14;
+            IWorksheet.Cells[1, 3] = "Отчёт о проделанной работе";
+            IWorksheet.Cells[3, 7] = "Подпись главы отдела_____________";
+            IWorksheet.Cells[6, 7] = "М.П";
+            IWorksheet.Cells[2, 1] = "Все завершенные обращения сотрудников";
+            IWorksheet.Columns.AutoFit();
+            string excelFileName = " Отчет о завершенных обращениях.xlsx";
+            string finalFileName = DateTime.Now.ToString
+                ("dd-MM-yyyy", CultureInfo.InvariantCulture) + excelFileName;
+            string filePath = FilePathTextBox.Texts;
+            if (FilePathTextBox.Texts.IsNullOrWhiteSpace())
+                MessageBox.Show("Путь сохранения не определен!", "Ошибка",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
             else
             {
-                destfilename = Path.Combine(pathexp, destfilename);
-                xlWorkBook.SaveAs(destfilename);
-                MessageBox.Show("Отчёт успешно сформирован!",
-                            "Информация",
-                            MessageBoxButtons.OK,
-                            MessageBoxIcon.Information);
-                xlWorkBook.Close(true, misValue, misValue);
-                xlApp.Quit();
+                finalFileName = Path.Combine(filePath, finalFileName);
+                IWorkbook.SaveAs(finalFileName);
+                MessageBox.Show("Отчёт успешно сформирован!", "Информация",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+                IWorkbook.Close(true, missingValue, missingValue);
+                IApplication.Quit();
             }
         }
         #endregion
-        #region [Обновление данных в DGW]
+        #region [Метод, обновляющий данные в CompleteApplicationDGW]
+        /// <summary>
+        /// Метод, обновляющий данные в CompleteApplicationDGW
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void UpdateDataDGWAnswer_Click(object sender, EventArgs e)
         {
-            LoadDataInDWGComplete();
+            LoadDataInCompleteApplicationDGW();
         }
         #endregion
-        #region [Выбор пути для сохранения отчёта]
+        #region [Метод выбора пути для сохранения отчёта]
+        /// <summary>
+        /// Метод выбора пути для сохранения отчёта
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void FilePathChooseButton_Click(object sender, EventArgs e)
         {
             if (FolderPathBrowserDialog.ShowDialog() == DialogResult.OK)
                 FilePathTextBox.Texts = FolderPathBrowserDialog.SelectedPath;
         }
-
         #endregion
-        private void MainWorkFormWorker_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            Application.Exit();
-        }
     }
 }

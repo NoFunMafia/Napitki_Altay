@@ -1,8 +1,7 @@
-﻿using Microsoft.SqlServer.Server;
+﻿#region [using's]
 using Napitki_Altay2.Forms;
 using System;
-using System.Data;
-
+#endregion
 namespace Napitki_Altay2.Classes
 {
     internal class SqlQueries
@@ -386,6 +385,62 @@ namespace Napitki_Altay2.Classes
                 $"('{idRow}', '{idUser}', " +
                 $"'{description}', '{dateTime}', " +
                 $"'{idDocument}')";
+            return sqlCom;
+        }
+        #endregion
+        #region [MainWorkFormWorker]
+        public string SqlComTakeFioWorker(string login)
+        {
+            string sqlCom = "select * from Info_About_User join Authentication_ " +
+                "on Authentication_.FK_Info_User = Info_About_User.ID_Info_User " +
+                $"where Authentication_.Login_User = '{login}'";
+            return sqlCom;
+        }
+        public string SqlComCheckWorkerFio(string name, string fam, string otch)
+        {
+            string sqlCom = "select * from Info_About_User where " +
+                $"User_Surname = {fam} and User_Name = {name} " +
+                $"and User_Patronymic = {otch}";
+            return sqlCom;
+        }
+        public string SqlComInsertWorkerFio(string name, string fam, string otch)
+        {
+            string sqlCom = "insert into Info_About_User(User_Surname, " +
+                $"User_Name, User_Patronymic) values ('{fam}','{name}','{otch}')";
+            return sqlCom;
+        }
+        public string SqlComUpdateWorkerForFio(string name, string fam, string otch, string login)
+        {
+            string sqlCom = $"update Authentication_ set FK_Info_User = " +
+                "Info_About_User.ID_Info_User from Info_About_User where " +
+                $"Info_About_User.User_Surname = '{fam}' and " +
+                $"Info_About_User.User_Name = '{name}' and " +
+                $"Info_About_User.User_Patronymic = '{otch}' and " +
+                $"Authentication_.Login_User = '{login}'";
+            return sqlCom;
+        }
+        public string sqlComOutputAnswers = "select FK_ID_Application, " +
+            "User_Surname, User_Name, User_Patronymic, Date_Of_Answer " +
+            "from Ready_Application join Info_About_User on " +
+            "Ready_Application.FK_Info_User = Info_About_User.ID_Info_User";
+        public string sqlComOutputApplications = "select Id_Application, " +
+            "Applicant_Company, User_Surname, User_Name, User_Patronymic, " +
+            "Status_Name from Application_To_Company join Info_About_User on " +
+            "Application_To_Company.FK_Info_User = Info_About_User.ID_Info_User " +
+            "join Status_Application on Application_To_Company.FK_Status_Application = " +
+            "Status_Application.ID_Status full join " +
+            "Application_Document_From_User on " +
+            "Application_To_Company.FK_Application_Document_From_User = " +
+            "Application_Document_From_User.ID_Document_From_User " +
+            "where Status_Application.Status_Name = 'В обработке' or " +
+            "Status_Application.Status_Name = 'На рассмотрении'";
+        public string sqlComCheckStatusId = "select ID_Status from Status_Application " +
+            "where Status_Name = 'В обработке'";
+        public string SqlComUpdateStatusApplication(string idStatus, string idRow)
+        {
+            string sqlCom = "update Application_To_Company set " +
+                $"FK_Status_Application = '{idStatus}' " +
+                $"where ID_Application = '{idRow}'";
             return sqlCom;
         }
         #endregion
