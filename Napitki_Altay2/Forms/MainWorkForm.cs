@@ -247,6 +247,8 @@ namespace Napitki_Altay2.Forms
                     MessageBoxIcon.Information);
                 if (checkQueryFirst != false)
                 {
+                    FillStrings();
+                    LoadDataGridView();
                     CreateUserFIOButton.Enabled = false;
                     ((Control)ApplicationPage).Enabled = true;
                     InfoApplicationLabel.Visible = false;

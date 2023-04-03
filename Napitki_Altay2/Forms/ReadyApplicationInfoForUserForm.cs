@@ -3,45 +3,82 @@ using System;
 using System.Data.SqlClient;
 using System.Windows.Forms;
 using System.IO;
+using Napitki_Altay2.Classes;
+using System.Diagnostics;
+using System.Collections.Generic;
 #endregion
 namespace Napitki_Altay2.Forms
 {   
     public partial class ReadyApplicationInfoForUserForm : Form
     {
-        DataBaseWork dataBaseCon = new DataBaseWork();
+        #region [Подключение классов, обьявление переменных]
+        readonly SqlQueries sqlQueries = new SqlQueries();
+        readonly DataBaseWork dataBaseWork = new DataBaseWork();
+        #endregion
         public ReadyApplicationInfoForUserForm()
         {
             InitializeComponent();
         }
+        #region [Событие закрытия формы]
+        /// <summary>
+        /// Событие закрытия формы
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ReadyApplicationInfoForUserForm_FormClosed
             (object sender, FormClosedEventArgs e)
         {
             MainWorkForm mainWorkForm = new MainWorkForm();
             mainWorkForm.Show();
         }
+        #endregion
+        #region [Событие загрузки формы]
+        /// <summary>
+        /// Событие загрузки формы
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ReadyApplicationInfoForUserForm_Load(object sender, EventArgs e)
+        {
+            List<string[]> listSearch = GetApplicationInfoQuery();
+            CheckDataReaderRowsInfo(listSearch);
+        }
+        #endregion
+        #region [Событие нажатия на кнопку CloseCompleteApplicationButton]
+        /// <summary>
+        /// Событие нажатия на кнопку CloseCompleteApplicationButton
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void CloseCompleteApplicationButton_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
+        #endregion
+        #region [Событие нажатия на кнопку OpenPinDocumentButton]
+        /// <summary>
+        /// Событие нажатия на кнопку OpenPinDocumentButton
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OpenPinDocumentButton_Click(object sender, EventArgs e)
+        {
+            OpenFile();
+        }
+        #endregion
+        #region [Метод, открывающий прикрепленный документ]
+        /// <summary>
+        /// Метод, открывающий прикрепленный документ
+        /// </summary>
         private void OpenFile()
         {
             try
             {
-                string sqlQuery = "select Document_Name_W, " +
-                    "Document_Data_W, " +
-                    "Document_Extension_W " +
-                    "from Ready_Application " +
-                    "join Answer_Document_From_Worker " +
-                    "on Ready_Application." +
-                    "FK_Answer_Document_From_Worker " +
-                    "= Answer_Document_From_Worker." +
-                    "ID_Document_From_Worker" +
-                    " join Application_To_Company " +
-                    "on Ready_Application.FK_ID_Application " +
-                    "= Application_To_Company." +
-                    "ID_Application where " +
-                    $"ID_Application = " +
-                    $"'{MainWorkForm.SelectedRowIDInDGW}'";
-                SqlCommand command = new SqlCommand
-                    (sqlQuery, dataBaseCon.GetConnection());
-                dataBaseCon.OpenConnection();
-                var dataReader = command.ExecuteReader();
+                string sqlQueryFirst = sqlQueries.SqlComOpenWorkerDocument
+                    (MainWorkForm.SelectedRowIDInDGW);
+                SqlCommand sqlCommand = new SqlCommand(sqlQueryFirst, dataBaseWork.GetConnection());
+                dataBaseWork.OpenConnection();
+                var dataReader = sqlCommand.ExecuteReader();
                 if (dataReader.Read())
                 {
                     var name = dataReader["Document_Name_W"].ToString();
@@ -50,125 +87,60 @@ namespace Napitki_Altay2.Forms
                     var newFileName = name.Replace(extn,
                         DateTime.Now.ToString("ddMMyyyyhhmmss")) + extn;
                     File.WriteAllBytes(newFileName, data);
-                    System.Diagnostics.Process.Start(newFileName);
+                    Process.Start(newFileName);
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message,
-                    "Ошибка",
-                    MessageBoxButtons.OK,
+                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
             }
             finally
             {
-                dataBaseCon.CloseConnection();
+                dataBaseWork.CloseConnection();
             }
-        }
-        private void CheckDataReaderRowsInfo(SqlDataReader datareader)
-        {
-            if (datareader.HasRows)
-            {
-                TypeAppealAnswerTextBox.Texts =
-                    datareader.GetValue(1).ToString();
-            }
-            if (datareader.HasRows)
-            {
-                StatusCompleteTextBox.Texts =
-                    datareader.GetValue(2).ToString();
-            }
-            else
-            {
-                StatusCompleteTextBox.Texts = "";
-            }
-            if (datareader.HasRows)
-            {
-                DescripCompleteTextBox.Texts =
-                    datareader.GetValue(3).ToString();
-            }
-            else
-            {
-                DescripCompleteTextBox.Texts = "";
-            }
-            if (datareader.HasRows)
-            {
-                ApplCompleteDTP.Text =
-                    datareader.GetDateTime(4).ToString();
-            }
-            else
-            {
-                ApplCompleteDTP.Text = "";
-            }
-            if (datareader.HasRows)
-            {
-                PinDocumentTextBox.Texts =
-                    datareader.GetValue(5).ToString();
-            }
-        }
-        #region [Проверка входящего запроса в БД]
-        /// <summary>
-        /// Проверка работы входящего запроса в базу данных
-        /// </summary>
-        /// <param name="command">Запрос в базу данных</param>
-        /// <returns></returns>
-        private SqlCommand Check(string command)
-        {
-            return new SqlCommand(command, dataBaseCon.GetConnection());
         }
         #endregion
-        private void ReadyApplicationInfoForUserForm_Load(object sender, EventArgs e)
+        #region [Метод, заполняющий TextBox'ы данными из sql-запроса]
+        /// <summary>
+        /// Метод, заполняющий TextBox'ы данными из sql-запроса
+        /// </summary>
+        /// <param name="strings"></param>
+        private void CheckDataReaderRowsInfo(List<string[]> strings)
         {
-            try
+            if (strings != null)
             {
-                bool successLoad;
-                string sqlComUserFIO = "select FK_ID_Application, " +
-                    "Type_Appeal, Status_Name, " +
-                    "Answer_To_Application, Date_Of_Answer, " +
-                    "Document_Name_W from Ready_Application " +
-                    "full join Answer_Document_From_Worker on " +
-                    "Ready_Application.FK_Answer_Document_From_Worker" +
-                    " = Answer_Document_From_Worker." +
-                    "ID_Document_From_Worker join " +
-                    "Application_To_Company on " +
-                    "Application_To_Company.ID_Application " +
-                    "= Ready_Application.FK_ID_Application " +
-                    "join Type_Of_Appeal on " +
-                    "Application_To_Company.FK_Type_Of_Appeal " +
-                    "= Type_Of_Appeal.ID_Type_Of_Appeal join " +
-                    "Status_Application on " +
-                    "Application_To_Company.FK_Status_Application" +
-                    $" = Status_Application.ID_Status " +
-                    $"where FK_ID_Application = " +
-                    $"'{MainWorkForm.SelectedRowIDInDGW}'";
-                SqlCommand check = Check(sqlComUserFIO);
-                dataBaseCon.OpenConnection();
-                using (var datareader = check.ExecuteReader())
+                foreach (string[] item in strings)
                 {
-                    successLoad = datareader.Read();
-                    {
-                        CheckDataReaderRowsInfo(datareader);
-                    }
+                    TypeAppealAnswerTextBox.Texts = item[1];
+                    StatusCompleteTextBox.Texts = item[2];
+                    DescripCompleteTextBox.Texts = item[3];
+                    ApplCompleteDTP.Text = DateTime.Parse(item[4]).ToString();
+                    PinDocumentTextBox.Texts = item[5];
                 }
             }
-            catch (Exception ex)
+            else
             {
-                MessageBox.Show(ex.Message,
-                    "Ошибка",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Error);
-            }
-            finally
-            {
-                dataBaseCon.CloseConnection();
+                TypeAppealAnswerTextBox.Texts = "";
+                StatusCompleteTextBox.Texts = "";
+                DescripCompleteTextBox.Texts = "";
+                ApplCompleteDTP.Text = "";
+                PinDocumentTextBox.Texts = "";
             }
         }
-        private void CloseCompleteApplicationButton_Click(object sender, EventArgs e)
+        #endregion
+        #region [Метод, заполняющий List список из sql-запроса]
+        /// <summary>
+        /// Метод, заполняющий List список из sql-запроса
+        /// </summary>
+        /// <returns></returns>
+        private List<string[]> GetApplicationInfoQuery()
         {
-            Close();
+            string sqlQuerySecond = sqlQueries.SqlComOpenWorkerAnswer
+                (MainWorkForm.SelectedRowIDInDGW);
+            List<string[]> listSearch = dataBaseWork.GetMultiList(sqlQuerySecond, 6);
+            return listSearch;
         }
-        private void OpenPinDocumentButton_Click(object sender, EventArgs e)
-        {
-            OpenFile();
-        }
+        #endregion
     }
 }

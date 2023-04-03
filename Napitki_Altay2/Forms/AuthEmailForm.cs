@@ -42,7 +42,7 @@ namespace Napitki_Altay2.Forms
         /// </summary>
         private void CheckCode()
         {
-            if (EnterCodeTextBox.Texts == RegistrationForm.unicCode.ToString())
+            if (EnterCodeTextBox.Texts == RegistrationForm.uniqueCode.ToString())
             {
                 RightCode = true;
                 Close();

@@ -443,6 +443,31 @@ namespace Napitki_Altay2.Classes
                 $"where ID_Application = '{idRow}'";
             return sqlCom;
         }
+        public string SqlComOpenWorkerDocument(string idRow)
+        {
+            string sqlCom = "select Document_Name_W, Document_Data_W, " +
+                "Document_Extension_W from Ready_Application join " +
+                "Answer_Document_From_Worker on " +
+                "Ready_Application.FK_Answer_Document_From_Worker = " +
+                "ID_Document_From_Worker join Application_To_Company on " +
+                "Ready_Application.FK_ID_Application = " +
+                $"Application_To_Company.ID_Application where ID_Application = '{idRow}'";
+            return sqlCom;
+        }
+        public string SqlComOpenWorkerAnswer(string idRow)
+        {
+            string sqlCom = "select FK_ID_Application, Type_Appeal, Status_Name, " +
+                "Answer_To_Application, Date_Of_Answer, Document_Name_W " +
+                "from Ready_Application full join Answer_Document_From_Worker on " +
+                "= Answer_Document_From_Worker.ID_Document_From_Worker join " +
+                "Application_To_Company on Application_To_Company.ID_Application " +
+                "= Ready_Application.FK_ID_Application join Type_Of_Appeal on " +
+                "Application_To_Company.FK_Type_Of_Appeal = " +
+                "Type_Of_Appeal.ID_Type_Of_Appeal join Status_Application on " +
+                "Application_To_Company.FK_Status_Application = " +
+                $"Status_Application.ID_Status where FK_ID_Application = '{idRow}'";
+            return sqlCom;
+        }
         #endregion
     }
 }

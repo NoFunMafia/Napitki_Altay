@@ -251,9 +251,7 @@ namespace Napitki_Altay2.Forms
                 (@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$",
                 RegexOptions.IgnoreCase);
             if (emailRegex.IsMatch(email))
-            {
                 return true;
-            }
             else
             {
                 MessageBox.Show("Адрес электронной почты введен некорректно!",

@@ -68,14 +68,14 @@
             this.сотрудникToolStripMenuItem.Name = "сотрудникToolStripMenuItem";
             this.сотрудникToolStripMenuItem.Size = new System.Drawing.Size(163, 26);
             this.сотрудникToolStripMenuItem.Text = "Сотрудник";
-            this.сотрудникToolStripMenuItem.Click += new System.EventHandler(this.сотрудникToolStripMenuItem_Click);
+            this.сотрудникToolStripMenuItem.Click += new System.EventHandler(this.СотрудникToolStripMenuItem_Click);
             // 
             // заказчикToolStripMenuItem
             // 
             this.заказчикToolStripMenuItem.Name = "заказчикToolStripMenuItem";
             this.заказчикToolStripMenuItem.Size = new System.Drawing.Size(163, 26);
             this.заказчикToolStripMenuItem.Text = "Заявитель";
-            this.заказчикToolStripMenuItem.Click += new System.EventHandler(this.заказчикToolStripMenuItem_Click);
+            this.заказчикToolStripMenuItem.Click += new System.EventHandler(this.ЗаказчикToolStripMenuItem_Click);
             // 
             // VisiblePassCheckRegForm
             // 

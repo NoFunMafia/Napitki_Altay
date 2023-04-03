@@ -134,8 +134,6 @@ namespace Napitki_Altay2.Forms
                 dataBaseWork.CloseConnection();
             }
         }
-
-
         #endregion
     }
 }

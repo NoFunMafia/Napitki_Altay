@@ -1,13 +1,16 @@
 ﻿#region [using's]
 using Napitki_Altay2.Forms;
 using System;
-using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using MailKit.Net.Smtp;
 using MimeKit;
+using Napitki_Altay2.Classes;
+using System.Collections.Generic;
+using Napitki_Altay2.Design;
+using System.Linq;
 #endregion
 
 namespace Napitki_Altay2
@@ -16,26 +19,16 @@ namespace Napitki_Altay2
     {
         #region [Подключение класса соединения с БД]
         // Использование класса соединения с БД
-        DataBaseWork datebaseCon = new DataBaseWork();
-        public static int unicCode;
+        readonly DataBaseWork dataBaseWork = new DataBaseWork();
+        readonly SqlQueries sqlQueries = new SqlQueries();
+        public static int uniqueCode;
         #endregion
         public RegistrationForm()
         {
             InitializeComponent();
             DoubleBuffered = true; // Включение двойной буферизации
         }
-        #region [Проверка входящего запроса в БД]
-        /// <summary>
-        /// Проверка отправки запроса в БД
-        /// </summary>
-        /// <param name="dbQuery">Запрос в БД</param>
-        /// <returns></returns>
-        private SqlCommand Check(string dbQuery)
-        {
-            return new SqlCommand(dbQuery, datebaseCon.GetConnection());
-        }
-        #endregion
-        #region [Работа с ToolStripMenu, выбор прав пользователя]
+        #region [Событие нажатия на кнопку ChoosePictureBox]
         /// <summary>
         /// Событие нажатия на картинку с последующим 
         /// действием выпадающего элемента
@@ -48,32 +41,38 @@ namespace Napitki_Altay2
             RoleContextMenuStip.Show(ChoosePictureBox, 
                 new Point(0, ChoosePictureBox.Height));
         }
+        #endregion
+        #region [Событие нажатия на item "администратор" ToolStrip'а]
         /// <summary>
         /// Событие нажатия на кнопку "Администратор" в ToolStripMenu
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void администраторToolStripMenuItem_Click
+        private void АдминистраторToolStripMenuItem_Click
             (object sender, EventArgs e)
         {
             ChooseRoleTextBox.Texts = "Администратор";
         }
+        #endregion
+        #region [Событие нажатия на item "сотрудник" ToolStrip'а]
         /// <summary>
         /// Событие нажатия на кнопку "Сотрудник" в ToolStripMenu
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void сотрудникToolStripMenuItem_Click
+        private void СотрудникToolStripMenuItem_Click
             (object sender, EventArgs e)
         {
             ChooseRoleTextBox.Texts = "Сотрудник";
         }
+        #endregion
+        #region [Событие нажатия на item "заявитель" ToolStrip'а]
         /// <summary>
         /// Событие нажатия на кнопку "Заказчик" в ToolStripMenu
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void заказчикToolStripMenuItem_Click
+        private void ЗаказчикToolStripMenuItem_Click
             (object sender, EventArgs e)
         {
             ChooseRoleTextBox.Texts = "Заявитель";
@@ -158,108 +157,115 @@ namespace Napitki_Altay2
             }
         }
         #endregion
-        #region [Показ/скрытие пароля]
+        #region [Событие нажатия на проверочную кнопку VisiblePassCheckRegForm]
         private void VisiblePassCheckRegForm_CheckedChanged
             (object sender, EventArgs e)
         {
-            if (VisiblePassCheckRegForm.Checked == true)
-                PasswordCreateTextBox.PasswordChar = false;
-            else
-                PasswordCreateTextBox.PasswordChar = true;
+            PasswordCreateTextBox.PasswordChar = !VisiblePassCheckRegForm.Checked;
         }
         #endregion
-        #region [Внесение нового логина и пароля пользователя в БД, проверка полей заполнения]
+        #region [Событие нажатия на кнопку RegisterAccountButton]
         /// <summary>
         /// Действие регистрации нового аккаунта с 
         /// проверками на успешность внесения данных
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void RegisterAccountButton_Click
-            (object sender, EventArgs e)
+        private void RegisterAccountButton_Click(object sender, EventArgs e)
         {
-            try // Открытие соединения, проверка работы БД
+            if (CheckTextBoxIsNotNull())
             {
-                if (ChooseRoleTextBox.Texts == "Роль пользователя")
-                {
-                    MessageBox.Show
-                        ("Роль пользователя не определена!",
-                        "Ошибка", 
-                        MessageBoxButtons.OK, 
-                        MessageBoxIcon.Error);
-                }
-                else if(ChooseRoleTextBox.Texts == "Администратор" 
-                    || ChooseRoleTextBox.Texts == "Сотрудник" 
-                    || ChooseRoleTextBox.Texts == "Заявитель")
-                {
-                    if(LoginCreateTextBox.Texts == "Создание логина" || 
-                        PasswordCreateTextBox.Texts == "Создание пароля" ||
-                        EmailTextBox.Texts == "Ваш Email")
-                    {
-                        MessageBox.Show
-                            ("Поля данных не заполнены до конца!",
-                            "Ошибка",
-                            MessageBoxButtons.OK,
-                            MessageBoxIcon.Error);
-                    }
-                    else
-                    {
-                        Random rand = new Random();
-                        unicCode = rand.Next(100000, 999999);
-                        if (CheckLoginUserInDB())
-                            return;
-                        if (CheckPass(PasswordCreateTextBox.Texts, 8, 15))
-                            return;
-                        if (IsValidEmail(EmailTextBox.Texts))
-                            return;
-                        Enabled = false;
-                        SMTPCon();
-                    }
-                }
-            }
-            catch(Exception ex)
-            {
-                MessageBox.Show(ex.Message,
-                    "Ошибка",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Error);
-            }
-            finally // Закрытие соединения с БД
-            {
-                datebaseCon.CloseConnection();
+                if (!CheckLoginUserInDB())
+                    return;
+                if (CheckPass(PasswordCreateTextBox.Texts, 8, 15))
+                    return;
+                if (!IsValidEmail(EmailTextBox.Texts))
+                    return;
+                Enabled = false;
+                SendAnEmail();
             }
         }
-        private void SMTPCon()
+        #endregion
+        #region [Событие закрытия формы]
+        void AuthEmailForm_FormClosed(object sender, FormClosedEventArgs e)
         {
+            Enabled = true;
+            bool rightCode = (sender as AuthEmailForm).RightCode;
+            if (rightCode == true)
+            {
+                ReceiveRoleID(out string roleID);
+                ReceiveBoolCheckInsertUser(out bool checkInsertUser, roleID);
+                if (checkInsertUser)
+                {
+                    MessageBox.Show("Пользователь успешно добавлен!",
+                        "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    AuthForm authForm = new AuthForm();
+                    authForm.Show();
+                    Hide();
+                }
+            }
+        }
+        #endregion
+        #region [Событие перехода на форму AuthForm]
+        /// <summary>
+        /// Открытие формы авторизации, 
+        /// если у пользователя уже есть аккаунт
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OpenFormLogin_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            AuthForm authForm = new AuthForm();
+            authForm.Show();
+            Hide();
+        }
+        #endregion
+        #region [Событие закрытия формы]
+        private void RegistrationForm_FormClosed
+            (object sender, FormClosedEventArgs e)
+        {
+            Application.Exit();
+        }
+        #endregion
+        #region [Событие нажатия кнопочную картинку InfoPictureBox]
+        private void InfoPictureBox_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("• Пароль должен содержать " +
+                "не менее 8 и не более 15 символов" +
+                "\n• Пароль должен содержать минимум 1 цифру" +
+                "\n• Пароль должен содержать 1 букву нижнего регистра" +
+                "\n• Пароль должен содержать 1 букву верхнего регистра" +
+                "\n• Пароль должен содержать 1 спецсимвол", "Информация",
+                MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+        #endregion
+        #region [Метод, отправляющий письмо на Email почту]
+        private void SendAnEmail()
+        {
+            GetUniqueCode();
             MimeMessage mimeMessage = new MimeMessage();
             mimeMessage.From.Add(new MailboxAddress
                 ("Волчихинский Пивоваренный Завод",
                 "napitki-altay@mail.ru"));
-            mimeMessage.To.Add
-                (MailboxAddress.Parse(EmailTextBox.Texts));
-            mimeMessage.Subject
-                = $"Код подтверждения: {unicCode}";
+            mimeMessage.To.Add(MailboxAddress.Parse(EmailTextBox.Texts));
+            mimeMessage.Subject = $"Код подтверждения: {uniqueCode}";
             mimeMessage.Body = new TextPart("html")
             {
-                Text = "<b>Мы очень рады, что Вы, решили " +
-                "воспользоваться нашим приложением!</b>" +
-                $"<br>Ваш код подтверждения: " +
-                $"<b>{unicCode}</b>"
+                Text = $"<h1>Добро пожаловать в приложение Напитки Алтая!</h1>" +
+                $"<p>Мы рады видеть Вас в числе наших пользователей. Наше приложение предоставляет Вам множество функций и возможностей для работы с документами.</p>" +
+                $"<p>Для завершения процесса регистрации, пожалуйста, введите код подтверждения в соответствующее поле в приложении:</p>" +
+                $"<h2 style='color: #007BFF;'>{uniqueCode}</h2>" +
+                $"<p>Благодарим Вас за выбор нашего приложения и надеемся, что оно станет незаменимым инструментом в Вашей работе!</p>" +
+                $"<p>С уважением,<br>Команда «Волчихинского пивоваренного завода»</p>"
             };
             SmtpClient smtpClient = new SmtpClient();
             try
             {
-                smtpClient.Connect
-                    ("smtp.mail.ru", 465, true);
-                smtpClient.Authenticate
-                    ("napitki-altay@mail.ru",
-                    "5TGsxjXKrXYpVxeajrgY");
+                smtpClient.Connect("smtp.mail.ru", 465, true);
+                smtpClient.Authenticate("napitki-altay@mail.ru", "5TGsxjXKrXYpVxeajrgY");
                 smtpClient.Send(mimeMessage);
-                AuthEmailForm authEmailForm
-                    = new AuthEmailForm();
-                authEmailForm.FormClosed
-                    += new FormClosedEventHandler
-                    (AuthEmailForm_FormClosed);
+                AuthEmailForm authEmailForm = new AuthEmailForm();
+                authEmailForm.FormClosed += new FormClosedEventHandler(AuthEmailForm_FormClosed);
                 authEmailForm.Show();
             }
             catch (Exception ex)
@@ -275,78 +281,72 @@ namespace Napitki_Altay2
                 smtpClient.Dispose();
             }
         }
-        void AuthEmailForm_FormClosed(object sender, FormClosedEventArgs e)
+        #endregion
+        #region [Метод, формирующий уникальное значение для Email]
+        private static void GetUniqueCode()
         {
-            this.Enabled = true;
-            bool rightCode = (sender as AuthEmailForm).RightCode;
-            if (rightCode == true)
-            {
-                int chooseRole = CheckUserRole();
-                string sqlCom = "insert " +
-                "into Authentication_" +
-                "(Login_User, Password_User, " +
-                "FK_Role_User, Email) " +
-                $"values ('{LoginCreateTextBox.Texts}', " +
-                $"'{PasswordCreateTextBox.Texts}', " +
-                $"'{chooseRole}', '{EmailTextBox.Texts}')";
-                SqlCommand check = Check(sqlCom);
-                datebaseCon.OpenConnection();
-                using (var datareader
-                    = check.ExecuteReader())
-                {
-                    datareader.Read();
-                    MessageBox.Show
-                        ("Пользователь успешно добавлен!",
-                        "Информация", MessageBoxButtons.OK,
-                        MessageBoxIcon.Information);
-                    AuthForm authForm = new AuthForm();
-                    authForm.Show();
-                    this.Hide();
-                }
-            }
-        }
-        private int CheckUserRole()
-        {
-            int chooseRole;
-            if (ChooseRoleTextBox.Texts == "Администратор")
-                chooseRole = 1;
-            else if (ChooseRoleTextBox.Texts == "Сотрудник")
-                chooseRole = 2;
-            else
-                chooseRole = 3;
-            return chooseRole;
+            Random rand = new Random();
+            uniqueCode = rand.Next(100000, 999999);
         }
         #endregion
-        #region [Метод проверки уникальности логина]
+        #region [Метод, формирующий string значение roleID из полученного результата sql-запроса]
         /// <summary>
-        /// Проверка уникальности логина пользователя
+        /// Метод, формирующий string значение roleID из полученного результата sql-запроса
         /// </summary>
-        /// <returns>Правда - если логин занят, 
-        /// ложь - свободен</returns>
-        public Boolean CheckLoginUserInDB()
+        /// <param name="roleID"></param>
+        private void ReceiveRoleID(out string roleID)
         {
-            DataBaseWork dataBaseCon = new DataBaseWork();
-            DataTable dataTable = new DataTable();
-            SqlCommand command = new SqlCommand
-                ("select * from Authentication_ " +
-                "where Login_User=@usLog", 
-                dataBaseCon.GetConnection());
-            command.Parameters.Add
-                ("@usLog", SqlDbType.VarChar).Value 
-                = LoginCreateTextBox.Texts;
-            SqlDataAdapter adapter = new SqlDataAdapter();
-            adapter.SelectCommand = command;
-            adapter.Fill(dataTable);
-            if (dataTable.Rows.Count > 0)
+            string sqlQuery = sqlQueries.SqlComRoleAddUser(ChooseRoleTextBox.Texts);
+            roleID = dataBaseWork.GetString(sqlQuery);
+        }
+        #endregion
+        #region [Метод, формирующий bool значение проверки CheckInsertUser]
+        /// <summary>
+        /// Метод, формирующий bool значение проверки CheckInsertUser
+        /// </summary>
+        /// <param name="checkInsertUser">Bool значение выполненного sql-запроса</param>
+        /// <param name="roleID">Переменная, использующаяся в формировании sql-запроса</param>
+        private void ReceiveBoolCheckInsertUser(out bool checkInsertUser, string roleID)
+        {
+            string sqlQuerySecond = sqlQueries.SqlComInsertUser
+                (LoginCreateTextBox.Texts, PasswordCreateTextBox.Texts, 
+                roleID, EmailTextBox.Texts);
+            checkInsertUser = dataBaseWork.WithoutOutputQuery(sqlQuerySecond);
+        }
+        #endregion
+        #region [Метод, проверяющий на пустоту TextBox'ы]
+        private bool CheckTextBoxIsNotNull()
+        {
+            foreach (CustomTextBox customTextBox in Controls.OfType<CustomTextBox>())
             {
-                MessageBox.Show("Данный логин занят, используйте другой!",
-                    "Ошибка", 
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Error);
+                if (string.IsNullOrWhiteSpace(customTextBox.Texts))
+                {
+                    MessageBox.Show("Не все поля данных заполненны!",
+                        "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return false;
+                }
                 return true;
             }
-            else
+            return false;
+        }
+        #endregion
+        #region [Метод, проверяющий уникальность добавляемого логина в БД]
+        /// <summary>
+        /// Метод, проверяющий уникальность добавляемого логина в БД
+        /// </summary>
+        /// <returns>True - логин свободен, 
+        /// Ложь - логин занят</returns>
+        private bool CheckLoginUserInDB()
+        {
+            string sqlQuery = sqlQueries.SqlComCheckLogin(LoginCreateTextBox.Texts);
+            List<string[]> listSearch = dataBaseWork.GetMultiList(sqlQuery, 2);
+            if (listSearch != null)
+            {
+                MessageBox.Show("Вносимый логин уже зарегистрирован в БД!",
+                    "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
+            }
+            return true;
         }
         #endregion
         #region [Метод, проверяющий правильность ввода адреса электронной почты]
@@ -356,28 +356,23 @@ namespace Napitki_Altay2
                 (@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$",
                 RegexOptions.IgnoreCase);
             if (emailRegex.IsMatch(email))
-            {
-                return false;
-            }
+                return true;
             else
             {
                 MessageBox.Show("Адрес электронной почты введен некорректно!",
                     "Ошибка",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
-                return true;
+                return false;
             }
         }
         #endregion
-        #region [Проверка пароля (надёжность)]
-        public Boolean CheckPass(string inputPass, 
-            int minLenght, int maxLenght)
+        #region [Метод, проверяющий пароль на надёжность]
+        public Boolean CheckPass(string inputPass, int minLenght, int maxLenght)
         {
-            bool hasNum = true, 
-                hasCap = true, 
-                hasLow = true, 
-                hasSpec = true;
+            bool hasCap = true, hasLow = true, hasSpec = true;
             char currentCharacter;
+            bool hasNum;
             if (!(inputPass.Length <= minLenght
                 || inputPass.Length >= maxLenght))
             {
@@ -391,7 +386,7 @@ namespace Napitki_Altay2
                     MessageBoxIcon.Error);
                 return true;
             }
-            for(int i = 0; i < inputPass.Length; i++)
+            for (int i = 0; i < inputPass.Length; i++)
             {
                 currentCharacter = inputPass[i];
                 if (char.IsDigit(currentCharacter))
@@ -411,39 +406,6 @@ namespace Napitki_Altay2
                     MessageBoxButtons.OK, 
                     MessageBoxIcon.Error);
             return true;
-        }
-        #endregion
-        #region [Событие перехода на форму AuthForm]
-        /// <summary>
-        /// Открытие формы авторизации, 
-        /// если у пользователя уже есть аккаунт
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void OpenFormLogin_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            AuthForm authForm = new AuthForm();
-            authForm.Show();
-            this.Hide();
-        }
-        #endregion
-        #region [Закрытие формы]
-        private void RegistrationForm_FormClosed
-            (object sender, FormClosedEventArgs e)
-        {
-            Application.Exit();
-        }
-        #endregion
-        #region [Подсказка к паролю]
-        private void InfoPictureBox_Click(object sender, EventArgs e)
-        {
-            MessageBox.Show("• Пароль должен содержать " +
-                "не менее 8 и не более 15 символов" +
-                "\n• Пароль должен содержать минимум 1 цифру" +
-                "\n• Пароль должен содержать 1 букву нижнего регистра" +
-                "\n• Пароль должен содержать 1 букву верхнего регистра" +
-                "\n• Пароль должен содержать 1 спецсимвол", "Информация", 
-                MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         #endregion
     }
