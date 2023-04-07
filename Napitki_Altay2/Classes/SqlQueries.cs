@@ -419,10 +419,15 @@ namespace Napitki_Altay2.Classes
                 $"Authentication_.Login_User = '{login}'";
             return sqlCom;
         }
-        public string sqlComOutputAnswers = "select FK_ID_Application, " +
-            "User_Surname, User_Name, User_Patronymic, Date_Of_Answer " +
-            "from Ready_Application join Info_About_User on " +
-            "Ready_Application.FK_Info_User = Info_About_User.ID_Info_User";
+        public string SqlComOutputAnswers(string name, string fam, string otch)
+        {
+            string sqlCom = "select FK_ID_Application, User_Surname, " +
+                "User_Name, User_Patronymic, Date_Of_Answer from " +
+                "Ready_Application join Info_About_User on Ready_Application.FK_Info_User " +
+                $"= Info_About_User.ID_Info_User where User_Surname = '{fam}' " +
+                $"and User_Name = '{name}' and User_Patronymic = '{otch}'";
+            return sqlCom;
+        } 
         public string sqlComOutputApplications = "select Id_Application, " +
             "Applicant_Company, User_Surname, User_Name, User_Patronymic, " +
             "Status_Name from Application_To_Company join Info_About_User on " +

@@ -51,11 +51,11 @@ namespace Napitki_Altay2.Forms
             TypeApplWorkMenuStrip.Show(ChooseStatusApplPictureBox,
                 new Point(0, ChooseStatusApplPictureBox.Height));
         }
-        private void завершеноToolStripMenuItem_Click(object sender, EventArgs e)
+        private void ЗавершеноToolStripMenuItem_Click(object sender, EventArgs e)
         {
             StatusApplicationTextBox.Texts = "Завершено";
         }
-        private void отклоненоToolStripMenuItem_Click(object sender, EventArgs e)
+        private void ОтклоненоToolStripMenuItem_Click(object sender, EventArgs e)
         {
             StatusApplicationTextBox.Texts = "Отклонено";
         }

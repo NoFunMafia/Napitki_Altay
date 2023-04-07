@@ -11,6 +11,7 @@ using Napitki_Altay2.Classes;
 using System.Collections.Generic;
 using System.Linq;
 using ClosedXML.Report.Utils;
+using ClosedXML.Excel;
 #endregion
 namespace Napitki_Altay2.Forms
 {
@@ -188,7 +189,10 @@ namespace Napitki_Altay2.Forms
         #region [Метод, выводящий данные в CompleteApplicationDGW]
         public void LoadDataInCompleteApplicationDGW()
         {
-            string sqlQueryFourth = sqlQueries.sqlComOutputAnswers;
+            string sqlQueryFourth = sqlQueries.SqlComOutputAnswers
+                (NameWorkCreateTextBox.Texts, 
+                FamWorkCreateTextBox.Texts, 
+                PatrWorkCreateTextBox.Texts);
             DataTable dataTable = dataBaseWork.OutputQuery(sqlQueryFourth);
             OutputInTableSettingTwo(dataTable);
         }
@@ -199,10 +203,10 @@ namespace Napitki_Altay2.Forms
         /// </summary>
         public void LoadDataInDataGridViewAnswer()
         {
+            FillStrings();
             string sqlQueryFive = sqlQueries.sqlComOutputApplications;
             DataTable dataTable = dataBaseWork.OutputQuery(sqlQueryFive);
             OutputInTableSetting(dataTable);
-            FillStrings();
         }
         #endregion
         #region [Метод, заполняющий string переменные]
@@ -301,6 +305,13 @@ namespace Napitki_Altay2.Forms
             }
         }
         #endregion
+        #region [Метод, получающий русское название месяцев для выводного отчёта]
+        private string GetRussianMonthName(int month)
+        {
+            string[] monthNames = { "Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь" };
+            return monthNames[month - 1];
+        }
+        #endregion
         #region [Метод, позволяющий сформировать excel рапорт]
         /// <summary>
         /// Метод, позволяющий сформировать excel рапорт
@@ -311,53 +322,114 @@ namespace Napitki_Altay2.Forms
             Excel.Application IApplication = new Excel.Application();
             Excel.Workbook IWorkbook = IApplication.Workbooks.Add(missingValue);
             Excel.Worksheet IWorksheet = IWorkbook.Worksheets.get_Item(1);
+            // Заголовок отчета
+            IWorksheet.Cells[1, 1].Font.Size = 20;
+            IWorksheet.Cells[1, 1].Font.Bold = true;
+            IWorksheet.Cells[1, 1] = $"Отчет о проделанной работе сотрудника";
+            // Заголовки столбцов
+            int columnIndex = 1;
             for (int i = 0; i < CompleteApplicationDGW.Columns.Count; i++)
             {
-                IWorksheet.Cells[3, i + 1] = CompleteApplicationDGW.Columns[i].HeaderText;
+                if (CompleteApplicationDGW.Columns[i].HeaderText == "User_Surname" ||
+                    CompleteApplicationDGW.Columns[i].HeaderText == "User_Name" ||
+                    CompleteApplicationDGW.Columns[i].HeaderText == "User_Patronymic")
+                    continue;
+                IWorksheet.Cells[3, columnIndex] = CompleteApplicationDGW.Columns[i].HeaderText;
+                IWorksheet.Cells[3, columnIndex].Font.Bold = true;
+                IWorksheet.Cells[3, columnIndex].Interior.Color = Color.FromArgb(201, 235, 200);
+                IWorksheet.Cells[3, columnIndex].Borders.Color = Color.Black;
+                columnIndex++;
             }
+            Dictionary<string, int> employeeTasksCount = new Dictionary<string, int>();
+            // Данные таблицы
             for (int j = 0; j < CompleteApplicationDGW.Rows.Count; j++)
             {
+                string currentEmployeeName = Convert.ToString
+                    (CompleteApplicationDGW.Rows[j].Cells["User_Name"].Value);
+                if (!employeeTasksCount.ContainsKey(currentEmployeeName))
+                {
+                    employeeTasksCount[currentEmployeeName] = 1;
+                }
+                else
+                {
+                    employeeTasksCount[currentEmployeeName]++;
+                }
+                columnIndex = 1;
                 for (int i = 0; i < CompleteApplicationDGW.Columns.Count; i++)
                 {
-                    IWorksheet.Cells[j + 4, i + 1] = Convert.ToString
+                    if (CompleteApplicationDGW.Columns[i].HeaderText == "User_Surname" ||
+                        CompleteApplicationDGW.Columns[i].HeaderText == "User_Name" ||
+                        CompleteApplicationDGW.Columns[i].HeaderText == "User_Patronymic")
+                        continue;
+                    IWorksheet.Cells[j + 4, columnIndex] = Convert.ToString
                         (CompleteApplicationDGW.Rows[j].Cells[i].Value);
+                    IWorksheet.Cells[j + 4, columnIndex].Interior.Color = Color.FromArgb(218, 237, 255);
+                    IWorksheet.Cells[j + 4, columnIndex].Borders.Color = Color.Black;
+                    columnIndex++;
                 }
             }
-            IWorksheet.UsedRange.Borders.Color = Color.Black;
-            IWorksheet.Cells[1, 3].Font.Size = 20;
-            IWorksheet.Cells[3, 7].Font.Size = 16;
-            IWorksheet.Cells[6, 7].Font.Size = 16;
-            IWorksheet.Cells[2, 1].Font.Size = 14;
-            IWorksheet.Cells[1, 3] = "Отчёт о проделанной работе";
-            IWorksheet.Cells[3, 7] = "Подпись главы отдела_____________";
-            IWorksheet.Cells[6, 7] = "М.П";
-            IWorksheet.Cells[2, 1] = "Все завершенные обращения сотрудников";
             IWorksheet.Columns.AutoFit();
+            // Вывод статистики по сотрудникам
+            int summaryRow = CompleteApplicationDGW.Rows.Count + 5;
+            IWorksheet.Cells[summaryRow, 1] = "Количество завершенных обращений";
+            IWorksheet.Cells[summaryRow, 1].Font.Bold = true;
+            IWorksheet.Cells[summaryRow, 1].Interior.Color = Color.FromArgb(201, 235, 200);
+            IWorksheet.Cells[summaryRow, 1].Borders.Color = Color.Black;
+            int employeeRow = summaryRow + 1;
+            foreach (var employee in employeeTasksCount)
+            {
+                IWorksheet.Cells[employeeRow, 1] = employee.Value;
+                IWorksheet.Cells[employeeRow, 1].Interior.Color = Color.FromArgb(218, 237, 255);
+                IWorksheet.Cells[employeeRow, 1].Borders.Color = Color.Black;
+                employeeRow++;
+            }
+            // Добавление диаграммы
+            Excel.ChartObjects chartObjects = (Excel.ChartObjects)IWorksheet.ChartObjects(Type.Missing);
+            Excel.ChartObject chartObject = chartObjects.Add(400, 60, 400, 300); // Изменение размеров диаграммы
+            Excel.Chart chart = chartObject.Chart;
+            Excel.Range dataRange = IWorksheet.Range[IWorksheet.Cells[summaryRow + 1, 1], IWorksheet.Cells[employeeRow - 1, 1]];
+            chart.SetSourceData(dataRange);
+            chart.ChartType = Excel.XlChartType.xlColumnClustered;
+            chart.HasTitle = true;
+            var cultureInfo = new CultureInfo("ru-RU");
+            string monthName = DateTime.Now.ToString("MMMM", cultureInfo);
+            chart.ChartTitle.Text = $"Завершенные обращения за {monthName}";
+            chart.HasLegend = false;
+            // Подпись и дата
+            int lastRow = employeeRow + 1;
+            IWorksheet.Cells[lastRow, 1].Font.Bold = true;
+            IWorksheet.Cells[lastRow, 1] = $"Дата: {DateTime.Now.ToString("dd-MM-yyyy")}";
+            IWorksheet.Cells[lastRow, 5] = "Подпись главы отдела:_____________";
+            IWorksheet.Cells[lastRow, 5].Font.Bold = true; // Выделение жирным
+            IWorksheet.Cells[lastRow + 1, 5] = "Место печати ";
+            IWorksheet.Cells[lastRow + 1, 5].Font.Bold = true; // Выделение жирным
+            // Сохранение файла
             string excelFileName = " Отчет о завершенных обращениях.xlsx";
-            string finalFileName = DateTime.Now.ToString
-                ("dd-MM-yyyy", CultureInfo.InvariantCulture) + excelFileName;
+            string finalFileName = DateTime.Now.ToString("dd-MM-yyyy", CultureInfo.InvariantCulture) + excelFileName;
             string filePath = FilePathTextBox.Texts;
             if (FilePathTextBox.Texts.IsNullOrWhiteSpace())
+            {
                 MessageBox.Show("Путь сохранения не определен!", "Ошибка",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
             else
             {
                 finalFileName = Path.Combine(filePath, finalFileName);
                 IWorkbook.SaveAs(finalFileName);
                 MessageBox.Show("Отчёт успешно сформирован!", "Информация",
-                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBoxButtons.OK, MessageBoxIcon.Information);
                 IWorkbook.Close(true, missingValue, missingValue);
                 IApplication.Quit();
             }
         }
         #endregion
         #region [Метод, обновляющий данные в CompleteApplicationDGW]
-        /// <summary>
-        /// Метод, обновляющий данные в CompleteApplicationDGW
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void UpdateDataDGWAnswer_Click(object sender, EventArgs e)
+            /// <summary>
+            /// Метод, обновляющий данные в CompleteApplicationDGW
+            /// </summary>
+            /// <param name="sender"></param>
+            /// <param name="e"></param>
+            private void UpdateDataDGWAnswer_Click(object sender, EventArgs e)
         {
             LoadDataInCompleteApplicationDGW();
         }

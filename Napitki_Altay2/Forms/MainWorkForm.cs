@@ -242,9 +242,7 @@ namespace Napitki_Altay2.Forms
                     PatrCreateTextBox.Texts);
                 bool checkQueryFirst = dataBaseWork.WithoutOutputQuery(sqlQueryFirst);
                 MessageBox.Show("Операция с данными проведена успешно!",
-                    "Информация",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Information);
+                    "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 if (checkQueryFirst != false)
                 {
                     FillStrings();

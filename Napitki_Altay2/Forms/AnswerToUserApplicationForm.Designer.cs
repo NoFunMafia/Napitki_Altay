@@ -40,6 +40,10 @@
             this.TypeApplWorkMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.завершеноToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.отклоненоToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.HelpLabel = new System.Windows.Forms.Label();
+            this.HelpThanksButton = new Napitki_Altay2.Design.CustomButton();
+            this.HelpDiscussionButton = new Napitki_Altay2.Design.CustomButton();
+            this.HelpCollaborationButton = new Napitki_Altay2.Design.CustomButton();
             this.DeleteAnsWorkDocumentButton = new Napitki_Altay2.Design.CustomButton();
             this.ChooseAnsWorkDocumentButton = new Napitki_Altay2.Design.CustomButton();
             this.AnswerApplButton = new Napitki_Altay2.Design.CustomButton();
@@ -87,7 +91,7 @@
             // 
             this.ApplAnsWorkDTP.Enabled = false;
             this.ApplAnsWorkDTP.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.ApplAnsWorkDTP.Location = new System.Drawing.Point(25, 634);
+            this.ApplAnsWorkDTP.Location = new System.Drawing.Point(27, 636);
             this.ApplAnsWorkDTP.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.ApplAnsWorkDTP.Name = "ApplAnsWorkDTP";
             this.ApplAnsWorkDTP.RightToLeft = System.Windows.Forms.RightToLeft.No;
@@ -144,14 +148,84 @@
             this.завершеноToolStripMenuItem.Name = "завершеноToolStripMenuItem";
             this.завершеноToolStripMenuItem.Size = new System.Drawing.Size(157, 24);
             this.завершеноToolStripMenuItem.Text = "Завершено";
-            this.завершеноToolStripMenuItem.Click += new System.EventHandler(this.завершеноToolStripMenuItem_Click);
+            this.завершеноToolStripMenuItem.Click += new System.EventHandler(this.ЗавершеноToolStripMenuItem_Click);
             // 
             // отклоненоToolStripMenuItem
             // 
             this.отклоненоToolStripMenuItem.Name = "отклоненоToolStripMenuItem";
             this.отклоненоToolStripMenuItem.Size = new System.Drawing.Size(157, 24);
             this.отклоненоToolStripMenuItem.Text = "Отклонено";
-            this.отклоненоToolStripMenuItem.Click += new System.EventHandler(this.отклоненоToolStripMenuItem_Click);
+            this.отклоненоToolStripMenuItem.Click += new System.EventHandler(this.ОтклоненоToolStripMenuItem_Click);
+            // 
+            // HelpLabel
+            // 
+            this.HelpLabel.AutoSize = true;
+            this.HelpLabel.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
+            this.HelpLabel.Location = new System.Drawing.Point(333, 606);
+            this.HelpLabel.Name = "HelpLabel";
+            this.HelpLabel.Size = new System.Drawing.Size(404, 28);
+            this.HelpLabel.TabIndex = 56;
+            this.HelpLabel.Text = "Макеты для формирования документов:";
+            // 
+            // HelpThanksButton
+            // 
+            this.HelpThanksButton.BackColor = System.Drawing.Color.RoyalBlue;
+            this.HelpThanksButton.BackgroundColor = System.Drawing.Color.RoyalBlue;
+            this.HelpThanksButton.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
+            this.HelpThanksButton.BorderRadius = 0;
+            this.HelpThanksButton.BorderSize = 0;
+            this.HelpThanksButton.FlatAppearance.BorderSize = 0;
+            this.HelpThanksButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.HelpThanksButton.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold);
+            this.HelpThanksButton.ForeColor = System.Drawing.Color.White;
+            this.HelpThanksButton.Location = new System.Drawing.Point(692, 637);
+            this.HelpThanksButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.HelpThanksButton.Name = "HelpThanksButton";
+            this.HelpThanksButton.Size = new System.Drawing.Size(171, 52);
+            this.HelpThanksButton.TabIndex = 58;
+            this.HelpThanksButton.Text = "Письмо-притензия";
+            this.HelpThanksButton.TextColor = System.Drawing.Color.White;
+            this.HelpThanksButton.UseVisualStyleBackColor = false;
+            // 
+            // HelpDiscussionButton
+            // 
+            this.HelpDiscussionButton.BackColor = System.Drawing.Color.RoyalBlue;
+            this.HelpDiscussionButton.BackgroundColor = System.Drawing.Color.RoyalBlue;
+            this.HelpDiscussionButton.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
+            this.HelpDiscussionButton.BorderRadius = 0;
+            this.HelpDiscussionButton.BorderSize = 0;
+            this.HelpDiscussionButton.FlatAppearance.BorderSize = 0;
+            this.HelpDiscussionButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.HelpDiscussionButton.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold);
+            this.HelpDiscussionButton.ForeColor = System.Drawing.Color.White;
+            this.HelpDiscussionButton.Location = new System.Drawing.Point(515, 637);
+            this.HelpDiscussionButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.HelpDiscussionButton.Name = "HelpDiscussionButton";
+            this.HelpDiscussionButton.Size = new System.Drawing.Size(171, 52);
+            this.HelpDiscussionButton.TabIndex = 57;
+            this.HelpDiscussionButton.Text = "Обсуждение проблемы";
+            this.HelpDiscussionButton.TextColor = System.Drawing.Color.White;
+            this.HelpDiscussionButton.UseVisualStyleBackColor = false;
+            // 
+            // HelpCollaborationButton
+            // 
+            this.HelpCollaborationButton.BackColor = System.Drawing.Color.RoyalBlue;
+            this.HelpCollaborationButton.BackgroundColor = System.Drawing.Color.RoyalBlue;
+            this.HelpCollaborationButton.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
+            this.HelpCollaborationButton.BorderRadius = 0;
+            this.HelpCollaborationButton.BorderSize = 0;
+            this.HelpCollaborationButton.FlatAppearance.BorderSize = 0;
+            this.HelpCollaborationButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.HelpCollaborationButton.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold);
+            this.HelpCollaborationButton.ForeColor = System.Drawing.Color.White;
+            this.HelpCollaborationButton.Location = new System.Drawing.Point(338, 637);
+            this.HelpCollaborationButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.HelpCollaborationButton.Name = "HelpCollaborationButton";
+            this.HelpCollaborationButton.Size = new System.Drawing.Size(171, 52);
+            this.HelpCollaborationButton.TabIndex = 55;
+            this.HelpCollaborationButton.Text = "Сотрудничество";
+            this.HelpCollaborationButton.TextColor = System.Drawing.Color.White;
+            this.HelpCollaborationButton.UseVisualStyleBackColor = false;
             // 
             // DeleteAnsWorkDocumentButton
             // 
@@ -206,7 +280,7 @@
             this.AnswerApplButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.AnswerApplButton.Font = new System.Drawing.Font("Segoe UI Semibold", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.AnswerApplButton.ForeColor = System.Drawing.Color.White;
-            this.AnswerApplButton.Location = new System.Drawing.Point(25, 692);
+            this.AnswerApplButton.Location = new System.Drawing.Point(25, 753);
             this.AnswerApplButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.AnswerApplButton.Name = "AnswerApplButton";
             this.AnswerApplButton.Size = new System.Drawing.Size(399, 82);
@@ -247,7 +321,7 @@
             this.CloseAnsButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.CloseAnsButton.Font = new System.Drawing.Font("Segoe UI Semibold", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.CloseAnsButton.ForeColor = System.Drawing.Color.White;
-            this.CloseAnsButton.Location = new System.Drawing.Point(467, 692);
+            this.CloseAnsButton.Location = new System.Drawing.Point(467, 753);
             this.CloseAnsButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.CloseAnsButton.Name = "CloseAnsButton";
             this.CloseAnsButton.Size = new System.Drawing.Size(399, 82);
@@ -320,7 +394,11 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(877, 790);
+            this.ClientSize = new System.Drawing.Size(877, 851);
+            this.Controls.Add(this.HelpThanksButton);
+            this.Controls.Add(this.HelpDiscussionButton);
+            this.Controls.Add(this.HelpLabel);
+            this.Controls.Add(this.HelpCollaborationButton);
             this.Controls.Add(this.ChooseStatusApplPictureBox);
             this.Controls.Add(this.SelectAnsWorkDocumentLabel);
             this.Controls.Add(this.DeleteAnsWorkDocumentButton);
@@ -367,5 +445,9 @@
         private System.Windows.Forms.ContextMenuStrip TypeApplWorkMenuStrip;
         private System.Windows.Forms.ToolStripMenuItem завершеноToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem отклоненоToolStripMenuItem;
+        private Design.CustomButton HelpCollaborationButton;
+        private Design.CustomButton HelpThanksButton;
+        private Design.CustomButton HelpDiscussionButton;
+        private System.Windows.Forms.Label HelpLabel;
     }
 }

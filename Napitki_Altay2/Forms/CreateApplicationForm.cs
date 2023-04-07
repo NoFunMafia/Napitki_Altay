@@ -7,6 +7,8 @@ using System.Data.SqlClient;
 using System.IO;
 using Napitki_Altay2.Classes;
 using System.Collections.Generic;
+using MimeKit;
+using MailKit.Net.Smtp;
 #endregion
 namespace Napitki_Altay2.Forms
 {
@@ -54,6 +56,7 @@ namespace Napitki_Altay2.Forms
             if (string.IsNullOrEmpty(DocumentTextBox.Texts))
             {
                 CreateApplicationWithoutDocument();
+                SendAnEmail();
             }
             else
             {
@@ -79,7 +82,51 @@ namespace Napitki_Altay2.Forms
                     TakeDocumentIdInfo(out List<string[]> listSearchSecond);
                     CheckDataRowsIDDocument(listSearchSecond);
                     CreateApplicationWithDocument();
+                    SendAnEmail();
                 }
+            }
+        }
+        #endregion
+        #region [Метод, получающий значение email пользователя]
+        private string GetEmailUser(string idUser)
+        {
+            string sqlQueryEmail = "select Email from Authentication_ " +
+                "join Info_About_User on Authentication_.FK_Info_User = " +
+                $"Info_About_User.ID_Info_User where FK_Info_User = '{idUser}'";
+            string emailAdress = dataBaseWork.GetString(sqlQueryEmail);
+            return emailAdress;
+        }
+        #endregion
+        #region [Метод, отправляющий email уведомление о добавлении обращения]
+        private void SendAnEmail()
+        {
+            MimeMessage mimeMessage = new MimeMessage();
+            mimeMessage.From.Add(new MailboxAddress("Волчихинский Пивоваренный Завод",
+                "napitki-altay@mail.ru"));
+            mimeMessage.To.Add(MailboxAddress.Parse(GetEmailUser(fkInfoUser)));
+            mimeMessage.Subject = $"Заявление успешно создано!";
+            mimeMessage.Body = new TextPart("html")
+            {
+                Text = $"<h1>Спасибо за создание обращения в приложении Напитки Алтая!</h1>" +
+                "<p>Оно было успешно отправлено на предприятие. Мы приложим все усилия для его скорейшей обработки и ответа на ваш запрос.</p>" +
+                "<p>С уважением,<br>Команда «Волчихинского пивоваренного завода»</p>"
+            };
+            SmtpClient smtpClient = new SmtpClient();
+            try
+            {
+                smtpClient.Connect("smtp.mail.ru", 465, true);
+                smtpClient.Authenticate("napitki-altay@mail.ru", "5TGsxjXKrXYpVxeajrgY");
+                smtpClient.Send(mimeMessage);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Ошибка",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                smtpClient.Disconnect(true);
+                smtpClient.Dispose();
             }
         }
         #endregion
@@ -201,10 +248,8 @@ namespace Napitki_Altay2.Forms
             bool checkInsertApplication = dataBaseWork.WithoutOutputQuery(sqlQuerySix);
             if (checkInsertApplication)
             {
-                MessageBox.Show("Обращение создано!",
-                    "Информация",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Information);
+                MessageBox.Show("Обращение создано!", "Информация",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
                 Hide();
                 MainWorkForm mainWorkForm = new MainWorkForm();
                 mainWorkForm.Show();

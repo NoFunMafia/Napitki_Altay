@@ -1,7 +1,6 @@
 ﻿#region [using's]
 using Napitki_Altay2.Forms;
 using System;
-using System.Data.SqlClient;
 using System.Drawing;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
@@ -244,8 +243,7 @@ namespace Napitki_Altay2
         {
             GetUniqueCode();
             MimeMessage mimeMessage = new MimeMessage();
-            mimeMessage.From.Add(new MailboxAddress
-                ("Волчихинский Пивоваренный Завод",
+            mimeMessage.From.Add(new MailboxAddress("Волчихинский Пивоваренный Завод",
                 "napitki-altay@mail.ru"));
             mimeMessage.To.Add(MailboxAddress.Parse(EmailTextBox.Texts));
             mimeMessage.Subject = $"Код подтверждения: {uniqueCode}";
@@ -270,10 +268,8 @@ namespace Napitki_Altay2
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message,
-                    "Ошибка",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Error);
+                MessageBox.Show(ex.Message, "Ошибка", 
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             finally
             {

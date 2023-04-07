@@ -78,10 +78,20 @@ namespace TelegramBot
                                 reader.Close();
                                 command = new SqlCommand($"UPDATE Telegram_Account SET IsLogin = '1' WHERE Account_Telegram = '{userID}'", connection);
                                 await command.ExecuteNonQueryAsync();
-                                await botClient.SendTextMessageAsync(
-                                    chatId: e.Message.Chat.Id,
-                                    text: "Вы успешно вошли в систему!"
-                                );
+                                command = new SqlCommand($"SELECT ID_Account FROM Telegram_Account WHERE Account_Telegram = '{userID}'", connection);
+                                reader = await command.ExecuteReaderAsync();
+                                if (reader.HasRows)
+                                {
+                                    await reader.ReadAsync();
+                                    string idTelegram = reader[0].ToString();
+                                    reader.Close();
+                                    command = new SqlCommand($"UPDATE Authentication_ SET FK_Telegram_Account = '{idTelegram}' WHERE Login_User = '{login}'", connection);
+                                    await command.ExecuteNonQueryAsync();
+                                    await botClient.SendTextMessageAsync(
+                                        chatId: e.Message.Chat.Id,
+                                        text: "Вы успешно вошли в систему!"
+                                        );
+                                }
                             }
                             else
                             {

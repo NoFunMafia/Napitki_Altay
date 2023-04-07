@@ -33,18 +33,18 @@
             this.MainWorkAdminTabControl = new System.Windows.Forms.TabControl();
             this.AllUsersPage = new System.Windows.Forms.TabPage();
             this.InfoUsersLabel = new System.Windows.Forms.Label();
+            this.DataGridViewUsers = new System.Windows.Forms.DataGridView();
+            this.AllApplicationPage = new System.Windows.Forms.TabPage();
+            this.DataGridViewApplication = new System.Windows.Forms.DataGridView();
+            this.FolderPathBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
             this.UpdateUserButton = new Napitki_Altay2.Design.CustomButton();
             this.DeleteUserButton = new Napitki_Altay2.Design.CustomButton();
             this.CreateUserButton = new Napitki_Altay2.Design.CustomButton();
-            this.DataGridViewUsers = new System.Windows.Forms.DataGridView();
-            this.AllApplicationPage = new System.Windows.Forms.TabPage();
-            this.CustomFormForAllProject = new Napitki_Altay2.Components.FormStyleCustom(this.components);
-            this.DataGridViewApplication = new System.Windows.Forms.DataGridView();
             this.FilePathChooseButton = new Napitki_Altay2.Design.CustomButton();
             this.FilePathTextBox = new Napitki_Altay2.Design.CustomTextBox();
             this.UpdateApplicationButton = new Napitki_Altay2.Design.CustomButton();
             this.GenerateRaportButton = new Napitki_Altay2.Design.CustomButton();
-            this.FolderPathBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
+            this.CustomFormForAllProject = new Napitki_Altay2.Components.FormStyleCustom(this.components);
             this.MainWorkAdminTabControl.SuspendLayout();
             this.AllUsersPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DataGridViewUsers)).BeginInit();
@@ -89,6 +89,49 @@
             this.InfoUsersLabel.TabIndex = 17;
             this.InfoUsersLabel.Text = "Внимание! Удаление сотрудников и заявителей которые\r\nучаствовали в документооборо" +
     "те недопустимо!";
+            // 
+            // DataGridViewUsers
+            // 
+            this.DataGridViewUsers.AllowUserToAddRows = false;
+            this.DataGridViewUsers.AllowUserToDeleteRows = false;
+            this.DataGridViewUsers.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.DataGridViewUsers.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.DataGridViewUsers.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.DataGridViewUsers.Location = new System.Drawing.Point(3, 59);
+            this.DataGridViewUsers.Name = "DataGridViewUsers";
+            this.DataGridViewUsers.RowHeadersWidth = 51;
+            this.DataGridViewUsers.RowTemplate.Height = 24;
+            this.DataGridViewUsers.Size = new System.Drawing.Size(1005, 458);
+            this.DataGridViewUsers.TabIndex = 0;
+            // 
+            // AllApplicationPage
+            // 
+            this.AllApplicationPage.Controls.Add(this.FilePathChooseButton);
+            this.AllApplicationPage.Controls.Add(this.FilePathTextBox);
+            this.AllApplicationPage.Controls.Add(this.UpdateApplicationButton);
+            this.AllApplicationPage.Controls.Add(this.GenerateRaportButton);
+            this.AllApplicationPage.Controls.Add(this.DataGridViewApplication);
+            this.AllApplicationPage.Location = new System.Drawing.Point(4, 27);
+            this.AllApplicationPage.Name = "AllApplicationPage";
+            this.AllApplicationPage.Padding = new System.Windows.Forms.Padding(3);
+            this.AllApplicationPage.Size = new System.Drawing.Size(1011, 520);
+            this.AllApplicationPage.TabIndex = 1;
+            this.AllApplicationPage.Text = "Отчётность";
+            this.AllApplicationPage.UseVisualStyleBackColor = true;
+            // 
+            // DataGridViewApplication
+            // 
+            this.DataGridViewApplication.AllowUserToAddRows = false;
+            this.DataGridViewApplication.AllowUserToDeleteRows = false;
+            this.DataGridViewApplication.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.DataGridViewApplication.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.DataGridViewApplication.Location = new System.Drawing.Point(3, 93);
+            this.DataGridViewApplication.Name = "DataGridViewApplication";
+            this.DataGridViewApplication.RowHeadersWidth = 51;
+            this.DataGridViewApplication.RowTemplate.Height = 24;
+            this.DataGridViewApplication.Size = new System.Drawing.Size(1005, 425);
+            this.DataGridViewApplication.TabIndex = 0;
             // 
             // UpdateUserButton
             // 
@@ -152,64 +195,6 @@
             this.CreateUserButton.TextColor = System.Drawing.Color.White;
             this.CreateUserButton.UseVisualStyleBackColor = false;
             this.CreateUserButton.Click += new System.EventHandler(this.CreateUserButton_Click);
-            // 
-            // DataGridViewUsers
-            // 
-            this.DataGridViewUsers.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.DataGridViewUsers.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.DataGridViewUsers.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.DataGridViewUsers.Location = new System.Drawing.Point(3, 59);
-            this.DataGridViewUsers.Name = "DataGridViewUsers";
-            this.DataGridViewUsers.RowHeadersWidth = 51;
-            this.DataGridViewUsers.RowTemplate.Height = 24;
-            this.DataGridViewUsers.Size = new System.Drawing.Size(1005, 458);
-            this.DataGridViewUsers.TabIndex = 0;
-            // 
-            // AllApplicationPage
-            // 
-            this.AllApplicationPage.Controls.Add(this.FilePathChooseButton);
-            this.AllApplicationPage.Controls.Add(this.FilePathTextBox);
-            this.AllApplicationPage.Controls.Add(this.UpdateApplicationButton);
-            this.AllApplicationPage.Controls.Add(this.GenerateRaportButton);
-            this.AllApplicationPage.Controls.Add(this.DataGridViewApplication);
-            this.AllApplicationPage.Location = new System.Drawing.Point(4, 27);
-            this.AllApplicationPage.Name = "AllApplicationPage";
-            this.AllApplicationPage.Padding = new System.Windows.Forms.Padding(3);
-            this.AllApplicationPage.Size = new System.Drawing.Size(1011, 520);
-            this.AllApplicationPage.TabIndex = 1;
-            this.AllApplicationPage.Text = "Отчётность";
-            this.AllApplicationPage.UseVisualStyleBackColor = true;
-            // 
-            // CustomFormForAllProject
-            // 
-            this.CustomFormForAllProject.AllowUserResize = false;
-            this.CustomFormForAllProject.BackColor = System.Drawing.Color.White;
-            this.CustomFormForAllProject.ContextMenuForm = null;
-            this.CustomFormForAllProject.ControlBoxButtonsWidth = 20;
-            this.CustomFormForAllProject.EnableControlBoxIconsLight = true;
-            this.CustomFormForAllProject.EnableControlBoxMouseLight = false;
-            this.CustomFormForAllProject.Form = this;
-            this.CustomFormForAllProject.FormStyle = Napitki_Altay2.Components.FormStyleCustom.fStyle.UserStyle;
-            this.CustomFormForAllProject.HeaderColor = System.Drawing.Color.RoyalBlue;
-            this.CustomFormForAllProject.HeaderColorAdditional = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(48)))), ((int)(((byte)(207)))));
-            this.CustomFormForAllProject.HeaderColorGradientEnable = true;
-            this.CustomFormForAllProject.HeaderColorGradientMode = System.Drawing.Drawing2D.LinearGradientMode.Vertical;
-            this.CustomFormForAllProject.HeaderHeight = 29;
-            this.CustomFormForAllProject.HeaderImage = null;
-            this.CustomFormForAllProject.HeaderTextColor = System.Drawing.Color.White;
-            this.CustomFormForAllProject.HeaderTextFont = new System.Drawing.Font("Segoe UI", 12F);
-            // 
-            // DataGridViewApplication
-            // 
-            this.DataGridViewApplication.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.DataGridViewApplication.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.DataGridViewApplication.Location = new System.Drawing.Point(3, 93);
-            this.DataGridViewApplication.Name = "DataGridViewApplication";
-            this.DataGridViewApplication.RowHeadersWidth = 51;
-            this.DataGridViewApplication.RowTemplate.Height = 24;
-            this.DataGridViewApplication.Size = new System.Drawing.Size(1005, 425);
-            this.DataGridViewApplication.TabIndex = 0;
             // 
             // FilePathChooseButton
             // 
@@ -293,6 +278,25 @@
             this.GenerateRaportButton.TextColor = System.Drawing.Color.White;
             this.GenerateRaportButton.UseVisualStyleBackColor = false;
             this.GenerateRaportButton.Click += new System.EventHandler(this.GenerateRaportButton_Click);
+            // 
+            // CustomFormForAllProject
+            // 
+            this.CustomFormForAllProject.AllowUserResize = false;
+            this.CustomFormForAllProject.BackColor = System.Drawing.Color.White;
+            this.CustomFormForAllProject.ContextMenuForm = null;
+            this.CustomFormForAllProject.ControlBoxButtonsWidth = 20;
+            this.CustomFormForAllProject.EnableControlBoxIconsLight = true;
+            this.CustomFormForAllProject.EnableControlBoxMouseLight = false;
+            this.CustomFormForAllProject.Form = this;
+            this.CustomFormForAllProject.FormStyle = Napitki_Altay2.Components.FormStyleCustom.fStyle.UserStyle;
+            this.CustomFormForAllProject.HeaderColor = System.Drawing.Color.RoyalBlue;
+            this.CustomFormForAllProject.HeaderColorAdditional = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(48)))), ((int)(((byte)(207)))));
+            this.CustomFormForAllProject.HeaderColorGradientEnable = true;
+            this.CustomFormForAllProject.HeaderColorGradientMode = System.Drawing.Drawing2D.LinearGradientMode.Vertical;
+            this.CustomFormForAllProject.HeaderHeight = 29;
+            this.CustomFormForAllProject.HeaderImage = null;
+            this.CustomFormForAllProject.HeaderTextColor = System.Drawing.Color.White;
+            this.CustomFormForAllProject.HeaderTextFont = new System.Drawing.Font("Segoe UI", 12F);
             // 
             // MainWorkFormAdmin
             // 

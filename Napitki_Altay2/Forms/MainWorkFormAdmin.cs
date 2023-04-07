@@ -59,7 +59,7 @@ namespace Napitki_Altay2.Forms
         /// <param name="e"></param>
         private void MainWorkFormAdmin_Resize(object sender, EventArgs e)
         {
-            if(WindowState == FormWindowState.Maximized)
+            if (WindowState == FormWindowState.Maximized)
             {
                 MainWorkAdminTabControl.Size = new Size(1532, 829);
                 DataGridViewUsers.Size = new Size(1520, 750);
@@ -275,6 +275,13 @@ namespace Napitki_Altay2.Forms
             DataGridViewApplication.Columns[4].Width = 148;
         }
         #endregion
+        #region [Метод, получающий русское название месяцев для выводного отчёта]
+        private string GetRussianMonthName(int month)
+        {
+            string[] monthNames = { "Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь" };
+            return monthNames[month - 1];
+        }
+        #endregion
         #region [Метод, позволяющий сформировать excel рапорт]
         /// <summary>
         /// Метод, позволяющий сформировать excel рапорт
@@ -285,41 +292,118 @@ namespace Napitki_Altay2.Forms
             Excel.Application IApplication = new Excel.Application();
             Excel.Workbook IWorkbook = IApplication.Workbooks.Add(missingValue);
             Excel.Worksheet IWorksheet = IWorkbook.Worksheets.get_Item(1);
+            // Заголовок отчета
+            IWorksheet.Cells[1, 1].Font.Size = 20;
+            IWorksheet.Cells[1, 1].Font.Bold = true;
+            IWorksheet.Cells[1, 1] = $"Отчет о проделанной работе сотрудников";
+            IWorksheet.get_Range("A1", "E1").Merge();
+            IWorksheet.get_Range("A1", "E1").HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter;
+            // Заголовки столбцов
+            int columnIndex = 1;
             for (int i = 0; i < DataGridViewApplication.Columns.Count; i++)
             {
-                IWorksheet.Cells[3, i + 1] = DataGridViewApplication.Columns[i].HeaderText;
+                if (DataGridViewApplication.Columns[i].HeaderText == "User_Surname" ||
+                    DataGridViewApplication.Columns[i].HeaderText == "User_Name" ||
+                    DataGridViewApplication.Columns[i].HeaderText == "User_Patronymic")
+                    continue;
+                IWorksheet.Cells[3, columnIndex] = DataGridViewApplication.Columns[i].HeaderText;
+                IWorksheet.Cells[3, columnIndex].Font.Bold = true;
+                IWorksheet.Cells[3, columnIndex].Interior.Color = Color.FromArgb(201, 235, 200);
+                IWorksheet.Cells[3, columnIndex].Borders.Color = Color.Black;
+                columnIndex++;
             }
+            // Данные таблицы
+            Dictionary<string, int> employeeTasksCount = new Dictionary<string, int>();
             for (int j = 0; j < DataGridViewApplication.Rows.Count; j++)
             {
+                DateTime taskDate = Convert.ToDateTime
+                    (DataGridViewApplication.Rows[j].Cells["Date_Of_Answer"].Value);
+                string currentEmployeeFullName = $"{DataGridViewApplication.Rows[j].Cells["User_Surname"].Value}" +
+                    $" {DataGridViewApplication.Rows[j].Cells["User_Name"].Value}" +
+                    $" {DataGridViewApplication.Rows[j].Cells["User_Patronymic"].Value}";
+                if (!employeeTasksCount.ContainsKey(currentEmployeeFullName))
+                {
+                    employeeTasksCount[currentEmployeeFullName] = 1;
+                }
+                else
+                {
+                    employeeTasksCount[currentEmployeeFullName] += 1;
+                }
+                columnIndex = 1;
                 for (int i = 0; i < DataGridViewApplication.Columns.Count; i++)
                 {
-                    IWorksheet.Cells[j + 4, i + 1] = Convert.ToString
+                    if (DataGridViewApplication.Columns[i].HeaderText == "User_Surname" ||
+                        DataGridViewApplication.Columns[i].HeaderText == "User_Name" ||
+                        DataGridViewApplication.Columns[i].HeaderText == "User_Patronymic")
+                        continue;
+                    IWorksheet.Cells[j + 4, columnIndex] = Convert.ToString
                         (DataGridViewApplication.Rows[j].Cells[i].Value);
+                    IWorksheet.Cells[j + 4, columnIndex].Interior.Color = Color.FromArgb(218, 237, 255);
+                    IWorksheet.Cells[j + 4, columnIndex].Borders.Color = Color.Black;
+                    columnIndex++;
                 }
             }
-            IWorksheet.UsedRange.Borders.Color = Color.Black;
-            IWorksheet.Cells[1, 3].Font.Size = 20;
-            IWorksheet.Cells[3, 7].Font.Size = 16;
-            IWorksheet.Cells[6, 7].Font.Size = 16;
-            IWorksheet.Cells[2, 1].Font.Size = 14;
-            IWorksheet.Cells[1, 3] = "Отчёт о проделанной работе";
-            IWorksheet.Cells[3, 7] = "Подпись главы отдела_____________";
-            IWorksheet.Cells[6, 7] = "М.П";
-            IWorksheet.Cells[2, 1] = "Все завершенные обращения сотрудников";
             IWorksheet.Columns.AutoFit();
+            // Вывод статистики по сотрудникам
+            int summaryRow = DataGridViewApplication.Rows.Count + 5;
+            IWorksheet.Cells[summaryRow, 1] = "Сотрудник";
+            IWorksheet.Cells[summaryRow, 2] = "Количество завершенных обращений";
+            IWorksheet.Cells[summaryRow, 1].Font.Bold = true;
+            IWorksheet.Cells[summaryRow, 1].Interior.Color = Color.FromArgb(201, 235, 200);
+            IWorksheet.Cells[summaryRow, 1].Borders.Color = Color.Black;
+            IWorksheet.Cells[summaryRow, 2].Font.Bold = true;
+            IWorksheet.Cells[summaryRow, 2].Interior.Color = Color.FromArgb(201, 235, 200);
+            IWorksheet.Cells[summaryRow, 2].Borders.Color = Color.Black;
+            int employeeRow = summaryRow + 1;
+            foreach (var employee in employeeTasksCount)
+            {
+                IWorksheet.Cells[employeeRow, 1] = employee.Key;
+                IWorksheet.Cells[employeeRow, 1].Interior.Color = Color.FromArgb(218, 237, 255);
+                IWorksheet.Cells[employeeRow, 1].Borders.Color = Color.Black;
+                IWorksheet.Cells[employeeRow, 2] = employee.Value;
+                IWorksheet.Cells[employeeRow, 2].Interior.Color = Color.FromArgb(218, 237, 255);
+                IWorksheet.Cells[employeeRow, 2].Borders.Color = Color.Black;
+                employeeRow++;
+            }
+            // Добавление диаграммы
+            Excel.ChartObjects chartObjects = (Excel.ChartObjects)IWorksheet.ChartObjects(Type.Missing);
+            Excel.ChartObject chartObject = chartObjects.Add(400, 60, 400, 300); // Изменение размеров диаграммы
+            Excel.Chart chart = chartObject.Chart;
+            Excel.Range dataRange = IWorksheet.Range[IWorksheet.Cells[summaryRow + 1, 2], 
+                IWorksheet.Cells[employeeRow - 1, 2]];
+            chart.SetSourceData(dataRange);
+            chart.ChartType = Excel.XlChartType.xlColumnClustered;
+            chart.HasTitle = true;
+            chart.ChartTitle.Text = $"Завершенные обращения за месяцы";
+            chart.HasLegend = false;
+            // Изменение подписи горизонтальной оси на ФИО сотрудников
+            Excel.Series series = (Excel.Series)chart.SeriesCollection(1);
+            series.XValues = IWorksheet.Range[IWorksheet.Cells[summaryRow + 1, 1], 
+                IWorksheet.Cells[employeeRow - 1, 1]];
+            // Подпись и дата
+            int lastRow = employeeRow + 1;
+            IWorksheet.Cells[lastRow, 1].Font.Bold = true;
+            IWorksheet.Cells[lastRow, 1] = $"Дата: {DateTime.Now.ToString("dd-MM-yyyy")}";
+            IWorksheet.Cells[lastRow, 5] = "Подпись главы отдела:_____________";
+            IWorksheet.Cells[lastRow, 5].Font.Bold = true; // Выделение жирным
+            IWorksheet.Cells[lastRow + 1, 5] = "Место печати ";
+            IWorksheet.Cells[lastRow + 1, 5].Font.Bold = true; // Выделение жирным
+            // Сохранение файла
             string excelFileName = " Отчет о завершенных обращениях.xlsx";
             string finalFileName = DateTime.Now.ToString
                 ("dd-MM-yyyy", CultureInfo.InvariantCulture) + excelFileName;
             string filePath = FilePathTextBox.Texts;
-            if (FilePathTextBox.Texts.IsNullOrWhiteSpace())
+            if (string.IsNullOrWhiteSpace(filePath))
+            {
                 MessageBox.Show("Путь сохранения не определен!", "Ошибка",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
             else
             {
                 finalFileName = Path.Combine(filePath, finalFileName);
                 IWorkbook.SaveAs(finalFileName);
                 MessageBox.Show("Отчёт успешно сформирован!", "Информация",
-                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBoxButtons.OK, MessageBoxIcon.Information);
                 IWorkbook.Close(true, missingValue, missingValue);
                 IApplication.Quit();
             }

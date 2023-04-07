@@ -10,35 +10,53 @@ namespace Napitki_Altay2
     public class DataBaseWork
     {
         #region [Выбор БД для дома/учёбы]
-         //БД для тестирования в домашних условиях
-        readonly SqlConnection sqlCon = new SqlConnection(@"Data Source=MYHOMIES;
-        Initial Catalog=Altai_zavodBackup;
-        Persist Security Info=True;
-        User ID=Admin;
-        Password=Admin");
-        #endregion
-        #region [Методы, для открытия/закрытия соединения с БД]
-        /// <summary>
-        /// Открытие соединения с БД
-        /// </summary>
-        public void OpenConnection()
+        private readonly List<string> connectionStrings = new List<string>
         {
-            if(sqlCon.State == ConnectionState.Closed)
-            {
-                sqlCon.Open();
-            }
-        }
-        /// <summary>
-        /// Закрытие соединения с БД
-        /// </summary>
-        public void CloseConnection()
+            //БД для тестирования в домашних условиях с использ. локал.
+            @"Data Source=MYHOMIES;Initial Catalog=Altai_zavodBackup;Persist Security Info=True;User ID=Admin;Password=Admin",
+            //БД для тестирования в домашних условиях и подкл. к колледжу
+            @"Data Source=62.78.81.19;Initial Catalog=Altai_Napitki;Persist Security Info=True;User ID=25-тпмоксингв;Password=650131",
+            //БД для тестирования в учебных условиях
+            @"Data Source=sql1c;Initial Catalog=Altai_Napitki;Persist Security Info=True;User ID=25-тпмоксингв;Password=650131"
+        };
+        private SqlConnection _sqlCon;
+        public SqlConnection SqlCon
         {
-            if (sqlCon.State == System.Data.ConnectionState.Open)
+            get
             {
-                sqlCon.Close();
+                if (_sqlCon == null)
+                {
+                    _sqlCon = ConnectToDatabase();
+                }
+                return _sqlCon;
             }
         }
         #endregion
+        private SqlConnection ConnectToDatabase()
+        {
+            SqlConnection connection = null;
+            foreach (string connectionString in connectionStrings)
+            {
+                try
+                {
+                    connection = new SqlConnection(connectionString);
+                    connection.Open();
+                    break;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Ошибка: {ex.Message}", "Ошибка", 
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    connection = null;
+                }
+            }
+            if (connection == null)
+            {
+                MessageBox.Show($"Ошибка подключения к доступным базам данных. Повторите попытку позже!",
+                    "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            return connection;
+        }
         #region [Метод, получающий значение sqlCon]
         /// <summary>
         /// Метод, получающий значение sqlCon
@@ -46,7 +64,29 @@ namespace Napitki_Altay2
         /// <returns>Значение соединения</returns>
         public SqlConnection GetConnection()
         {
-            return sqlCon;
+            return SqlCon;
+        }
+        #endregion
+        #region [Методы, для открытия/закрытия соединения с БД]
+        /// <summary>
+        /// Открытие соединения с БД
+        /// </summary>
+        public void OpenConnection()
+        {
+            if (SqlCon.State == ConnectionState.Closed)
+            {
+                SqlCon.Open();
+            }
+        }
+        /// <summary>
+        /// Закрытие соединения с БД
+        /// </summary>
+        public void CloseConnection()
+        {
+            if (SqlCon.State == ConnectionState.Open)
+            {
+                SqlCon.Close();
+            }
         }
         #endregion
         #region [Методы для непосредственной работой с БД]
