@@ -183,9 +183,10 @@
             this.HelpThanksButton.Name = "HelpThanksButton";
             this.HelpThanksButton.Size = new System.Drawing.Size(171, 52);
             this.HelpThanksButton.TabIndex = 58;
-            this.HelpThanksButton.Text = "Письмо-притензия";
+            this.HelpThanksButton.Text = "Письмо-претензия";
             this.HelpThanksButton.TextColor = System.Drawing.Color.White;
             this.HelpThanksButton.UseVisualStyleBackColor = false;
+            this.HelpThanksButton.Click += new System.EventHandler(this.HelpThanksButton_Click);
             // 
             // HelpDiscussionButton
             // 
@@ -206,6 +207,7 @@
             this.HelpDiscussionButton.Text = "Обсуждение проблемы";
             this.HelpDiscussionButton.TextColor = System.Drawing.Color.White;
             this.HelpDiscussionButton.UseVisualStyleBackColor = false;
+            this.HelpDiscussionButton.Click += new System.EventHandler(this.HelpDiscussionButton_Click);
             // 
             // HelpCollaborationButton
             // 
@@ -226,6 +228,7 @@
             this.HelpCollaborationButton.Text = "Сотрудничество";
             this.HelpCollaborationButton.TextColor = System.Drawing.Color.White;
             this.HelpCollaborationButton.UseVisualStyleBackColor = false;
+            this.HelpCollaborationButton.Click += new System.EventHandler(this.HelpCollaborationButton_Click);
             // 
             // DeleteAnsWorkDocumentButton
             // 

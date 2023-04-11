@@ -184,7 +184,7 @@ namespace Napitki_Altay2.Forms
         private void ПисьмопритензияToolStripMenuItem_Click
             (object sender, EventArgs e)
         {
-            TypeApplTextBox.Texts = "Письмо-притензия";
+            TypeApplTextBox.Texts = "Письмо-претензия";
         }
         /// <summary>
         /// Событие нажатия на кнопку 

@@ -18,6 +18,10 @@ namespace Napitki_Altay2.Forms
         readonly DataBaseWork dataBaseWork = new DataBaseWork();
         // Класс запросов в БД
         readonly SqlQueries sqlQueries = new SqlQueries();
+        public static string companyWork;
+        public static string typeApplication;
+        public static string description;
+        public static DateTime dateTimeWork;
         #endregion
         public UserApplicationInfoForWorkerForm()
         {
@@ -75,6 +79,10 @@ namespace Napitki_Altay2.Forms
                     DescripWorkTextBox.Texts = item[3];
                     ApplWorkDTP.Text = DateTime.Parse(item[4]).ToString();
                     DocumentWorkTextBox.Texts = item[5];
+                    companyWork = item[1];
+                    typeApplication = item[2];
+                    description = item[3];
+                    dateTimeWork = DateTime.Parse(ApplWorkDTP.Text);
                 }
             }
             else

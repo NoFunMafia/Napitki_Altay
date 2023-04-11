@@ -179,10 +179,8 @@ namespace Napitki_Altay2.Forms
                 if (CompleteApplicationDGWUser.RowCount != 0)
                 {
                     SelectedRowIDInDGW = CompleteApplicationDGWUser.CurrentRow.Cells[0].Value.ToString();
-                    ReadyApplicationInfoForUserForm
-                        readyApplicationInfoForUserForm =
-                        new ReadyApplicationInfoForUserForm();
-                    readyApplicationInfoForUserForm.Show();
+                    ReadyApplicationInfoForUserForm readyForm = new ReadyApplicationInfoForUserForm();
+                    readyForm.Show();
                     Hide();
                 }
                 else
@@ -271,9 +269,7 @@ namespace Napitki_Altay2.Forms
                 bool checkDelete = dataBaseWork.WithoutOutputQuery(sqlQuery);
                 if (checkDelete != true)
                     MessageBox.Show("Завершенные обращения удалять нельзя!",
-                        "Ошибка",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Error);
+                        "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 LoadDataGridView();
             }
         }

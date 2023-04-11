@@ -387,6 +387,14 @@ namespace Napitki_Altay2.Classes
                 $"'{idDocument}')";
             return sqlCom;
         }
+        public string SqlComFioApplication(string idApplication)
+        {
+            string sqlCom = "select ID_Application, User_Surname, User_Name, " +
+                "User_Patronymic from Application_To_Company join " +
+                "Info_About_User on Application_To_Company.FK_Info_User = " +
+                $"Info_About_User.ID_Info_User where ID_Application = '{idApplication}'";
+            return sqlCom;
+        }
         #endregion
         #region [MainWorkFormWorker]
         public string SqlComTakeFioWorker(string login)

@@ -398,7 +398,7 @@ namespace Napitki_Altay2.Forms
             // Подпись и дата
             int lastRow = employeeRow + 1;
             IWorksheet.Cells[lastRow, 1].Font.Bold = true;
-            IWorksheet.Cells[lastRow, 1] = $"Дата: {DateTime.Now.ToString("dd-MM-yyyy")}";
+            IWorksheet.Cells[lastRow, 1] = $"Дата: {DateTime.Now:dd-MM-yyyy}";
             IWorksheet.Cells[lastRow, 5] = "Подпись главы отдела:_____________";
             IWorksheet.Cells[lastRow, 5].Font.Bold = true; // Выделение жирным
             IWorksheet.Cells[lastRow + 1, 5] = "Место печати ";

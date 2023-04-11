@@ -6,7 +6,15 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
 using System.IO;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
+using DocumentFormat.OpenXml.Packaging;
+using DocumentFormat.OpenXml.Wordprocessing;
+using DocumentFormat.OpenXml.Drawing.Diagrams;
+using System.Globalization;
+using Point = System.Drawing.Point;
+using System.Linq;
+using System.Text;
 #endregion
 
 namespace Napitki_Altay2.Forms
@@ -16,11 +24,9 @@ namespace Napitki_Altay2.Forms
         #region [Подключение класса соединения с БД, объявление string переменных]
         readonly DataBaseWork dataBaseWork = new DataBaseWork();
         readonly SqlQueries sqlQueries = new SqlQueries();
-        string fkInfoUser;
-        string docName;
-        string docExtension;
-        string checkStatus;
-        string fkApplicationDocumentFromWorker;
+        string fkInfoUser, docName, docExtension, checkStatus, 
+            fkApplicationDocumentFromWorker, userFam, userName, userOtch;
+        readonly CultureInfo russianCulture = new CultureInfo("ru-RU");
         #endregion
         public AnswerToUserApplicationForm()
         {
@@ -124,6 +130,57 @@ namespace Napitki_Altay2.Forms
                 CheckDataRowsIdDocument(listSearchSecond);
                 CreateAnswerWithDocument();
             }
+        }
+        #endregion
+        #region [Событие нажатия на кнопку HelpCollaborationButton]
+        /// <summary>
+        /// Событие нажатия на кнопку HelpCollaborationButton
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void HelpCollaborationButton_Click(object sender, EventArgs e)
+        {
+            List<string[]> listSearch = GetFioFromQuery();
+            FillFioStrings(listSearch);
+            string newDocumentPath = CreateCollaborationDocumentPath();
+            Dictionary<string, string> placeHolders = CreatePlaceHolders();
+            ReplacePlaceholdersInDocument(newDocumentPath, placeHolders);
+            MessageBox.Show("Документ создан и сохранен по пути: " + newDocumentPath,
+                "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+        #endregion
+        #region [Событие нажатия на кнопку HelpThanksButton]
+        /// <summary>
+        /// Событие нажатия на кнопку HelpThanksButton
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void HelpThanksButton_Click(object sender, EventArgs e)
+        {
+            List<string[]> listSearch = GetFioFromQuery();
+            FillFioStrings(listSearch);
+            string newDocumentPath = CreateThanksDocumentPath();
+            Dictionary<string, string> placeHolders = CreatePlaceHolders();
+            ReplacePlaceholdersInDocument(newDocumentPath, placeHolders);
+            MessageBox.Show("Документ создан и сохранен по пути: " + newDocumentPath,
+                "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+        #endregion
+        #region [Событие нажатия на кнопку HelpDiscussionButton]
+        /// <summary>
+        /// Событие нажатия на кнопку HelpDiscussionButton
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void HelpDiscussionButton_Click(object sender, EventArgs e)
+        {
+            List<string[]> listSearch = GetFioFromQuery();
+            FillFioStrings(listSearch);
+            string newDocumentPath = CreateDiscussionDocumentPath();
+            Dictionary<string, string> placeHolders = CreatePlaceHolders();
+            ReplacePlaceholdersInDocument(newDocumentPath, placeHolders);
+            MessageBox.Show("Документ создан и сохранен по пути: " + newDocumentPath,
+                "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         #endregion
         #region [Метод, проверяющий уникальность названия прикрепляемого документа]
@@ -311,6 +368,176 @@ namespace Napitki_Altay2.Forms
                 MainWorkFormWorker.SurnameWorkerString,
                 MainWorkFormWorker.PatrWorkerString);
             listSearch = dataBaseWork.GetMultiList(sqlQueryFirst, 4);
+        }
+        #endregion
+        #region [Метод, создающий плейсхолдеры для макетов документов]
+        /// <summary>
+        /// Метод, создающий плейсхолдеры для макетов документов
+        /// </summary>
+        /// <returns></returns>
+        private Dictionary<string, string> CreatePlaceHolders()
+        {
+            // Заполнить плейсхолдеры данными
+            return new Dictionary<string, string>
+            {
+                { "{applicationNumber}", MainWorkFormWorker.SelectedRowID?.ToString() ?? "Неизвестно" },
+                { "{companyName}", UserApplicationInfoForWorkerForm.companyWork?.ToString() ?? "Неизвестно" },
+                { "{imya}", userName?.Substring(0, 1).ToString() ?? "Неизвестно" },
+                { "{fam}", userFam?.Substring(0, 1).ToString() ?? "Неизвестно" },
+                { "{otchFull}", userOtch?.ToString() ?? "Неизвестно"},
+                { "{day}", DateTime.Today.Day.ToString() },
+                { "{monthName}", russianCulture.DateTimeFormat.GetMonthName(DateTime.Today.Month) },
+                { "{year}", DateTime.Today.Year.ToString() },
+                { "{dayFiling}", UserApplicationInfoForWorkerForm.dateTimeWork.Day.ToString() },
+                { "{monthFiling}", russianCulture.DateTimeFormat.GetMonthName
+                (UserApplicationInfoForWorkerForm.dateTimeWork.Month).ToString() },
+                { "{yearFiling}", UserApplicationInfoForWorkerForm.dateTimeWork.Year.ToString() }
+            };
+        }
+        #endregion
+        #region [Метод, создающий документ сотрудничества по пути рабочего стола]
+        /// <summary>
+        /// Метод, создающий документ сотрудничества по пути рабочего стола
+        /// </summary>
+        /// <returns></returns>
+        private static string CreateCollaborationDocumentPath()
+        {
+            string assemblyPath = System.Reflection.Assembly.GetExecutingAssembly().Location;
+            string assemblyDirectory = Path.GetDirectoryName(assemblyPath);
+            string subfolderName = "WordDocuments";
+            string templateFileName = "Пример для составления ответа на сотрудничество.docx";
+            string templatePath = Path.Combine(assemblyDirectory, subfolderName, templateFileName);
+            string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            string newDocumentName = "Ответ на сотрудничество.docx";
+            string newDocumentPath = Path.Combine(desktopPath, newDocumentName);
+            // Создание копии шаблона
+            File.Copy(templatePath, newDocumentPath, true);
+            return newDocumentPath;
+        }
+        #endregion
+        #region [Метод, создающий документ претензии по пути рабочего стола]
+        /// <summary>
+        /// Метод, создающий документ претензии по пути рабочего стола
+        /// </summary>
+        /// <returns></returns>
+        private static string CreateThanksDocumentPath()
+        {
+            string assemblyPath = System.Reflection.Assembly.GetExecutingAssembly().Location;
+            string assemblyDirectory = Path.GetDirectoryName(assemblyPath);
+            string subfolderName = "WordDocuments";
+            string templateFileName = "Пример для составления ответа на претензию.docx";
+            string templatePath = Path.Combine(assemblyDirectory, subfolderName, templateFileName);
+            string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            string newDocumentName = "Ответ на претензию.docx";
+            string newDocumentPath = Path.Combine(desktopPath, newDocumentName);
+            // Создание копии шаблона
+            File.Copy(templatePath, newDocumentPath, true);
+            return newDocumentPath;
+        }
+        #endregion
+        #region [Метод, создающий документ проблемы по пути рабочего стола]
+        /// <summary>
+        /// Метод, создающий документ проблемы по пути рабочего стола
+        /// </summary>
+        /// <returns></returns>
+        private static string CreateDiscussionDocumentPath()
+        {
+            string assemblyPath = System.Reflection.Assembly.GetExecutingAssembly().Location;
+            string assemblyDirectory = Path.GetDirectoryName(assemblyPath);
+            string subfolderName = "WordDocuments";
+            string templateFileName = "Пример для составления ответа на проблему.docx";
+            string templatePath = Path.Combine(assemblyDirectory, subfolderName, templateFileName);
+            string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            string newDocumentName = "Ответ на проблему.docx";
+            string newDocumentPath = Path.Combine(desktopPath, newDocumentName);
+            // Создание копии шаблона
+            File.Copy(templatePath, newDocumentPath, true);
+            return newDocumentPath;
+        }
+        #endregion
+        #region [Метод, меняющий слова в {скобках} на плейсхолдеры]
+        /// <summary>
+        /// Метод, меняющий слова в {скобках} на плейсхолдеры
+        /// </summary>
+        /// <param name="filePath"></param>
+        /// <param name="placeholders"></param>
+        private void ReplacePlaceholdersInDocument(string filePath, Dictionary<string, string> placeholders)
+        {
+            try
+            {
+                using (WordprocessingDocument wordDoc = WordprocessingDocument.Open(filePath, true))
+                {
+                    var doc = wordDoc.MainDocumentPart.Document.CloneNode(true) as Document;
+                    var body = doc.Body;
+                    foreach (var paragraph in body.Descendants<Paragraph>())
+                    {
+                        var runs = paragraph.Descendants<Run>().ToList();
+
+                        if (runs.Count == 0) continue;
+                        // Склеиваем все текстовые элементы всех Run внутри параграфа
+                        StringBuilder sb = new StringBuilder();
+                        foreach (var run in runs)
+                        {
+                            foreach (var textElement in run.Descendants<Text>())
+                            {
+                                sb.Append(textElement.Text);
+                            }
+                        }
+                        string fullText = sb.ToString();
+                        // Замена плейсхолдеров
+                        foreach (var placeholder in placeholders)
+                        {
+                            fullText = fullText.Replace(placeholder.Key, placeholder.Value);
+                        }
+                        // Удаляем все Run элементы в параграфе
+                        foreach (var run in runs)
+                        {
+                            paragraph.RemoveChild(run);
+                        }
+                        // Добавляем новый Run элемент с замененными плейсхолдерами
+                        var newRun = new Run();
+                        newRun.AppendChild(new Text(fullText));
+                        paragraph.AppendChild(newRun);
+                    }
+                    wordDoc.MainDocumentPart.Document = doc;
+                    wordDoc.MainDocumentPart.Document.Save();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка: {ex.Message}", "Ошибка",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+        #endregion
+        #region [Метод, получающий ФИО заявителя]
+        /// <summary>
+        /// Метод, получающий ФИО заявителя
+        /// </summary>
+        /// <returns></returns>
+        private List<string[]> GetFioFromQuery()
+        {
+            string sqlQuery = sqlQueries.SqlComFioApplication(MainWorkFormWorker.SelectedRowID);
+            List<string[]> listSearch = dataBaseWork.GetMultiList(sqlQuery, 4);
+            return listSearch;
+        }
+        #endregion
+        #region [Метод, заполняющий ФИО в string переменные]
+        /// <summary>
+        /// Метод, заполняющий ФИО в string переменные
+        /// </summary>
+        /// <param name="strings"></param>
+        private void FillFioStrings(List<string[]> strings)
+        {
+            if (strings != null)
+            {
+                foreach (string[] item in strings)
+                {
+                    userFam = item[1];
+                    userName = item[2];
+                    userOtch = item[3];
+                }
+            }
         }
         #endregion
     }
