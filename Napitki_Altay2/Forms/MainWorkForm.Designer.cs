@@ -443,6 +443,7 @@
             this.OpenSout2021Button.Text = "Открыть";
             this.OpenSout2021Button.TextColor = System.Drawing.Color.White;
             this.OpenSout2021Button.UseVisualStyleBackColor = false;
+            this.OpenSout2021Button.Click += new System.EventHandler(this.OpenSout2021Button_Click);
             // 
             // OpenSout2018Button
             // 

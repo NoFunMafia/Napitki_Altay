@@ -178,10 +178,7 @@ namespace Napitki_Altay2.Classes
         // MainWorkFormAdmin - ReceiveRowAndList
         public string SqlComTakeFio(string loginID)
         {
-            string sqlCom = "select User_Surname, User_Name, User_Patronymic " +
-                "from Authentication_ join Info_About_User " +
-                "on Authentication_.FK_Info_User = Info_About_User.ID_Info_User " +
-                $"where ID_User = '{loginID}'";
+            string sqlCom = $"select * from Authentication_ where ID_User = '{loginID}'";
             return sqlCom;
         }
         // MainWorkFormAdmin - SendQueryFromList
@@ -472,6 +469,7 @@ namespace Napitki_Altay2.Classes
             string sqlCom = "select FK_ID_Application, Type_Appeal, Status_Name, " +
                 "Answer_To_Application, Date_Of_Answer, Document_Name_W " +
                 "from Ready_Application full join Answer_Document_From_Worker on " +
+                "Ready_Application.FK_Answer_Document_From_Worker " +
                 "= Answer_Document_From_Worker.ID_Document_From_Worker join " +
                 "Application_To_Company on Application_To_Company.ID_Application " +
                 "= Ready_Application.FK_ID_Application join Type_Of_Appeal on " +

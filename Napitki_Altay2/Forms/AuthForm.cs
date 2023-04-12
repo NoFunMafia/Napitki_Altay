@@ -143,7 +143,7 @@ namespace Napitki_Altay2
         {
             string sqlQueryFirst = sqlQueries.SqlComRoleUser
                 (LoginTextBox.Texts, PasswordTextBox.Texts);
-            List<string[]> listSearch = dataBaseWork.GetMultiList(sqlQueryFirst, 4);
+            List<string[]> listSearch = dataBaseWork.GetMultiList(sqlQueryFirst, 5);
             return listSearch;
         }
         #endregion
@@ -208,7 +208,7 @@ namespace Napitki_Altay2
             {
                 foreach (string[] item in strings)
                 {
-                    RoleString = item[3].ToString();
+                    RoleString = item[4].ToString();
                 }
             }
         }

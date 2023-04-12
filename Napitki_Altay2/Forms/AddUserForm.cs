@@ -101,6 +101,7 @@ namespace Napitki_Altay2.Forms
                             "Информация",
                             MessageBoxButtons.OK,
                             MessageBoxIcon.Information);
+
                 }
             }
         }

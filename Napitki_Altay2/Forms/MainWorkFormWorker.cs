@@ -144,6 +144,14 @@ namespace Napitki_Altay2.Forms
                     }
                 }
             }
+            else
+            {
+                FamWorkCreateTextBox.Texts = "";
+                NameWorkCreateTextBox.Texts = "";
+                PatrWorkCreateTextBox.Texts = "";
+                ((Control)AnswerToApplicationPage).Enabled = false;
+                InfoAnswerLabel.Visible = true;
+            }
         }
         #endregion
         #region [Метод, вносящий ФИО и добавляющий его к пользователю]
@@ -279,29 +287,44 @@ namespace Napitki_Altay2.Forms
         /// </summary>
         private void OpenAnswerFormAndUpdateStatus()
         {
-            SelectedRowID = DataGridViewAnswer.CurrentRow.Cells[0].Value.ToString();
-            if (DataGridViewAnswer.CurrentRow.Cells[5].Value.ToString() == "На рассмотрении")
+            try
             {
-                string sqlQuerySix = sqlQueries.sqlComCheckStatusId;
-                string statusName = dataBaseWork.GetString(sqlQuerySix);
-                string sqlQuerySeven = sqlQueries.SqlComUpdateStatusApplication
-                    (statusName, SelectedRowID);
-                bool checkInsert = dataBaseWork.WithoutOutputQuery(sqlQuerySeven);
-                if (checkInsert)
+                if (DataGridViewAnswer.RowCount != 0)
                 {
-                    LoadDataInDataGridViewAnswer();
-                    AnswerToUserApplicationForm answerForm = new AnswerToUserApplicationForm();
-                    answerForm.Show();
-                    UserApplicationInfoForWorkerForm userForm = new UserApplicationInfoForWorkerForm();
-                    userForm.Show();
+                    SelectedRowID = DataGridViewAnswer.CurrentRow.Cells[0].Value.ToString();
+                    if (DataGridViewAnswer.CurrentRow.Cells[5].Value.ToString() == "На рассмотрении")
+                    {
+                        string sqlQuerySix = sqlQueries.sqlComCheckStatusId;
+                        string statusName = dataBaseWork.GetString(sqlQuerySix);
+                        string sqlQuerySeven = sqlQueries.SqlComUpdateStatusApplication
+                            (statusName, SelectedRowID);
+                        bool checkInsert = dataBaseWork.WithoutOutputQuery(sqlQuerySeven);
+                        if (checkInsert)
+                        {
+                            LoadDataInDataGridViewAnswer();
+                            AnswerToUserApplicationForm answerForm = new AnswerToUserApplicationForm();
+                            answerForm.Show();
+                            UserApplicationInfoForWorkerForm userForm = new UserApplicationInfoForWorkerForm();
+                            userForm.Show();
+                        }
+                    }
+                    else
+                    {
+                        AnswerToUserApplicationForm answerForm = new AnswerToUserApplicationForm();
+                        answerForm.Show();
+                        UserApplicationInfoForWorkerForm userForm = new UserApplicationInfoForWorkerForm();
+                        userForm.Show();
+                    }
+                }
+                else
+                {
+                    throw new Exception();
                 }
             }
-            else
+            catch (Exception)
             {
-                AnswerToUserApplicationForm answerForm = new AnswerToUserApplicationForm();
-                answerForm.Show();
-                UserApplicationInfoForWorkerForm userForm = new UserApplicationInfoForWorkerForm();
-                userForm.Show();
+                MessageBox.Show("Невозможно дать ответ на не выделенное обращение!", "Ошибка",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
         #endregion

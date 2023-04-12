@@ -55,8 +55,20 @@ namespace Napitki_Altay2.Forms
             CheckDataReaderRowsInfo(listSearch);
             if (string.IsNullOrEmpty(DocumentTextBox.Texts))
             {
-                CreateApplicationWithoutDocument();
-                SendAnEmail();
+                if (string.IsNullOrEmpty(CompanyTextBox.Texts)
+                    || string.IsNullOrEmpty(TypeApplTextBox.Texts)
+                    || string.IsNullOrEmpty(DescripTextBox.Texts))
+                {
+                    MessageBox.Show("Не все поля заполнены!",
+                        "Ошибка",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error);
+                }
+                else
+                {
+                    CreateApplicationWithoutDocument();
+                    SendAnEmail();
+                }
             }
             else
             {
