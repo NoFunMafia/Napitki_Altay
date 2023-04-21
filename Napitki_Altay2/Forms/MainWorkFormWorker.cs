@@ -33,6 +33,8 @@ namespace Napitki_Altay2.Forms
         #region [Событие загрузки формы]
         private void MainWorkFormWorker_Load(object sender, EventArgs e)
         {
+            // Передача значения Пароля из формы AuthForm
+            PassWorkCreaUpdaTextBox.Texts = AuthForm.PasswordString;
             TakeFioWorker(out List<string[]> listSearch);
             CheckDataReaderRowsInfo(listSearch);
             LoadDataInDataGridViewAnswer();
@@ -102,6 +104,12 @@ namespace Napitki_Altay2.Forms
         private void MainWorkFormWorker_FormClosed(object sender, FormClosedEventArgs e)
         {
             Application.Exit();
+        }
+        #endregion
+        #region [Событие нажатия на кнопку UpdLogPassButton]
+        private void UpdLogPassButton_Click(object sender, EventArgs e)
+        {
+            UpdatePassQuery();
         }
         #endregion
         #region [Метод, получающий ФИО сотрудника]
@@ -467,6 +475,28 @@ namespace Napitki_Altay2.Forms
         {
             if (FolderPathBrowserDialog.ShowDialog() == DialogResult.OK)
                 FilePathTextBox.Texts = FolderPathBrowserDialog.SelectedPath;
+        }
+        #endregion
+        #region [Метод, показывающий/скрывающий видимость пароля]
+        private void VisiblePassCheckMain_CheckedChanged(object sender, EventArgs e)
+        {
+            PassWorkCreaUpdaTextBox.PasswordChar = !VisiblePassCheckMain.Checked;
+        }
+        #endregion
+        #region [Метод, отправляющий sql-запрос на обновление пароля]
+        /// <summary>
+        /// Метод, отправляющий sql-запрос на обновление пароля 
+        /// </summary>
+        private void UpdatePassQuery()
+        {
+            string sqlQuery = sqlQueries.SqlComUpdPass(PassWorkCreaUpdaTextBox.Texts);
+            bool checkSql = dataBaseWork.WithoutOutputQuery(sqlQuery);
+            if (checkSql != false)
+            {
+                MessageBox.Show("Операция с данными проведена успешно!",
+                    "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                UpdLogPassButton.Enabled = false;
+            }
         }
         #endregion
     }

@@ -57,6 +57,7 @@
             this.FamWorkCreateTextBox = new Napitki_Altay2.Design.CustomTextBox();
             this.CustomFormForAllProject = new Napitki_Altay2.Components.FormStyleCustom(this.components);
             this.FolderPathBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
+            this.VisiblePassCheckMain = new System.Windows.Forms.CheckBox();
             this.MainWorkWorkerTabControl.SuspendLayout();
             this.AnswerToApplicationPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DataGridViewAnswer)).BeginInit();
@@ -281,6 +282,7 @@
             // WorkerDataPage
             // 
             this.WorkerDataPage.BackColor = System.Drawing.Color.White;
+            this.WorkerDataPage.Controls.Add(this.VisiblePassCheckMain);
             this.WorkerDataPage.Controls.Add(this.MainWorkFormWorkerPictureBox);
             this.WorkerDataPage.Controls.Add(this.PasswordWorkInfoLabel);
             this.WorkerDataPage.Controls.Add(this.SurnameWorkInfoLabel);
@@ -381,6 +383,7 @@
             this.UpdLogPassButton.Text = "Изменить";
             this.UpdLogPassButton.TextColor = System.Drawing.Color.White;
             this.UpdLogPassButton.UseVisualStyleBackColor = false;
+            this.UpdLogPassButton.Click += new System.EventHandler(this.UpdLogPassButton_Click);
             // 
             // CreateUserFIOButton
             // 
@@ -416,7 +419,7 @@
             this.PassWorkCreaUpdaTextBox.Multiline = false;
             this.PassWorkCreaUpdaTextBox.Name = "PassWorkCreaUpdaTextBox";
             this.PassWorkCreaUpdaTextBox.Padding = new System.Windows.Forms.Padding(7);
-            this.PassWorkCreaUpdaTextBox.PasswordChar = false;
+            this.PassWorkCreaUpdaTextBox.PasswordChar = true;
             this.PassWorkCreaUpdaTextBox.Size = new System.Drawing.Size(239, 35);
             this.PassWorkCreaUpdaTextBox.TabIndex = 25;
             this.PassWorkCreaUpdaTextBox.Texts = "";
@@ -498,6 +501,22 @@
             this.CustomFormForAllProject.HeaderTextColor = System.Drawing.Color.White;
             this.CustomFormForAllProject.HeaderTextFont = new System.Drawing.Font("Segoe UI", 12F);
             // 
+            // VisiblePassCheckMain
+            // 
+            this.VisiblePassCheckMain.AutoSize = true;
+            this.VisiblePassCheckMain.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.VisiblePassCheckMain.Cursor = System.Windows.Forms.Cursors.Default;
+            this.VisiblePassCheckMain.FlatAppearance.BorderColor = System.Drawing.SystemColors.Window;
+            this.VisiblePassCheckMain.Font = new System.Drawing.Font("Segoe UI Variable Text", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.VisiblePassCheckMain.Location = new System.Drawing.Point(763, 136);
+            this.VisiblePassCheckMain.Name = "VisiblePassCheckMain";
+            this.VisiblePassCheckMain.Size = new System.Drawing.Size(95, 24);
+            this.VisiblePassCheckMain.TabIndex = 34;
+            this.VisiblePassCheckMain.Text = "Показать";
+            this.VisiblePassCheckMain.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.VisiblePassCheckMain.UseVisualStyleBackColor = true;
+            this.VisiblePassCheckMain.CheckedChanged += new System.EventHandler(this.VisiblePassCheckMain_CheckedChanged);
+            // 
             // MainWorkFormWorker
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -507,7 +526,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MainWorkFormWorker";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Напитки Алтая";
+            this.Text = "Автоматизация документооборота";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainWorkFormWorker_FormClosed);
             this.Load += new System.EventHandler(this.MainWorkFormWorker_Load);
             this.MainWorkWorkerTabControl.ResumeLayout(false);
@@ -552,5 +571,6 @@
         private Design.CustomButton FilePathChooseButton;
         private Design.CustomTextBox FilePathTextBox;
         private System.Windows.Forms.FolderBrowserDialog FolderPathBrowserDialog;
+        private System.Windows.Forms.CheckBox VisiblePassCheckMain;
     }
 }

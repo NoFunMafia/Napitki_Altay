@@ -382,13 +382,13 @@ namespace Napitki_Altay2.Forms
             // Подпись и дата
             int lastRow = employeeRow + 1;
             IWorksheet.Cells[lastRow, 1].Font.Bold = true;
-            IWorksheet.Cells[lastRow, 1] = $"Дата: {DateTime.Now.ToString("dd-MM-yyyy")}";
+            IWorksheet.Cells[lastRow, 1] = $"Дата: {DateTime.Now:dd-MM-yyyy}";
             IWorksheet.Cells[lastRow, 5] = "Подпись главы отдела:_____________";
             IWorksheet.Cells[lastRow, 5].Font.Bold = true; // Выделение жирным
             IWorksheet.Cells[lastRow + 1, 5] = "Место печати ";
             IWorksheet.Cells[lastRow + 1, 5].Font.Bold = true; // Выделение жирным
             // Сохранение файла
-            string excelFileName = " Отчет о завершенных обращениях.xlsx";
+            string excelFileName = "Отчет о завершенных обращениях.xlsx";
             string finalFileName = DateTime.Now.ToString
                 ("dd-MM-yyyy", CultureInfo.InvariantCulture) + excelFileName;
             string filePath = FilePathTextBox.Texts;

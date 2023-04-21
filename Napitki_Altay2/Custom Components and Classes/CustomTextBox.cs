@@ -200,8 +200,7 @@ namespace Napitki_Altay2.Design
         private void TextBoxForCustomSetting_TextChanged
             (object sender, EventArgs e)
         {
-            if (TextChangedEvent != null)
-                TextChangedEvent.Invoke(sender, e);
+            TextChangedEvent?.Invoke(sender, e);
         }
         private void TextBoxForCustomSetting_Click
             (object sender, EventArgs e)

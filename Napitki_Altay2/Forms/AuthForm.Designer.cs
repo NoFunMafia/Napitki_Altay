@@ -166,7 +166,7 @@
             this.VisiblePassCheck.Cursor = System.Windows.Forms.Cursors.Default;
             this.VisiblePassCheck.FlatAppearance.BorderColor = System.Drawing.SystemColors.Window;
             this.VisiblePassCheck.Font = new System.Drawing.Font("Segoe UI Variable Text", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.VisiblePassCheck.Location = new System.Drawing.Point(356, 262);
+            this.VisiblePassCheck.Location = new System.Drawing.Point(356, 261);
             this.VisiblePassCheck.Name = "VisiblePassCheck";
             this.VisiblePassCheck.Size = new System.Drawing.Size(95, 24);
             this.VisiblePassCheck.TabIndex = 6;

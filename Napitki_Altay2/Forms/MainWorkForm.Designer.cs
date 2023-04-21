@@ -77,6 +77,7 @@
             this.AboutOurCompanyLabel = new System.Windows.Forms.Label();
             this.MainWorkFormPictureBox2 = new System.Windows.Forms.PictureBox();
             this.CustomFormForAllProject = new Napitki_Altay2.Components.FormStyleCustom(this.components);
+            this.VisiblePassCheckMain = new System.Windows.Forms.CheckBox();
             this.MainWorkTabControl.SuspendLayout();
             this.ApplicationPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DataGridViewApplication)).BeginInit();
@@ -511,6 +512,7 @@
             // UserDataPage
             // 
             this.UserDataPage.BackColor = System.Drawing.Color.White;
+            this.UserDataPage.Controls.Add(this.VisiblePassCheckMain);
             this.UserDataPage.Controls.Add(this.MainWorkFormPictureBox);
             this.UserDataPage.Controls.Add(this.PasswordWorkInfoLabel);
             this.UserDataPage.Controls.Add(this.SurnameWorkInfoLabel);
@@ -647,7 +649,7 @@
             this.PassCreaUpdaTextBox.Multiline = false;
             this.PassCreaUpdaTextBox.Name = "PassCreaUpdaTextBox";
             this.PassCreaUpdaTextBox.Padding = new System.Windows.Forms.Padding(7);
-            this.PassCreaUpdaTextBox.PasswordChar = false;
+            this.PassCreaUpdaTextBox.PasswordChar = true;
             this.PassCreaUpdaTextBox.Size = new System.Drawing.Size(239, 35);
             this.PassCreaUpdaTextBox.TabIndex = 9;
             this.PassCreaUpdaTextBox.Texts = "";
@@ -783,6 +785,22 @@
             this.CustomFormForAllProject.HeaderTextColor = System.Drawing.Color.White;
             this.CustomFormForAllProject.HeaderTextFont = new System.Drawing.Font("Segoe UI", 12F);
             // 
+            // VisiblePassCheckMain
+            // 
+            this.VisiblePassCheckMain.AutoSize = true;
+            this.VisiblePassCheckMain.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.VisiblePassCheckMain.Cursor = System.Windows.Forms.Cursors.Default;
+            this.VisiblePassCheckMain.FlatAppearance.BorderColor = System.Drawing.SystemColors.Window;
+            this.VisiblePassCheckMain.Font = new System.Drawing.Font("Segoe UI Variable Text", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.VisiblePassCheckMain.Location = new System.Drawing.Point(763, 136);
+            this.VisiblePassCheckMain.Name = "VisiblePassCheckMain";
+            this.VisiblePassCheckMain.Size = new System.Drawing.Size(95, 24);
+            this.VisiblePassCheckMain.TabIndex = 22;
+            this.VisiblePassCheckMain.Text = "Показать";
+            this.VisiblePassCheckMain.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.VisiblePassCheckMain.UseVisualStyleBackColor = true;
+            this.VisiblePassCheckMain.CheckedChanged += new System.EventHandler(this.VisiblePassCheckMain_CheckedChanged);
+            // 
             // MainWorkForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -794,7 +812,7 @@
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "MainWorkForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Напитки Алтая";
+            this.Text = "Автоматизация документооборота";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainWorkForm_FormClosed);
             this.Load += new System.EventHandler(this.MainWorkForm_Load);
             this.MainWorkTabControl.ResumeLayout(false);
@@ -877,5 +895,6 @@
         private System.Windows.Forms.Panel Sout2021Panel;
         private Design.CustomButton OpenWorkerMessage;
         private System.Windows.Forms.DataGridView CompleteApplicationDGWUser;
+        private System.Windows.Forms.CheckBox VisiblePassCheckMain;
     }
 }

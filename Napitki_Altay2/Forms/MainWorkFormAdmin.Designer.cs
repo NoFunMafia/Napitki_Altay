@@ -308,7 +308,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MainWorkFormAdmin";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Админ-панель «Напитки Алтая»";
+            this.Text = "Админ-панель «Автоматизация документооборота»";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainWorkFormAdmin_FormClosed);
             this.Load += new System.EventHandler(this.MainWorkFormAdmin_Load);
             this.Resize += new System.EventHandler(this.MainWorkFormAdmin_Resize);

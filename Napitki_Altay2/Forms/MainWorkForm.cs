@@ -452,5 +452,10 @@ namespace Napitki_Altay2.Forms
                 return false;
         }
         #endregion
+
+        private void VisiblePassCheckMain_CheckedChanged(object sender, EventArgs e)
+        {
+            PassCreaUpdaTextBox.PasswordChar = !VisiblePassCheckMain.Checked;
+        }
     }
 }
