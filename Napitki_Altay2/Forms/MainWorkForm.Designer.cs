@@ -59,6 +59,7 @@
             this.OpenSout2016Button = new Napitki_Altay2.Design.CustomButton();
             this.OpenPriceListButton = new Napitki_Altay2.Design.CustomButton();
             this.UserDataPage = new System.Windows.Forms.TabPage();
+            this.VisiblePassCheckMain = new System.Windows.Forms.CheckBox();
             this.MainWorkFormPictureBox = new System.Windows.Forms.PictureBox();
             this.PasswordWorkInfoLabel = new System.Windows.Forms.Label();
             this.SurnameWorkInfoLabel = new System.Windows.Forms.Label();
@@ -77,7 +78,6 @@
             this.AboutOurCompanyLabel = new System.Windows.Forms.Label();
             this.MainWorkFormPictureBox2 = new System.Windows.Forms.PictureBox();
             this.CustomFormForAllProject = new Napitki_Altay2.Components.FormStyleCustom(this.components);
-            this.VisiblePassCheckMain = new System.Windows.Forms.CheckBox();
             this.MainWorkTabControl.SuspendLayout();
             this.ApplicationPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DataGridViewApplication)).BeginInit();
@@ -140,7 +140,7 @@
             this.InfoApplicationLabel.Name = "InfoApplicationLabel";
             this.InfoApplicationLabel.Size = new System.Drawing.Size(353, 46);
             this.InfoApplicationLabel.TabIndex = 14;
-            this.InfoApplicationLabel.Text = "Данные о пользователе не заполнены,\r\nфункция создания обращения отключена.\r\n";
+            this.InfoApplicationLabel.Text = "Данные о заявителе не заполнены,\r\nфункция создания обращения отключена.\r\n";
             this.InfoApplicationLabel.Visible = false;
             // 
             // UpdateDataInDGW
@@ -533,6 +533,22 @@
             this.UserDataPage.TabIndex = 2;
             this.UserDataPage.Text = "Данные о пользователе";
             // 
+            // VisiblePassCheckMain
+            // 
+            this.VisiblePassCheckMain.AutoSize = true;
+            this.VisiblePassCheckMain.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.VisiblePassCheckMain.Cursor = System.Windows.Forms.Cursors.Default;
+            this.VisiblePassCheckMain.FlatAppearance.BorderColor = System.Drawing.SystemColors.Window;
+            this.VisiblePassCheckMain.Font = new System.Drawing.Font("Segoe UI Variable Text", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.VisiblePassCheckMain.Location = new System.Drawing.Point(763, 136);
+            this.VisiblePassCheckMain.Name = "VisiblePassCheckMain";
+            this.VisiblePassCheckMain.Size = new System.Drawing.Size(95, 24);
+            this.VisiblePassCheckMain.TabIndex = 22;
+            this.VisiblePassCheckMain.Text = "Показать";
+            this.VisiblePassCheckMain.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.VisiblePassCheckMain.UseVisualStyleBackColor = true;
+            this.VisiblePassCheckMain.CheckedChanged += new System.EventHandler(this.VisiblePassCheckMain_CheckedChanged);
+            // 
             // MainWorkFormPictureBox
             // 
             this.MainWorkFormPictureBox.Image = global::Napitki_Altay2.Properties.Resources.PictureMainWorkForm;
@@ -650,6 +666,7 @@
             this.PassCreaUpdaTextBox.Name = "PassCreaUpdaTextBox";
             this.PassCreaUpdaTextBox.Padding = new System.Windows.Forms.Padding(7);
             this.PassCreaUpdaTextBox.PasswordChar = true;
+            this.PassCreaUpdaTextBox.ScrollBars = System.Windows.Forms.ScrollBars.None;
             this.PassCreaUpdaTextBox.Size = new System.Drawing.Size(239, 35);
             this.PassCreaUpdaTextBox.TabIndex = 9;
             this.PassCreaUpdaTextBox.Texts = "";
@@ -669,6 +686,7 @@
             this.PatrCreateTextBox.Name = "PatrCreateTextBox";
             this.PatrCreateTextBox.Padding = new System.Windows.Forms.Padding(7);
             this.PatrCreateTextBox.PasswordChar = false;
+            this.PatrCreateTextBox.ScrollBars = System.Windows.Forms.ScrollBars.None;
             this.PatrCreateTextBox.Size = new System.Drawing.Size(239, 35);
             this.PatrCreateTextBox.TabIndex = 8;
             this.PatrCreateTextBox.Texts = "";
@@ -688,6 +706,7 @@
             this.NameCreateTextBox.Name = "NameCreateTextBox";
             this.NameCreateTextBox.Padding = new System.Windows.Forms.Padding(7);
             this.NameCreateTextBox.PasswordChar = false;
+            this.NameCreateTextBox.ScrollBars = System.Windows.Forms.ScrollBars.None;
             this.NameCreateTextBox.Size = new System.Drawing.Size(239, 35);
             this.NameCreateTextBox.TabIndex = 7;
             this.NameCreateTextBox.Texts = "";
@@ -707,6 +726,7 @@
             this.FamCreateTextBox.Name = "FamCreateTextBox";
             this.FamCreateTextBox.Padding = new System.Windows.Forms.Padding(7);
             this.FamCreateTextBox.PasswordChar = false;
+            this.FamCreateTextBox.ScrollBars = System.Windows.Forms.ScrollBars.None;
             this.FamCreateTextBox.Size = new System.Drawing.Size(239, 35);
             this.FamCreateTextBox.TabIndex = 6;
             this.FamCreateTextBox.Texts = "";
@@ -784,22 +804,6 @@
             this.CustomFormForAllProject.HeaderImage = null;
             this.CustomFormForAllProject.HeaderTextColor = System.Drawing.Color.White;
             this.CustomFormForAllProject.HeaderTextFont = new System.Drawing.Font("Segoe UI", 12F);
-            // 
-            // VisiblePassCheckMain
-            // 
-            this.VisiblePassCheckMain.AutoSize = true;
-            this.VisiblePassCheckMain.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.VisiblePassCheckMain.Cursor = System.Windows.Forms.Cursors.Default;
-            this.VisiblePassCheckMain.FlatAppearance.BorderColor = System.Drawing.SystemColors.Window;
-            this.VisiblePassCheckMain.Font = new System.Drawing.Font("Segoe UI Variable Text", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.VisiblePassCheckMain.Location = new System.Drawing.Point(763, 136);
-            this.VisiblePassCheckMain.Name = "VisiblePassCheckMain";
-            this.VisiblePassCheckMain.Size = new System.Drawing.Size(95, 24);
-            this.VisiblePassCheckMain.TabIndex = 22;
-            this.VisiblePassCheckMain.Text = "Показать";
-            this.VisiblePassCheckMain.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.VisiblePassCheckMain.UseVisualStyleBackColor = true;
-            this.VisiblePassCheckMain.CheckedChanged += new System.EventHandler(this.VisiblePassCheckMain_CheckedChanged);
             // 
             // MainWorkForm
             // 

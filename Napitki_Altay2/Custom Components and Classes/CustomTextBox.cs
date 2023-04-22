@@ -127,6 +127,18 @@ namespace Napitki_Altay2.Design
             }
         }
         [Category("Конфигурация")]
+        public ScrollBars ScrollBars
+        {
+            get
+            {
+                return TextBoxForCustomSetting.ScrollBars;
+            }
+            set
+            {
+                TextBoxForCustomSetting.ScrollBars = value;
+            }
+        }
+        [Category("Конфигурация")]
         public string Texts
         {
             get

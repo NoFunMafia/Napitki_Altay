@@ -58,9 +58,9 @@ namespace Napitki_Altay2.Forms
         {
             StatusApplicationTextBox.Texts = "Завершено";
         }
-        private void ОтклоненоToolStripMenuItem_Click(object sender, EventArgs e)
+        private void ОжиданиеToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            StatusApplicationTextBox.Texts = "Отклонено";
+            StatusApplicationTextBox.Texts = "Ожидание доп. информации";
         }
         #endregion
         #region [Событие нажатия на кнопку ChooseAnsWorkDocumentButton]
@@ -113,7 +113,7 @@ namespace Napitki_Altay2.Forms
                     || string.IsNullOrEmpty(DescripWorkAnsTextBox.Texts))
                 {
                     MessageBox.Show("Не все поля заполнены!",
-                            "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 using (Stream stream = File.OpenRead(filepath))
                 {
@@ -328,21 +328,30 @@ namespace Napitki_Altay2.Forms
             string sqlQuerySecond = sqlQueries.SqlComCheckStatusID
                 (StatusApplicationTextBox.Texts);
             checkStatus = dataBaseWork.GetString(sqlQuerySecond);
-            string sqlQueryThree = sqlQueries.SqlComUpdateStatus
-                (checkStatus, MainWorkFormWorker.SelectedRowID);
-            dataBaseWork.WithoutOutputQuery(sqlQueryThree);
-            string sqlQueryFourth = sqlQueries.SqlComCreateReadyApplicationWithoutDocument
-                (MainWorkFormWorker.SelectedRowID, fkInfoUser,
-                DescripWorkAnsTextBox.Texts, ApplAnsWorkDTP.Value);
-            bool checkInsert = dataBaseWork.WithoutOutputQuery(sqlQueryFourth);
-            if (checkInsert)
+            if (checkStatus == "3")
             {
-                MessageBox.Show("Ответ на обращение создан!",
-                    "Информация", MessageBoxButtons.OK,
-                    MessageBoxIcon.Information);
-                Close();
-                Form userForm = Application.OpenForms["UserApplicationInfoForWorkerForm"];
-                userForm?.Close();
+                string sqlQueryThree = sqlQueries.SqlComUpdateStatus
+                    (checkStatus, MainWorkFormWorker.SelectedRowID);
+                dataBaseWork.WithoutOutputQuery(sqlQueryThree);
+            }
+            else
+            {
+                string sqlQueryFourth = sqlQueries.SqlComUpdateStatus
+                (checkStatus, MainWorkFormWorker.SelectedRowID);
+                dataBaseWork.WithoutOutputQuery(sqlQueryFourth);
+                string sqlQueryFive = sqlQueries.SqlComCreateReadyApplicationWithoutDocument
+                    (MainWorkFormWorker.SelectedRowID, fkInfoUser,
+                    DescripWorkAnsTextBox.Texts, ApplAnsWorkDTP.Value);
+                bool checkInsert = dataBaseWork.WithoutOutputQuery(sqlQueryFive);
+                if (checkInsert)
+                {
+                    MessageBox.Show("Ответ на обращение создан!",
+                        "Информация", MessageBoxButtons.OK,
+                        MessageBoxIcon.Information);
+                    Close();
+                    Form userForm = Application.OpenForms["UserApplicationInfoForWorkerForm"];
+                    userForm?.Close();
+                }
             }
         }
         #endregion

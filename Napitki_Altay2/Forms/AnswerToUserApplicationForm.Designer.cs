@@ -39,7 +39,7 @@
             this.ChooseStatusApplPictureBox = new System.Windows.Forms.PictureBox();
             this.TypeApplWorkMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.завершеноToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.отклоненоToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ожиданиеToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.HelpLabel = new System.Windows.Forms.Label();
             this.HelpThanksButton = new Napitki_Altay2.Design.CustomButton();
             this.HelpDiscussionButton = new Napitki_Altay2.Design.CustomButton();
@@ -138,24 +138,24 @@
             this.TypeApplWorkMenuStrip.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
             this.TypeApplWorkMenuStrip.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.TypeApplWorkMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.завершеноToolStripMenuItem,
-            this.отклоненоToolStripMenuItem});
+            this.ожиданиеToolStripMenuItem,
+            this.завершеноToolStripMenuItem});
             this.TypeApplWorkMenuStrip.Name = "TypeApplWorkMenuStrip";
-            this.TypeApplWorkMenuStrip.Size = new System.Drawing.Size(158, 52);
+            this.TypeApplWorkMenuStrip.Size = new System.Drawing.Size(281, 80);
             // 
             // завершеноToolStripMenuItem
             // 
             this.завершеноToolStripMenuItem.Name = "завершеноToolStripMenuItem";
-            this.завершеноToolStripMenuItem.Size = new System.Drawing.Size(157, 24);
+            this.завершеноToolStripMenuItem.Size = new System.Drawing.Size(280, 24);
             this.завершеноToolStripMenuItem.Text = "Завершено";
             this.завершеноToolStripMenuItem.Click += new System.EventHandler(this.ЗавершеноToolStripMenuItem_Click);
             // 
-            // отклоненоToolStripMenuItem
+            // ожиданиеToolStripMenuItem
             // 
-            this.отклоненоToolStripMenuItem.Name = "отклоненоToolStripMenuItem";
-            this.отклоненоToolStripMenuItem.Size = new System.Drawing.Size(157, 24);
-            this.отклоненоToolStripMenuItem.Text = "Отклонено";
-            this.отклоненоToolStripMenuItem.Click += new System.EventHandler(this.ОтклоненоToolStripMenuItem_Click);
+            this.ожиданиеToolStripMenuItem.Name = "ожиданиеToolStripMenuItem";
+            this.ожиданиеToolStripMenuItem.Size = new System.Drawing.Size(280, 24);
+            this.ожиданиеToolStripMenuItem.Text = "Ожидание доп. информации";
+            this.ожиданиеToolStripMenuItem.Click += new System.EventHandler(this.ОжиданиеToolStripMenuItem_Click);
             // 
             // HelpLabel
             // 
@@ -308,6 +308,7 @@
             this.DocumentWorkAnsTextBox.Name = "DocumentWorkAnsTextBox";
             this.DocumentWorkAnsTextBox.Padding = new System.Windows.Forms.Padding(7);
             this.DocumentWorkAnsTextBox.PasswordChar = false;
+            this.DocumentWorkAnsTextBox.ScrollBars = System.Windows.Forms.ScrollBars.None;
             this.DocumentWorkAnsTextBox.Size = new System.Drawing.Size(383, 35);
             this.DocumentWorkAnsTextBox.TabIndex = 47;
             this.DocumentWorkAnsTextBox.Texts = "";
@@ -348,6 +349,7 @@
             this.DescripWorkAnsTextBox.Name = "DescripWorkAnsTextBox";
             this.DescripWorkAnsTextBox.Padding = new System.Windows.Forms.Padding(7);
             this.DescripWorkAnsTextBox.PasswordChar = false;
+            this.DescripWorkAnsTextBox.ScrollBars = System.Windows.Forms.ScrollBars.None;
             this.DescripWorkAnsTextBox.Size = new System.Drawing.Size(839, 254);
             this.DescripWorkAnsTextBox.TabIndex = 40;
             this.DescripWorkAnsTextBox.Texts = "";
@@ -368,6 +370,7 @@
             this.StatusApplicationTextBox.Name = "StatusApplicationTextBox";
             this.StatusApplicationTextBox.Padding = new System.Windows.Forms.Padding(7);
             this.StatusApplicationTextBox.PasswordChar = false;
+            this.StatusApplicationTextBox.ScrollBars = System.Windows.Forms.ScrollBars.None;
             this.StatusApplicationTextBox.Size = new System.Drawing.Size(383, 35);
             this.StatusApplicationTextBox.TabIndex = 38;
             this.StatusApplicationTextBox.Texts = "";
@@ -447,7 +450,7 @@
         private System.Windows.Forms.PictureBox ChooseStatusApplPictureBox;
         private System.Windows.Forms.ContextMenuStrip TypeApplWorkMenuStrip;
         private System.Windows.Forms.ToolStripMenuItem завершеноToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem отклоненоToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem ожиданиеToolStripMenuItem;
         private Design.CustomButton HelpCollaborationButton;
         private Design.CustomButton HelpThanksButton;
         private Design.CustomButton HelpDiscussionButton;

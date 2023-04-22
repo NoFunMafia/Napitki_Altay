@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.Linq;
 using ClosedXML.Report.Utils;
 using ClosedXML.Excel;
+using Microsoft.VisualBasic.ApplicationServices;
 #endregion
 namespace Napitki_Altay2.Forms
 {
@@ -49,14 +50,19 @@ namespace Napitki_Altay2.Forms
         /// <param name="e"></param>
         private void CreateUserFIOButton_Click(object sender, EventArgs e)
         {
+            CreateUserInfoQuery();
+        }
+        #endregion
+        #region [Метод, отправляющий sql-запросы на внесение ФИО в БД]
+        /// <summary>
+        /// Метод, отправляющий sql-запросы на внесение ФИО в БД
+        /// </summary>
+        private void CreateUserInfoQuery()
+        {
             if (string.IsNullOrEmpty(FamWorkCreateTextBox.Texts) ||
-                string.IsNullOrEmpty(NameWorkCreateTextBox.Texts) ||
-                string.IsNullOrEmpty(PatrWorkCreateTextBox.Texts))
-            {
+                string.IsNullOrEmpty(NameWorkCreateTextBox.Texts))
                 MessageBox.Show("Поля данных не заполнены до конца!",
-                    "Ошибка", MessageBoxButtons.OK,
-                    MessageBoxIcon.Error);
-            }
+                    "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             else
             {
                 if (!CheckFIOUserInDB())
@@ -65,10 +71,15 @@ namespace Napitki_Altay2.Forms
                     out bool checkUpdateWorkerFio);
                 if (checkInsertFio && checkUpdateWorkerFio)
                 {
-                    MessageBox.Show("Пользователь успешно добавлен!",
+                    MessageBox.Show("Операция с данными проведена успешно!",
                         "Информация", MessageBoxButtons.OK,
                         MessageBoxIcon.Information);
+                    ((Control)AnswerToApplicationPage).Enabled = true;
+                    InfoAnswerLabel.Visible = false;
                     CreateUserFIOButton.Enabled = false;
+                    FamWorkCreateTextBox.Enabled = false;
+                    NameWorkCreateTextBox.Enabled = false;
+                    PatrWorkCreateTextBox.Enabled = false;
                 }
             }
         }
@@ -92,7 +103,12 @@ namespace Napitki_Altay2.Forms
         /// <param name="e"></param>
         private void GenerateRaportButton_Click(object sender, EventArgs e)
         {
-            GenerateExcelRaport();
+            if (FolderPathBrowserDialog.ShowDialog() == DialogResult.OK)
+                FilePathTextBox.Texts = FolderPathBrowserDialog.SelectedPath;
+            if(FilePathTextBox.Texts != string.Empty)
+            {
+                GenerateExcelRaport();
+            }
         }
         #endregion
         #region [Событие закрытия формы]
@@ -134,7 +150,7 @@ namespace Napitki_Altay2.Forms
             {
                 foreach (string[] item in strings)
                 {
-                    if (item.Contains(""))
+                    if (item.GetValue(1).ToString() == string.Empty)
                     {
                         FamWorkCreateTextBox.Texts = "";
                         NameWorkCreateTextBox.Texts = "";
@@ -146,8 +162,15 @@ namespace Napitki_Altay2.Forms
                     {
                         FamWorkCreateTextBox.Texts = item.GetValue(1).ToString();
                         NameWorkCreateTextBox.Texts = item.GetValue(2).ToString();
-                        PatrWorkCreateTextBox.Texts = item.GetValue(3).ToString();
+                        if (item.GetValue(3) == null || item.GetValue(3).ToString() == string.Empty)
+                            PatrWorkCreateTextBox.Texts = "";
+                        else
+                            PatrWorkCreateTextBox.Texts = item.GetValue(3).ToString();
                         CreateUserFIOButton.Enabled = false;
+                        FamWorkCreateTextBox.Enabled = false;
+                        NameWorkCreateTextBox.Enabled = false;
+                        PatrWorkCreateTextBox.Enabled = false;
+                        InfoAnswerLabel.Visible = false;
                         ((Control)AnswerToApplicationPage).Enabled = true;
                     }
                 }
@@ -245,17 +268,17 @@ namespace Napitki_Altay2.Forms
         {
             DataGridViewAnswer.DataSource = dataTable;
             DataGridViewAnswer.Columns[0].HeaderText = "Номер обращения";
-            DataGridViewAnswer.Columns[0].Width = 60;
-            DataGridViewAnswer.Columns[1].HeaderText = "Компания заявителя";
-            DataGridViewAnswer.Columns[1].Width = 140;
-            DataGridViewAnswer.Columns[2].HeaderText = "Фамилия заявителя";
-            DataGridViewAnswer.Columns[2].Width = 120;
-            DataGridViewAnswer.Columns[3].HeaderText = "Имя заявителя";
-            DataGridViewAnswer.Columns[3].Width = 130;
-            DataGridViewAnswer.Columns[4].HeaderText = "Отчество заявителя";
-            DataGridViewAnswer.Columns[4].Width = 130;
-            DataGridViewAnswer.Columns[5].HeaderText = "Статус заявки";
-            DataGridViewAnswer.Columns[5].Width = 116;
+            DataGridViewAnswer.Columns[0].Width = 80;
+            DataGridViewAnswer.Columns[1].HeaderText = "Компания";
+            DataGridViewAnswer.Columns[1].Width = 100;
+            DataGridViewAnswer.Columns[2].HeaderText = "Фамилия";
+            DataGridViewAnswer.Columns[2].Width = 100;
+            DataGridViewAnswer.Columns[3].HeaderText = "Имя";
+            DataGridViewAnswer.Columns[3].Width = 100;
+            DataGridViewAnswer.Columns[4].HeaderText = "Отчество";
+            DataGridViewAnswer.Columns[4].Width = 100;
+            DataGridViewAnswer.Columns[5].HeaderText = "Статус обращения";
+            DataGridViewAnswer.Columns[5].Width = 218;
         }
         #endregion
         #region [Метод, настраивающий вывод информации в CompleteApplicationDGW]
@@ -267,20 +290,23 @@ namespace Napitki_Altay2.Forms
         {
             CompleteApplicationDGW.DataSource = dataTable;
             CompleteApplicationDGW.Columns[0].HeaderText = 
-                "Номер обращения пользователя";
-            CompleteApplicationDGW.Columns[0].Width = 100;
+                "Номер обращения";
+            CompleteApplicationDGW.Columns[0].Width = 80;
             CompleteApplicationDGW.Columns[1].HeaderText = 
-                "Фамилия сотрудника";
-            CompleteApplicationDGW.Columns[1].Width = 150;
+                "Фамилия";
+            CompleteApplicationDGW.Columns[1].Width = 100;
             CompleteApplicationDGW.Columns[2].HeaderText = 
-                "Имя сотрудника";
-            CompleteApplicationDGW.Columns[2].Width = 150;
+                "Имя";
+            CompleteApplicationDGW.Columns[2].Width = 100;
             CompleteApplicationDGW.Columns[3].HeaderText = 
-                "Отчество сотрудника";
-            CompleteApplicationDGW.Columns[3].Width = 150;
+                "Отчество";
+            CompleteApplicationDGW.Columns[3].Width = 100;
             CompleteApplicationDGW.Columns[4].HeaderText = 
                 "Время ответа сотрудника";
-            CompleteApplicationDGW.Columns[4].Width = 148;
+            CompleteApplicationDGW.Columns[4].Width = 130;
+            CompleteApplicationDGW.Columns[5].HeaderText =
+                "Статус обращения";
+            CompleteApplicationDGW.Columns[5].Width = 188;
         }
         #endregion
         #region [Метод, обновляющий данные в DataGridViewAnswer]
@@ -300,7 +326,7 @@ namespace Napitki_Altay2.Forms
                 if (DataGridViewAnswer.RowCount != 0)
                 {
                     SelectedRowID = DataGridViewAnswer.CurrentRow.Cells[0].Value.ToString();
-                    if (DataGridViewAnswer.CurrentRow.Cells[5].Value.ToString() == "На рассмотрении")
+                    if (DataGridViewAnswer.CurrentRow.Cells[5].Value.ToString() == "Новое обращение")
                     {
                         string sqlQuerySix = sqlQueries.sqlComCheckStatusId;
                         string statusName = dataBaseWork.GetString(sqlQuerySix);
@@ -463,18 +489,6 @@ namespace Napitki_Altay2.Forms
             private void UpdateDataDGWAnswer_Click(object sender, EventArgs e)
         {
             LoadDataInCompleteApplicationDGW();
-        }
-        #endregion
-        #region [Метод выбора пути для сохранения отчёта]
-        /// <summary>
-        /// Метод выбора пути для сохранения отчёта
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void FilePathChooseButton_Click(object sender, EventArgs e)
-        {
-            if (FolderPathBrowserDialog.ShowDialog() == DialogResult.OK)
-                FilePathTextBox.Texts = FolderPathBrowserDialog.SelectedPath;
         }
         #endregion
         #region [Метод, показывающий/скрывающий видимость пароля]

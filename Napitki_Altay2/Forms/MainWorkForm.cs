@@ -220,12 +220,9 @@ namespace Napitki_Altay2.Forms
         private void CreateUserInfoQuery()
         {
             if (string.IsNullOrEmpty(FamCreateTextBox.Texts) ||
-                string.IsNullOrEmpty(NameCreateTextBox.Texts) ||
-                string.IsNullOrEmpty(PatrCreateTextBox.Texts))
+                string.IsNullOrEmpty(NameCreateTextBox.Texts))
                 MessageBox.Show("Поля данных не заполнены до конца!",
-                    "Ошибка",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Error);
+                    "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             else
             {
                 if (CheckFIOUserInDB())
@@ -248,6 +245,9 @@ namespace Napitki_Altay2.Forms
                     CreateUserFIOButton.Enabled = false;
                     ((Control)ApplicationPage).Enabled = true;
                     InfoApplicationLabel.Visible = false;
+                    FamCreateTextBox.Enabled = false;
+                    NameCreateTextBox.Enabled = false;
+                    PatrCreateTextBox.Enabled = false;
                 }
                 dataBaseWork.WithoutOutputQuery(sqlQuerySecond);
             }
@@ -259,18 +259,31 @@ namespace Napitki_Altay2.Forms
         /// </summary>
         private void DeleteApplicationQuery()
         {
-            DialogResult result = MessageBox.Show
-                ("Вы действительно хотите удалить обращение?",
-                "Внимание", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-            if (result == DialogResult.Yes)
+            try
             {
-                DeletedRow = DataGridViewApplication.CurrentRow.Cells[0].Value.ToString();
-                string sqlQuery = sqlQueries.SqlComDelete(DeletedRow);
-                bool checkDelete = dataBaseWork.WithoutOutputQuery(sqlQuery);
-                if (checkDelete != true)
-                    MessageBox.Show("Завершенные обращения удалять нельзя!",
-                        "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                LoadDataGridView();
+                if (DataGridViewApplication.RowCount != 0)
+                {
+                    DialogResult result = MessageBox.Show
+                        ("Вы действительно хотите удалить обращение?",
+                        "Внимание", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                    if (result == DialogResult.Yes)
+                    {
+                        DeletedRow = DataGridViewApplication.CurrentRow.Cells[0].Value.ToString();
+                        string sqlQuery = sqlQueries.SqlComDelete(DeletedRow);
+                        bool checkDelete = dataBaseWork.WithoutOutputQuery(sqlQuery);
+                        if (checkDelete != true)
+                            MessageBox.Show("Завершенные обращения удалять нельзя!",
+                                "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        LoadDataGridView();
+                    }
+                }
+                else
+                    throw new Exception();
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Невозможно удалить не выделенное обращение!", "Ошибка",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
         #endregion
@@ -374,15 +387,15 @@ namespace Napitki_Altay2.Forms
             DataGridViewApplication.DataSource = dataTable;
             DataGridViewApplication.Columns[0].HeaderText = "Номер обращения";
             DataGridViewApplication.Columns[0].Width = 60;
-            DataGridViewApplication.Columns[1].HeaderText = "Компания заявителя";
+            DataGridViewApplication.Columns[1].HeaderText = "Компания";
             DataGridViewApplication.Columns[1].Width = 140;
-            DataGridViewApplication.Columns[2].HeaderText = "Фамилия заявителя";
+            DataGridViewApplication.Columns[2].HeaderText = "Фамилия";
             DataGridViewApplication.Columns[2].Width = 120;
-            DataGridViewApplication.Columns[3].HeaderText = "Имя заявителя";
+            DataGridViewApplication.Columns[3].HeaderText = "Имя";
             DataGridViewApplication.Columns[3].Width = 130;
-            DataGridViewApplication.Columns[4].HeaderText = "Отчество заявителя";
+            DataGridViewApplication.Columns[4].HeaderText = "Отчество";
             DataGridViewApplication.Columns[4].Width = 130;
-            DataGridViewApplication.Columns[5].HeaderText = "Статус заявки";
+            DataGridViewApplication.Columns[5].HeaderText = "Статус обращения";
             DataGridViewApplication.Columns[5].Width = 116;
         }
         #endregion
@@ -399,7 +412,7 @@ namespace Napitki_Altay2.Forms
             {
                 foreach (string[] item in strings)
                 {
-                    if(item.Contains(""))
+                    if (item.GetValue(1).ToString() == string.Empty)
                     {
                         FamCreateTextBox.Texts = "";
                         NameCreateTextBox.Texts = "";
@@ -411,8 +424,15 @@ namespace Napitki_Altay2.Forms
                     {
                         FamCreateTextBox.Texts = item.GetValue(1).ToString();
                         NameCreateTextBox.Texts = item.GetValue(2).ToString();
-                        PatrCreateTextBox.Texts = item.GetValue(3).ToString();
+                        // Проверка значения отчества
+                        if (item.GetValue(3) == null || item.GetValue(3).ToString() == string.Empty)
+                            PatrCreateTextBox.Texts = "";
+                        else
+                            PatrCreateTextBox.Texts = item.GetValue(3).ToString();
                         CreateUserFIOButton.Enabled = false;
+                        FamCreateTextBox.Enabled = false;
+                        NameCreateTextBox.Enabled = false;
+                        PatrCreateTextBox.Enabled = false;
                         ((Control)ApplicationPage).Enabled = true;
                     }
                 }

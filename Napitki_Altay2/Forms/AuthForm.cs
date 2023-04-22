@@ -128,9 +128,7 @@ namespace Napitki_Altay2
                 }
                 else
                     MessageBox.Show("Введен неправильный логин/пароль!",
-                        "Ошибка",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Error);
+                        "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
         #endregion

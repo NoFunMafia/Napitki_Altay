@@ -48,7 +48,11 @@ namespace Napitki_Altay2.Forms
                 Close();
             }
             else
+            {
                 RightCode = false;
+                MessageBox.Show("Введен неправильный код подтверждения!", "Ошибка", 
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
         #endregion
     }

@@ -249,6 +249,7 @@
             this.DocumentTextBox.Name = "DocumentTextBox";
             this.DocumentTextBox.Padding = new System.Windows.Forms.Padding(7);
             this.DocumentTextBox.PasswordChar = false;
+            this.DocumentTextBox.ScrollBars = System.Windows.Forms.ScrollBars.None;
             this.DocumentTextBox.Size = new System.Drawing.Size(383, 35);
             this.DocumentTextBox.TabIndex = 17;
             this.DocumentTextBox.Texts = "";
@@ -298,6 +299,7 @@
             // 
             // DescripTextBox
             // 
+            this.DescripTextBox.AutoScrollMinSize = new System.Drawing.Size(0, 2);
             this.DescripTextBox.BackColor = System.Drawing.Color.White;
             this.DescripTextBox.BorderColor = System.Drawing.Color.RoyalBlue;
             this.DescripTextBox.BorderFocusColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
@@ -310,6 +312,7 @@
             this.DescripTextBox.Name = "DescripTextBox";
             this.DescripTextBox.Padding = new System.Windows.Forms.Padding(7);
             this.DescripTextBox.PasswordChar = false;
+            this.DescripTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.DescripTextBox.Size = new System.Drawing.Size(839, 254);
             this.DescripTextBox.TabIndex = 8;
             this.DescripTextBox.Texts = "";
@@ -330,6 +333,7 @@
             this.TypeApplTextBox.Name = "TypeApplTextBox";
             this.TypeApplTextBox.Padding = new System.Windows.Forms.Padding(7);
             this.TypeApplTextBox.PasswordChar = false;
+            this.TypeApplTextBox.ScrollBars = System.Windows.Forms.ScrollBars.None;
             this.TypeApplTextBox.Size = new System.Drawing.Size(383, 35);
             this.TypeApplTextBox.TabIndex = 7;
             this.TypeApplTextBox.Texts = "";
@@ -349,6 +353,7 @@
             this.CompanyTextBox.Name = "CompanyTextBox";
             this.CompanyTextBox.Padding = new System.Windows.Forms.Padding(7);
             this.CompanyTextBox.PasswordChar = false;
+            this.CompanyTextBox.ScrollBars = System.Windows.Forms.ScrollBars.None;
             this.CompanyTextBox.Size = new System.Drawing.Size(383, 35);
             this.CompanyTextBox.TabIndex = 6;
             this.CompanyTextBox.Texts = "";

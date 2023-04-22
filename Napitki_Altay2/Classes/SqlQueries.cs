@@ -404,8 +404,8 @@ namespace Napitki_Altay2.Classes
         public string SqlComCheckWorkerFio(string name, string fam, string otch)
         {
             string sqlCom = "select * from Info_About_User where " +
-                $"User_Surname = {fam} and User_Name = {name} " +
-                $"and User_Patronymic = {otch}";
+                $"User_Surname = '{fam}' and User_Name = '{name}' " +
+                $"and User_Patronymic = '{otch}'";
             return sqlCom;
         }
         public string SqlComInsertWorkerFio(string name, string fam, string otch)
@@ -427,9 +427,13 @@ namespace Napitki_Altay2.Classes
         public string SqlComOutputAnswers(string name, string fam, string otch)
         {
             string sqlCom = "select FK_ID_Application, User_Surname, " +
-                "User_Name, User_Patronymic, Date_Of_Answer from " +
+                "User_Name, User_Patronymic, Date_Of_Answer, Status_Name from " +
                 "Ready_Application join Info_About_User on Ready_Application.FK_Info_User " +
-                $"= Info_About_User.ID_Info_User where User_Surname = '{fam}' " +
+                $"= Info_About_User.ID_Info_User join Application_To_Company on " +
+                $"Ready_Application.FK_ID_Application = Application_To_Company.ID_Application " +
+                $"join Status_Application " +
+                $"on Application_To_Company.FK_Status_Application = " +
+                $"Status_Application.ID_Status where User_Surname = '{fam}' " +
                 $"and User_Name = '{name}' and User_Patronymic = '{otch}'";
             return sqlCom;
         } 
@@ -442,10 +446,10 @@ namespace Napitki_Altay2.Classes
             "Application_Document_From_User on " +
             "Application_To_Company.FK_Application_Document_From_User = " +
             "Application_Document_From_User.ID_Document_From_User " +
-            "where Status_Application.Status_Name = 'В обработке' or " +
-            "Status_Application.Status_Name = 'На рассмотрении'";
+            "where Status_Application.Status_Name = 'Новое обращение' or " +
+            "Status_Application.Status_Name = 'В процессе рассмотрения'";
         public string sqlComCheckStatusId = "select ID_Status from Status_Application " +
-            "where Status_Name = 'В обработке'";
+            "where Status_Name = 'В процессе рассмотрения'";
         public string SqlComUpdateStatusApplication(string idStatus, string idRow)
         {
             string sqlCom = "update Application_To_Company set " +

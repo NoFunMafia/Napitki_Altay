@@ -24,6 +24,7 @@ namespace Napitki_Altay2.Forms
         string checkType;
         string documentName;
         string documentExtansion;
+        string documentPath;
         #endregion
         public CreateApplicationForm()
         {
@@ -83,7 +84,7 @@ namespace Napitki_Altay2.Forms
                 }
                 else
                 {
-                    using (Stream stream = File.OpenRead(filePath))
+                    using (Stream stream = File.OpenRead(documentPath))
                     {
                         GetDocumentInfo(filePath, stream, out byte[] buffer,
                             out string extension, out string name);
@@ -96,49 +97,6 @@ namespace Napitki_Altay2.Forms
                     CreateApplicationWithDocument();
                     SendAnEmail();
                 }
-            }
-        }
-        #endregion
-        #region [Метод, получающий значение email пользователя]
-        private string GetEmailUser(string idUser)
-        {
-            string sqlQueryEmail = "select Email from Authentication_ " +
-                "join Info_About_User on Authentication_.FK_Info_User = " +
-                $"Info_About_User.ID_Info_User where FK_Info_User = '{idUser}'";
-            string emailAdress = dataBaseWork.GetString(sqlQueryEmail);
-            return emailAdress;
-        }
-        #endregion
-        #region [Метод, отправляющий email уведомление о добавлении обращения]
-        private void SendAnEmail()
-        {
-            MimeMessage mimeMessage = new MimeMessage();
-            mimeMessage.From.Add(new MailboxAddress("Волчихинский Пивоваренный Завод",
-                "napitki-altay@mail.ru"));
-            mimeMessage.To.Add(MailboxAddress.Parse(GetEmailUser(fkInfoUser)));
-            mimeMessage.Subject = $"Заявление успешно создано!";
-            mimeMessage.Body = new TextPart("html")
-            {
-                Text = $"<h1>Спасибо за создание обращения в приложении Напитки Алтая!</h1>" +
-                "<p>Оно было успешно отправлено на предприятие. Мы приложим все усилия для его скорейшей обработки и ответа на ваш запрос.</p>" +
-                "<p>С уважением,<br>Команда «Волчихинского пивоваренного завода»</p>"
-            };
-            SmtpClient smtpClient = new SmtpClient();
-            try
-            {
-                smtpClient.Connect("smtp.mail.ru", 465, true);
-                smtpClient.Authenticate("napitki-altay@mail.ru", "5TGsxjXKrXYpVxeajrgY");
-                smtpClient.Send(mimeMessage);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Ошибка",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            finally
-            {
-                smtpClient.Disconnect(true);
-                smtpClient.Dispose();
             }
         }
         #endregion
@@ -221,10 +179,14 @@ namespace Napitki_Altay2.Forms
         {
             OpenFileDialog openFileDialog = new OpenFileDialog
             {
-                Filter = "Documents|*.docx;*.pdf;*.doc;*.xlsx"
+                Filter = "Документы|*.docx;*.doc;*.xlsx;*.xls;*.pdf"
             };
-            openFileDialog.ShowDialog();
-            DocumentTextBox.Texts = openFileDialog.FileName;
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                string fileName = Path.GetFileName(openFileDialog.FileName);
+                DocumentTextBox.Texts = fileName;
+                documentPath = openFileDialog.FileName;
+            }
         }
         #endregion
         #region [Событие нажатия на кнопку DeleteDocumentButton]
@@ -244,6 +206,49 @@ namespace Napitki_Altay2.Forms
         {
             MainWorkForm mainWorkForm = new MainWorkForm();
             mainWorkForm.Show();
+        }
+        #endregion
+        #region [Метод, получающий значение email пользователя]
+        private string GetEmailUser(string idUser)
+        {
+            string sqlQueryEmail = "select Email from Authentication_ " +
+                "join Info_About_User on Authentication_.FK_Info_User = " +
+                $"Info_About_User.ID_Info_User where FK_Info_User = '{idUser}'";
+            string emailAdress = dataBaseWork.GetString(sqlQueryEmail);
+            return emailAdress;
+        }
+        #endregion
+        #region [Метод, отправляющий email уведомление о добавлении обращения]
+        private void SendAnEmail()
+        {
+            MimeMessage mimeMessage = new MimeMessage();
+            mimeMessage.From.Add(new MailboxAddress("Волчихинский Пивоваренный Завод",
+                "napitki-altay@mail.ru"));
+            mimeMessage.To.Add(MailboxAddress.Parse(GetEmailUser(fkInfoUser)));
+            mimeMessage.Subject = $"Заявление успешно создано!";
+            mimeMessage.Body = new TextPart("html")
+            {
+                Text = $"<h1>Спасибо за создание обращения в приложении «Автоматизация документооборота»!</h1>" +
+                "<p>Мы приложим максимум усилий для его быстрой обработки и подготовки ответа на ваш вопрос.</p>" +
+                "<p>С уважением,<br>Команда ЗАО «Волчихинский пивоваренный завод»</p>"
+            };
+            SmtpClient smtpClient = new SmtpClient();
+            try
+            {
+                smtpClient.Connect("smtp.mail.ru", 465, true);
+                smtpClient.Authenticate("napitki-altay@mail.ru", "5TGsxjXKrXYpVxeajrgY");
+                smtpClient.Send(mimeMessage);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Ошибка",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                smtpClient.Disconnect(true);
+                smtpClient.Dispose();
+            }
         }
         #endregion
         #region [Метод, отправляющий sql-запрос на создание обращения с документом]
@@ -391,7 +396,7 @@ namespace Napitki_Altay2.Forms
         public Boolean CheckNameOfUserFile(string name)
         {
             string filepath = DocumentTextBox.Texts;
-            using (Stream stream = File.OpenRead(filepath))
+            using (Stream stream = File.OpenRead(documentPath))
             {
                 string sqlQuery = sqlQueries.SqlComCheckDocumentName(name);
                 List<string[]> listSearch = dataBaseWork.GetMultiList(sqlQuery, 4);
