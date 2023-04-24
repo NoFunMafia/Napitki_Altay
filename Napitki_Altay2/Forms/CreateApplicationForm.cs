@@ -9,6 +9,7 @@ using Napitki_Altay2.Classes;
 using System.Collections.Generic;
 using MimeKit;
 using MailKit.Net.Smtp;
+using System.Linq;
 #endregion
 namespace Napitki_Altay2.Forms
 {
@@ -39,8 +40,10 @@ namespace Napitki_Altay2.Forms
         /// <param name="e"></param>
         private void CancelApplButton_Click(object sender, EventArgs e)
         {
-            MainWorkForm mainWorkForm = new MainWorkForm();
-            mainWorkForm.Show();
+            // Найдите открытую форму MainWorkFormWorker
+            MainWorkForm mainWorkForm = Application.OpenForms.OfType<MainWorkForm>().FirstOrDefault();
+            // Если форма найдена, вызовите методы обновления
+            mainWorkForm?.Show();
             Close();
         }
         #endregion
@@ -61,9 +64,7 @@ namespace Napitki_Altay2.Forms
                     || string.IsNullOrEmpty(DescripTextBox.Texts))
                 {
                     MessageBox.Show("Не все поля заполнены!",
-                        "Ошибка",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Error);
+                        "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 else
                 {
@@ -78,9 +79,7 @@ namespace Napitki_Altay2.Forms
                     || string.IsNullOrEmpty(DescripTextBox.Texts))
                 {
                     MessageBox.Show("Не все поля заполнены!",
-                        "Ошибка",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Error);
+                        "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 else
                 {
@@ -204,8 +203,10 @@ namespace Napitki_Altay2.Forms
         private void CreateApplicationForm_FormClosed
             (object sender, FormClosedEventArgs e)
         {
-            MainWorkForm mainWorkForm = new MainWorkForm();
-            mainWorkForm.Show();
+            // Найдите открытую форму MainWorkFormWorker
+            MainWorkForm mainWorkForm = Application.OpenForms.OfType<MainWorkForm>().FirstOrDefault();
+            // Если форма найдена, вызовите методы обновления
+            mainWorkForm?.Show();
         }
         #endregion
         #region [Метод, получающий значение email пользователя]
@@ -268,8 +269,10 @@ namespace Napitki_Altay2.Forms
                 MessageBox.Show("Обращение создано!", "Информация",
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
                 Hide();
-                MainWorkForm mainWorkForm = new MainWorkForm();
-                mainWorkForm.Show();
+                // Найдите открытую форму MainWorkFormWorker
+                MainWorkForm mainWorkForm = Application.OpenForms.OfType<MainWorkForm>().FirstOrDefault();
+                // Если форма найдена, вызовите методы обновления
+                mainWorkForm?.Show();
             }
         }
         #endregion
@@ -350,9 +353,7 @@ namespace Napitki_Altay2.Forms
                 || string.IsNullOrEmpty(DescripTextBox.Texts))
             {
                 MessageBox.Show("Не все поля заполнены!",
-                    "Ошибка",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Error);
+                    "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             else
             {
@@ -367,8 +368,10 @@ namespace Napitki_Altay2.Forms
                     MessageBox.Show("Обращение создано!", "Информация",
                         MessageBoxButtons.OK, MessageBoxIcon.Information);
                     Hide();
-                    MainWorkForm mainWorkForm = new MainWorkForm();
-                    mainWorkForm.Show();
+                    // Найдите открытую форму MainWorkFormWorker
+                    MainWorkForm mainWorkForm = Application.OpenForms.OfType<MainWorkForm>().FirstOrDefault();
+                    // Если форма найдена, вызовите методы обновления
+                    mainWorkForm?.Show();
                 }
             }
         }

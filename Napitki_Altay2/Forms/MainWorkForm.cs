@@ -4,7 +4,7 @@ using System.Data;
 using System.Windows.Forms;
 using Napitki_Altay2.Classes;
 using System.Collections.Generic;
-using System.Linq;
+using System.Drawing;
 #endregion
 namespace Napitki_Altay2.Forms
 {
@@ -15,11 +15,11 @@ namespace Napitki_Altay2.Forms
         readonly SqlQueries sqlQueries = new SqlQueries();
         // Использование класса работы с БД
         readonly DataBaseWork dataBaseWork = new DataBaseWork();
-        public static string SurnameUserString;
-        public static string NameUserString;
-        public static string PatronymicUserString;
-        public static string SelectedRowIDInDGW;
-        public static string DeletedRow;
+        public static string surnameUserString;
+        public static string nameUserString;
+        public static string patronymicUserString;
+        public static string selectedRowIDInDGWC;
+        public static string deletedRow;
         #endregion
         public MainWorkForm()
         {
@@ -156,17 +156,6 @@ namespace Napitki_Altay2.Forms
             Application.Exit();
         }
         #endregion
-        #region [Событие нажатия на кнопку OpenWorkerMessage]
-        /// <summary>
-        /// Событие нажатия на кнопку OpenWorkerMessage
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void OpenWorkerMessage_Click(object sender, EventArgs e)
-        {
-            OpenMessageFromWorker();
-        }
-        #endregion
         #region [Метод, осуществляющий открытие ответа от сотрудника]
         /// <summary>
         /// Метод, осуществляющий открытие ответа от сотрудника
@@ -178,9 +167,10 @@ namespace Napitki_Altay2.Forms
             {
                 if (CompleteApplicationDGWUser.RowCount != 0)
                 {
-                    SelectedRowIDInDGW = CompleteApplicationDGWUser.CurrentRow.Cells[0].Value.ToString();
+                    selectedRowIDInDGWC = CompleteApplicationDGWUser.CurrentRow.Cells[0].Value.ToString();
                     ReadyApplicationInfoForUserForm readyForm = new ReadyApplicationInfoForUserForm();
                     readyForm.Show();
+                    readyForm.Location = new Point(740, 90);
                     Hide();
                 }
                 else
@@ -189,9 +179,7 @@ namespace Napitki_Altay2.Forms
             catch (Exception)
             {
                 MessageBox.Show("Невозможно открыть не выделенное обращение!",
-                    "Ошибка",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Error);
+                    "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
         #endregion
@@ -206,9 +194,7 @@ namespace Napitki_Altay2.Forms
             if (checkSql != false)
             {
                 MessageBox.Show("Операция с данными проведена успешно!",
-                    "Информация",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Information);
+                    "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 UpdLogPassButton.Enabled = false;
             }
         }
@@ -268,8 +254,8 @@ namespace Napitki_Altay2.Forms
                         "Внимание", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                     if (result == DialogResult.Yes)
                     {
-                        DeletedRow = DataGridViewApplication.CurrentRow.Cells[0].Value.ToString();
-                        string sqlQuery = sqlQueries.SqlComDelete(DeletedRow);
+                        deletedRow = DataGridViewApplication.CurrentRow.Cells[0].Value.ToString();
+                        string sqlQuery = sqlQueries.SqlComDelete(deletedRow);
                         bool checkDelete = dataBaseWork.WithoutOutputQuery(sqlQuery);
                         if (checkDelete != true)
                             MessageBox.Show("Завершенные обращения удалять нельзя!",
@@ -320,7 +306,7 @@ namespace Napitki_Altay2.Forms
         {
             FillStrings();
             string sqlQuery = sqlQueries.SqlOutputMWF
-                (NameUserString, SurnameUserString, PatronymicUserString);
+                (nameUserString, surnameUserString, patronymicUserString);
             DataTable dataTable = dataBaseWork.OutputQuery(sqlQuery);
             OutputInTableSetting(dataTable);
         }
@@ -331,9 +317,9 @@ namespace Napitki_Altay2.Forms
         /// </summary>
         private void FillStrings()
         {
-            SurnameUserString = FamCreateTextBox.Texts;
-            NameUserString = NameCreateTextBox.Texts;
-            PatronymicUserString = PatrCreateTextBox.Texts;
+            surnameUserString = FamCreateTextBox.Texts;
+            nameUserString = NameCreateTextBox.Texts;
+            patronymicUserString = PatrCreateTextBox.Texts;
         }
         #endregion
         #region [Метод, выводящий данные в таблицу CompleteApplicationDGWUser]
@@ -343,7 +329,7 @@ namespace Napitki_Altay2.Forms
         public void LoadDataGridViewComplete()
         {
             string sqlQuery = sqlQueries.SqlComIDUser
-                (SurnameUserString, NameUserString, PatronymicUserString);
+                (surnameUserString, nameUserString, patronymicUserString);
             string stringFromQuery = dataBaseWork.GetString(sqlQuery);
             string stringResultFK = sqlQueries.SqlComFKInfo(stringFromQuery);
             DataTable dataTable = dataBaseWork.OutputQuery(stringResultFK);
@@ -383,17 +369,17 @@ namespace Napitki_Altay2.Forms
         {
             DataGridViewApplication.DataSource = dataTable;
             DataGridViewApplication.Columns[0].HeaderText = "Номер обращения";
-            DataGridViewApplication.Columns[0].Width = 60;
+            DataGridViewApplication.Columns[0].Width = 80;
             DataGridViewApplication.Columns[1].HeaderText = "Компания";
-            DataGridViewApplication.Columns[1].Width = 140;
+            DataGridViewApplication.Columns[1].Width = 130;
             DataGridViewApplication.Columns[2].HeaderText = "Фамилия";
-            DataGridViewApplication.Columns[2].Width = 120;
+            DataGridViewApplication.Columns[2].Width = 90;
             DataGridViewApplication.Columns[3].HeaderText = "Имя";
-            DataGridViewApplication.Columns[3].Width = 130;
+            DataGridViewApplication.Columns[3].Width = 90;
             DataGridViewApplication.Columns[4].HeaderText = "Отчество";
-            DataGridViewApplication.Columns[4].Width = 130;
+            DataGridViewApplication.Columns[4].Width = 110;
             DataGridViewApplication.Columns[5].HeaderText = "Статус обращения";
-            DataGridViewApplication.Columns[5].Width = 116;
+            DataGridViewApplication.Columns[5].Width = 197;
         }
         #endregion
         #region [Метод, проверяющий наличие у пользователя заполненного ФИО в БД]
@@ -469,10 +455,39 @@ namespace Napitki_Altay2.Forms
                 return false;
         }
         #endregion
-
+        #region [Метод, показывающий и скрывающий пароль]
+        /// <summary>
+        /// Метод, показывающий и скрывающий пароль
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void VisiblePassCheckMain_CheckedChanged(object sender, EventArgs e)
         {
             PassCreaUpdaTextBox.PasswordChar = !VisiblePassCheckMain.Checked;
         }
+        #endregion
+        #region [Событие нажатия на кнопку MoreInformationButton]
+        /// <summary>
+        /// Событие нажатия на кнопку MoreInformationButton
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void MoreInformationButton_Click(object sender, EventArgs e)
+        {
+            if (CompleteApplicationDGWUser.CurrentRow.Cells[5].Value.ToString() == "Завершено")
+            {
+                OpenMessageFromWorker();
+            }
+            else
+            {
+                CreateApplicationForm createForm = new CreateApplicationForm();
+                createForm.Show();
+                createForm.Location = new Point(40, 90);
+                createForm.Text = "Добавление доп. информации к обращению";
+                Hide();
+                OpenMessageFromWorker();
+            }
+        }
+        #endregion
     }
 }

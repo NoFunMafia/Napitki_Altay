@@ -6,6 +6,7 @@ using System.IO;
 using Napitki_Altay2.Classes;
 using System.Diagnostics;
 using System.Collections.Generic;
+using System.Linq;
 #endregion
 namespace Napitki_Altay2.Forms
 {   
@@ -28,8 +29,10 @@ namespace Napitki_Altay2.Forms
         private void ReadyApplicationInfoForUserForm_FormClosed
             (object sender, FormClosedEventArgs e)
         {
-            MainWorkForm mainWorkForm = new MainWorkForm();
-            mainWorkForm.Show();
+            // Найдите открытую форму MainWorkFormWorker
+            MainWorkForm mainWorkForm = Application.OpenForms.OfType<MainWorkForm>().FirstOrDefault();
+            // Если форма найдена, вызовите методы обновления
+            mainWorkForm?.Show();
         }
         #endregion
         #region [Событие загрузки формы]
@@ -75,7 +78,7 @@ namespace Napitki_Altay2.Forms
             try
             {
                 string sqlQueryFirst = sqlQueries.SqlComOpenWorkerDocument
-                    (MainWorkForm.SelectedRowIDInDGW);
+                    (MainWorkForm.selectedRowIDInDGWC);
                 SqlCommand sqlCommand = new SqlCommand(sqlQueryFirst, dataBaseWork.GetConnection());
                 dataBaseWork.OpenConnection();
                 var dataReader = sqlCommand.ExecuteReader();
@@ -137,7 +140,7 @@ namespace Napitki_Altay2.Forms
         private List<string[]> GetApplicationInfoQuery()
         {
             string sqlQuerySecond = sqlQueries.SqlComOpenWorkerAnswer
-                (MainWorkForm.SelectedRowIDInDGW);
+                (MainWorkForm.selectedRowIDInDGWC);
             List<string[]> listSearch = dataBaseWork.GetMultiList(sqlQuerySecond, 6);
             return listSearch;
         }

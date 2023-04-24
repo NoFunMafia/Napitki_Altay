@@ -35,7 +35,7 @@ namespace Napitki_Altay2.Classes
                     $"'{fam}' and " +
                     $"Info_About_User.User_Patronymic = " +
                     $"'{otch}' and ID_Status = '1' " +
-                    $"and ID_Status = '2'";
+                    $"or ID_Status = '2'";
             return sqlCom;
         }
 
@@ -133,7 +133,7 @@ namespace Napitki_Altay2.Classes
                 $"Info_About_User.User_Surname = " +
                 $"'{fam}' and " +
                 $"Info_About_User.User_Patronymic = " +
-                $"'{otch}' and ID_Status = '1' and ID_Status = '2'";
+                $"'{otch}' and ID_Status = '1' or ID_Status = '2'";
             return sqlCom;
         }
 
@@ -276,9 +276,9 @@ namespace Napitki_Altay2.Classes
         #endregion
         #region [CreateApplicationForm]
         public string sqlComFkInfoUser = "select * from Info_About_User where " +
-            $"User_Surname = '{MainWorkForm.SurnameUserString}' and " +
-            $"User_Name = '{MainWorkForm.NameUserString}' and " +
-            $"User_Patronymic = '{MainWorkForm.PatronymicUserString}'";
+            $"User_Surname = '{MainWorkForm.surnameUserString}' and " +
+            $"User_Name = '{MainWorkForm.nameUserString}' and " +
+            $"User_Patronymic = '{MainWorkForm.patronymicUserString}'";
         public string SqlComCheckTypeID(string typeName)
         {
             string sqlCom = "select Id_Type_Of_Appeal " +

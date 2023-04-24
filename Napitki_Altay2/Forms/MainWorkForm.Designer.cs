@@ -33,12 +33,8 @@
             this.MainWorkTabControl = new System.Windows.Forms.TabControl();
             this.ApplicationPage = new System.Windows.Forms.TabPage();
             this.InfoApplicationLabel = new System.Windows.Forms.Label();
-            this.UpdateDataInDGW = new Napitki_Altay2.Design.CustomButton();
-            this.DeleteApplicationButton = new Napitki_Altay2.Design.CustomButton();
-            this.CreateApplicationButton = new Napitki_Altay2.Design.CustomButton();
             this.DataGridViewApplication = new System.Windows.Forms.DataGridView();
             this.AnswerForUserApplicPage = new System.Windows.Forms.TabPage();
-            this.OpenWorkerMessage = new Napitki_Altay2.Design.CustomButton();
             this.CompleteApplicationDGWUser = new System.Windows.Forms.DataGridView();
             this.DocumentTypeInfoPage = new System.Windows.Forms.TabPage();
             this.Sout2021Panel = new System.Windows.Forms.Panel();
@@ -54,10 +50,6 @@
             this.PriceListInfoLabel = new System.Windows.Forms.Label();
             this.PriceListPictureBox = new System.Windows.Forms.PictureBox();
             this.DocumentInfoLabel = new System.Windows.Forms.Label();
-            this.OpenSout2021Button = new Napitki_Altay2.Design.CustomButton();
-            this.OpenSout2018Button = new Napitki_Altay2.Design.CustomButton();
-            this.OpenSout2016Button = new Napitki_Altay2.Design.CustomButton();
-            this.OpenPriceListButton = new Napitki_Altay2.Design.CustomButton();
             this.UserDataPage = new System.Windows.Forms.TabPage();
             this.VisiblePassCheckMain = new System.Windows.Forms.CheckBox();
             this.MainWorkFormPictureBox = new System.Windows.Forms.PictureBox();
@@ -66,19 +58,26 @@
             this.NameWorkInfoLabel = new System.Windows.Forms.Label();
             this.FamWorkInfoLabel = new System.Windows.Forms.Label();
             this.InfoUserLabel = new System.Windows.Forms.Label();
+            this.AboutOurCompanyPage = new System.Windows.Forms.TabPage();
+            this.MainWorkFormPictureBox3 = new System.Windows.Forms.PictureBox();
+            this.ContactInfoLabel = new System.Windows.Forms.Label();
+            this.AboutOurCompanyLabel = new System.Windows.Forms.Label();
+            this.MainWorkFormPictureBox2 = new System.Windows.Forms.PictureBox();
+            this.UpdateDataInDGW = new Napitki_Altay2.Design.CustomButton();
+            this.DeleteApplicationButton = new Napitki_Altay2.Design.CustomButton();
+            this.CreateApplicationButton = new Napitki_Altay2.Design.CustomButton();
+            this.MoreInformationButton = new Napitki_Altay2.Design.CustomButton();
+            this.OpenSout2021Button = new Napitki_Altay2.Design.CustomButton();
+            this.OpenSout2018Button = new Napitki_Altay2.Design.CustomButton();
+            this.OpenSout2016Button = new Napitki_Altay2.Design.CustomButton();
+            this.OpenPriceListButton = new Napitki_Altay2.Design.CustomButton();
             this.UpdLogPassButton = new Napitki_Altay2.Design.CustomButton();
             this.CreateUserFIOButton = new Napitki_Altay2.Design.CustomButton();
             this.PassCreaUpdaTextBox = new Napitki_Altay2.Design.CustomTextBox();
             this.PatrCreateTextBox = new Napitki_Altay2.Design.CustomTextBox();
             this.NameCreateTextBox = new Napitki_Altay2.Design.CustomTextBox();
             this.FamCreateTextBox = new Napitki_Altay2.Design.CustomTextBox();
-            this.AboutOurCompanyPage = new System.Windows.Forms.TabPage();
-            this.MainWorkFormPictureBox3 = new System.Windows.Forms.PictureBox();
-            this.ContactInfoLabel = new System.Windows.Forms.Label();
-            this.AboutOurCompanyLabel = new System.Windows.Forms.Label();
-            this.MainWorkFormPictureBox2 = new System.Windows.Forms.PictureBox();
             this.CustomFormForAllProject = new Napitki_Altay2.Components.FormStyleCustom(this.components);
-            this.customButton1 = new Napitki_Altay2.Design.CustomButton();
             this.MainWorkTabControl.SuspendLayout();
             this.ApplicationPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DataGridViewApplication)).BeginInit();
@@ -144,69 +143,6 @@
             this.InfoApplicationLabel.Text = "Данные о заявителе не заполнены,\r\nфункция создания обращения отключена.\r\n";
             this.InfoApplicationLabel.Visible = false;
             // 
-            // UpdateDataInDGW
-            // 
-            this.UpdateDataInDGW.BackColor = System.Drawing.Color.RoyalBlue;
-            this.UpdateDataInDGW.BackgroundColor = System.Drawing.Color.RoyalBlue;
-            this.UpdateDataInDGW.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
-            this.UpdateDataInDGW.BorderRadius = 0;
-            this.UpdateDataInDGW.BorderSize = 0;
-            this.UpdateDataInDGW.FlatAppearance.BorderSize = 0;
-            this.UpdateDataInDGW.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.UpdateDataInDGW.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
-            this.UpdateDataInDGW.ForeColor = System.Drawing.Color.White;
-            this.UpdateDataInDGW.Location = new System.Drawing.Point(283, 9);
-            this.UpdateDataInDGW.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.UpdateDataInDGW.Name = "UpdateDataInDGW";
-            this.UpdateDataInDGW.Size = new System.Drawing.Size(207, 43);
-            this.UpdateDataInDGW.TabIndex = 13;
-            this.UpdateDataInDGW.Text = "Обновить данные";
-            this.UpdateDataInDGW.TextColor = System.Drawing.Color.White;
-            this.UpdateDataInDGW.UseVisualStyleBackColor = false;
-            this.UpdateDataInDGW.Click += new System.EventHandler(this.UpdateDataInDGW_Click);
-            // 
-            // DeleteApplicationButton
-            // 
-            this.DeleteApplicationButton.BackColor = System.Drawing.Color.RoyalBlue;
-            this.DeleteApplicationButton.BackgroundColor = System.Drawing.Color.RoyalBlue;
-            this.DeleteApplicationButton.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
-            this.DeleteApplicationButton.BorderRadius = 0;
-            this.DeleteApplicationButton.BorderSize = 0;
-            this.DeleteApplicationButton.FlatAppearance.BorderSize = 0;
-            this.DeleteApplicationButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.DeleteApplicationButton.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
-            this.DeleteApplicationButton.ForeColor = System.Drawing.Color.White;
-            this.DeleteApplicationButton.Location = new System.Drawing.Point(144, 9);
-            this.DeleteApplicationButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.DeleteApplicationButton.Name = "DeleteApplicationButton";
-            this.DeleteApplicationButton.Size = new System.Drawing.Size(133, 43);
-            this.DeleteApplicationButton.TabIndex = 12;
-            this.DeleteApplicationButton.Text = "Удалить";
-            this.DeleteApplicationButton.TextColor = System.Drawing.Color.White;
-            this.DeleteApplicationButton.UseVisualStyleBackColor = false;
-            this.DeleteApplicationButton.Click += new System.EventHandler(this.DeleteApplicationButton_Click);
-            // 
-            // CreateApplicationButton
-            // 
-            this.CreateApplicationButton.BackColor = System.Drawing.Color.RoyalBlue;
-            this.CreateApplicationButton.BackgroundColor = System.Drawing.Color.RoyalBlue;
-            this.CreateApplicationButton.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
-            this.CreateApplicationButton.BorderRadius = 0;
-            this.CreateApplicationButton.BorderSize = 0;
-            this.CreateApplicationButton.FlatAppearance.BorderSize = 0;
-            this.CreateApplicationButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.CreateApplicationButton.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.CreateApplicationButton.ForeColor = System.Drawing.Color.White;
-            this.CreateApplicationButton.Location = new System.Drawing.Point(5, 9);
-            this.CreateApplicationButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.CreateApplicationButton.Name = "CreateApplicationButton";
-            this.CreateApplicationButton.Size = new System.Drawing.Size(133, 43);
-            this.CreateApplicationButton.TabIndex = 10;
-            this.CreateApplicationButton.Text = "Создать";
-            this.CreateApplicationButton.TextColor = System.Drawing.Color.White;
-            this.CreateApplicationButton.UseVisualStyleBackColor = false;
-            this.CreateApplicationButton.Click += new System.EventHandler(this.CreateApplicationButton_Click);
-            // 
             // DataGridViewApplication
             // 
             this.DataGridViewApplication.AllowUserToAddRows = false;
@@ -226,8 +162,7 @@
             // AnswerForUserApplicPage
             // 
             this.AnswerForUserApplicPage.BackColor = System.Drawing.Color.White;
-            this.AnswerForUserApplicPage.Controls.Add(this.customButton1);
-            this.AnswerForUserApplicPage.Controls.Add(this.OpenWorkerMessage);
+            this.AnswerForUserApplicPage.Controls.Add(this.MoreInformationButton);
             this.AnswerForUserApplicPage.Controls.Add(this.CompleteApplicationDGWUser);
             this.AnswerForUserApplicPage.Location = new System.Drawing.Point(4, 27);
             this.AnswerForUserApplicPage.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
@@ -237,27 +172,6 @@
             this.AnswerForUserApplicPage.TabIndex = 1;
             this.AnswerForUserApplicPage.Text = "Обращения в работе";
             // 
-            // OpenWorkerMessage
-            // 
-            this.OpenWorkerMessage.BackColor = System.Drawing.Color.RoyalBlue;
-            this.OpenWorkerMessage.BackgroundColor = System.Drawing.Color.RoyalBlue;
-            this.OpenWorkerMessage.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
-            this.OpenWorkerMessage.BorderRadius = 0;
-            this.OpenWorkerMessage.BorderSize = 0;
-            this.OpenWorkerMessage.FlatAppearance.BorderSize = 0;
-            this.OpenWorkerMessage.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.OpenWorkerMessage.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.OpenWorkerMessage.ForeColor = System.Drawing.Color.White;
-            this.OpenWorkerMessage.Location = new System.Drawing.Point(303, 9);
-            this.OpenWorkerMessage.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.OpenWorkerMessage.Name = "OpenWorkerMessage";
-            this.OpenWorkerMessage.Size = new System.Drawing.Size(335, 43);
-            this.OpenWorkerMessage.TabIndex = 11;
-            this.OpenWorkerMessage.Text = "Открыть ответное сообщение";
-            this.OpenWorkerMessage.TextColor = System.Drawing.Color.White;
-            this.OpenWorkerMessage.UseVisualStyleBackColor = false;
-            this.OpenWorkerMessage.Click += new System.EventHandler(this.OpenWorkerMessage_Click);
-            // 
             // CompleteApplicationDGWUser
             // 
             this.CompleteApplicationDGWUser.AllowUserToAddRows = false;
@@ -265,13 +179,13 @@
             this.CompleteApplicationDGWUser.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.CompleteApplicationDGWUser.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.CompleteApplicationDGWUser.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.CompleteApplicationDGWUser.Location = new System.Drawing.Point(3, 60);
+            this.CompleteApplicationDGWUser.Location = new System.Drawing.Point(3, 95);
             this.CompleteApplicationDGWUser.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.CompleteApplicationDGWUser.Name = "CompleteApplicationDGWUser";
             this.CompleteApplicationDGWUser.ReadOnly = true;
             this.CompleteApplicationDGWUser.RowHeadersWidth = 51;
             this.CompleteApplicationDGWUser.RowTemplate.Height = 24;
-            this.CompleteApplicationDGWUser.Size = new System.Drawing.Size(1005, 458);
+            this.CompleteApplicationDGWUser.Size = new System.Drawing.Size(1005, 423);
             this.CompleteApplicationDGWUser.TabIndex = 1;
             // 
             // DocumentTypeInfoPage
@@ -427,90 +341,6 @@
             this.DocumentInfoLabel.TabIndex = 12;
             this.DocumentInfoLabel.Text = "ДОКУМЕНТЫ";
             // 
-            // OpenSout2021Button
-            // 
-            this.OpenSout2021Button.BackColor = System.Drawing.Color.RoyalBlue;
-            this.OpenSout2021Button.BackgroundColor = System.Drawing.Color.RoyalBlue;
-            this.OpenSout2021Button.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
-            this.OpenSout2021Button.BorderRadius = 0;
-            this.OpenSout2021Button.BorderSize = 0;
-            this.OpenSout2021Button.FlatAppearance.BorderSize = 0;
-            this.OpenSout2021Button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.OpenSout2021Button.Font = new System.Drawing.Font("Segoe UI Semibold", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.OpenSout2021Button.ForeColor = System.Drawing.Color.White;
-            this.OpenSout2021Button.Location = new System.Drawing.Point(819, 414);
-            this.OpenSout2021Button.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.OpenSout2021Button.Name = "OpenSout2021Button";
-            this.OpenSout2021Button.Size = new System.Drawing.Size(138, 57);
-            this.OpenSout2021Button.TabIndex = 23;
-            this.OpenSout2021Button.Text = "Открыть";
-            this.OpenSout2021Button.TextColor = System.Drawing.Color.White;
-            this.OpenSout2021Button.UseVisualStyleBackColor = false;
-            this.OpenSout2021Button.Click += new System.EventHandler(this.OpenSout2021Button_Click);
-            // 
-            // OpenSout2018Button
-            // 
-            this.OpenSout2018Button.BackColor = System.Drawing.Color.RoyalBlue;
-            this.OpenSout2018Button.BackgroundColor = System.Drawing.Color.RoyalBlue;
-            this.OpenSout2018Button.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
-            this.OpenSout2018Button.BorderRadius = 0;
-            this.OpenSout2018Button.BorderSize = 0;
-            this.OpenSout2018Button.FlatAppearance.BorderSize = 0;
-            this.OpenSout2018Button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.OpenSout2018Button.Font = new System.Drawing.Font("Segoe UI Semibold", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.OpenSout2018Button.ForeColor = System.Drawing.Color.White;
-            this.OpenSout2018Button.Location = new System.Drawing.Point(563, 414);
-            this.OpenSout2018Button.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.OpenSout2018Button.Name = "OpenSout2018Button";
-            this.OpenSout2018Button.Size = new System.Drawing.Size(138, 57);
-            this.OpenSout2018Button.TabIndex = 22;
-            this.OpenSout2018Button.Text = "Открыть";
-            this.OpenSout2018Button.TextColor = System.Drawing.Color.White;
-            this.OpenSout2018Button.UseVisualStyleBackColor = false;
-            this.OpenSout2018Button.Click += new System.EventHandler(this.OpenSout2018Button_Click);
-            // 
-            // OpenSout2016Button
-            // 
-            this.OpenSout2016Button.BackColor = System.Drawing.Color.RoyalBlue;
-            this.OpenSout2016Button.BackgroundColor = System.Drawing.Color.RoyalBlue;
-            this.OpenSout2016Button.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
-            this.OpenSout2016Button.BorderRadius = 0;
-            this.OpenSout2016Button.BorderSize = 0;
-            this.OpenSout2016Button.FlatAppearance.BorderSize = 0;
-            this.OpenSout2016Button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.OpenSout2016Button.Font = new System.Drawing.Font("Segoe UI Semibold", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.OpenSout2016Button.ForeColor = System.Drawing.Color.White;
-            this.OpenSout2016Button.Location = new System.Drawing.Point(305, 414);
-            this.OpenSout2016Button.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.OpenSout2016Button.Name = "OpenSout2016Button";
-            this.OpenSout2016Button.Size = new System.Drawing.Size(138, 57);
-            this.OpenSout2016Button.TabIndex = 21;
-            this.OpenSout2016Button.Text = "Открыть";
-            this.OpenSout2016Button.TextColor = System.Drawing.Color.White;
-            this.OpenSout2016Button.UseVisualStyleBackColor = false;
-            this.OpenSout2016Button.Click += new System.EventHandler(this.OpenSout2016Button_Click);
-            // 
-            // OpenPriceListButton
-            // 
-            this.OpenPriceListButton.BackColor = System.Drawing.Color.RoyalBlue;
-            this.OpenPriceListButton.BackgroundColor = System.Drawing.Color.RoyalBlue;
-            this.OpenPriceListButton.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
-            this.OpenPriceListButton.BorderRadius = 0;
-            this.OpenPriceListButton.BorderSize = 0;
-            this.OpenPriceListButton.FlatAppearance.BorderSize = 0;
-            this.OpenPriceListButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.OpenPriceListButton.Font = new System.Drawing.Font("Segoe UI Semibold", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.OpenPriceListButton.ForeColor = System.Drawing.Color.White;
-            this.OpenPriceListButton.Location = new System.Drawing.Point(59, 414);
-            this.OpenPriceListButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.OpenPriceListButton.Name = "OpenPriceListButton";
-            this.OpenPriceListButton.Size = new System.Drawing.Size(138, 57);
-            this.OpenPriceListButton.TabIndex = 20;
-            this.OpenPriceListButton.Text = "Открыть";
-            this.OpenPriceListButton.TextColor = System.Drawing.Color.White;
-            this.OpenPriceListButton.UseVisualStyleBackColor = false;
-            this.OpenPriceListButton.Click += new System.EventHandler(this.OpenPriceListButton_Click);
-            // 
             // UserDataPage
             // 
             this.UserDataPage.BackColor = System.Drawing.Color.White;
@@ -611,6 +441,228 @@
             this.InfoUserLabel.Size = new System.Drawing.Size(645, 50);
             this.InfoUserLabel.TabIndex = 11;
             this.InfoUserLabel.Text = "ИНФОРМАЦИЯ О ПОЛЬЗОВАТЕЛЕ";
+            // 
+            // AboutOurCompanyPage
+            // 
+            this.AboutOurCompanyPage.BackColor = System.Drawing.Color.White;
+            this.AboutOurCompanyPage.Controls.Add(this.MainWorkFormPictureBox3);
+            this.AboutOurCompanyPage.Controls.Add(this.ContactInfoLabel);
+            this.AboutOurCompanyPage.Controls.Add(this.AboutOurCompanyLabel);
+            this.AboutOurCompanyPage.Controls.Add(this.MainWorkFormPictureBox2);
+            this.AboutOurCompanyPage.Location = new System.Drawing.Point(4, 27);
+            this.AboutOurCompanyPage.Name = "AboutOurCompanyPage";
+            this.AboutOurCompanyPage.Padding = new System.Windows.Forms.Padding(3);
+            this.AboutOurCompanyPage.Size = new System.Drawing.Size(1011, 520);
+            this.AboutOurCompanyPage.TabIndex = 3;
+            this.AboutOurCompanyPage.Text = "О нашей компании";
+            // 
+            // MainWorkFormPictureBox3
+            // 
+            this.MainWorkFormPictureBox3.Image = ((System.Drawing.Image)(resources.GetObject("MainWorkFormPictureBox3.Image")));
+            this.MainWorkFormPictureBox3.Location = new System.Drawing.Point(495, 19);
+            this.MainWorkFormPictureBox3.Name = "MainWorkFormPictureBox3";
+            this.MainWorkFormPictureBox3.Size = new System.Drawing.Size(510, 405);
+            this.MainWorkFormPictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.MainWorkFormPictureBox3.TabIndex = 2;
+            this.MainWorkFormPictureBox3.TabStop = false;
+            // 
+            // ContactInfoLabel
+            // 
+            this.ContactInfoLabel.AutoSize = true;
+            this.ContactInfoLabel.Font = new System.Drawing.Font("Segoe UI", 22.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.ContactInfoLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(9)))), ((int)(((byte)(64)))), ((int)(((byte)(127)))));
+            this.ContactInfoLabel.Location = new System.Drawing.Point(17, 16);
+            this.ContactInfoLabel.Name = "ContactInfoLabel";
+            this.ContactInfoLabel.Size = new System.Drawing.Size(436, 50);
+            this.ContactInfoLabel.TabIndex = 1;
+            this.ContactInfoLabel.Text = "О НАШЕЙ КОМПАНИИ";
+            // 
+            // AboutOurCompanyLabel
+            // 
+            this.AboutOurCompanyLabel.AutoSize = true;
+            this.AboutOurCompanyLabel.Font = new System.Drawing.Font("Segoe UI", 12.1F);
+            this.AboutOurCompanyLabel.Location = new System.Drawing.Point(18, 80);
+            this.AboutOurCompanyLabel.Name = "AboutOurCompanyLabel";
+            this.AboutOurCompanyLabel.Size = new System.Drawing.Size(462, 330);
+            this.AboutOurCompanyLabel.TabIndex = 3;
+            this.AboutOurCompanyLabel.Text = resources.GetString("AboutOurCompanyLabel.Text");
+            // 
+            // MainWorkFormPictureBox2
+            // 
+            this.MainWorkFormPictureBox2.Image = global::Napitki_Altay2.Properties.Resources.Picture2MainWorkForm;
+            this.MainWorkFormPictureBox2.Location = new System.Drawing.Point(157, 281);
+            this.MainWorkFormPictureBox2.Name = "MainWorkFormPictureBox2";
+            this.MainWorkFormPictureBox2.Size = new System.Drawing.Size(851, 236);
+            this.MainWorkFormPictureBox2.TabIndex = 0;
+            this.MainWorkFormPictureBox2.TabStop = false;
+            // 
+            // UpdateDataInDGW
+            // 
+            this.UpdateDataInDGW.BackColor = System.Drawing.Color.RoyalBlue;
+            this.UpdateDataInDGW.BackgroundColor = System.Drawing.Color.RoyalBlue;
+            this.UpdateDataInDGW.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
+            this.UpdateDataInDGW.BorderRadius = 0;
+            this.UpdateDataInDGW.BorderSize = 0;
+            this.UpdateDataInDGW.FlatAppearance.BorderSize = 0;
+            this.UpdateDataInDGW.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.UpdateDataInDGW.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
+            this.UpdateDataInDGW.ForeColor = System.Drawing.Color.White;
+            this.UpdateDataInDGW.Location = new System.Drawing.Point(283, 9);
+            this.UpdateDataInDGW.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.UpdateDataInDGW.Name = "UpdateDataInDGW";
+            this.UpdateDataInDGW.Size = new System.Drawing.Size(207, 43);
+            this.UpdateDataInDGW.TabIndex = 13;
+            this.UpdateDataInDGW.Text = "Обновить данные";
+            this.UpdateDataInDGW.TextColor = System.Drawing.Color.White;
+            this.UpdateDataInDGW.UseVisualStyleBackColor = false;
+            this.UpdateDataInDGW.Click += new System.EventHandler(this.UpdateDataInDGW_Click);
+            // 
+            // DeleteApplicationButton
+            // 
+            this.DeleteApplicationButton.BackColor = System.Drawing.Color.RoyalBlue;
+            this.DeleteApplicationButton.BackgroundColor = System.Drawing.Color.RoyalBlue;
+            this.DeleteApplicationButton.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
+            this.DeleteApplicationButton.BorderRadius = 0;
+            this.DeleteApplicationButton.BorderSize = 0;
+            this.DeleteApplicationButton.FlatAppearance.BorderSize = 0;
+            this.DeleteApplicationButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.DeleteApplicationButton.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
+            this.DeleteApplicationButton.ForeColor = System.Drawing.Color.White;
+            this.DeleteApplicationButton.Location = new System.Drawing.Point(144, 9);
+            this.DeleteApplicationButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.DeleteApplicationButton.Name = "DeleteApplicationButton";
+            this.DeleteApplicationButton.Size = new System.Drawing.Size(133, 43);
+            this.DeleteApplicationButton.TabIndex = 12;
+            this.DeleteApplicationButton.Text = "Удалить";
+            this.DeleteApplicationButton.TextColor = System.Drawing.Color.White;
+            this.DeleteApplicationButton.UseVisualStyleBackColor = false;
+            this.DeleteApplicationButton.Click += new System.EventHandler(this.DeleteApplicationButton_Click);
+            // 
+            // CreateApplicationButton
+            // 
+            this.CreateApplicationButton.BackColor = System.Drawing.Color.RoyalBlue;
+            this.CreateApplicationButton.BackgroundColor = System.Drawing.Color.RoyalBlue;
+            this.CreateApplicationButton.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
+            this.CreateApplicationButton.BorderRadius = 0;
+            this.CreateApplicationButton.BorderSize = 0;
+            this.CreateApplicationButton.FlatAppearance.BorderSize = 0;
+            this.CreateApplicationButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.CreateApplicationButton.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.CreateApplicationButton.ForeColor = System.Drawing.Color.White;
+            this.CreateApplicationButton.Location = new System.Drawing.Point(5, 9);
+            this.CreateApplicationButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.CreateApplicationButton.Name = "CreateApplicationButton";
+            this.CreateApplicationButton.Size = new System.Drawing.Size(133, 43);
+            this.CreateApplicationButton.TabIndex = 10;
+            this.CreateApplicationButton.Text = "Создать";
+            this.CreateApplicationButton.TextColor = System.Drawing.Color.White;
+            this.CreateApplicationButton.UseVisualStyleBackColor = false;
+            this.CreateApplicationButton.Click += new System.EventHandler(this.CreateApplicationButton_Click);
+            // 
+            // MoreInformationButton
+            // 
+            this.MoreInformationButton.BackColor = System.Drawing.Color.RoyalBlue;
+            this.MoreInformationButton.BackgroundColor = System.Drawing.Color.RoyalBlue;
+            this.MoreInformationButton.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
+            this.MoreInformationButton.BorderRadius = 0;
+            this.MoreInformationButton.BorderSize = 0;
+            this.MoreInformationButton.FlatAppearance.BorderSize = 0;
+            this.MoreInformationButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.MoreInformationButton.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.MoreInformationButton.ForeColor = System.Drawing.Color.White;
+            this.MoreInformationButton.Location = new System.Drawing.Point(6, 9);
+            this.MoreInformationButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.MoreInformationButton.Name = "MoreInformationButton";
+            this.MoreInformationButton.Size = new System.Drawing.Size(353, 73);
+            this.MoreInformationButton.TabIndex = 12;
+            this.MoreInformationButton.Text = "Дополнить информацию или\r\nпросмотреть ответ сотрудника\r\n";
+            this.MoreInformationButton.TextColor = System.Drawing.Color.White;
+            this.MoreInformationButton.UseVisualStyleBackColor = false;
+            this.MoreInformationButton.Click += new System.EventHandler(this.MoreInformationButton_Click);
+            // 
+            // OpenSout2021Button
+            // 
+            this.OpenSout2021Button.BackColor = System.Drawing.Color.RoyalBlue;
+            this.OpenSout2021Button.BackgroundColor = System.Drawing.Color.RoyalBlue;
+            this.OpenSout2021Button.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
+            this.OpenSout2021Button.BorderRadius = 0;
+            this.OpenSout2021Button.BorderSize = 0;
+            this.OpenSout2021Button.FlatAppearance.BorderSize = 0;
+            this.OpenSout2021Button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.OpenSout2021Button.Font = new System.Drawing.Font("Segoe UI Semibold", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.OpenSout2021Button.ForeColor = System.Drawing.Color.White;
+            this.OpenSout2021Button.Location = new System.Drawing.Point(819, 414);
+            this.OpenSout2021Button.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.OpenSout2021Button.Name = "OpenSout2021Button";
+            this.OpenSout2021Button.Size = new System.Drawing.Size(138, 57);
+            this.OpenSout2021Button.TabIndex = 23;
+            this.OpenSout2021Button.Text = "Открыть";
+            this.OpenSout2021Button.TextColor = System.Drawing.Color.White;
+            this.OpenSout2021Button.UseVisualStyleBackColor = false;
+            this.OpenSout2021Button.Click += new System.EventHandler(this.OpenSout2021Button_Click);
+            // 
+            // OpenSout2018Button
+            // 
+            this.OpenSout2018Button.BackColor = System.Drawing.Color.RoyalBlue;
+            this.OpenSout2018Button.BackgroundColor = System.Drawing.Color.RoyalBlue;
+            this.OpenSout2018Button.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
+            this.OpenSout2018Button.BorderRadius = 0;
+            this.OpenSout2018Button.BorderSize = 0;
+            this.OpenSout2018Button.FlatAppearance.BorderSize = 0;
+            this.OpenSout2018Button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.OpenSout2018Button.Font = new System.Drawing.Font("Segoe UI Semibold", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.OpenSout2018Button.ForeColor = System.Drawing.Color.White;
+            this.OpenSout2018Button.Location = new System.Drawing.Point(563, 414);
+            this.OpenSout2018Button.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.OpenSout2018Button.Name = "OpenSout2018Button";
+            this.OpenSout2018Button.Size = new System.Drawing.Size(138, 57);
+            this.OpenSout2018Button.TabIndex = 22;
+            this.OpenSout2018Button.Text = "Открыть";
+            this.OpenSout2018Button.TextColor = System.Drawing.Color.White;
+            this.OpenSout2018Button.UseVisualStyleBackColor = false;
+            this.OpenSout2018Button.Click += new System.EventHandler(this.OpenSout2018Button_Click);
+            // 
+            // OpenSout2016Button
+            // 
+            this.OpenSout2016Button.BackColor = System.Drawing.Color.RoyalBlue;
+            this.OpenSout2016Button.BackgroundColor = System.Drawing.Color.RoyalBlue;
+            this.OpenSout2016Button.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
+            this.OpenSout2016Button.BorderRadius = 0;
+            this.OpenSout2016Button.BorderSize = 0;
+            this.OpenSout2016Button.FlatAppearance.BorderSize = 0;
+            this.OpenSout2016Button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.OpenSout2016Button.Font = new System.Drawing.Font("Segoe UI Semibold", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.OpenSout2016Button.ForeColor = System.Drawing.Color.White;
+            this.OpenSout2016Button.Location = new System.Drawing.Point(305, 414);
+            this.OpenSout2016Button.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.OpenSout2016Button.Name = "OpenSout2016Button";
+            this.OpenSout2016Button.Size = new System.Drawing.Size(138, 57);
+            this.OpenSout2016Button.TabIndex = 21;
+            this.OpenSout2016Button.Text = "Открыть";
+            this.OpenSout2016Button.TextColor = System.Drawing.Color.White;
+            this.OpenSout2016Button.UseVisualStyleBackColor = false;
+            this.OpenSout2016Button.Click += new System.EventHandler(this.OpenSout2016Button_Click);
+            // 
+            // OpenPriceListButton
+            // 
+            this.OpenPriceListButton.BackColor = System.Drawing.Color.RoyalBlue;
+            this.OpenPriceListButton.BackgroundColor = System.Drawing.Color.RoyalBlue;
+            this.OpenPriceListButton.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
+            this.OpenPriceListButton.BorderRadius = 0;
+            this.OpenPriceListButton.BorderSize = 0;
+            this.OpenPriceListButton.FlatAppearance.BorderSize = 0;
+            this.OpenPriceListButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.OpenPriceListButton.Font = new System.Drawing.Font("Segoe UI Semibold", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.OpenPriceListButton.ForeColor = System.Drawing.Color.White;
+            this.OpenPriceListButton.Location = new System.Drawing.Point(59, 414);
+            this.OpenPriceListButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.OpenPriceListButton.Name = "OpenPriceListButton";
+            this.OpenPriceListButton.Size = new System.Drawing.Size(138, 57);
+            this.OpenPriceListButton.TabIndex = 20;
+            this.OpenPriceListButton.Text = "Открыть";
+            this.OpenPriceListButton.TextColor = System.Drawing.Color.White;
+            this.OpenPriceListButton.UseVisualStyleBackColor = false;
+            this.OpenPriceListButton.Click += new System.EventHandler(this.OpenPriceListButton_Click);
             // 
             // UpdLogPassButton
             // 
@@ -734,60 +786,6 @@
             this.FamCreateTextBox.Texts = "";
             this.FamCreateTextBox.UnderlinedStyle = false;
             // 
-            // AboutOurCompanyPage
-            // 
-            this.AboutOurCompanyPage.BackColor = System.Drawing.Color.White;
-            this.AboutOurCompanyPage.Controls.Add(this.MainWorkFormPictureBox3);
-            this.AboutOurCompanyPage.Controls.Add(this.ContactInfoLabel);
-            this.AboutOurCompanyPage.Controls.Add(this.AboutOurCompanyLabel);
-            this.AboutOurCompanyPage.Controls.Add(this.MainWorkFormPictureBox2);
-            this.AboutOurCompanyPage.Location = new System.Drawing.Point(4, 27);
-            this.AboutOurCompanyPage.Name = "AboutOurCompanyPage";
-            this.AboutOurCompanyPage.Padding = new System.Windows.Forms.Padding(3);
-            this.AboutOurCompanyPage.Size = new System.Drawing.Size(1011, 520);
-            this.AboutOurCompanyPage.TabIndex = 3;
-            this.AboutOurCompanyPage.Text = "О нашей компании";
-            // 
-            // MainWorkFormPictureBox3
-            // 
-            this.MainWorkFormPictureBox3.Image = ((System.Drawing.Image)(resources.GetObject("MainWorkFormPictureBox3.Image")));
-            this.MainWorkFormPictureBox3.Location = new System.Drawing.Point(495, 19);
-            this.MainWorkFormPictureBox3.Name = "MainWorkFormPictureBox3";
-            this.MainWorkFormPictureBox3.Size = new System.Drawing.Size(510, 405);
-            this.MainWorkFormPictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.MainWorkFormPictureBox3.TabIndex = 2;
-            this.MainWorkFormPictureBox3.TabStop = false;
-            // 
-            // ContactInfoLabel
-            // 
-            this.ContactInfoLabel.AutoSize = true;
-            this.ContactInfoLabel.Font = new System.Drawing.Font("Segoe UI", 22.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.ContactInfoLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(9)))), ((int)(((byte)(64)))), ((int)(((byte)(127)))));
-            this.ContactInfoLabel.Location = new System.Drawing.Point(17, 16);
-            this.ContactInfoLabel.Name = "ContactInfoLabel";
-            this.ContactInfoLabel.Size = new System.Drawing.Size(436, 50);
-            this.ContactInfoLabel.TabIndex = 1;
-            this.ContactInfoLabel.Text = "О НАШЕЙ КОМПАНИИ";
-            // 
-            // AboutOurCompanyLabel
-            // 
-            this.AboutOurCompanyLabel.AutoSize = true;
-            this.AboutOurCompanyLabel.Font = new System.Drawing.Font("Segoe UI", 12.1F);
-            this.AboutOurCompanyLabel.Location = new System.Drawing.Point(18, 80);
-            this.AboutOurCompanyLabel.Name = "AboutOurCompanyLabel";
-            this.AboutOurCompanyLabel.Size = new System.Drawing.Size(462, 330);
-            this.AboutOurCompanyLabel.TabIndex = 3;
-            this.AboutOurCompanyLabel.Text = resources.GetString("AboutOurCompanyLabel.Text");
-            // 
-            // MainWorkFormPictureBox2
-            // 
-            this.MainWorkFormPictureBox2.Image = global::Napitki_Altay2.Properties.Resources.Picture2MainWorkForm;
-            this.MainWorkFormPictureBox2.Location = new System.Drawing.Point(157, 281);
-            this.MainWorkFormPictureBox2.Name = "MainWorkFormPictureBox2";
-            this.MainWorkFormPictureBox2.Size = new System.Drawing.Size(851, 236);
-            this.MainWorkFormPictureBox2.TabIndex = 0;
-            this.MainWorkFormPictureBox2.TabStop = false;
-            // 
             // CustomFormForAllProject
             // 
             this.CustomFormForAllProject.AllowUserResize = false;
@@ -806,26 +804,6 @@
             this.CustomFormForAllProject.HeaderImage = null;
             this.CustomFormForAllProject.HeaderTextColor = System.Drawing.Color.White;
             this.CustomFormForAllProject.HeaderTextFont = new System.Drawing.Font("Segoe UI", 12F);
-            // 
-            // customButton1
-            // 
-            this.customButton1.BackColor = System.Drawing.Color.RoyalBlue;
-            this.customButton1.BackgroundColor = System.Drawing.Color.RoyalBlue;
-            this.customButton1.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
-            this.customButton1.BorderRadius = 0;
-            this.customButton1.BorderSize = 0;
-            this.customButton1.FlatAppearance.BorderSize = 0;
-            this.customButton1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.customButton1.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.customButton1.ForeColor = System.Drawing.Color.White;
-            this.customButton1.Location = new System.Drawing.Point(6, 9);
-            this.customButton1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.customButton1.Name = "customButton1";
-            this.customButton1.Size = new System.Drawing.Size(291, 43);
-            this.customButton1.TabIndex = 12;
-            this.customButton1.Text = "Дополнить информацию";
-            this.customButton1.TextColor = System.Drawing.Color.White;
-            this.customButton1.UseVisualStyleBackColor = false;
             // 
             // MainWorkForm
             // 
@@ -919,9 +897,8 @@
         private System.Windows.Forms.Panel Sout2016Panel;
         private System.Windows.Forms.Panel Sout2018Panel;
         private System.Windows.Forms.Panel Sout2021Panel;
-        private Design.CustomButton OpenWorkerMessage;
         private System.Windows.Forms.DataGridView CompleteApplicationDGWUser;
         private System.Windows.Forms.CheckBox VisiblePassCheckMain;
-        private Design.CustomButton customButton1;
+        private Design.CustomButton MoreInformationButton;
     }
 }
