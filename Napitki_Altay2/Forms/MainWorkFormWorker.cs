@@ -365,7 +365,9 @@ namespace Napitki_Altay2.Forms
         #region [Метод, получающий русское название месяцев для выводного отчёта]
         private string GetRussianMonthName(int month)
         {
-            string[] monthNames = { "Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь" };
+            string[] monthNames = { "Январь", "Февраль", "Март", "Апрель", 
+                "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", 
+                "Ноябрь", "Декабрь" };
             return monthNames[month - 1];
         }
         #endregion
@@ -511,6 +513,17 @@ namespace Napitki_Altay2.Forms
                     "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 UpdLogPassButton.Enabled = false;
             }
+        }
+        #endregion
+        #region [Событие нажатия на кнопку SupplementReplyButton]
+        /// <summary>
+        /// Событие нажатия на кнопку SupplementReplyButton
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void SupplementReplyButton_Click(object sender, EventArgs e)
+        {
+
         }
         #endregion
     }

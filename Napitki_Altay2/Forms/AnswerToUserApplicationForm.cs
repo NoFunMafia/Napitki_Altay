@@ -260,6 +260,14 @@ namespace Napitki_Altay2.Forms
                 MessageBox.Show("Ответ на обращение создан!",
                 "Информация", MessageBoxButtons.OK,
                 MessageBoxIcon.Information);
+                // Найдите открытую форму MainWorkFormWorker
+                MainWorkFormWorker mainWorkFormWork = Application.OpenForms.OfType<MainWorkFormWorker>().FirstOrDefault();
+                // Если форма найдена, вызовите методы обновления
+                if (mainWorkFormWork != null)
+                {
+                    mainWorkFormWork.LoadDataInDataGridViewAnswer();
+                    mainWorkFormWork.LoadDataInCompleteApplicationDGW();
+                }
                 Close();
                 Form userForm = Application.OpenForms["UserApplicationInfoForWorkerForm"];
                 userForm?.Close();
@@ -328,30 +336,29 @@ namespace Napitki_Altay2.Forms
             string sqlQuerySecond = sqlQueries.SqlComCheckStatusID
                 (StatusApplicationTextBox.Texts);
             checkStatus = dataBaseWork.GetString(sqlQuerySecond);
-            if (checkStatus == "3")
-            {
-                string sqlQueryThree = sqlQueries.SqlComUpdateStatus
-                    (checkStatus, MainWorkFormWorker.SelectedRowID);
-                dataBaseWork.WithoutOutputQuery(sqlQueryThree);
-            }
-            else
-            {
-                string sqlQueryFourth = sqlQueries.SqlComUpdateStatus
+            string sqlQueryFourth = sqlQueries.SqlComUpdateStatus
                 (checkStatus, MainWorkFormWorker.SelectedRowID);
-                dataBaseWork.WithoutOutputQuery(sqlQueryFourth);
-                string sqlQueryFive = sqlQueries.SqlComCreateReadyApplicationWithoutDocument
-                    (MainWorkFormWorker.SelectedRowID, fkInfoUser,
-                    DescripWorkAnsTextBox.Texts, ApplAnsWorkDTP.Value);
-                bool checkInsert = dataBaseWork.WithoutOutputQuery(sqlQueryFive);
-                if (checkInsert)
+            dataBaseWork.WithoutOutputQuery(sqlQueryFourth);
+            string sqlQueryFive = sqlQueries.SqlComCreateReadyApplicationWithoutDocument
+                (MainWorkFormWorker.SelectedRowID, fkInfoUser,
+                DescripWorkAnsTextBox.Texts, ApplAnsWorkDTP.Value);
+            bool checkInsert = dataBaseWork.WithoutOutputQuery(sqlQueryFive);
+            if (checkInsert)
+            {
+                MessageBox.Show("Ответ на обращение создан!",
+                    "Информация", MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
+                // Найдите открытую форму MainWorkFormWorker
+                MainWorkFormWorker mainWorkFormWork = Application.OpenForms.OfType<MainWorkFormWorker>().FirstOrDefault();
+                // Если форма найдена, вызовите методы обновления
+                if (mainWorkFormWork != null)
                 {
-                    MessageBox.Show("Ответ на обращение создан!",
-                        "Информация", MessageBoxButtons.OK,
-                        MessageBoxIcon.Information);
-                    Close();
-                    Form userForm = Application.OpenForms["UserApplicationInfoForWorkerForm"];
-                    userForm?.Close();
+                    mainWorkFormWork.LoadDataInDataGridViewAnswer();
+                    mainWorkFormWork.LoadDataInCompleteApplicationDGW();
                 }
+                Close();
+                Form userForm = Application.OpenForms["UserApplicationInfoForWorkerForm"];
+                userForm?.Close();
             }
         }
         #endregion

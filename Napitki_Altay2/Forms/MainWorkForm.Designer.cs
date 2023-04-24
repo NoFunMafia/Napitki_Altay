@@ -78,6 +78,7 @@
             this.AboutOurCompanyLabel = new System.Windows.Forms.Label();
             this.MainWorkFormPictureBox2 = new System.Windows.Forms.PictureBox();
             this.CustomFormForAllProject = new Napitki_Altay2.Components.FormStyleCustom(this.components);
+            this.customButton1 = new Napitki_Altay2.Design.CustomButton();
             this.MainWorkTabControl.SuspendLayout();
             this.ApplicationPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DataGridViewApplication)).BeginInit();
@@ -128,7 +129,7 @@
             this.ApplicationPage.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.ApplicationPage.Size = new System.Drawing.Size(1011, 520);
             this.ApplicationPage.TabIndex = 0;
-            this.ApplicationPage.Text = "Ваши обращения";
+            this.ApplicationPage.Text = "Новые обращения";
             // 
             // InfoApplicationLabel
             // 
@@ -225,6 +226,7 @@
             // AnswerForUserApplicPage
             // 
             this.AnswerForUserApplicPage.BackColor = System.Drawing.Color.White;
+            this.AnswerForUserApplicPage.Controls.Add(this.customButton1);
             this.AnswerForUserApplicPage.Controls.Add(this.OpenWorkerMessage);
             this.AnswerForUserApplicPage.Controls.Add(this.CompleteApplicationDGWUser);
             this.AnswerForUserApplicPage.Location = new System.Drawing.Point(4, 27);
@@ -233,7 +235,7 @@
             this.AnswerForUserApplicPage.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.AnswerForUserApplicPage.Size = new System.Drawing.Size(1011, 520);
             this.AnswerForUserApplicPage.TabIndex = 1;
-            this.AnswerForUserApplicPage.Text = "Ответы на обращения";
+            this.AnswerForUserApplicPage.Text = "Обращения в работе";
             // 
             // OpenWorkerMessage
             // 
@@ -246,10 +248,10 @@
             this.OpenWorkerMessage.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.OpenWorkerMessage.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.OpenWorkerMessage.ForeColor = System.Drawing.Color.White;
-            this.OpenWorkerMessage.Location = new System.Drawing.Point(5, 9);
+            this.OpenWorkerMessage.Location = new System.Drawing.Point(303, 9);
             this.OpenWorkerMessage.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.OpenWorkerMessage.Name = "OpenWorkerMessage";
-            this.OpenWorkerMessage.Size = new System.Drawing.Size(407, 43);
+            this.OpenWorkerMessage.Size = new System.Drawing.Size(335, 43);
             this.OpenWorkerMessage.TabIndex = 11;
             this.OpenWorkerMessage.Text = "Открыть ответное сообщение";
             this.OpenWorkerMessage.TextColor = System.Drawing.Color.White;
@@ -805,6 +807,26 @@
             this.CustomFormForAllProject.HeaderTextColor = System.Drawing.Color.White;
             this.CustomFormForAllProject.HeaderTextFont = new System.Drawing.Font("Segoe UI", 12F);
             // 
+            // customButton1
+            // 
+            this.customButton1.BackColor = System.Drawing.Color.RoyalBlue;
+            this.customButton1.BackgroundColor = System.Drawing.Color.RoyalBlue;
+            this.customButton1.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
+            this.customButton1.BorderRadius = 0;
+            this.customButton1.BorderSize = 0;
+            this.customButton1.FlatAppearance.BorderSize = 0;
+            this.customButton1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.customButton1.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.customButton1.ForeColor = System.Drawing.Color.White;
+            this.customButton1.Location = new System.Drawing.Point(6, 9);
+            this.customButton1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.customButton1.Name = "customButton1";
+            this.customButton1.Size = new System.Drawing.Size(291, 43);
+            this.customButton1.TabIndex = 12;
+            this.customButton1.Text = "Дополнить информацию";
+            this.customButton1.TextColor = System.Drawing.Color.White;
+            this.customButton1.UseVisualStyleBackColor = false;
+            // 
             // MainWorkForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -900,5 +922,6 @@
         private Design.CustomButton OpenWorkerMessage;
         private System.Windows.Forms.DataGridView CompleteApplicationDGWUser;
         private System.Windows.Forms.CheckBox VisiblePassCheckMain;
+        private Design.CustomButton customButton1;
     }
 }

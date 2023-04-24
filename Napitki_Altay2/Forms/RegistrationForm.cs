@@ -239,7 +239,7 @@ namespace Napitki_Altay2
         }
         #endregion
         #region [Метод, отправляющий письмо на Email почту]
-        private void SendAnEmail()
+        private async void SendAnEmail()
         {
             GetUniqueCode();
             MimeMessage mimeMessage = new MimeMessage();
@@ -259,7 +259,7 @@ namespace Napitki_Altay2
             SmtpClient smtpClient = new SmtpClient();
             try
             {
-                smtpClient.Connect("smtp.mail.ru", 465, true);
+                await smtpClient.ConnectAsync("smtp.mail.ru", 465, true);
                 smtpClient.Authenticate("napitki-altay@mail.ru", "5TGsxjXKrXYpVxeajrgY");
                 smtpClient.Send(mimeMessage);
                 AuthEmailForm authEmailForm = new AuthEmailForm();

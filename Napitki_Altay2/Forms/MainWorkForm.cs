@@ -340,7 +340,7 @@ namespace Napitki_Altay2.Forms
         /// <summary>
         /// Вывод данных в таблицу CompleteApplicationDGWUser
         /// </summary>
-        private void LoadDataGridViewComplete()
+        public void LoadDataGridViewComplete()
         {
             string sqlQuery = sqlQueries.SqlComIDUser
                 (SurnameUserString, NameUserString, PatronymicUserString);
@@ -359,21 +359,18 @@ namespace Napitki_Altay2.Forms
         private void OutputInTableSettingTwo(DataTable dataTable)
         {
             CompleteApplicationDGWUser.DataSource = dataTable;
-            CompleteApplicationDGWUser.Columns[0].HeaderText =
-                "Номер вашего обращения";
-            CompleteApplicationDGWUser.Columns[0].Width = 100;
-            CompleteApplicationDGWUser.Columns[1].HeaderText =
-                "Фамилия сотрудника";
-            CompleteApplicationDGWUser.Columns[1].Width = 150;
-            CompleteApplicationDGWUser.Columns[2].HeaderText =
-                "Имя сотрудника";
-            CompleteApplicationDGWUser.Columns[2].Width = 150;
-            CompleteApplicationDGWUser.Columns[3].HeaderText =
-                "Отчество сотрудника";
-            CompleteApplicationDGWUser.Columns[3].Width = 150;
-            CompleteApplicationDGWUser.Columns[4].HeaderText =
-                "Время ответа сотрудника";
-            CompleteApplicationDGWUser.Columns[4].Width = 148;
+            CompleteApplicationDGWUser.Columns[0].HeaderText = "Номер обращения";
+            CompleteApplicationDGWUser.Columns[0].Width = 74;
+            CompleteApplicationDGWUser.Columns[1].HeaderText = "Фамилия";
+            CompleteApplicationDGWUser.Columns[1].Width = 95;
+            CompleteApplicationDGWUser.Columns[2].HeaderText = "Имя";
+            CompleteApplicationDGWUser.Columns[2].Width = 95;
+            CompleteApplicationDGWUser.Columns[3].HeaderText = "Отчество";
+            CompleteApplicationDGWUser.Columns[3].Width = 95;
+            CompleteApplicationDGWUser.Columns[4].HeaderText = "Время ответа сотрудника";
+            CompleteApplicationDGWUser.Columns[4].Width = 118;
+            CompleteApplicationDGWUser.Columns[5].HeaderText = "Статус обращения";
+            CompleteApplicationDGWUser.Columns[5].Width = 220;
         }
         #endregion
         #region [Метод, настроивающий отображение выводимых данных в таблицу DataGridViewApplication]

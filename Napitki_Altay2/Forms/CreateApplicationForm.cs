@@ -219,7 +219,7 @@ namespace Napitki_Altay2.Forms
         }
         #endregion
         #region [Метод, отправляющий email уведомление о добавлении обращения]
-        private void SendAnEmail()
+        private async void SendAnEmail()
         {
             MimeMessage mimeMessage = new MimeMessage();
             mimeMessage.From.Add(new MailboxAddress("Волчихинский Пивоваренный Завод",
@@ -235,7 +235,7 @@ namespace Napitki_Altay2.Forms
             SmtpClient smtpClient = new SmtpClient();
             try
             {
-                smtpClient.Connect("smtp.mail.ru", 465, true);
+                await smtpClient.ConnectAsync("smtp.mail.ru", 465, true);
                 smtpClient.Authenticate("napitki-altay@mail.ru", "5TGsxjXKrXYpVxeajrgY");
                 smtpClient.Send(mimeMessage);
             }

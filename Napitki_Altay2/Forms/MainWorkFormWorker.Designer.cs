@@ -32,15 +32,10 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainWorkFormWorker));
             this.MainWorkWorkerTabControl = new System.Windows.Forms.TabControl();
             this.AnswerToApplicationPage = new System.Windows.Forms.TabPage();
-            this.UpdateAnswerInDGW = new Napitki_Altay2.Design.CustomButton();
-            this.AnswerToApplicationButton = new Napitki_Altay2.Design.CustomButton();
             this.InfoAnswerLabel = new System.Windows.Forms.Label();
             this.DataGridViewAnswer = new System.Windows.Forms.DataGridView();
             this.DoneApplicationPage = new System.Windows.Forms.TabPage();
             this.FolderPathLabel = new System.Windows.Forms.Label();
-            this.FilePathTextBox = new Napitki_Altay2.Design.CustomTextBox();
-            this.UpdateDataDGWAnswer = new Napitki_Altay2.Design.CustomButton();
-            this.GenerateRaportButton = new Napitki_Altay2.Design.CustomButton();
             this.CompleteApplicationDGW = new System.Windows.Forms.DataGridView();
             this.WorkerDataPage = new System.Windows.Forms.TabPage();
             this.VisiblePassCheckMain = new System.Windows.Forms.CheckBox();
@@ -50,6 +45,13 @@
             this.NameWorkInfoLabel = new System.Windows.Forms.Label();
             this.FamWorkInfoLabel = new System.Windows.Forms.Label();
             this.InfoUserLabel = new System.Windows.Forms.Label();
+            this.FolderPathBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
+            this.UpdateAnswerInDGW = new Napitki_Altay2.Design.CustomButton();
+            this.AnswerToApplicationButton = new Napitki_Altay2.Design.CustomButton();
+            this.SupplementReplyButton = new Napitki_Altay2.Design.CustomButton();
+            this.FilePathTextBox = new Napitki_Altay2.Design.CustomTextBox();
+            this.UpdateDataDGWAnswer = new Napitki_Altay2.Design.CustomButton();
+            this.GenerateRaportButton = new Napitki_Altay2.Design.CustomButton();
             this.UpdLogPassButton = new Napitki_Altay2.Design.CustomButton();
             this.CreateUserFIOButton = new Napitki_Altay2.Design.CustomButton();
             this.PassWorkCreaUpdaTextBox = new Napitki_Altay2.Design.CustomTextBox();
@@ -57,7 +59,6 @@
             this.NameWorkCreateTextBox = new Napitki_Altay2.Design.CustomTextBox();
             this.FamWorkCreateTextBox = new Napitki_Altay2.Design.CustomTextBox();
             this.CustomFormForAllProject = new Napitki_Altay2.Components.FormStyleCustom(this.components);
-            this.FolderPathBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
             this.MainWorkWorkerTabControl.SuspendLayout();
             this.AnswerToApplicationPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DataGridViewAnswer)).BeginInit();
@@ -78,7 +79,7 @@
             this.MainWorkWorkerTabControl.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.MainWorkWorkerTabControl.Name = "MainWorkWorkerTabControl";
             this.MainWorkWorkerTabControl.SelectedIndex = 0;
-            this.MainWorkWorkerTabControl.Size = new System.Drawing.Size(1019, 551);
+            this.MainWorkWorkerTabControl.Size = new System.Drawing.Size(1019, 619);
             this.MainWorkWorkerTabControl.TabIndex = 0;
             // 
             // AnswerToApplicationPage
@@ -91,51 +92,9 @@
             this.AnswerToApplicationPage.Location = new System.Drawing.Point(4, 27);
             this.AnswerToApplicationPage.Name = "AnswerToApplicationPage";
             this.AnswerToApplicationPage.Padding = new System.Windows.Forms.Padding(3);
-            this.AnswerToApplicationPage.Size = new System.Drawing.Size(1011, 520);
+            this.AnswerToApplicationPage.Size = new System.Drawing.Size(1011, 588);
             this.AnswerToApplicationPage.TabIndex = 1;
             this.AnswerToApplicationPage.Text = "Создать ответ на обращение";
-            // 
-            // UpdateAnswerInDGW
-            // 
-            this.UpdateAnswerInDGW.BackColor = System.Drawing.Color.RoyalBlue;
-            this.UpdateAnswerInDGW.BackgroundColor = System.Drawing.Color.RoyalBlue;
-            this.UpdateAnswerInDGW.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
-            this.UpdateAnswerInDGW.BorderRadius = 0;
-            this.UpdateAnswerInDGW.BorderSize = 0;
-            this.UpdateAnswerInDGW.FlatAppearance.BorderSize = 0;
-            this.UpdateAnswerInDGW.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.UpdateAnswerInDGW.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
-            this.UpdateAnswerInDGW.ForeColor = System.Drawing.Color.White;
-            this.UpdateAnswerInDGW.Location = new System.Drawing.Point(144, 9);
-            this.UpdateAnswerInDGW.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.UpdateAnswerInDGW.Name = "UpdateAnswerInDGW";
-            this.UpdateAnswerInDGW.Size = new System.Drawing.Size(207, 43);
-            this.UpdateAnswerInDGW.TabIndex = 17;
-            this.UpdateAnswerInDGW.Text = "Обновить данные";
-            this.UpdateAnswerInDGW.TextColor = System.Drawing.Color.White;
-            this.UpdateAnswerInDGW.UseVisualStyleBackColor = false;
-            this.UpdateAnswerInDGW.Click += new System.EventHandler(this.UpdateAnswerInDGW_Click);
-            // 
-            // AnswerToApplicationButton
-            // 
-            this.AnswerToApplicationButton.BackColor = System.Drawing.Color.RoyalBlue;
-            this.AnswerToApplicationButton.BackgroundColor = System.Drawing.Color.RoyalBlue;
-            this.AnswerToApplicationButton.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
-            this.AnswerToApplicationButton.BorderRadius = 0;
-            this.AnswerToApplicationButton.BorderSize = 0;
-            this.AnswerToApplicationButton.FlatAppearance.BorderSize = 0;
-            this.AnswerToApplicationButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.AnswerToApplicationButton.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.AnswerToApplicationButton.ForeColor = System.Drawing.Color.White;
-            this.AnswerToApplicationButton.Location = new System.Drawing.Point(5, 9);
-            this.AnswerToApplicationButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.AnswerToApplicationButton.Name = "AnswerToApplicationButton";
-            this.AnswerToApplicationButton.Size = new System.Drawing.Size(133, 43);
-            this.AnswerToApplicationButton.TabIndex = 16;
-            this.AnswerToApplicationButton.Text = "Ответить";
-            this.AnswerToApplicationButton.TextColor = System.Drawing.Color.White;
-            this.AnswerToApplicationButton.UseVisualStyleBackColor = false;
-            this.AnswerToApplicationButton.Click += new System.EventHandler(this.AnswerToApplicationButton_Click);
             // 
             // InfoAnswerLabel
             // 
@@ -157,27 +116,28 @@
             this.DataGridViewAnswer.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.DataGridViewAnswer.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.DataGridViewAnswer.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.DataGridViewAnswer.Location = new System.Drawing.Point(3, 61);
+            this.DataGridViewAnswer.Location = new System.Drawing.Point(3, 66);
             this.DataGridViewAnswer.Name = "DataGridViewAnswer";
             this.DataGridViewAnswer.ReadOnly = true;
             this.DataGridViewAnswer.RowHeadersWidth = 51;
             this.DataGridViewAnswer.RowTemplate.Height = 24;
-            this.DataGridViewAnswer.Size = new System.Drawing.Size(1005, 456);
+            this.DataGridViewAnswer.Size = new System.Drawing.Size(1005, 519);
             this.DataGridViewAnswer.TabIndex = 0;
             // 
             // DoneApplicationPage
             // 
             this.DoneApplicationPage.BackColor = System.Drawing.Color.White;
+            this.DoneApplicationPage.Controls.Add(this.SupplementReplyButton);
             this.DoneApplicationPage.Controls.Add(this.FolderPathLabel);
+            this.DoneApplicationPage.Controls.Add(this.CompleteApplicationDGW);
             this.DoneApplicationPage.Controls.Add(this.FilePathTextBox);
             this.DoneApplicationPage.Controls.Add(this.UpdateDataDGWAnswer);
             this.DoneApplicationPage.Controls.Add(this.GenerateRaportButton);
-            this.DoneApplicationPage.Controls.Add(this.CompleteApplicationDGW);
             this.DoneApplicationPage.Location = new System.Drawing.Point(4, 27);
             this.DoneApplicationPage.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.DoneApplicationPage.Name = "DoneApplicationPage";
             this.DoneApplicationPage.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.DoneApplicationPage.Size = new System.Drawing.Size(1011, 520);
+            this.DoneApplicationPage.Size = new System.Drawing.Size(1011, 588);
             this.DoneApplicationPage.TabIndex = 0;
             this.DoneApplicationPage.Text = " Обращения в доработке и завершенные";
             // 
@@ -191,69 +151,6 @@
             this.FolderPathLabel.TabIndex = 28;
             this.FolderPathLabel.Text = "Путь сохранения для формирования отчёта:";
             // 
-            // FilePathTextBox
-            // 
-            this.FilePathTextBox.BackColor = System.Drawing.Color.White;
-            this.FilePathTextBox.BorderColor = System.Drawing.Color.RoyalBlue;
-            this.FilePathTextBox.BorderFocusColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
-            this.FilePathTextBox.BorderSize = 2;
-            this.FilePathTextBox.Enabled = false;
-            this.FilePathTextBox.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.FilePathTextBox.ForeColor = System.Drawing.Color.Black;
-            this.FilePathTextBox.Location = new System.Drawing.Point(10, 37);
-            this.FilePathTextBox.Margin = new System.Windows.Forms.Padding(7);
-            this.FilePathTextBox.Multiline = false;
-            this.FilePathTextBox.Name = "FilePathTextBox";
-            this.FilePathTextBox.Padding = new System.Windows.Forms.Padding(10);
-            this.FilePathTextBox.PasswordChar = false;
-            this.FilePathTextBox.ScrollBars = System.Windows.Forms.ScrollBars.None;
-            this.FilePathTextBox.Size = new System.Drawing.Size(991, 41);
-            this.FilePathTextBox.TabIndex = 23;
-            this.FilePathTextBox.Texts = "";
-            this.FilePathTextBox.UnderlinedStyle = false;
-            // 
-            // UpdateDataDGWAnswer
-            // 
-            this.UpdateDataDGWAnswer.BackColor = System.Drawing.Color.RoyalBlue;
-            this.UpdateDataDGWAnswer.BackgroundColor = System.Drawing.Color.RoyalBlue;
-            this.UpdateDataDGWAnswer.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
-            this.UpdateDataDGWAnswer.BorderRadius = 0;
-            this.UpdateDataDGWAnswer.BorderSize = 0;
-            this.UpdateDataDGWAnswer.FlatAppearance.BorderSize = 0;
-            this.UpdateDataDGWAnswer.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.UpdateDataDGWAnswer.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
-            this.UpdateDataDGWAnswer.ForeColor = System.Drawing.Color.White;
-            this.UpdateDataDGWAnswer.Location = new System.Drawing.Point(264, 87);
-            this.UpdateDataDGWAnswer.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.UpdateDataDGWAnswer.Name = "UpdateDataDGWAnswer";
-            this.UpdateDataDGWAnswer.Size = new System.Drawing.Size(249, 43);
-            this.UpdateDataDGWAnswer.TabIndex = 18;
-            this.UpdateDataDGWAnswer.Text = "Обновить данные";
-            this.UpdateDataDGWAnswer.TextColor = System.Drawing.Color.White;
-            this.UpdateDataDGWAnswer.UseVisualStyleBackColor = false;
-            this.UpdateDataDGWAnswer.Click += new System.EventHandler(this.UpdateDataDGWAnswer_Click);
-            // 
-            // GenerateRaportButton
-            // 
-            this.GenerateRaportButton.BackColor = System.Drawing.Color.RoyalBlue;
-            this.GenerateRaportButton.BackgroundColor = System.Drawing.Color.RoyalBlue;
-            this.GenerateRaportButton.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
-            this.GenerateRaportButton.BorderRadius = 0;
-            this.GenerateRaportButton.BorderSize = 0;
-            this.GenerateRaportButton.FlatAppearance.BorderSize = 0;
-            this.GenerateRaportButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.GenerateRaportButton.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.GenerateRaportButton.ForeColor = System.Drawing.Color.White;
-            this.GenerateRaportButton.Location = new System.Drawing.Point(10, 87);
-            this.GenerateRaportButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.GenerateRaportButton.Name = "GenerateRaportButton";
-            this.GenerateRaportButton.Size = new System.Drawing.Size(249, 43);
-            this.GenerateRaportButton.TabIndex = 17;
-            this.GenerateRaportButton.Text = "Сформировать отчёт";
-            this.GenerateRaportButton.TextColor = System.Drawing.Color.White;
-            this.GenerateRaportButton.UseVisualStyleBackColor = false;
-            this.GenerateRaportButton.Click += new System.EventHandler(this.GenerateRaportButton_Click);
-            // 
             // CompleteApplicationDGW
             // 
             this.CompleteApplicationDGW.AllowUserToAddRows = false;
@@ -261,12 +158,12 @@
             this.CompleteApplicationDGW.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.CompleteApplicationDGW.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.CompleteApplicationDGW.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.CompleteApplicationDGW.Location = new System.Drawing.Point(3, 148);
+            this.CompleteApplicationDGW.Location = new System.Drawing.Point(3, 146);
             this.CompleteApplicationDGW.Name = "CompleteApplicationDGW";
             this.CompleteApplicationDGW.ReadOnly = true;
             this.CompleteApplicationDGW.RowHeadersWidth = 51;
             this.CompleteApplicationDGW.RowTemplate.Height = 24;
-            this.CompleteApplicationDGW.Size = new System.Drawing.Size(1005, 370);
+            this.CompleteApplicationDGW.Size = new System.Drawing.Size(1005, 440);
             this.CompleteApplicationDGW.TabIndex = 1;
             // 
             // WorkerDataPage
@@ -289,7 +186,7 @@
             this.WorkerDataPage.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.WorkerDataPage.Name = "WorkerDataPage";
             this.WorkerDataPage.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.WorkerDataPage.Size = new System.Drawing.Size(1011, 520);
+            this.WorkerDataPage.Size = new System.Drawing.Size(1011, 588);
             this.WorkerDataPage.TabIndex = 3;
             this.WorkerDataPage.Text = "Данные о сотруднике";
             // 
@@ -369,6 +266,132 @@
             this.InfoUserLabel.Size = new System.Drawing.Size(598, 50);
             this.InfoUserLabel.TabIndex = 26;
             this.InfoUserLabel.Text = "ИНФОРМАЦИЯ О СОТРУДНИКЕ";
+            // 
+            // UpdateAnswerInDGW
+            // 
+            this.UpdateAnswerInDGW.BackColor = System.Drawing.Color.RoyalBlue;
+            this.UpdateAnswerInDGW.BackgroundColor = System.Drawing.Color.RoyalBlue;
+            this.UpdateAnswerInDGW.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
+            this.UpdateAnswerInDGW.BorderRadius = 0;
+            this.UpdateAnswerInDGW.BorderSize = 0;
+            this.UpdateAnswerInDGW.FlatAppearance.BorderSize = 0;
+            this.UpdateAnswerInDGW.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.UpdateAnswerInDGW.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
+            this.UpdateAnswerInDGW.ForeColor = System.Drawing.Color.White;
+            this.UpdateAnswerInDGW.Location = new System.Drawing.Point(144, 9);
+            this.UpdateAnswerInDGW.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.UpdateAnswerInDGW.Name = "UpdateAnswerInDGW";
+            this.UpdateAnswerInDGW.Size = new System.Drawing.Size(207, 43);
+            this.UpdateAnswerInDGW.TabIndex = 17;
+            this.UpdateAnswerInDGW.Text = "Обновить данные";
+            this.UpdateAnswerInDGW.TextColor = System.Drawing.Color.White;
+            this.UpdateAnswerInDGW.UseVisualStyleBackColor = false;
+            this.UpdateAnswerInDGW.Click += new System.EventHandler(this.UpdateAnswerInDGW_Click);
+            // 
+            // AnswerToApplicationButton
+            // 
+            this.AnswerToApplicationButton.BackColor = System.Drawing.Color.RoyalBlue;
+            this.AnswerToApplicationButton.BackgroundColor = System.Drawing.Color.RoyalBlue;
+            this.AnswerToApplicationButton.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
+            this.AnswerToApplicationButton.BorderRadius = 0;
+            this.AnswerToApplicationButton.BorderSize = 0;
+            this.AnswerToApplicationButton.FlatAppearance.BorderSize = 0;
+            this.AnswerToApplicationButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.AnswerToApplicationButton.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.AnswerToApplicationButton.ForeColor = System.Drawing.Color.White;
+            this.AnswerToApplicationButton.Location = new System.Drawing.Point(5, 9);
+            this.AnswerToApplicationButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.AnswerToApplicationButton.Name = "AnswerToApplicationButton";
+            this.AnswerToApplicationButton.Size = new System.Drawing.Size(133, 43);
+            this.AnswerToApplicationButton.TabIndex = 16;
+            this.AnswerToApplicationButton.Text = "Ответить";
+            this.AnswerToApplicationButton.TextColor = System.Drawing.Color.White;
+            this.AnswerToApplicationButton.UseVisualStyleBackColor = false;
+            this.AnswerToApplicationButton.Click += new System.EventHandler(this.AnswerToApplicationButton_Click);
+            // 
+            // SupplementReplyButton
+            // 
+            this.SupplementReplyButton.BackColor = System.Drawing.Color.RoyalBlue;
+            this.SupplementReplyButton.BackgroundColor = System.Drawing.Color.RoyalBlue;
+            this.SupplementReplyButton.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
+            this.SupplementReplyButton.BorderRadius = 0;
+            this.SupplementReplyButton.BorderSize = 0;
+            this.SupplementReplyButton.FlatAppearance.BorderSize = 0;
+            this.SupplementReplyButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.SupplementReplyButton.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.SupplementReplyButton.ForeColor = System.Drawing.Color.White;
+            this.SupplementReplyButton.Location = new System.Drawing.Point(10, 87);
+            this.SupplementReplyButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.SupplementReplyButton.Name = "SupplementReplyButton";
+            this.SupplementReplyButton.Size = new System.Drawing.Size(204, 43);
+            this.SupplementReplyButton.TabIndex = 29;
+            this.SupplementReplyButton.Text = "Дополнить ответ";
+            this.SupplementReplyButton.TextColor = System.Drawing.Color.White;
+            this.SupplementReplyButton.UseVisualStyleBackColor = false;
+            this.SupplementReplyButton.Click += new System.EventHandler(this.SupplementReplyButton_Click);
+            // 
+            // FilePathTextBox
+            // 
+            this.FilePathTextBox.BackColor = System.Drawing.Color.White;
+            this.FilePathTextBox.BorderColor = System.Drawing.Color.RoyalBlue;
+            this.FilePathTextBox.BorderFocusColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
+            this.FilePathTextBox.BorderSize = 2;
+            this.FilePathTextBox.Enabled = false;
+            this.FilePathTextBox.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.FilePathTextBox.ForeColor = System.Drawing.Color.Black;
+            this.FilePathTextBox.Location = new System.Drawing.Point(10, 37);
+            this.FilePathTextBox.Margin = new System.Windows.Forms.Padding(7);
+            this.FilePathTextBox.Multiline = false;
+            this.FilePathTextBox.Name = "FilePathTextBox";
+            this.FilePathTextBox.Padding = new System.Windows.Forms.Padding(10);
+            this.FilePathTextBox.PasswordChar = false;
+            this.FilePathTextBox.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            this.FilePathTextBox.Size = new System.Drawing.Size(991, 41);
+            this.FilePathTextBox.TabIndex = 23;
+            this.FilePathTextBox.Texts = "";
+            this.FilePathTextBox.UnderlinedStyle = false;
+            // 
+            // UpdateDataDGWAnswer
+            // 
+            this.UpdateDataDGWAnswer.BackColor = System.Drawing.Color.RoyalBlue;
+            this.UpdateDataDGWAnswer.BackgroundColor = System.Drawing.Color.RoyalBlue;
+            this.UpdateDataDGWAnswer.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
+            this.UpdateDataDGWAnswer.BorderRadius = 0;
+            this.UpdateDataDGWAnswer.BorderSize = 0;
+            this.UpdateDataDGWAnswer.FlatAppearance.BorderSize = 0;
+            this.UpdateDataDGWAnswer.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.UpdateDataDGWAnswer.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
+            this.UpdateDataDGWAnswer.ForeColor = System.Drawing.Color.White;
+            this.UpdateDataDGWAnswer.Location = new System.Drawing.Point(475, 87);
+            this.UpdateDataDGWAnswer.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.UpdateDataDGWAnswer.Name = "UpdateDataDGWAnswer";
+            this.UpdateDataDGWAnswer.Size = new System.Drawing.Size(209, 43);
+            this.UpdateDataDGWAnswer.TabIndex = 18;
+            this.UpdateDataDGWAnswer.Text = "Обновить данные";
+            this.UpdateDataDGWAnswer.TextColor = System.Drawing.Color.White;
+            this.UpdateDataDGWAnswer.UseVisualStyleBackColor = false;
+            this.UpdateDataDGWAnswer.Click += new System.EventHandler(this.UpdateDataDGWAnswer_Click);
+            // 
+            // GenerateRaportButton
+            // 
+            this.GenerateRaportButton.BackColor = System.Drawing.Color.RoyalBlue;
+            this.GenerateRaportButton.BackgroundColor = System.Drawing.Color.RoyalBlue;
+            this.GenerateRaportButton.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
+            this.GenerateRaportButton.BorderRadius = 0;
+            this.GenerateRaportButton.BorderSize = 0;
+            this.GenerateRaportButton.FlatAppearance.BorderSize = 0;
+            this.GenerateRaportButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.GenerateRaportButton.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.GenerateRaportButton.ForeColor = System.Drawing.Color.White;
+            this.GenerateRaportButton.Location = new System.Drawing.Point(220, 87);
+            this.GenerateRaportButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.GenerateRaportButton.Name = "GenerateRaportButton";
+            this.GenerateRaportButton.Size = new System.Drawing.Size(249, 43);
+            this.GenerateRaportButton.TabIndex = 17;
+            this.GenerateRaportButton.Text = "Сформировать отчёт";
+            this.GenerateRaportButton.TextColor = System.Drawing.Color.White;
+            this.GenerateRaportButton.UseVisualStyleBackColor = false;
+            this.GenerateRaportButton.Click += new System.EventHandler(this.GenerateRaportButton_Click);
             // 
             // UpdLogPassButton
             // 
@@ -515,7 +538,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1025, 561);
+            this.ClientSize = new System.Drawing.Size(1025, 628);
             this.Controls.Add(this.MainWorkWorkerTabControl);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MainWorkFormWorker";
@@ -567,5 +590,6 @@
         private System.Windows.Forms.FolderBrowserDialog FolderPathBrowserDialog;
         private System.Windows.Forms.CheckBox VisiblePassCheckMain;
         private System.Windows.Forms.Label FolderPathLabel;
+        private Design.CustomButton SupplementReplyButton;
     }
 }

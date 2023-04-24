@@ -34,7 +34,8 @@ namespace Napitki_Altay2.Classes
                     $"Info_About_User.User_Surname = " +
                     $"'{fam}' and " +
                     $"Info_About_User.User_Patronymic = " +
-                    $"'{otch}'";
+                    $"'{otch}' and ID_Status = '1' " +
+                    $"and ID_Status = '2'";
             return sqlCom;
         }
 
@@ -57,7 +58,7 @@ namespace Napitki_Altay2.Classes
             string sqlCom = "select FK_ID_Application, " +
                     "User_Surname, User_Name, " +
                     "User_Patronymic, " +
-                    "Date_Of_Answer " +
+                    "Date_Of_Answer, Status_Name " +
                     "from Ready_Application " +
                     "join Info_About_User on " +
                     "Ready_Application.FK_Info_User " +
@@ -65,6 +66,8 @@ namespace Napitki_Altay2.Classes
                     "join Application_To_Company " +
                     "on Application_To_Company.ID_Application " +
                     "= Ready_Application.FK_ID_Application " +
+                    "join Status_Application " +
+                    "on Status_Application.ID_Status = Application_To_Company.FK_Status_Application " +
                     $"where Application_To_Company.FK_Info_User = " +
                     $"'{fkInfoUser}'";
             return sqlCom;
@@ -130,7 +133,7 @@ namespace Napitki_Altay2.Classes
                 $"Info_About_User.User_Surname = " +
                 $"'{fam}' and " +
                 $"Info_About_User.User_Patronymic = " +
-                $"'{otch}'";
+                $"'{otch}' and ID_Status = '1' and ID_Status = '2'";
             return sqlCom;
         }
 
