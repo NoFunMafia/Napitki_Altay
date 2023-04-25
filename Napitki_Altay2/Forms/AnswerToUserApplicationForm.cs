@@ -119,8 +119,6 @@ namespace Napitki_Altay2.Forms
                 {
                     GetDocumentInfo(filepath, stream, out byte[] buffer,
                         out string extension, out string name);
-                    if (!CheckNameOfWorkerFile(name))
-                        return;
                     InsertDocumentQuery(buffer, extension, name);
                 }
                 TakeDocumentIdInfo(out List<string[]> listSearchSecond);
@@ -178,32 +176,6 @@ namespace Napitki_Altay2.Forms
             ReplacePlaceholdersInDocument(newDocumentPath, placeHolders);
             MessageBox.Show("Документ создан и сохранен по пути: " + newDocumentPath,
                 "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
-        #endregion
-        #region [Метод, проверяющий уникальность названия прикрепляемого документа]
-        /// <summary>
-        /// Метод проверки уникальности названия прикрепляемого документа
-        /// </summary>
-        /// <param name="name"></param>
-        /// <returns></returns>
-        public Boolean CheckNameOfWorkerFile(string name)
-        {
-            string filepath = DocumentWorkAnsTextBox.Texts;
-            using (Stream stream = File.OpenRead(filepath))
-            {
-                string sqlQuery = sqlQueries.SqlComCheckDocumentNameWorker(name);
-                List<string[]> listSearch = dataBaseWork.GetMultiList(sqlQuery, 4);
-                if (listSearch != null && listSearch.Count > 0)
-                {
-                    MessageBox.Show("Переименуйте файл! " +
-                        "Данное название уже присутствует в базе данных!",
-                        "Ошибка",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Error);
-                    return false;
-                }
-                return true;
-            }
         }
         #endregion
         #region [Метод, получающий ID пользователя при составлении обращения]
@@ -310,10 +282,8 @@ namespace Napitki_Altay2.Forms
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message,
-                    "Ошибка",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Error);
+                MessageBox.Show(ex.Message, "Ошибка",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             finally
             {

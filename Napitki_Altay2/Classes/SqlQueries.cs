@@ -487,5 +487,48 @@ namespace Napitki_Altay2.Classes
             return sqlCom;
         }
         #endregion
+        #region [SupplementForm]
+        public string SqlComSupplementInfo(string idRow)
+        {
+            string sqlCom = "select " +
+                    "ID_Application, Applicant_Company, " +
+                    "Type_Appeal, Description_Of_Appeal, " +
+                    "Date_Of_Request, Document_Name " +
+                    "from Application_To_Company " +
+                    "join Type_Of_Appeal on " +
+                    "Application_To_Company.FK_Type_Of_Appeal " +
+                    "= Type_Of_Appeal.ID_Type_Of_Appeal " +
+                    "full join Application_Document_From_User " +
+                    "on Application_To_Company." +
+                    "FK_Application_Document_From_User = " +
+                    "Application_Document_From_User." +
+                    $"ID_Document_From_User where " +
+                    $"Id_Application = " +
+                    $"'{idRow}'";
+            return sqlCom;
+        }
+        public string SqlComUpdateApplication(string desc, string idRow)
+        {
+            string sqlCom = "update Application_To_Company set " +
+                $"Description_Of_Appeal = '{desc}' where ID_Application = '{idRow}'";
+            return sqlCom;
+        }
+        public string SqlComUpdateStatusAppl(string idRow)
+        {
+            string sqlCom = "update Application_To_Company set " +
+                $"FK_Status_Application = '5' where ID_Application = '{idRow}'";
+            return sqlCom;
+        }
+        public string SqlComUpdateDocumentUser(string idRow)
+        {
+            string sqlCom = "update Application_Document_From_User set " +
+                "Document_Name = @filename, Document_Data = @data, Document_Extension = @extn " +
+                "from Application_To_Company join Application_Document_From_User on " +
+                "Application_To_Company.FK_Application_Document_From_User " +
+                "= Application_Document_From_User.ID_Document_From_User " +
+                $"where ID_Application = '{idRow}'";
+            return sqlCom;
+        }
+        #endregion
     }
 }

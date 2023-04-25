@@ -56,6 +56,8 @@ namespace Napitki_Altay2.Forms
         private void CloseCompleteApplicationButton_Click(object sender, EventArgs e)
         {
             Close();
+            Form supForm = Application.OpenForms["SupplementForm"];
+            supForm?.Close();
         }
         #endregion
         #region [Событие нажатия на кнопку OpenPinDocumentButton]

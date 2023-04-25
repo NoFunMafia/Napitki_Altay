@@ -87,8 +87,6 @@ namespace Napitki_Altay2.Forms
                     {
                         GetDocumentInfo(filePath, stream, out byte[] buffer,
                             out string extension, out string name);
-                        if (!CheckNameOfUserFile(name))
-                            return;
                         InsertDocumentQuery(buffer, extension, name);
                     }
                     TakeDocumentIdInfo(out List<string[]> listSearchSecond);
@@ -272,7 +270,11 @@ namespace Napitki_Altay2.Forms
                 // Найдите открытую форму MainWorkFormWorker
                 MainWorkForm mainWorkForm = Application.OpenForms.OfType<MainWorkForm>().FirstOrDefault();
                 // Если форма найдена, вызовите методы обновления
-                mainWorkForm?.Show();
+                if (mainWorkForm != null)
+                {
+                    mainWorkForm.LoadDataGridView();
+                    mainWorkForm.Show();
+                }
             }
         }
         #endregion
@@ -371,7 +373,11 @@ namespace Napitki_Altay2.Forms
                     // Найдите открытую форму MainWorkFormWorker
                     MainWorkForm mainWorkForm = Application.OpenForms.OfType<MainWorkForm>().FirstOrDefault();
                     // Если форма найдена, вызовите методы обновления
-                    mainWorkForm?.Show();
+                    if (mainWorkForm != null)
+                    {
+                        mainWorkForm.LoadDataGridView();
+                        mainWorkForm.Show();
+                    }
                 }
             }
         }
@@ -388,32 +394,6 @@ namespace Napitki_Altay2.Forms
             filePath = DocumentTextBox.Texts;
             string sqlQuery = sqlQueries.sqlComFkInfoUser;
             listSearch = dataBaseWork.GetMultiList(sqlQuery, 4);
-        }
-        #endregion
-        #region [Метод проверки уникальности названия прикрепляемого документа]
-        /// <summary>
-        /// Метод проверки уникальности названия прикрепляемого документа
-        /// </summary>
-        /// <param name="name"></param>
-        /// <returns></returns>
-        public Boolean CheckNameOfUserFile(string name)
-        {
-            string filepath = DocumentTextBox.Texts;
-            using (Stream stream = File.OpenRead(documentPath))
-            {
-                string sqlQuery = sqlQueries.SqlComCheckDocumentName(name);
-                List<string[]> listSearch = dataBaseWork.GetMultiList(sqlQuery, 4);
-                if(listSearch != null && listSearch.Count > 0)
-                {
-                    MessageBox.Show("Переименуйте файл! " +
-                        "Данное название уже присутствует в базе данных!",
-                        "Ошибка",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Error);
-                    return false;
-                }
-                return true;
-            }
         }
         #endregion
         #region [Метод получения ID пользователя при составлении обращения]

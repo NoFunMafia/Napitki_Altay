@@ -154,6 +154,19 @@ namespace Napitki_Altay2.Design
         public Color BorderFocusColor { get => borderFocusColor; 
             set => borderFocusColor = value; }
 
+        public int SelectionStart
+        {
+            get
+            {
+                return TextBoxForCustomSetting.SelectionStart;
+            }
+            set
+            {
+                TextBoxForCustomSetting.SelectionStart = value;
+            }
+        }
+
+
         //переопределенные методы
         protected override void OnPaint(PaintEventArgs e)
         {

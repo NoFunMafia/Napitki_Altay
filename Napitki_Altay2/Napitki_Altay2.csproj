@@ -239,6 +239,12 @@
     <Compile Include="Forms\ReadyApplicationInfoForUserForm.Designer.cs">
       <DependentUpon>ReadyApplicationInfoForUserForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\SupplementForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\SupplementForm.Designer.cs">
+      <DependentUpon>SupplementForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\UserApplicationInfoForWorkerForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -284,6 +290,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\ReadyApplicationInfoForUserForm.resx">
       <DependentUpon>ReadyApplicationInfoForUserForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\SupplementForm.resx">
+      <DependentUpon>SupplementForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\UserApplicationInfoForWorkerForm.resx">
       <DependentUpon>UserApplicationInfoForWorkerForm.cs</DependentUpon>

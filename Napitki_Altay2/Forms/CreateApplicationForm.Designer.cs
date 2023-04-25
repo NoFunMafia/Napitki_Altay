@@ -30,13 +30,11 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CreateApplicationForm));
-            this.ApplPictureBox = new System.Windows.Forms.PictureBox();
             this.ApplDTP = new System.Windows.Forms.DateTimePicker();
             this.CompanyNameLabel = new System.Windows.Forms.Label();
             this.TypeApplLabel = new System.Windows.Forms.Label();
             this.DescripApplLabel = new System.Windows.Forms.Label();
             this.DateTimeDescrLabel = new System.Windows.Forms.Label();
-            this.ChooseTypeApplPictureBox = new System.Windows.Forms.PictureBox();
             this.TypeApplMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.сотрудничествоToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.обсуждениеПроблемыToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -44,6 +42,8 @@
             this.письмопритензияToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.письмоблагодарностьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.SelectDocumentLabel = new System.Windows.Forms.Label();
+            this.ChooseTypeApplPictureBox = new System.Windows.Forms.PictureBox();
+            this.ApplPictureBox = new System.Windows.Forms.PictureBox();
             this.DeleteDocumentButton = new Napitki_Altay2.Design.CustomButton();
             this.ChooseDocumentButton = new Napitki_Altay2.Design.CustomButton();
             this.DocumentTextBox = new Napitki_Altay2.Design.CustomTextBox();
@@ -53,22 +53,10 @@
             this.TypeApplTextBox = new Napitki_Altay2.Design.CustomTextBox();
             this.CompanyTextBox = new Napitki_Altay2.Design.CustomTextBox();
             this.CustomFormForAllProject = new Napitki_Altay2.Components.FormStyleCustom(this.components);
-            ((System.ComponentModel.ISupportInitialize)(this.ApplPictureBox)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ChooseTypeApplPictureBox)).BeginInit();
             this.TypeApplMenuStrip.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.ChooseTypeApplPictureBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ApplPictureBox)).BeginInit();
             this.SuspendLayout();
-            // 
-            // ApplPictureBox
-            // 
-            this.ApplPictureBox.BackColor = System.Drawing.Color.White;
-            this.ApplPictureBox.Image = global::Napitki_Altay2.Properties.Resources.PictureLoginForm;
-            this.ApplPictureBox.Location = new System.Drawing.Point(327, 4);
-            this.ApplPictureBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.ApplPictureBox.Name = "ApplPictureBox";
-            this.ApplPictureBox.Size = new System.Drawing.Size(239, 210);
-            this.ApplPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.ApplPictureBox.TabIndex = 5;
-            this.ApplPictureBox.TabStop = false;
             // 
             // ApplDTP
             // 
@@ -120,19 +108,6 @@
             this.DateTimeDescrLabel.Size = new System.Drawing.Size(269, 28);
             this.DateTimeDescrLabel.TabIndex = 13;
             this.DateTimeDescrLabel.Text = "Время подачи обращения:";
-            // 
-            // ChooseTypeApplPictureBox
-            // 
-            this.ChooseTypeApplPictureBox.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.ChooseTypeApplPictureBox.Image = global::Napitki_Altay2.Properties.Resources.PictureRegForm;
-            this.ChooseTypeApplPictureBox.Location = new System.Drawing.Point(372, 283);
-            this.ChooseTypeApplPictureBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.ChooseTypeApplPictureBox.Name = "ChooseTypeApplPictureBox";
-            this.ChooseTypeApplPictureBox.Size = new System.Drawing.Size(32, 27);
-            this.ChooseTypeApplPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.ChooseTypeApplPictureBox.TabIndex = 16;
-            this.ChooseTypeApplPictureBox.TabStop = false;
-            this.ChooseTypeApplPictureBox.Click += new System.EventHandler(this.ChooseTypeApplPictureBox_Click);
             // 
             // TypeApplMenuStrip
             // 
@@ -191,6 +166,31 @@
             this.SelectDocumentLabel.Size = new System.Drawing.Size(426, 25);
             this.SelectDocumentLabel.TabIndex = 20;
             this.SelectDocumentLabel.Text = "Прикрепить файл к обращению (опционально):";
+            // 
+            // ChooseTypeApplPictureBox
+            // 
+            this.ChooseTypeApplPictureBox.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.ChooseTypeApplPictureBox.Image = global::Napitki_Altay2.Properties.Resources.PictureRegForm;
+            this.ChooseTypeApplPictureBox.Location = new System.Drawing.Point(372, 283);
+            this.ChooseTypeApplPictureBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.ChooseTypeApplPictureBox.Name = "ChooseTypeApplPictureBox";
+            this.ChooseTypeApplPictureBox.Size = new System.Drawing.Size(32, 27);
+            this.ChooseTypeApplPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.ChooseTypeApplPictureBox.TabIndex = 16;
+            this.ChooseTypeApplPictureBox.TabStop = false;
+            this.ChooseTypeApplPictureBox.Click += new System.EventHandler(this.ChooseTypeApplPictureBox_Click);
+            // 
+            // ApplPictureBox
+            // 
+            this.ApplPictureBox.BackColor = System.Drawing.Color.White;
+            this.ApplPictureBox.Image = global::Napitki_Altay2.Properties.Resources.PictureLoginForm;
+            this.ApplPictureBox.Location = new System.Drawing.Point(327, 4);
+            this.ApplPictureBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.ApplPictureBox.Name = "ApplPictureBox";
+            this.ApplPictureBox.Size = new System.Drawing.Size(239, 210);
+            this.ApplPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.ApplPictureBox.TabIndex = 5;
+            this.ApplPictureBox.TabStop = false;
             // 
             // DeleteDocumentButton
             // 
@@ -299,6 +299,7 @@
             // 
             // DescripTextBox
             // 
+            this.DescripTextBox.AutoScroll = true;
             this.DescripTextBox.AutoScrollMinSize = new System.Drawing.Size(0, 2);
             this.DescripTextBox.BackColor = System.Drawing.Color.White;
             this.DescripTextBox.BorderColor = System.Drawing.Color.RoyalBlue;
@@ -406,9 +407,9 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Создание обращения";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.CreateApplicationForm_FormClosed);
-            ((System.ComponentModel.ISupportInitialize)(this.ApplPictureBox)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ChooseTypeApplPictureBox)).EndInit();
             this.TypeApplMenuStrip.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.ChooseTypeApplPictureBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ApplPictureBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

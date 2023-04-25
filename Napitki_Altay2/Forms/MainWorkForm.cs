@@ -302,7 +302,7 @@ namespace Napitki_Altay2.Forms
         /// <summary>
         /// Вывод данных в таблицу DataGridViewApplication
         /// </summary>
-        private void LoadDataGridView()
+        public void LoadDataGridView()
         {
             FillStrings();
             string sqlQuery = sqlQueries.SqlOutputMWF
@@ -478,16 +478,26 @@ namespace Napitki_Altay2.Forms
             {
                 OpenMessageFromWorker();
             }
+            else if(CompleteApplicationDGWUser.CurrentRow.Cells[5].Value.ToString() == "Дополнено")
+            {
+                MessageBox.Show("Дополненное сообщение открыть нельзя. " +
+                    "Ожидайте ответ от сотрудника!", "Внимание", 
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
             else
             {
-                CreateApplicationForm createForm = new CreateApplicationForm();
-                createForm.Show();
-                createForm.Location = new Point(40, 90);
-                createForm.Text = "Добавление доп. информации к обращению";
+                selectedRowIDInDGWC = CompleteApplicationDGWUser.CurrentRow.Cells[0].Value.ToString();
+                SupplementForm supForm = new SupplementForm();
+                supForm.Show();
+                supForm.Location = new Point(40, 90);
                 Hide();
                 OpenMessageFromWorker();
             }
         }
         #endregion
+        private void UpdateDataDGWCButton_Click(object sender, EventArgs e)
+        {
+            LoadDataGridViewComplete();
+        }
     }
 }
