@@ -474,27 +474,44 @@ namespace Napitki_Altay2.Forms
         /// <param name="e"></param>
         private void MoreInformationButton_Click(object sender, EventArgs e)
         {
-            if (CompleteApplicationDGWUser.CurrentRow.Cells[5].Value.ToString() == "Завершено")
-            {
-                OpenMessageFromWorker();
-            }
-            else if(CompleteApplicationDGWUser.CurrentRow.Cells[5].Value.ToString() == "Дополнено")
-            {
-                MessageBox.Show("Дополненное сообщение открыть нельзя. " +
-                    "Ожидайте ответ от сотрудника!", "Внимание", 
-                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
-            else
-            {
-                selectedRowIDInDGWC = CompleteApplicationDGWUser.CurrentRow.Cells[0].Value.ToString();
-                SupplementForm supForm = new SupplementForm();
-                supForm.Show();
-                supForm.Location = new Point(40, 90);
-                Hide();
-                OpenMessageFromWorker();
-            }
+            OpenSupplementsForm();
         }
         #endregion
+        private void OpenSupplementsForm()
+        {
+            try
+            {
+                if (CompleteApplicationDGWUser.RowCount != 0)
+                {
+                    if (CompleteApplicationDGWUser.CurrentRow.Cells[5].Value.ToString() == "Завершено")
+                    {
+                        OpenMessageFromWorker();
+                    }
+                    else if (CompleteApplicationDGWUser.CurrentRow.Cells[5].Value.ToString() == "Дополнено")
+                    {
+                        MessageBox.Show("Дополненное сообщение открыть нельзя. " +
+                            "Ожидайте ответ от сотрудника!", "Внимание",
+                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+                    else
+                    {
+                        selectedRowIDInDGWC = CompleteApplicationDGWUser.CurrentRow.Cells[0].Value.ToString();
+                        SupplementForm supForm = new SupplementForm();
+                        supForm.Show();
+                        supForm.Location = new Point(40, 90);
+                        Hide();
+                        OpenMessageFromWorker();
+                    }
+                }
+                else
+                    throw new Exception();
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Невозможно дополнить ответ на не выделенное обращение!",
+                    "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
         private void UpdateDataDGWCButton_Click(object sender, EventArgs e)
         {
             LoadDataGridViewComplete();

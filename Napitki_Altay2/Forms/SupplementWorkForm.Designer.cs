@@ -1,6 +1,6 @@
 ﻿namespace Napitki_Altay2.Forms
 {
-    partial class AnswerToUserApplicationForm
+    partial class SupplementWorkForm
     {
         /// <summary>
         /// Required designer variable.
@@ -29,18 +29,18 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AnswerToUserApplicationForm));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SupplementWorkForm));
+            this.HelpLabel = new System.Windows.Forms.Label();
+            this.ChooseStatusApplPictureBox = new System.Windows.Forms.PictureBox();
+            this.SelectAnsWorkDocumentLabel = new System.Windows.Forms.Label();
             this.DateTimeAnsDescrWorkLabel = new System.Windows.Forms.Label();
             this.DescripApplWorkLabel = new System.Windows.Forms.Label();
             this.StatusApplicationLabel = new System.Windows.Forms.Label();
             this.ApplAnsWorkDTP = new System.Windows.Forms.DateTimePicker();
             this.ApplPictureBox = new System.Windows.Forms.PictureBox();
-            this.SelectAnsWorkDocumentLabel = new System.Windows.Forms.Label();
-            this.ChooseStatusApplPictureBox = new System.Windows.Forms.PictureBox();
             this.TypeApplWorkMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.ожиданиеToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.завершеноToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.HelpLabel = new System.Windows.Forms.Label();
             this.HelpThanksButton = new Napitki_Altay2.Design.CustomButton();
             this.HelpDiscussionButton = new Napitki_Altay2.Design.CustomButton();
             this.HelpCollaborationButton = new Napitki_Altay2.Design.CustomButton();
@@ -52,10 +52,43 @@
             this.DescripWorkAnsTextBox = new Napitki_Altay2.Design.CustomTextBox();
             this.StatusApplicationTextBox = new Napitki_Altay2.Design.CustomTextBox();
             this.CustomFormForAllProject = new Napitki_Altay2.Components.FormStyleCustom(this.components);
-            ((System.ComponentModel.ISupportInitialize)(this.ApplPictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ChooseStatusApplPictureBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ApplPictureBox)).BeginInit();
             this.TypeApplWorkMenuStrip.SuspendLayout();
             this.SuspendLayout();
+            // 
+            // HelpLabel
+            // 
+            this.HelpLabel.AutoSize = true;
+            this.HelpLabel.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
+            this.HelpLabel.Location = new System.Drawing.Point(333, 606);
+            this.HelpLabel.Name = "HelpLabel";
+            this.HelpLabel.Size = new System.Drawing.Size(404, 28);
+            this.HelpLabel.TabIndex = 74;
+            this.HelpLabel.Text = "Макеты для формирования документов:";
+            // 
+            // ChooseStatusApplPictureBox
+            // 
+            this.ChooseStatusApplPictureBox.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.ChooseStatusApplPictureBox.Image = global::Napitki_Altay2.Properties.Resources.PictureRegForm;
+            this.ChooseStatusApplPictureBox.Location = new System.Drawing.Point(371, 234);
+            this.ChooseStatusApplPictureBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.ChooseStatusApplPictureBox.Name = "ChooseStatusApplPictureBox";
+            this.ChooseStatusApplPictureBox.Size = new System.Drawing.Size(32, 27);
+            this.ChooseStatusApplPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.ChooseStatusApplPictureBox.TabIndex = 72;
+            this.ChooseStatusApplPictureBox.TabStop = false;
+            this.ChooseStatusApplPictureBox.Click += new System.EventHandler(this.ChooseStatusApplPictureBox_Click);
+            // 
+            // SelectAnsWorkDocumentLabel
+            // 
+            this.SelectAnsWorkDocumentLabel.AutoSize = true;
+            this.SelectAnsWorkDocumentLabel.Font = new System.Drawing.Font("Segoe UI Semibold", 10.5F, System.Drawing.FontStyle.Bold);
+            this.SelectAnsWorkDocumentLabel.Location = new System.Drawing.Point(445, 175);
+            this.SelectAnsWorkDocumentLabel.Name = "SelectAnsWorkDocumentLabel";
+            this.SelectAnsWorkDocumentLabel.Size = new System.Drawing.Size(349, 50);
+            this.SelectAnsWorkDocumentLabel.TabIndex = 71;
+            this.SelectAnsWorkDocumentLabel.Text = "Прикрепить файл \r\nк ответу на обращение (опционально):";
             // 
             // DateTimeAnsDescrWorkLabel
             // 
@@ -64,7 +97,7 @@
             this.DateTimeAnsDescrWorkLabel.Location = new System.Drawing.Point(20, 606);
             this.DateTimeAnsDescrWorkLabel.Name = "DateTimeAnsDescrWorkLabel";
             this.DateTimeAnsDescrWorkLabel.Size = new System.Drawing.Size(289, 28);
-            this.DateTimeAnsDescrWorkLabel.TabIndex = 45;
+            this.DateTimeAnsDescrWorkLabel.TabIndex = 65;
             this.DateTimeAnsDescrWorkLabel.Text = "Время ответа на обращение:";
             // 
             // DescripApplWorkLabel
@@ -73,9 +106,9 @@
             this.DescripApplWorkLabel.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
             this.DescripApplWorkLabel.Location = new System.Drawing.Point(20, 319);
             this.DescripApplWorkLabel.Name = "DescripApplWorkLabel";
-            this.DescripApplWorkLabel.Size = new System.Drawing.Size(215, 28);
-            this.DescripApplWorkLabel.TabIndex = 44;
-            this.DescripApplWorkLabel.Text = "Ответ на обращение:";
+            this.DescripApplWorkLabel.Size = new System.Drawing.Size(348, 28);
+            this.DescripApplWorkLabel.TabIndex = 64;
+            this.DescripApplWorkLabel.Text = "Дополнение ответа на обращение:";
             // 
             // StatusApplicationLabel
             // 
@@ -84,7 +117,7 @@
             this.StatusApplicationLabel.Location = new System.Drawing.Point(20, 194);
             this.StatusApplicationLabel.Name = "StatusApplicationLabel";
             this.StatusApplicationLabel.Size = new System.Drawing.Size(191, 28);
-            this.StatusApplicationLabel.TabIndex = 42;
+            this.StatusApplicationLabel.TabIndex = 63;
             this.StatusApplicationLabel.Text = "Статус обращения:";
             // 
             // ApplAnsWorkDTP
@@ -96,7 +129,7 @@
             this.ApplAnsWorkDTP.Name = "ApplAnsWorkDTP";
             this.ApplAnsWorkDTP.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.ApplAnsWorkDTP.Size = new System.Drawing.Size(285, 38);
-            this.ApplAnsWorkDTP.TabIndex = 41;
+            this.ApplAnsWorkDTP.TabIndex = 62;
             // 
             // ApplPictureBox
             // 
@@ -107,31 +140,8 @@
             this.ApplPictureBox.Name = "ApplPictureBox";
             this.ApplPictureBox.Size = new System.Drawing.Size(239, 210);
             this.ApplPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.ApplPictureBox.TabIndex = 37;
+            this.ApplPictureBox.TabIndex = 59;
             this.ApplPictureBox.TabStop = false;
-            // 
-            // SelectAnsWorkDocumentLabel
-            // 
-            this.SelectAnsWorkDocumentLabel.AutoSize = true;
-            this.SelectAnsWorkDocumentLabel.Font = new System.Drawing.Font("Segoe UI Semibold", 10.5F, System.Drawing.FontStyle.Bold);
-            this.SelectAnsWorkDocumentLabel.Location = new System.Drawing.Point(445, 175);
-            this.SelectAnsWorkDocumentLabel.Name = "SelectAnsWorkDocumentLabel";
-            this.SelectAnsWorkDocumentLabel.Size = new System.Drawing.Size(349, 50);
-            this.SelectAnsWorkDocumentLabel.TabIndex = 53;
-            this.SelectAnsWorkDocumentLabel.Text = "Прикрепить файл \r\nк ответу на обращение (опционально):";
-            // 
-            // ChooseStatusApplPictureBox
-            // 
-            this.ChooseStatusApplPictureBox.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.ChooseStatusApplPictureBox.Image = global::Napitki_Altay2.Properties.Resources.PictureRegForm;
-            this.ChooseStatusApplPictureBox.Location = new System.Drawing.Point(371, 234);
-            this.ChooseStatusApplPictureBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.ChooseStatusApplPictureBox.Name = "ChooseStatusApplPictureBox";
-            this.ChooseStatusApplPictureBox.Size = new System.Drawing.Size(32, 27);
-            this.ChooseStatusApplPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.ChooseStatusApplPictureBox.TabIndex = 54;
-            this.ChooseStatusApplPictureBox.TabStop = false;
-            this.ChooseStatusApplPictureBox.Click += new System.EventHandler(this.ChooseStatusApplPictureBox_Click);
             // 
             // TypeApplWorkMenuStrip
             // 
@@ -157,16 +167,6 @@
             this.завершеноToolStripMenuItem.Text = "Завершено";
             this.завершеноToolStripMenuItem.Click += new System.EventHandler(this.ЗавершеноToolStripMenuItem_Click);
             // 
-            // HelpLabel
-            // 
-            this.HelpLabel.AutoSize = true;
-            this.HelpLabel.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
-            this.HelpLabel.Location = new System.Drawing.Point(333, 606);
-            this.HelpLabel.Name = "HelpLabel";
-            this.HelpLabel.Size = new System.Drawing.Size(404, 28);
-            this.HelpLabel.TabIndex = 56;
-            this.HelpLabel.Text = "Макеты для формирования документов:";
-            // 
             // HelpThanksButton
             // 
             this.HelpThanksButton.BackColor = System.Drawing.Color.RoyalBlue;
@@ -182,11 +182,10 @@
             this.HelpThanksButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.HelpThanksButton.Name = "HelpThanksButton";
             this.HelpThanksButton.Size = new System.Drawing.Size(171, 52);
-            this.HelpThanksButton.TabIndex = 58;
+            this.HelpThanksButton.TabIndex = 76;
             this.HelpThanksButton.Text = "Письмо-претензия";
             this.HelpThanksButton.TextColor = System.Drawing.Color.White;
             this.HelpThanksButton.UseVisualStyleBackColor = false;
-            this.HelpThanksButton.Click += new System.EventHandler(this.HelpThanksButton_Click);
             // 
             // HelpDiscussionButton
             // 
@@ -203,11 +202,10 @@
             this.HelpDiscussionButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.HelpDiscussionButton.Name = "HelpDiscussionButton";
             this.HelpDiscussionButton.Size = new System.Drawing.Size(171, 52);
-            this.HelpDiscussionButton.TabIndex = 57;
+            this.HelpDiscussionButton.TabIndex = 75;
             this.HelpDiscussionButton.Text = "Обсуждение проблемы";
             this.HelpDiscussionButton.TextColor = System.Drawing.Color.White;
             this.HelpDiscussionButton.UseVisualStyleBackColor = false;
-            this.HelpDiscussionButton.Click += new System.EventHandler(this.HelpDiscussionButton_Click);
             // 
             // HelpCollaborationButton
             // 
@@ -224,11 +222,10 @@
             this.HelpCollaborationButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.HelpCollaborationButton.Name = "HelpCollaborationButton";
             this.HelpCollaborationButton.Size = new System.Drawing.Size(171, 52);
-            this.HelpCollaborationButton.TabIndex = 55;
+            this.HelpCollaborationButton.TabIndex = 73;
             this.HelpCollaborationButton.Text = "Сотрудничество";
             this.HelpCollaborationButton.TextColor = System.Drawing.Color.White;
             this.HelpCollaborationButton.UseVisualStyleBackColor = false;
-            this.HelpCollaborationButton.Click += new System.EventHandler(this.HelpCollaborationButton_Click);
             // 
             // DeleteAnsWorkDocumentButton
             // 
@@ -245,7 +242,7 @@
             this.DeleteAnsWorkDocumentButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.DeleteAnsWorkDocumentButton.Name = "DeleteAnsWorkDocumentButton";
             this.DeleteAnsWorkDocumentButton.Size = new System.Drawing.Size(179, 56);
-            this.DeleteAnsWorkDocumentButton.TabIndex = 52;
+            this.DeleteAnsWorkDocumentButton.TabIndex = 70;
             this.DeleteAnsWorkDocumentButton.Text = "Удалить файл";
             this.DeleteAnsWorkDocumentButton.TextColor = System.Drawing.Color.White;
             this.DeleteAnsWorkDocumentButton.UseVisualStyleBackColor = false;
@@ -266,7 +263,7 @@
             this.ChooseAnsWorkDocumentButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.ChooseAnsWorkDocumentButton.Name = "ChooseAnsWorkDocumentButton";
             this.ChooseAnsWorkDocumentButton.Size = new System.Drawing.Size(179, 56);
-            this.ChooseAnsWorkDocumentButton.TabIndex = 51;
+            this.ChooseAnsWorkDocumentButton.TabIndex = 69;
             this.ChooseAnsWorkDocumentButton.Text = "Выбрать файл";
             this.ChooseAnsWorkDocumentButton.TextColor = System.Drawing.Color.White;
             this.ChooseAnsWorkDocumentButton.UseVisualStyleBackColor = false;
@@ -287,8 +284,8 @@
             this.AnswerApplButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.AnswerApplButton.Name = "AnswerApplButton";
             this.AnswerApplButton.Size = new System.Drawing.Size(399, 82);
-            this.AnswerApplButton.TabIndex = 50;
-            this.AnswerApplButton.Text = "Ответить на обращение";
+            this.AnswerApplButton.TabIndex = 68;
+            this.AnswerApplButton.Text = "Дополнить ответ";
             this.AnswerApplButton.TextColor = System.Drawing.Color.White;
             this.AnswerApplButton.UseVisualStyleBackColor = false;
             this.AnswerApplButton.Click += new System.EventHandler(this.AnswerApplButton_Click);
@@ -311,7 +308,7 @@
             this.DocumentWorkAnsTextBox.ScrollBars = System.Windows.Forms.ScrollBars.None;
             this.DocumentWorkAnsTextBox.SelectionStart = 0;
             this.DocumentWorkAnsTextBox.Size = new System.Drawing.Size(383, 35);
-            this.DocumentWorkAnsTextBox.TabIndex = 47;
+            this.DocumentWorkAnsTextBox.TabIndex = 67;
             this.DocumentWorkAnsTextBox.Texts = "";
             this.DocumentWorkAnsTextBox.UnderlinedStyle = false;
             // 
@@ -330,11 +327,11 @@
             this.CloseAnsButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.CloseAnsButton.Name = "CloseAnsButton";
             this.CloseAnsButton.Size = new System.Drawing.Size(399, 82);
-            this.CloseAnsButton.TabIndex = 46;
-            this.CloseAnsButton.Text = "Закрыть окно ";
+            this.CloseAnsButton.TabIndex = 66;
+            this.CloseAnsButton.Text = "Прекратить дополнение";
             this.CloseAnsButton.TextColor = System.Drawing.Color.White;
             this.CloseAnsButton.UseVisualStyleBackColor = false;
-            this.CloseAnsButton.Click += new System.EventHandler(this.CloseApplicWorkButton_Click);
+            this.CloseAnsButton.Click += new System.EventHandler(this.CloseAnsButton_Click);
             // 
             // DescripWorkAnsTextBox
             // 
@@ -353,7 +350,7 @@
             this.DescripWorkAnsTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.DescripWorkAnsTextBox.SelectionStart = 0;
             this.DescripWorkAnsTextBox.Size = new System.Drawing.Size(839, 254);
-            this.DescripWorkAnsTextBox.TabIndex = 40;
+            this.DescripWorkAnsTextBox.TabIndex = 61;
             this.DescripWorkAnsTextBox.Texts = "";
             this.DescripWorkAnsTextBox.UnderlinedStyle = false;
             // 
@@ -375,7 +372,7 @@
             this.StatusApplicationTextBox.ScrollBars = System.Windows.Forms.ScrollBars.None;
             this.StatusApplicationTextBox.SelectionStart = 0;
             this.StatusApplicationTextBox.Size = new System.Drawing.Size(383, 35);
-            this.StatusApplicationTextBox.TabIndex = 38;
+            this.StatusApplicationTextBox.TabIndex = 60;
             this.StatusApplicationTextBox.Texts = "";
             this.StatusApplicationTextBox.UnderlinedStyle = false;
             // 
@@ -398,7 +395,7 @@
             this.CustomFormForAllProject.HeaderTextColor = System.Drawing.Color.White;
             this.CustomFormForAllProject.HeaderTextFont = new System.Drawing.Font("Segoe UI", 12F);
             // 
-            // AnswerToUserApplicationForm
+            // SupplementWorkForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -423,12 +420,13 @@
             this.Controls.Add(this.StatusApplicationTextBox);
             this.Controls.Add(this.ApplPictureBox);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "AnswerToUserApplicationForm";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
-            this.Text = "Ответ на обращение пользователя";
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.AnswerToUserApplicationForm_FormClosed);
-            ((System.ComponentModel.ISupportInitialize)(this.ApplPictureBox)).EndInit();
+            this.Name = "SupplementWorkForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "Ответ на доп. информацию по обращению";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.SupplementWorkForm_FormClosed);
+            this.Load += new System.EventHandler(this.SupplementWorkForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.ChooseStatusApplPictureBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ApplPictureBox)).EndInit();
             this.TypeApplWorkMenuStrip.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -438,6 +436,15 @@
         #endregion
 
         private Components.FormStyleCustom CustomFormForAllProject;
+        private Design.CustomButton HelpThanksButton;
+        private Design.CustomButton HelpDiscussionButton;
+        private System.Windows.Forms.Label HelpLabel;
+        private Design.CustomButton HelpCollaborationButton;
+        private System.Windows.Forms.PictureBox ChooseStatusApplPictureBox;
+        private System.Windows.Forms.Label SelectAnsWorkDocumentLabel;
+        private Design.CustomButton DeleteAnsWorkDocumentButton;
+        private Design.CustomButton ChooseAnsWorkDocumentButton;
+        private Design.CustomButton AnswerApplButton;
         private Design.CustomTextBox DocumentWorkAnsTextBox;
         private Design.CustomButton CloseAnsButton;
         private System.Windows.Forms.Label DateTimeAnsDescrWorkLabel;
@@ -447,17 +454,8 @@
         private Design.CustomTextBox DescripWorkAnsTextBox;
         private Design.CustomTextBox StatusApplicationTextBox;
         private System.Windows.Forms.PictureBox ApplPictureBox;
-        private Design.CustomButton AnswerApplButton;
-        private Design.CustomButton DeleteAnsWorkDocumentButton;
-        private Design.CustomButton ChooseAnsWorkDocumentButton;
-        private System.Windows.Forms.Label SelectAnsWorkDocumentLabel;
-        private System.Windows.Forms.PictureBox ChooseStatusApplPictureBox;
         private System.Windows.Forms.ContextMenuStrip TypeApplWorkMenuStrip;
-        private System.Windows.Forms.ToolStripMenuItem завершеноToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem ожиданиеToolStripMenuItem;
-        private Design.CustomButton HelpCollaborationButton;
-        private Design.CustomButton HelpThanksButton;
-        private Design.CustomButton HelpDiscussionButton;
-        private System.Windows.Forms.Label HelpLabel;
+        private System.Windows.Forms.ToolStripMenuItem завершеноToolStripMenuItem;
     }
 }

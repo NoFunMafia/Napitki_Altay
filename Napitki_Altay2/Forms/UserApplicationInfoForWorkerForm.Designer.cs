@@ -124,6 +124,8 @@
             this.DocumentWorkTextBox.Name = "DocumentWorkTextBox";
             this.DocumentWorkTextBox.Padding = new System.Windows.Forms.Padding(7);
             this.DocumentWorkTextBox.PasswordChar = false;
+            this.DocumentWorkTextBox.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            this.DocumentWorkTextBox.SelectionStart = 0;
             this.DocumentWorkTextBox.Size = new System.Drawing.Size(383, 35);
             this.DocumentWorkTextBox.TabIndex = 34;
             this.DocumentWorkTextBox.Texts = "";
@@ -165,6 +167,8 @@
             this.DescripWorkTextBox.Name = "DescripWorkTextBox";
             this.DescripWorkTextBox.Padding = new System.Windows.Forms.Padding(7);
             this.DescripWorkTextBox.PasswordChar = false;
+            this.DescripWorkTextBox.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            this.DescripWorkTextBox.SelectionStart = 0;
             this.DescripWorkTextBox.Size = new System.Drawing.Size(839, 254);
             this.DescripWorkTextBox.TabIndex = 25;
             this.DescripWorkTextBox.Texts = "";
@@ -216,6 +220,8 @@
             this.CompanyWorkTextBox.Name = "CompanyWorkTextBox";
             this.CompanyWorkTextBox.Padding = new System.Windows.Forms.Padding(7);
             this.CompanyWorkTextBox.PasswordChar = false;
+            this.CompanyWorkTextBox.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            this.CompanyWorkTextBox.SelectionStart = 0;
             this.CompanyWorkTextBox.Size = new System.Drawing.Size(383, 35);
             this.CompanyWorkTextBox.TabIndex = 23;
             this.CompanyWorkTextBox.Texts = "";
@@ -246,6 +252,8 @@
             this.TypeApplWorkTextBox.Name = "TypeApplWorkTextBox";
             this.TypeApplWorkTextBox.Padding = new System.Windows.Forms.Padding(7);
             this.TypeApplWorkTextBox.PasswordChar = false;
+            this.TypeApplWorkTextBox.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            this.TypeApplWorkTextBox.SelectionStart = 0;
             this.TypeApplWorkTextBox.Size = new System.Drawing.Size(383, 35);
             this.TypeApplWorkTextBox.TabIndex = 24;
             this.TypeApplWorkTextBox.Texts = "";
@@ -284,6 +292,7 @@
             this.Name = "UserApplicationInfoForWorkerForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "Обращение пользователя";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.UserApplicationInfoForWorkerForm_FormClosed);
             this.Load += new System.EventHandler(this.UserApplicationInfoForWorkerForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.ApplPictureBox)).EndInit();
             this.ResumeLayout(false);

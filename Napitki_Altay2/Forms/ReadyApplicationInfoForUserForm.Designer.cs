@@ -146,6 +146,8 @@
             this.PinDocumentTextBox.Name = "PinDocumentTextBox";
             this.PinDocumentTextBox.Padding = new System.Windows.Forms.Padding(7);
             this.PinDocumentTextBox.PasswordChar = false;
+            this.PinDocumentTextBox.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            this.PinDocumentTextBox.SelectionStart = 0;
             this.PinDocumentTextBox.Size = new System.Drawing.Size(383, 35);
             this.PinDocumentTextBox.TabIndex = 47;
             this.PinDocumentTextBox.Texts = "";
@@ -187,6 +189,8 @@
             this.DescripCompleteTextBox.Name = "DescripCompleteTextBox";
             this.DescripCompleteTextBox.Padding = new System.Windows.Forms.Padding(7);
             this.DescripCompleteTextBox.PasswordChar = false;
+            this.DescripCompleteTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.DescripCompleteTextBox.SelectionStart = 0;
             this.DescripCompleteTextBox.Size = new System.Drawing.Size(839, 254);
             this.DescripCompleteTextBox.TabIndex = 40;
             this.DescripCompleteTextBox.Texts = "";
@@ -207,6 +211,8 @@
             this.StatusCompleteTextBox.Name = "StatusCompleteTextBox";
             this.StatusCompleteTextBox.Padding = new System.Windows.Forms.Padding(7);
             this.StatusCompleteTextBox.PasswordChar = false;
+            this.StatusCompleteTextBox.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            this.StatusCompleteTextBox.SelectionStart = 0;
             this.StatusCompleteTextBox.Size = new System.Drawing.Size(383, 35);
             this.StatusCompleteTextBox.TabIndex = 38;
             this.StatusCompleteTextBox.Texts = "";
@@ -256,6 +262,8 @@
             this.TypeAppealAnswerTextBox.Name = "TypeAppealAnswerTextBox";
             this.TypeAppealAnswerTextBox.Padding = new System.Windows.Forms.Padding(7);
             this.TypeAppealAnswerTextBox.PasswordChar = false;
+            this.TypeAppealAnswerTextBox.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            this.TypeAppealAnswerTextBox.SelectionStart = 0;
             this.TypeAppealAnswerTextBox.Size = new System.Drawing.Size(383, 35);
             this.TypeAppealAnswerTextBox.TabIndex = 50;
             this.TypeAppealAnswerTextBox.Texts = "";

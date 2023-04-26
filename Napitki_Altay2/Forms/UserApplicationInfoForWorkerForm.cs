@@ -7,6 +7,7 @@ using System.Drawing;
 using System.IO;
 using System.Diagnostics;
 using System.Windows.Forms;
+using System.Linq;
 #endregion
 
 namespace Napitki_Altay2.Forms
@@ -38,6 +39,8 @@ namespace Napitki_Altay2.Forms
         private void CloseApplicWorkButton_Click(object sender, EventArgs e)
         {
             Close();
+            Form userForm = Application.OpenForms["AnswerToUserApplicationForm"];
+            userForm?.Close();
         }
         #endregion
         #region [Событие загрузки формы]
@@ -143,5 +146,17 @@ namespace Napitki_Altay2.Forms
             }
         }
         #endregion
+
+        private void UserApplicationInfoForWorkerForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            // Найдите открытую форму MainWorkFormWorker
+            MainWorkFormWorker mainWorkFormWork = Application.OpenForms.OfType<MainWorkFormWorker>().FirstOrDefault();
+            // Если форма найдена, вызовите методы обновления
+            mainWorkFormWork?.Show();
+            Form answerForm = Application.OpenForms["AnswerToUserApplicationForm"];
+            answerForm?.Close();
+            Form supForm = Application.OpenForms["SupplementWorkForm"];
+            supForm?.Close();
+        }
     }
 }

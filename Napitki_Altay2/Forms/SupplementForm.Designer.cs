@@ -150,9 +150,9 @@
             this.DateTimeDescrLabel.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
             this.DateTimeDescrLabel.Location = new System.Drawing.Point(20, 606);
             this.DateTimeDescrLabel.Name = "DateTimeDescrLabel";
-            this.DateTimeDescrLabel.Size = new System.Drawing.Size(385, 28);
+            this.DateTimeDescrLabel.Size = new System.Drawing.Size(305, 28);
             this.DateTimeDescrLabel.TabIndex = 30;
-            this.DateTimeDescrLabel.Text = "Время подачи начального обращения:";
+            this.DateTimeDescrLabel.Text = "Время дополнения заявления:";
             // 
             // DescripApplLabel
             // 
@@ -318,6 +318,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(877, 790);
             this.Controls.Add(this.DeleteDocumentButton);
             this.Controls.Add(this.SelectDocumentLabel);

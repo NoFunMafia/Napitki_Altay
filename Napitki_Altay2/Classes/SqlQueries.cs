@@ -507,10 +507,11 @@ namespace Napitki_Altay2.Classes
                     $"'{idRow}'";
             return sqlCom;
         }
-        public string SqlComUpdateApplication(string desc, string idRow)
+        public string SqlComUpdateApplication(string desc, string dateTime, string idRow)
         {
             string sqlCom = "update Application_To_Company set " +
-                $"Description_Of_Appeal = '{desc}' where ID_Application = '{idRow}'";
+                $"Description_Of_Appeal = '{desc}', " +
+                $"Date_Of_Request = '{dateTime}' where ID_Application = '{idRow}'";
             return sqlCom;
         }
         public string SqlComUpdateStatusAppl(string idRow)
@@ -527,6 +528,31 @@ namespace Napitki_Altay2.Classes
                 "Application_To_Company.FK_Application_Document_From_User " +
                 "= Application_Document_From_User.ID_Document_From_User " +
                 $"where ID_Application = '{idRow}'";
+            return sqlCom;
+        }
+        #endregion
+        #region [SupplementWorkForm]
+        public string SqlComUpdateAnswer(string desc, string dateTime, string idRow)
+        {
+            string sqlCom = $"update Ready_Application set Answer_To_Application = '{desc}', " +
+                $"Date_Of_Answer = '{dateTime}' where ID_Ready_Application = '{idRow}'";
+            return sqlCom;
+        }
+        public string SqlComUpdateDocumentWorker(string idRow)
+        {
+            string sqlCom = "update Answer_Document_From_Worker set " +
+                "Document_Name_W = @filename, Document_Data_W = @data, " +
+                "Document_Extension_W = @extn " +
+                "from Ready_Application join Answer_Document_From_Worker on " +
+                "Ready_Application.FK_Answer_Document_From_Worker " +
+                "= Answer_Document_From_Worker.ID_Document_From_Worker " +
+                $"where ID_Application = '{idRow}'";
+            return sqlCom;
+        }
+        public string SqlComGetReadyId(string idRow)
+        {
+            string sqlCom = "select ID_Ready_Application from " +
+                $"Ready_Application where FK_ID_Application = '{idRow}'";
             return sqlCom;
         }
         #endregion

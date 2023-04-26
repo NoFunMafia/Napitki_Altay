@@ -12,6 +12,7 @@ using System.Globalization;
 using Point = System.Drawing.Point;
 using System.Linq;
 using System.Text;
+using System.Windows.Documents;
 #endregion
 
 namespace Napitki_Altay2.Forms
@@ -19,6 +20,7 @@ namespace Napitki_Altay2.Forms
     public partial class AnswerToUserApplicationForm : Form
     {
         #region [Подключение класса соединения с БД, объявление string переменных]
+        string documentPath;
         readonly DataBaseWork dataBaseWork = new DataBaseWork();
         readonly SqlQueries sqlQueries = new SqlQueries();
         string fkInfoUser, docName, docExtension, checkStatus, 
@@ -40,6 +42,8 @@ namespace Napitki_Altay2.Forms
         private void CloseApplicWorkButton_Click(object sender, EventArgs e)
         {
             Close();
+            Form userForm = Application.OpenForms["UserApplicationInfoForWorkerForm"];
+            userForm?.Close();
         }
         #endregion
         #region [События работы с ToolStripMenu, выбор статуса обращения]
@@ -74,10 +78,14 @@ namespace Napitki_Altay2.Forms
         {
             OpenFileDialog openFileDialog = new OpenFileDialog
             {
-                Filter = "Documents|*.docx;*.pdf;*.doc;*.xlsx"
+                Filter = "Документы|*.docx;*.doc;*.xlsx;*.xls;*.pdf"
             };
-            openFileDialog.ShowDialog();
-            DocumentWorkAnsTextBox.Texts = openFileDialog.FileName;
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                string fileName = Path.GetFileName(openFileDialog.FileName);
+                DocumentWorkAnsTextBox.Texts = fileName;
+                documentPath = openFileDialog.FileName;
+            }
         }
         #endregion
         #region [Событие нажатия на кнопку DeleteAnsWorkDocumentButton]
@@ -115,7 +123,7 @@ namespace Napitki_Altay2.Forms
                     MessageBox.Show("Не все поля заполнены!",
                         "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-                using (Stream stream = File.OpenRead(filepath))
+                using (Stream stream = File.OpenRead(documentPath))
                 {
                     GetDocumentInfo(filepath, stream, out byte[] buffer,
                         out string extension, out string name);
@@ -352,7 +360,18 @@ namespace Napitki_Altay2.Forms
                 MainWorkFormWorker.PatrWorkerString);
             listSearch = dataBaseWork.GetMultiList(sqlQueryFirst, 4);
         }
+
+        private void AnswerToUserApplicationForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            // Найдите открытую форму MainWorkFormWorker
+            MainWorkFormWorker mainWorkFormWork = Application.OpenForms.OfType<MainWorkFormWorker>().FirstOrDefault();
+            // Если форма найдена, вызовите методы обновления
+            mainWorkFormWork?.Show();
+            Form userForm = Application.OpenForms["UserApplicationInfoForWorkerForm"];
+            userForm?.Close();
+        }
         #endregion
+
         #region [Метод, создающий плейсхолдеры для макетов документов]
         /// <summary>
         /// Метод, создающий плейсхолдеры для макетов документов

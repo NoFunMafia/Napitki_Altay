@@ -22,6 +22,7 @@ namespace Napitki_Altay2.Forms
         readonly DataBaseWork dataBaseWork = new DataBaseWork();
         readonly SqlQueries sqlQueries = new SqlQueries();
         public static string SelectedRowID;
+        public static string SelectedRowCompleteID;
         public static string SurnameWorkerString;
         public static string NameWorkerString;
         public static string PatrWorkerString;
@@ -106,9 +107,7 @@ namespace Napitki_Altay2.Forms
             if (FolderPathBrowserDialog.ShowDialog() == DialogResult.OK)
                 FilePathTextBox.Texts = FolderPathBrowserDialog.SelectedPath;
             if(FilePathTextBox.Texts != string.Empty)
-            {
                 GenerateExcelRaport();
-            }
         }
         #endregion
         #region [Событие закрытия формы]
@@ -340,6 +339,7 @@ namespace Napitki_Altay2.Forms
                             answerForm.Show();
                             UserApplicationInfoForWorkerForm userForm = new UserApplicationInfoForWorkerForm();
                             userForm.Show();
+                            Hide();
                         }
                     }
                     else
@@ -348,17 +348,16 @@ namespace Napitki_Altay2.Forms
                         answerForm.Show();
                         UserApplicationInfoForWorkerForm userForm = new UserApplicationInfoForWorkerForm();
                         userForm.Show();
+                        Hide();
                     }
                 }
                 else
-                {
                     throw new Exception();
-                }
             }
             catch (Exception)
             {
-                MessageBox.Show("Невозможно дать ответ на не выделенное обращение!", "Ошибка",
-                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Невозможно дать ответ на не выделенное обращение!", 
+                    "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
         #endregion
@@ -523,7 +522,28 @@ namespace Napitki_Altay2.Forms
         /// <param name="e"></param>
         private void SupplementReplyButton_Click(object sender, EventArgs e)
         {
-
+            if (CompleteApplicationDGW.CurrentRow.Cells[5].Value.ToString() != "Дополнено")
+            {
+                SelectedRowID = CompleteApplicationDGW.CurrentRow.Cells[0].Value.ToString();
+                SupplementWorkForm supWorkForm = new SupplementWorkForm();
+                supWorkForm.Show();
+                supWorkForm.Location = new Point(740, 90);
+                supWorkForm.DisableControls();
+                UserApplicationInfoForWorkerForm userForm = new UserApplicationInfoForWorkerForm();
+                userForm.Show();
+                Hide();
+            }
+            else
+            {
+                SelectedRowID = CompleteApplicationDGW.CurrentRow.Cells[0].Value.ToString();
+                SupplementWorkForm supWorkForm = new SupplementWorkForm();
+                supWorkForm.Show();
+                supWorkForm.Location = new Point(740, 90);
+                supWorkForm.EnableControls();
+                UserApplicationInfoForWorkerForm userForm = new UserApplicationInfoForWorkerForm();
+                userForm.Show();
+                Hide();
+            }
         }
         #endregion
     }

@@ -33,6 +33,8 @@ namespace Napitki_Altay2.Forms
             MainWorkForm mainWorkForm = Application.OpenForms.OfType<MainWorkForm>().FirstOrDefault();
             // Если форма найдена, вызовите методы обновления
             mainWorkForm?.Show();
+            Form supForm = Application.OpenForms["SupplementForm"];
+            supForm?.Close();
         }
         #endregion
         #region [Событие загрузки формы]

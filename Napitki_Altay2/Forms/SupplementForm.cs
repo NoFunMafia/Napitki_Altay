@@ -25,6 +25,7 @@ namespace Napitki_Altay2.Forms
         public SupplementForm()
         {
             InitializeComponent();
+            DoubleBuffered = true; // Включение двойной буферизации
         }
         #endregion
         #region [Событие нажатия на кнопку ChooseDocumentButton]
@@ -50,8 +51,8 @@ namespace Napitki_Altay2.Forms
             // Если форма найдена, вызовите методы обновления
             mainWorkForm?.Show();
             Close();
-            Form readyForm = Application.OpenForms["ReadyApplicationInfoForUserForm"];
-            readyForm?.Close();
+            Form userInfoForm = Application.OpenForms["UserApplicationInfoForWorkerForm"];
+            userInfoForm?.Close();
         }
         #endregion
         #region [Событие нажатия на кнопку DeleteDocumentButton]
@@ -87,14 +88,16 @@ namespace Napitki_Altay2.Forms
                     MessageBox.Show("Не все поля заполнены!",
                         "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-
-                using (Stream stream = File.OpenRead(documentPath))
+                else
                 {
-                    GetDocumentInfo(filepath, stream, out byte[] buffer,
-                        out string extension, out string name);
-                    UpdateDocumentQuery(buffer, extension, name);
+                    using (Stream stream = File.OpenRead(documentPath))
+                    {
+                        GetDocumentInfo(filepath, stream, out byte[] buffer,
+                            out string extension, out string name);
+                        UpdateDocumentQuery(buffer, extension, name);
+                    }
+                    CreateSupplement();
                 }
-                CreateSupplement();
             }
         }
         #endregion
@@ -105,6 +108,8 @@ namespace Napitki_Altay2.Forms
             MainWorkForm mainWorkForm = Application.OpenForms.OfType<MainWorkForm>().FirstOrDefault();
             // Если форма найдена, вызовите методы обновления
             mainWorkForm?.Show();
+            Form readyForm = Application.OpenForms["ReadyApplicationInfoForUserForm"];
+            readyForm?.Close();
         }
         #endregion
         #region [Метод, заполняющий List список из sql-запроса]
@@ -133,7 +138,6 @@ namespace Napitki_Altay2.Forms
                     CompanyTextBox.Texts = item[1];
                     TypeApplTextBox.Texts = item[2];
                     DescripTextBox.Texts = item[3] + $"\r\n\r\nДополнение от {DateTime.Now}:\r\n";
-                    ApplDTP.Text = DateTime.Parse(item[4]).ToString();
                     companyWork = item[1];
                     typeApplication = item[2];
                     description = item[3];
@@ -197,7 +201,7 @@ namespace Napitki_Altay2.Forms
         private void CreateSupplement()
         {
             string sqlQueryFirst = sqlQueries.SqlComUpdateApplication
-                            (DescripTextBox.Texts, MainWorkForm.selectedRowIDInDGWC);
+                (DescripTextBox.Texts, DateTime.Now.ToString(), MainWorkForm.selectedRowIDInDGWC);
             bool checkUpdate = dataBaseWork.WithoutOutputQuery(sqlQueryFirst);
             string sqlQuerySecond = sqlQueries.SqlComUpdateStatusAppl
                 (MainWorkForm.selectedRowIDInDGWC);
