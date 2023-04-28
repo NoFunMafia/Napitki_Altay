@@ -12,7 +12,6 @@ using System.Globalization;
 using Point = System.Drawing.Point;
 using System.Linq;
 using System.Text;
-using System.Windows.Documents;
 #endregion
 
 namespace Napitki_Altay2.Forms

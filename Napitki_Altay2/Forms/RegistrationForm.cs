@@ -176,16 +176,42 @@ namespace Napitki_Altay2
             {
                 if (!CheckLoginUserInDB())
                     return;
-                if (CheckPass(PasswordCreateTextBox.Texts, 8, 15))
+                if (CheckPass(PasswordCreateTextBox.Texts, 7, 15))
                     return;
                 if (!IsValidEmail(EmailTextBox.Texts))
                     return;
                 Enabled = false;
-                SendAnEmail();
+                if(ChooseRoleTextBox.Texts == "Сотрудник")
+                {
+                    AuthFioWorkerForm authFioWorker = new AuthFioWorkerForm();
+                    authFioWorker.FormClosed += new FormClosedEventHandler(AuthFioWorkerForm_FormClosed);
+                    authFioWorker.Show();
+                }
+                else
+                    SendAnEmail();
             }
         }
         #endregion
-        #region [Событие закрытия формы]
+        void AuthFioWorkerForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Enabled = true;
+            bool createAccount = (sender as AuthFioWorkerForm).IsAccountWorker;
+            if (createAccount == true)
+            {
+                ReceiveRoleID(out string roleID);
+                ReceiveBoolCheckInsertUser(out bool checkInsertUser, roleID);
+                if (checkInsertUser)
+                {
+                    ReceiveUserIdFromLogin(AuthFioWorkerForm.idWorker, LoginCreateTextBox.Texts);
+                    MessageBox.Show("Ваши данные успешно внесены, можете приступать к работе!",
+                        "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    AuthForm authForm = new AuthForm();
+                    authForm.Show();
+                    Hide();
+                }
+            }
+        }
+        #region [Событие закрытия формы AuthEmailForm]
         void AuthEmailForm_FormClosed(object sender, FormClosedEventArgs e)
         {
             Enabled = true;
@@ -238,8 +264,15 @@ namespace Napitki_Altay2
                 MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         #endregion
+        #region [Метод, получающий id нового внесенного аккаунта]
+        public void ReceiveUserIdFromLogin(string idWorker, string login)
+        {
+            string sqlQuery = sqlQueries.SqlComSetWorkerIdToAccount(idWorker, login);
+            dataBaseWork.WithoutOutputQuery(sqlQuery);
+        }
+        #endregion
         #region [Метод, отправляющий письмо на Email почту]
-        private async void SendAnEmail()
+        public async void SendAnEmail()
         {
             GetUniqueCode();
             MimeMessage mimeMessage = new MimeMessage();

@@ -190,6 +190,12 @@
     <Compile Include="Forms\AuthEmailForm.Designer.cs">
       <DependentUpon>AuthEmailForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\AuthFioWorkerForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\AuthFioWorkerForm.Designer.cs">
+      <DependentUpon>AuthFioWorkerForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\AuthForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -272,6 +278,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\AuthEmailForm.resx">
       <DependentUpon>AuthEmailForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\AuthFioWorkerForm.resx">
+      <DependentUpon>AuthFioWorkerForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\AuthForm.resx">
       <DependentUpon>AuthForm.cs</DependentUpon>

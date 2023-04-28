@@ -555,6 +555,42 @@ namespace Napitki_Altay2.Classes
                 $"Ready_Application where FK_ID_Application = '{idRow}'";
             return sqlCom;
         }
+        public string SqlComOutputAnswerWithDateTime
+            (string name, string fam, string otch, string firstDate, string secondDate)
+        {
+            string sqlCom = "select FK_ID_Application, User_Surname, User_Name, " +
+                "User_Patronymic, Date_Of_Answer, Status_Name from Ready_Application " +
+                "join Info_About_User on Ready_Application.FK_Info_User = Info_About_User.ID_Info_User " +
+                "join Application_To_Company on " +
+                "Ready_Application.FK_ID_Application = Application_To_Company.ID_Application " +
+                "join Status_Application on " +
+                "Application_To_Company.FK_Status_Application = Status_Application.ID_Status " +
+                $"where User_Surname = '{fam}' and User_Name = '{name}' " +
+                $"and User_Patronymic = '{otch}' and Date_Of_Request " +
+                $"BETWEEN '{firstDate}T00:00:00' AND '{secondDate}T23:59:59' order by Date_Of_Answer";
+            return sqlCom;
+        }
+        #endregion
+        #region [AuthFioWorkerForm]
+        public string SqlComTakeIdWorker(string name, string fam, string otch)
+        {
+            string sqlCom = "select ID_Info_User from Info_About_User where " +
+                $"User_Surname = '{fam}' and User_Name = '{name}' and User_Patronymic = '{otch}'";
+            return sqlCom;
+        }
+        public string SqlComCheckAccountWorker(string idWorker)
+        {
+            string sqlCom = $"select ID_User from Authentication_ where FK_Info_User = '{idWorker}'";
+            return sqlCom;
+        }
+        #endregion
+        #region [RegistrationForm]
+        public string SqlComSetWorkerIdToAccount(string idWorker, string login)
+        {
+            string sqlCom = $"update Authentication_ set FK_Info_User = '{idWorker}' " +
+                $"where Login_User = '{login}'";
+            return sqlCom;
+        }
         #endregion
     }
 }

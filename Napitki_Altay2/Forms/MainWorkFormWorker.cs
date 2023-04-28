@@ -1,18 +1,12 @@
 ﻿#region [using's]
 using System;
 using System.Data;
-using System.Data.SqlClient;
-using System.Globalization;
 using System.IO;
 using System.Windows.Forms;
 using Excel = Microsoft.Office.Interop.Excel;
 using System.Drawing;
 using Napitki_Altay2.Classes;
 using System.Collections.Generic;
-using System.Linq;
-using ClosedXML.Report.Utils;
-using ClosedXML.Excel;
-using Microsoft.VisualBasic.ApplicationServices;
 #endregion
 namespace Napitki_Altay2.Forms
 {
@@ -31,8 +25,15 @@ namespace Napitki_Altay2.Forms
         {
             InitializeComponent();
             DoubleBuffered = true; // Включение двойной буферизации
+            SetFirstDayOfMonth();
+            SecondDateToRaportDTP.MaxDate = DateTime.Today;
         }
         #region [Событие загрузки формы]
+        /// <summary>
+        /// Событие загрузки формы
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void MainWorkFormWorker_Load(object sender, EventArgs e)
         {
             // Передача значения Пароля из формы AuthForm
@@ -52,6 +53,107 @@ namespace Napitki_Altay2.Forms
         private void CreateUserFIOButton_Click(object sender, EventArgs e)
         {
             CreateUserInfoQuery();
+        }
+        #endregion
+        #region [Событие нажатия на кнопку AnswerToApplicationButton]
+        /// <summary>
+        /// Событие нажатия на кнопку AnswerToApplicationButton
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void AnswerToApplicationButton_Click(object sender, EventArgs e)
+        {
+            OpenAnswerFormAndUpdateStatus();
+        }
+        #endregion
+        #region [Событие нажатия на кнопку GenerateRaportButton]
+        /// <summary>
+        /// Событие нажатия на кнопку GenerateRaportButton
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void GenerateRaportButton_Click(object sender, EventArgs e)
+        {
+            if (FolderPathBrowserDialog.ShowDialog() == DialogResult.OK)
+                FilePathTextBox.Texts = FolderPathBrowserDialog.SelectedPath;
+            if(FilePathTextBox.Texts != string.Empty)
+                GenerateExcelRaport(FirstDateToRaportDTP.Value, SecondDateToRaportDTP.Value);
+        }
+        #endregion
+        #region [Событие закрытия формы]
+        /// <summary>
+        /// Событие закрытия формы
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void MainWorkFormWorker_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Application.Exit();
+        }
+        #endregion
+        #region [Событие нажатия на кнопку UpdLogPassButton]
+        /// <summary>
+        /// Событие нажатия на кнопку UpdLogPassButton
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UpdLogPassButton_Click(object sender, EventArgs e)
+        {
+            UpdatePassQuery();
+        }
+        #endregion
+        #region [Событие нажатия на кнопку SupplementReplyButton]
+        /// <summary>
+        /// Событие нажатия на кнопку SupplementReplyButton
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void SupplementReplyButton_Click(object sender, EventArgs e)
+        {
+            if (CompleteApplicationDGW.CurrentRow.Cells[5].Value.ToString() != "Дополнено")
+            {
+                SelectedRowID = CompleteApplicationDGW.CurrentRow.Cells[0].Value.ToString();
+                SupplementWorkForm supWorkForm = new SupplementWorkForm();
+                supWorkForm.Show();
+                supWorkForm.Location = new Point(740, 90);
+                supWorkForm.DisableControls();
+                UserApplicationInfoForWorkerForm userForm = new UserApplicationInfoForWorkerForm();
+                userForm.Show();
+                Hide();
+            }
+            else
+            {
+                SelectedRowID = CompleteApplicationDGW.CurrentRow.Cells[0].Value.ToString();
+                SupplementWorkForm supWorkForm = new SupplementWorkForm();
+                supWorkForm.Show();
+                supWorkForm.Location = new Point(740, 90);
+                supWorkForm.EnableControls();
+                UserApplicationInfoForWorkerForm userForm = new UserApplicationInfoForWorkerForm();
+                userForm.Show();
+                Hide();
+            }
+        }
+        #endregion
+        #region [Событие смены значения даты в FirstDateToRaportDTP]
+        /// <summary>
+        /// Событие смены значения даты в FirstDateToRaportDTP
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void FirstDateToRaportDTP_ValueChanged(object sender, EventArgs e)
+        {
+            SecondDateToRaportDTP.MinDate = FirstDateToRaportDTP.Value;
+        }
+        #endregion
+        #region [Событие смены значения даты в SecondDateToRaportDTP]
+        /// <summary>
+        /// Событие смены значения даты в SecondDateToRaportDTP
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void SecondDateToRaportDTP_ValueChanged(object sender, EventArgs e)
+        {
+            FirstDateToRaportDTP.MaxDate = SecondDateToRaportDTP.Value;
         }
         #endregion
         #region [Метод, отправляющий sql-запросы на внесение ФИО в БД]
@@ -83,48 +185,6 @@ namespace Napitki_Altay2.Forms
                     PatrWorkCreateTextBox.Enabled = false;
                 }
             }
-        }
-        #endregion
-        #region [Событие нажатия на кнопку AnswerToApplicationButton]
-        /// <summary>
-        /// Событие нажатия на кнопку AnswerToApplicationButton
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void AnswerToApplicationButton_Click(object sender, EventArgs e)
-        {
-            OpenAnswerFormAndUpdateStatus();
-        }
-        #endregion
-        #region [Событие нажатия на кнопку GenerateRaportButton]
-        /// <summary>
-        /// Событие нажатия на кнопку GenerateRaportButton
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void GenerateRaportButton_Click(object sender, EventArgs e)
-        {
-            if (FolderPathBrowserDialog.ShowDialog() == DialogResult.OK)
-                FilePathTextBox.Texts = FolderPathBrowserDialog.SelectedPath;
-            if(FilePathTextBox.Texts != string.Empty)
-                GenerateExcelRaport();
-        }
-        #endregion
-        #region [Событие закрытия формы]
-        /// <summary>
-        /// Событие закрытия формы
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void MainWorkFormWorker_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            Application.Exit();
-        }
-        #endregion
-        #region [Событие нажатия на кнопку UpdLogPassButton]
-        private void UpdLogPassButton_Click(object sender, EventArgs e)
-        {
-            UpdatePassQuery();
         }
         #endregion
         #region [Метод, получающий ФИО сотрудника]
@@ -225,6 +285,9 @@ namespace Napitki_Altay2.Forms
         }
         #endregion
         #region [Метод, выводящий данные в CompleteApplicationDGW]
+        /// <summary>
+        /// Метод, выводящий данные в CompleteApplicationDGW
+        /// </summary>
         public void LoadDataInCompleteApplicationDGW()
         {
             string sqlQueryFourth = sqlQueries.SqlComOutputAnswers
@@ -309,6 +372,11 @@ namespace Napitki_Altay2.Forms
         }
         #endregion
         #region [Метод, обновляющий данные в DataGridViewAnswer]
+        /// <summary>
+        /// Метод, обновляющий данные в DataGridViewAnswer
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void UpdateAnswerInDGW_Click(object sender, EventArgs e)
         {
             LoadDataInDataGridViewAnswer();
@@ -362,6 +430,11 @@ namespace Napitki_Altay2.Forms
         }
         #endregion
         #region [Метод, получающий русское название месяцев для выводного отчёта]
+        /// <summary>
+        /// Метод, получающий русское название месяцев для выводного отчёта
+        /// </summary>
+        /// <param name="month"></param>
+        /// <returns></returns>
         private string GetRussianMonthName(int month)
         {
             string[] monthNames = { "Январь", "Февраль", "Март", "Апрель", 
@@ -374,125 +447,176 @@ namespace Napitki_Altay2.Forms
         /// <summary>
         /// Метод, позволяющий сформировать excel рапорт
         /// </summary>
-        private void GenerateExcelRaport()
+        private void GenerateExcelRaport(DateTime fromDate, DateTime toDate)
         {
-            object missingValue = Type.Missing;
-            Excel.Application IApplication = new Excel.Application();
-            Excel.Workbook IWorkbook = IApplication.Workbooks.Add(missingValue);
-            Excel.Worksheet IWorksheet = IWorkbook.Worksheets.get_Item(1);
-            // Заголовок отчета
-            IWorksheet.Cells[1, 1].Font.Size = 20;
-            IWorksheet.Cells[1, 1].Font.Bold = true;
-            IWorksheet.Cells[1, 1] = $"Отчет о проделанной работе сотрудника";
-            // Заголовки столбцов
-            int columnIndex = 1;
-            for (int i = 0; i < CompleteApplicationDGW.Columns.Count; i++)
+            FillStrings();
+            LoadDataInDataGridViewAnswerWithDate();
+            DialogResult result = MessageBox.Show
+                ($"Вы уверены что хотите создать отчёт от " +
+                $"{fromDate:dd-MM-yyyy} до {toDate:dd-MM-yyyy}?",
+                "Информация", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+            if (result == DialogResult.Yes)
             {
-                if (CompleteApplicationDGW.Columns[i].HeaderText == "User_Surname" ||
-                    CompleteApplicationDGW.Columns[i].HeaderText == "User_Name" ||
-                    CompleteApplicationDGW.Columns[i].HeaderText == "User_Patronymic")
-                    continue;
-                IWorksheet.Cells[3, columnIndex] = CompleteApplicationDGW.Columns[i].HeaderText;
-                IWorksheet.Cells[3, columnIndex].Font.Bold = true;
-                IWorksheet.Cells[3, columnIndex].Interior.Color = Color.FromArgb(201, 235, 200);
-                IWorksheet.Cells[3, columnIndex].Borders.Color = Color.Black;
-                columnIndex++;
-            }
-            Dictionary<string, int> employeeTasksCount = new Dictionary<string, int>();
-            // Данные таблицы
-            for (int j = 0; j < CompleteApplicationDGW.Rows.Count; j++)
-            {
-                string currentEmployeeName = Convert.ToString
-                    (CompleteApplicationDGW.Rows[j].Cells["User_Name"].Value);
-                if (!employeeTasksCount.ContainsKey(currentEmployeeName))
+                object missingValue = Type.Missing;
+                Excel.Application IApplication = new Excel.Application();
+                Excel.Workbook IWorkbook = IApplication.Workbooks.Add(missingValue);
+                Excel.Worksheet IWorksheet = IWorkbook.Worksheets.get_Item(1);
+                // Заголовок отчета
+                string employeeName = $"{SurnameWorkerString} {NameWorkerString} {PatrWorkerString}";
+                IWorksheet.Cells[1, 1].Font.Size = 16;
+                IWorksheet.Cells[1, 1].Font.Bold = true;
+                IWorksheet.Cells[2, 1].Font.Size = 16;
+                IWorksheet.Cells[2, 1].Font.Bold = true;
+                IWorksheet.Cells[1, 1] = $"Отчет о проделанной работе";
+                IWorksheet.Cells[2, 1] = $"сотрудника {employeeName}";
+                // Заголовки столбцов
+                int columnIndex = 1;
+                for (int i = 0; i < CompleteApplicationDGW.Columns.Count; i++)
                 {
-                    employeeTasksCount[currentEmployeeName] = 1;
+                    if (CompleteApplicationDGW.Columns[i].HeaderText == "Фамилия" ||
+                        CompleteApplicationDGW.Columns[i].HeaderText == "Имя" ||
+                        CompleteApplicationDGW.Columns[i].HeaderText == "Отчество")
+                        continue;
+                    IWorksheet.Cells[4, columnIndex] = CompleteApplicationDGW.Columns[i].HeaderText;
+                    IWorksheet.Cells[4, columnIndex].Font.Bold = true;
+                    IWorksheet.Cells[4, columnIndex].Interior.Color = Color.FromArgb(201, 235, 200);
+                    IWorksheet.Cells[4, columnIndex].Borders.Color = Color.Black;
+                    columnIndex++;
+                }
+                Dictionary<string, int> employeeTasksCount = new Dictionary<string, int>();
+                Dictionary<string, int> statusCounts = new Dictionary<string, int>()
+                {
+                    { "Дополнено", 0 },
+                    { "Завершено", 0 },
+                    { "Ожидание доп. информации", 0 }
+                };
+                // Данные таблицы
+                for (int j = 0; j < CompleteApplicationDGW.Rows.Count; j++)
+                {
+                    string currentEmployeeName = Convert.ToString
+                        (CompleteApplicationDGW.Rows[j].Cells["User_Name"].Value);
+                    string currentStatus = Convert.ToString
+                        (CompleteApplicationDGW.Rows[j].Cells["Status_Name"].Value);
+                    if (!employeeTasksCount.ContainsKey(currentEmployeeName))
+                    {
+                        employeeTasksCount[currentEmployeeName] = 1;
+                    }
+                    else
+                    {
+                        employeeTasksCount[currentEmployeeName]++;
+                    }
+                    if (statusCounts.ContainsKey(currentStatus))
+                    {
+                        statusCounts[currentStatus]++;
+                    }
+                    columnIndex = 1;
+                    for (int i = 0; i < CompleteApplicationDGW.Columns.Count; i++)
+                    {
+                        if (CompleteApplicationDGW.Columns[i].HeaderText == "Фамилия" ||
+                        CompleteApplicationDGW.Columns[i].HeaderText == "Имя" ||
+                        CompleteApplicationDGW.Columns[i].HeaderText == "Отчество")
+                            continue;
+                        IWorksheet.Cells[j + 5, columnIndex] = Convert.ToString
+                        (CompleteApplicationDGW.Rows[j].Cells[i].Value);
+                        IWorksheet.Cells[j + 5, columnIndex].Interior.Color = Color.FromArgb(218, 237, 255);
+                        IWorksheet.Cells[j + 5, columnIndex].Borders.Color = Color.Black;
+                        columnIndex++;
+                    }
+                }
+                IWorksheet.Columns.AutoFit();
+                // Вывод статистики по сотрудникам и статусам
+                int summaryRow = CompleteApplicationDGW.Rows.Count + 6;
+                IWorksheet.Cells[summaryRow, 1] = "Количество обращений по статусам";
+                IWorksheet.Cells[summaryRow, 1].Font.Bold = true;
+                IWorksheet.Cells[summaryRow, 1].Interior.Color = Color.FromArgb(201, 235, 200);
+                IWorksheet.Cells[summaryRow, 1].Borders.Color = Color.Black;
+                int statusRow = summaryRow + 1;
+                foreach (var status in statusCounts)
+                {
+                    IWorksheet.Cells[statusRow, 1] = $"{status.Key}: {status.Value}";
+                    IWorksheet.Cells[statusRow, 1].Interior.Color = Color.FromArgb(218, 237, 255);
+                    IWorksheet.Cells[statusRow, 1].Borders.Color = Color.Black;
+                    statusRow++;
+                }
+                // Добавление диаграммы
+                Excel.ChartObjects chartObjects = (Excel.ChartObjects)IWorksheet.ChartObjects(Type.Missing);
+                Excel.ChartObject chartObject = chartObjects.Add(610, 5, 370, 300); // Изменение размеров диаграммы
+                Excel.Chart chart = chartObject.Chart;
+                // Add data series
+                Excel.SeriesCollection seriesCollection = (Excel.SeriesCollection)chart.SeriesCollection(Type.Missing);
+                Excel.Series series = seriesCollection.NewSeries();
+                series.XValues = new string[] { "Дополнено", "Завершено", "Ожидание доп. информации" };
+                series.Values = new int[] { statusCounts["Дополнено"], statusCounts["Завершено"], statusCounts["Ожидание доп. информации"] };
+                series.Name = "Завершенные обращения";
+                series.ChartType = Excel.XlChartType.xlColumnClustered;
+                chart.HasTitle = true;
+                chart.ChartTitle.Text = $"Завершенные обращения с {fromDate:dd.MM.yyyy} по {toDate:dd.MM.yyyy}";
+                chart.HasLegend = false;
+                // Назначение цветов для статусов
+                Excel.SeriesCollection seriesCollectionSecond = (Excel.SeriesCollection)chart.SeriesCollection(Type.Missing);
+                Excel.Series seriesSecond = seriesCollection.Item(1);
+                for (int i = 1; i <= series.Points().Count; i++)
+                {
+                    Excel.Point point = series.Points(i);
+                    switch (i)
+                    {
+                        case 1:
+                            point.Interior.Color = Color.FromArgb(255, 99, 71); // Дополнено - красный
+                            break;
+                        case 2:
+                            point.Interior.Color = Color.FromArgb(50, 205, 50); // Завершено - зеленый
+                            break;
+                        case 3:
+                            point.Interior.Color = Color.FromArgb(255, 215, 0); // Ожидание доп. информации - желтый
+                            break;
+                    }
+                }
+                // Подпись и дата
+                int lastRow = statusRow + 1;
+                IWorksheet.Cells[lastRow, 1].Font.Bold = true;
+                IWorksheet.Cells[lastRow, 1] = $"Дата: {DateTime.Now:dd-MM-yyyy}";
+                IWorksheet.Cells[lastRow, 5] = "Подпись главы отдела:_____________";
+                IWorksheet.Cells[lastRow, 5].Font.Bold = true; // Выделение жирным
+                IWorksheet.Cells[lastRow + 1, 5] = "Место печати ";
+                IWorksheet.Cells[lastRow + 1, 5].Font.Bold = true; // Выделение жирным
+                string excelFileName = $"Отчет о завершённых обращениях " +
+                    $"сотрудника {employeeName} за период от " +
+                    $"{fromDate:dd.MM.yyyy} до {toDate:dd.MM.yyyy}.xlsx";
+                string filePath = FilePathTextBox.Texts;
+                if (string.IsNullOrWhiteSpace(filePath))
+                {
+                    MessageBox.Show("Путь сохранения не определен!", "Ошибка",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 else
                 {
-                    employeeTasksCount[currentEmployeeName]++;
+                    excelFileName = Path.Combine(filePath, excelFileName);
+                    IWorkbook.SaveAs(excelFileName);
+                    MessageBox.Show("Отчёт успешно сформирован!", "Информация",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    IWorkbook.Close(true, missingValue, missingValue);
+                    IApplication.Quit();
                 }
-                columnIndex = 1;
-                for (int i = 0; i < CompleteApplicationDGW.Columns.Count; i++)
-                {
-                    if (CompleteApplicationDGW.Columns[i].HeaderText == "User_Surname" ||
-                        CompleteApplicationDGW.Columns[i].HeaderText == "User_Name" ||
-                        CompleteApplicationDGW.Columns[i].HeaderText == "User_Patronymic")
-                        continue;
-                    IWorksheet.Cells[j + 4, columnIndex] = Convert.ToString
-                        (CompleteApplicationDGW.Rows[j].Cells[i].Value);
-                    IWorksheet.Cells[j + 4, columnIndex].Interior.Color = Color.FromArgb(218, 237, 255);
-                    IWorksheet.Cells[j + 4, columnIndex].Borders.Color = Color.Black;
-                    columnIndex++;
-                }
-            }
-            IWorksheet.Columns.AutoFit();
-            // Вывод статистики по сотрудникам
-            int summaryRow = CompleteApplicationDGW.Rows.Count + 5;
-            IWorksheet.Cells[summaryRow, 1] = "Количество завершенных обращений";
-            IWorksheet.Cells[summaryRow, 1].Font.Bold = true;
-            IWorksheet.Cells[summaryRow, 1].Interior.Color = Color.FromArgb(201, 235, 200);
-            IWorksheet.Cells[summaryRow, 1].Borders.Color = Color.Black;
-            int employeeRow = summaryRow + 1;
-            foreach (var employee in employeeTasksCount)
-            {
-                IWorksheet.Cells[employeeRow, 1] = employee.Value;
-                IWorksheet.Cells[employeeRow, 1].Interior.Color = Color.FromArgb(218, 237, 255);
-                IWorksheet.Cells[employeeRow, 1].Borders.Color = Color.Black;
-                employeeRow++;
-            }
-            // Добавление диаграммы
-            Excel.ChartObjects chartObjects = (Excel.ChartObjects)IWorksheet.ChartObjects(Type.Missing);
-            Excel.ChartObject chartObject = chartObjects.Add(400, 60, 400, 300); // Изменение размеров диаграммы
-            Excel.Chart chart = chartObject.Chart;
-            Excel.Range dataRange = IWorksheet.Range[IWorksheet.Cells[summaryRow + 1, 1], IWorksheet.Cells[employeeRow - 1, 1]];
-            chart.SetSourceData(dataRange);
-            chart.ChartType = Excel.XlChartType.xlColumnClustered;
-            chart.HasTitle = true;
-            var cultureInfo = new CultureInfo("ru-RU");
-            string monthName = DateTime.Now.ToString("MMMM", cultureInfo);
-            chart.ChartTitle.Text = $"Завершенные обращения за {monthName}";
-            chart.HasLegend = false;
-            // Подпись и дата
-            int lastRow = employeeRow + 1;
-            IWorksheet.Cells[lastRow, 1].Font.Bold = true;
-            IWorksheet.Cells[lastRow, 1] = $"Дата: {DateTime.Now:dd-MM-yyyy}";
-            IWorksheet.Cells[lastRow, 5] = "Подпись главы отдела:_____________";
-            IWorksheet.Cells[lastRow, 5].Font.Bold = true; // Выделение жирным
-            IWorksheet.Cells[lastRow + 1, 5] = "Место печати ";
-            IWorksheet.Cells[lastRow + 1, 5].Font.Bold = true; // Выделение жирным
-            // Сохранение файла
-            string excelFileName = " Отчет о завершенных обращениях.xlsx";
-            string finalFileName = DateTime.Now.ToString("dd-MM-yyyy", CultureInfo.InvariantCulture) + excelFileName;
-            string filePath = FilePathTextBox.Texts;
-            if (FilePathTextBox.Texts.IsNullOrWhiteSpace())
-            {
-                MessageBox.Show("Путь сохранения не определен!", "Ошибка",
-                MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            else
-            {
-                finalFileName = Path.Combine(filePath, finalFileName);
-                IWorkbook.SaveAs(finalFileName);
-                MessageBox.Show("Отчёт успешно сформирован!", "Информация",
-                MessageBoxButtons.OK, MessageBoxIcon.Information);
-                IWorkbook.Close(true, missingValue, missingValue);
-                IApplication.Quit();
             }
         }
         #endregion
         #region [Метод, обновляющий данные в CompleteApplicationDGW]
-            /// <summary>
-            /// Метод, обновляющий данные в CompleteApplicationDGW
-            /// </summary>
-            /// <param name="sender"></param>
-            /// <param name="e"></param>
-            private void UpdateDataDGWAnswer_Click(object sender, EventArgs e)
+        /// <summary>
+        /// Метод, обновляющий данные в CompleteApplicationDGW
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UpdateDataDGWAnswer_Click(object sender, EventArgs e)
         {
             LoadDataInCompleteApplicationDGW();
         }
         #endregion
         #region [Метод, показывающий/скрывающий видимость пароля]
+        /// <summary>
+        /// Метод, показывающий/скрывающий видимость пароля
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void VisiblePassCheckMain_CheckedChanged(object sender, EventArgs e)
         {
             PassWorkCreaUpdaTextBox.PasswordChar = !VisiblePassCheckMain.Checked;
@@ -514,36 +638,31 @@ namespace Napitki_Altay2.Forms
             }
         }
         #endregion
-        #region [Событие нажатия на кнопку SupplementReplyButton]
+        #region [Метод, устанавливающий в дату "ОТ" первое число месяца]
         /// <summary>
-        /// Событие нажатия на кнопку SupplementReplyButton
+        /// Метод, устанавливающий в дату "ОТ" первое число месяца
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void SupplementReplyButton_Click(object sender, EventArgs e)
+        private void SetFirstDayOfMonth()
         {
-            if (CompleteApplicationDGW.CurrentRow.Cells[5].Value.ToString() != "Дополнено")
-            {
-                SelectedRowID = CompleteApplicationDGW.CurrentRow.Cells[0].Value.ToString();
-                SupplementWorkForm supWorkForm = new SupplementWorkForm();
-                supWorkForm.Show();
-                supWorkForm.Location = new Point(740, 90);
-                supWorkForm.DisableControls();
-                UserApplicationInfoForWorkerForm userForm = new UserApplicationInfoForWorkerForm();
-                userForm.Show();
-                Hide();
-            }
-            else
-            {
-                SelectedRowID = CompleteApplicationDGW.CurrentRow.Cells[0].Value.ToString();
-                SupplementWorkForm supWorkForm = new SupplementWorkForm();
-                supWorkForm.Show();
-                supWorkForm.Location = new Point(740, 90);
-                supWorkForm.EnableControls();
-                UserApplicationInfoForWorkerForm userForm = new UserApplicationInfoForWorkerForm();
-                userForm.Show();
-                Hide();
-            }
+            DateTime now = DateTime.Now;
+            DateTime firstDayOfMonth = new DateTime(now.Year, now.Month, 1);
+            FirstDateToRaportDTP.Value = firstDayOfMonth;
+        }
+        #endregion
+        #region [Метод, выводящий значения из sql-запроса в CompleteApplicationDGW с отбором дат]
+        /// <summary>
+        /// Метод, выводящий значения из sql-запроса в CompleteApplicationDGW с отбором дат
+        /// </summary>
+        public void LoadDataInDataGridViewAnswerWithDate()
+        {
+            string sqlQuery = sqlQueries.SqlComOutputAnswerWithDateTime
+                (NameWorkCreateTextBox.Texts,
+                FamWorkCreateTextBox.Texts,
+                PatrWorkCreateTextBox.Texts, 
+                FirstDateToRaportDTP.Value.Date.ToString("yyyy-MM-dd"), 
+                SecondDateToRaportDTP.Value.Date.ToString("yyyy-MM-dd"));
+            DataTable dataTable = dataBaseWork.OutputQuery(sqlQuery);
+            OutputInTableSettingTwo(dataTable);
         }
         #endregion
     }
