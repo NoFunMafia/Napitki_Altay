@@ -33,17 +33,21 @@
             this.MainWorkAdminTabControl = new System.Windows.Forms.TabControl();
             this.AllUsersPage = new System.Windows.Forms.TabPage();
             this.InfoUsersLabel = new System.Windows.Forms.Label();
+            this.DataGridViewUsers = new System.Windows.Forms.DataGridView();
+            this.AllApplicationPage = new System.Windows.Forms.TabPage();
+            this.LatterPoLabel = new System.Windows.Forms.Label();
+            this.LatterOtLabel = new System.Windows.Forms.Label();
+            this.SecondDateToRaportDTP = new System.Windows.Forms.DateTimePicker();
+            this.FirstDateToRaportDTP = new System.Windows.Forms.DateTimePicker();
+            this.FolderPathLabel = new System.Windows.Forms.Label();
+            this.DataGridViewApplication = new System.Windows.Forms.DataGridView();
+            this.FolderPathBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
             this.UpdateUserButton = new Napitki_Altay2.Design.CustomButton();
             this.DeleteUserButton = new Napitki_Altay2.Design.CustomButton();
             this.CreateUserButton = new Napitki_Altay2.Design.CustomButton();
-            this.DataGridViewUsers = new System.Windows.Forms.DataGridView();
-            this.AllApplicationPage = new System.Windows.Forms.TabPage();
-            this.FilePathChooseButton = new Napitki_Altay2.Design.CustomButton();
             this.FilePathTextBox = new Napitki_Altay2.Design.CustomTextBox();
             this.UpdateApplicationButton = new Napitki_Altay2.Design.CustomButton();
             this.GenerateRaportButton = new Napitki_Altay2.Design.CustomButton();
-            this.DataGridViewApplication = new System.Windows.Forms.DataGridView();
-            this.FolderPathBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
             this.CustomFormForAllProject = new Napitki_Altay2.Components.FormStyleCustom(this.components);
             this.MainWorkAdminTabControl.SuspendLayout();
             this.AllUsersPage.SuspendLayout();
@@ -60,7 +64,7 @@
             this.MainWorkAdminTabControl.Location = new System.Drawing.Point(4, 5);
             this.MainWorkAdminTabControl.Name = "MainWorkAdminTabControl";
             this.MainWorkAdminTabControl.SelectedIndex = 0;
-            this.MainWorkAdminTabControl.Size = new System.Drawing.Size(1019, 551);
+            this.MainWorkAdminTabControl.Size = new System.Drawing.Size(1019, 619);
             this.MainWorkAdminTabControl.TabIndex = 0;
             // 
             // AllUsersPage
@@ -73,7 +77,7 @@
             this.AllUsersPage.Location = new System.Drawing.Point(4, 27);
             this.AllUsersPage.Name = "AllUsersPage";
             this.AllUsersPage.Padding = new System.Windows.Forms.Padding(3);
-            this.AllUsersPage.Size = new System.Drawing.Size(1011, 520);
+            this.AllUsersPage.Size = new System.Drawing.Size(1011, 588);
             this.AllUsersPage.TabIndex = 0;
             this.AllUsersPage.Text = "Пользователи";
             this.AllUsersPage.UseVisualStyleBackColor = true;
@@ -89,6 +93,102 @@
             this.InfoUsersLabel.TabIndex = 17;
             this.InfoUsersLabel.Text = "Внимание! Удаление сотрудников и заявителей которые\r\nучаствовали в документооборо" +
     "те недопустимо!";
+            // 
+            // DataGridViewUsers
+            // 
+            this.DataGridViewUsers.AllowUserToAddRows = false;
+            this.DataGridViewUsers.AllowUserToDeleteRows = false;
+            this.DataGridViewUsers.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.DataGridViewUsers.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.DataGridViewUsers.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.DataGridViewUsers.Location = new System.Drawing.Point(3, 59);
+            this.DataGridViewUsers.Name = "DataGridViewUsers";
+            this.DataGridViewUsers.ReadOnly = true;
+            this.DataGridViewUsers.RowHeadersWidth = 51;
+            this.DataGridViewUsers.RowTemplate.Height = 24;
+            this.DataGridViewUsers.Size = new System.Drawing.Size(1005, 525);
+            this.DataGridViewUsers.TabIndex = 0;
+            // 
+            // AllApplicationPage
+            // 
+            this.AllApplicationPage.Controls.Add(this.LatterPoLabel);
+            this.AllApplicationPage.Controls.Add(this.LatterOtLabel);
+            this.AllApplicationPage.Controls.Add(this.SecondDateToRaportDTP);
+            this.AllApplicationPage.Controls.Add(this.FirstDateToRaportDTP);
+            this.AllApplicationPage.Controls.Add(this.FolderPathLabel);
+            this.AllApplicationPage.Controls.Add(this.FilePathTextBox);
+            this.AllApplicationPage.Controls.Add(this.UpdateApplicationButton);
+            this.AllApplicationPage.Controls.Add(this.GenerateRaportButton);
+            this.AllApplicationPage.Controls.Add(this.DataGridViewApplication);
+            this.AllApplicationPage.Location = new System.Drawing.Point(4, 27);
+            this.AllApplicationPage.Name = "AllApplicationPage";
+            this.AllApplicationPage.Padding = new System.Windows.Forms.Padding(3);
+            this.AllApplicationPage.Size = new System.Drawing.Size(1011, 588);
+            this.AllApplicationPage.TabIndex = 1;
+            this.AllApplicationPage.Text = "Отчётность";
+            this.AllApplicationPage.UseVisualStyleBackColor = true;
+            // 
+            // LatterPoLabel
+            // 
+            this.LatterPoLabel.AutoSize = true;
+            this.LatterPoLabel.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
+            this.LatterPoLabel.Location = new System.Drawing.Point(8, 143);
+            this.LatterPoLabel.Name = "LatterPoLabel";
+            this.LatterPoLabel.Size = new System.Drawing.Size(42, 28);
+            this.LatterPoLabel.TabIndex = 37;
+            this.LatterPoLabel.Text = "ДО";
+            // 
+            // LatterOtLabel
+            // 
+            this.LatterOtLabel.AutoSize = true;
+            this.LatterOtLabel.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
+            this.LatterOtLabel.Location = new System.Drawing.Point(13, 101);
+            this.LatterOtLabel.Name = "LatterOtLabel";
+            this.LatterOtLabel.Size = new System.Drawing.Size(37, 28);
+            this.LatterOtLabel.TabIndex = 36;
+            this.LatterOtLabel.Text = "ОТ";
+            // 
+            // SecondDateToRaportDTP
+            // 
+            this.SecondDateToRaportDTP.Font = new System.Drawing.Font("Segoe UI", 12F);
+            this.SecondDateToRaportDTP.Location = new System.Drawing.Point(56, 138);
+            this.SecondDateToRaportDTP.Name = "SecondDateToRaportDTP";
+            this.SecondDateToRaportDTP.Size = new System.Drawing.Size(198, 34);
+            this.SecondDateToRaportDTP.TabIndex = 35;
+            this.SecondDateToRaportDTP.ValueChanged += new System.EventHandler(this.SecondDateToRaportDTP_ValueChanged);
+            // 
+            // FirstDateToRaportDTP
+            // 
+            this.FirstDateToRaportDTP.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.FirstDateToRaportDTP.Location = new System.Drawing.Point(56, 96);
+            this.FirstDateToRaportDTP.Name = "FirstDateToRaportDTP";
+            this.FirstDateToRaportDTP.Size = new System.Drawing.Size(198, 34);
+            this.FirstDateToRaportDTP.TabIndex = 34;
+            this.FirstDateToRaportDTP.ValueChanged += new System.EventHandler(this.FirstDateToRaportDTP_ValueChanged);
+            // 
+            // FolderPathLabel
+            // 
+            this.FolderPathLabel.AutoSize = true;
+            this.FolderPathLabel.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.FolderPathLabel.Location = new System.Drawing.Point(5, 5);
+            this.FolderPathLabel.Name = "FolderPathLabel";
+            this.FolderPathLabel.Size = new System.Drawing.Size(440, 28);
+            this.FolderPathLabel.TabIndex = 29;
+            this.FolderPathLabel.Text = "Путь сохранения для формирования отчёта:";
+            // 
+            // DataGridViewApplication
+            // 
+            this.DataGridViewApplication.AllowUserToAddRows = false;
+            this.DataGridViewApplication.AllowUserToDeleteRows = false;
+            this.DataGridViewApplication.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.DataGridViewApplication.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.DataGridViewApplication.Location = new System.Drawing.Point(3, 193);
+            this.DataGridViewApplication.Name = "DataGridViewApplication";
+            this.DataGridViewApplication.RowHeadersWidth = 51;
+            this.DataGridViewApplication.RowTemplate.Height = 24;
+            this.DataGridViewApplication.Size = new System.Drawing.Size(1005, 392);
+            this.DataGridViewApplication.TabIndex = 0;
             // 
             // UpdateUserButton
             // 
@@ -153,58 +253,6 @@
             this.CreateUserButton.UseVisualStyleBackColor = false;
             this.CreateUserButton.Click += new System.EventHandler(this.CreateUserButton_Click);
             // 
-            // DataGridViewUsers
-            // 
-            this.DataGridViewUsers.AllowUserToAddRows = false;
-            this.DataGridViewUsers.AllowUserToDeleteRows = false;
-            this.DataGridViewUsers.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.DataGridViewUsers.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.DataGridViewUsers.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.DataGridViewUsers.Location = new System.Drawing.Point(3, 59);
-            this.DataGridViewUsers.Name = "DataGridViewUsers";
-            this.DataGridViewUsers.ReadOnly = true;
-            this.DataGridViewUsers.RowHeadersWidth = 51;
-            this.DataGridViewUsers.RowTemplate.Height = 24;
-            this.DataGridViewUsers.Size = new System.Drawing.Size(1005, 458);
-            this.DataGridViewUsers.TabIndex = 0;
-            // 
-            // AllApplicationPage
-            // 
-            this.AllApplicationPage.Controls.Add(this.FilePathChooseButton);
-            this.AllApplicationPage.Controls.Add(this.FilePathTextBox);
-            this.AllApplicationPage.Controls.Add(this.UpdateApplicationButton);
-            this.AllApplicationPage.Controls.Add(this.GenerateRaportButton);
-            this.AllApplicationPage.Controls.Add(this.DataGridViewApplication);
-            this.AllApplicationPage.Location = new System.Drawing.Point(4, 27);
-            this.AllApplicationPage.Name = "AllApplicationPage";
-            this.AllApplicationPage.Padding = new System.Windows.Forms.Padding(3);
-            this.AllApplicationPage.Size = new System.Drawing.Size(1011, 520);
-            this.AllApplicationPage.TabIndex = 1;
-            this.AllApplicationPage.Text = "Отчётность";
-            this.AllApplicationPage.UseVisualStyleBackColor = true;
-            // 
-            // FilePathChooseButton
-            // 
-            this.FilePathChooseButton.BackColor = System.Drawing.Color.RoyalBlue;
-            this.FilePathChooseButton.BackgroundColor = System.Drawing.Color.RoyalBlue;
-            this.FilePathChooseButton.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
-            this.FilePathChooseButton.BorderRadius = 0;
-            this.FilePathChooseButton.BorderSize = 0;
-            this.FilePathChooseButton.FlatAppearance.BorderSize = 0;
-            this.FilePathChooseButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.FilePathChooseButton.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
-            this.FilePathChooseButton.ForeColor = System.Drawing.Color.White;
-            this.FilePathChooseButton.Location = new System.Drawing.Point(488, 9);
-            this.FilePathChooseButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.FilePathChooseButton.Name = "FilePathChooseButton";
-            this.FilePathChooseButton.Size = new System.Drawing.Size(175, 70);
-            this.FilePathChooseButton.TabIndex = 28;
-            this.FilePathChooseButton.Text = "Выбрать путь сохранения";
-            this.FilePathChooseButton.TextColor = System.Drawing.Color.White;
-            this.FilePathChooseButton.UseVisualStyleBackColor = false;
-            this.FilePathChooseButton.Click += new System.EventHandler(this.FilePathChooseButton_Click);
-            // 
             // FilePathTextBox
             // 
             this.FilePathTextBox.BackColor = System.Drawing.Color.White;
@@ -212,15 +260,17 @@
             this.FilePathTextBox.BorderFocusColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
             this.FilePathTextBox.BorderSize = 2;
             this.FilePathTextBox.Enabled = false;
-            this.FilePathTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.FilePathTextBox.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold);
             this.FilePathTextBox.ForeColor = System.Drawing.Color.Black;
-            this.FilePathTextBox.Location = new System.Drawing.Point(10, 19);
+            this.FilePathTextBox.Location = new System.Drawing.Point(10, 37);
             this.FilePathTextBox.Margin = new System.Windows.Forms.Padding(7);
             this.FilePathTextBox.Multiline = false;
             this.FilePathTextBox.Name = "FilePathTextBox";
             this.FilePathTextBox.Padding = new System.Windows.Forms.Padding(10);
             this.FilePathTextBox.PasswordChar = false;
-            this.FilePathTextBox.Size = new System.Drawing.Size(468, 50);
+            this.FilePathTextBox.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            this.FilePathTextBox.SelectionStart = 0;
+            this.FilePathTextBox.Size = new System.Drawing.Size(991, 41);
             this.FilePathTextBox.TabIndex = 27;
             this.FilePathTextBox.Texts = "";
             this.FilePathTextBox.UnderlinedStyle = false;
@@ -236,10 +286,10 @@
             this.UpdateApplicationButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.UpdateApplicationButton.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
             this.UpdateApplicationButton.ForeColor = System.Drawing.Color.White;
-            this.UpdateApplicationButton.Location = new System.Drawing.Point(865, 9);
+            this.UpdateApplicationButton.Location = new System.Drawing.Point(478, 87);
             this.UpdateApplicationButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.UpdateApplicationButton.Name = "UpdateApplicationButton";
-            this.UpdateApplicationButton.Size = new System.Drawing.Size(137, 70);
+            this.UpdateApplicationButton.Size = new System.Drawing.Size(168, 92);
             this.UpdateApplicationButton.TabIndex = 26;
             this.UpdateApplicationButton.Text = "Обновить данные";
             this.UpdateApplicationButton.TextColor = System.Drawing.Color.White;
@@ -257,28 +307,15 @@
             this.GenerateRaportButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.GenerateRaportButton.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.GenerateRaportButton.ForeColor = System.Drawing.Color.White;
-            this.GenerateRaportButton.Location = new System.Drawing.Point(669, 9);
+            this.GenerateRaportButton.Location = new System.Drawing.Point(272, 87);
             this.GenerateRaportButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.GenerateRaportButton.Name = "GenerateRaportButton";
-            this.GenerateRaportButton.Size = new System.Drawing.Size(190, 70);
+            this.GenerateRaportButton.Size = new System.Drawing.Size(200, 92);
             this.GenerateRaportButton.TabIndex = 25;
             this.GenerateRaportButton.Text = "Сформировать отчёт";
             this.GenerateRaportButton.TextColor = System.Drawing.Color.White;
             this.GenerateRaportButton.UseVisualStyleBackColor = false;
             this.GenerateRaportButton.Click += new System.EventHandler(this.GenerateRaportButton_Click);
-            // 
-            // DataGridViewApplication
-            // 
-            this.DataGridViewApplication.AllowUserToAddRows = false;
-            this.DataGridViewApplication.AllowUserToDeleteRows = false;
-            this.DataGridViewApplication.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.DataGridViewApplication.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.DataGridViewApplication.Location = new System.Drawing.Point(3, 93);
-            this.DataGridViewApplication.Name = "DataGridViewApplication";
-            this.DataGridViewApplication.RowHeadersWidth = 51;
-            this.DataGridViewApplication.RowTemplate.Height = 24;
-            this.DataGridViewApplication.Size = new System.Drawing.Size(1005, 425);
-            this.DataGridViewApplication.TabIndex = 0;
             // 
             // CustomFormForAllProject
             // 
@@ -303,7 +340,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1025, 561);
+            this.ClientSize = new System.Drawing.Size(1025, 628);
             this.Controls.Add(this.MainWorkAdminTabControl);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MainWorkFormAdmin";
@@ -311,12 +348,12 @@
             this.Text = "Админ-панель «Автоматизация документооборота»";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainWorkFormAdmin_FormClosed);
             this.Load += new System.EventHandler(this.MainWorkFormAdmin_Load);
-            this.Resize += new System.EventHandler(this.MainWorkFormAdmin_Resize);
             this.MainWorkAdminTabControl.ResumeLayout(false);
             this.AllUsersPage.ResumeLayout(false);
             this.AllUsersPage.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DataGridViewUsers)).EndInit();
             this.AllApplicationPage.ResumeLayout(false);
+            this.AllApplicationPage.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DataGridViewApplication)).EndInit();
             this.ResumeLayout(false);
 
@@ -334,10 +371,14 @@
         private Design.CustomButton CreateUserButton;
         private System.Windows.Forms.Label InfoUsersLabel;
         private System.Windows.Forms.DataGridView DataGridViewApplication;
-        private Design.CustomButton FilePathChooseButton;
         private Design.CustomTextBox FilePathTextBox;
         private Design.CustomButton UpdateApplicationButton;
         private Design.CustomButton GenerateRaportButton;
         private System.Windows.Forms.FolderBrowserDialog FolderPathBrowserDialog;
+        private System.Windows.Forms.Label FolderPathLabel;
+        private System.Windows.Forms.Label LatterPoLabel;
+        private System.Windows.Forms.Label LatterOtLabel;
+        private System.Windows.Forms.DateTimePicker SecondDateToRaportDTP;
+        private System.Windows.Forms.DateTimePicker FirstDateToRaportDTP;
     }
 }

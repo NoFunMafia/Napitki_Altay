@@ -198,12 +198,26 @@ namespace Napitki_Altay2.Classes
             return sqlCom;
         }
         // MainWorkFormAdmin - LoadDataGridViewApplication
-        public string sqlComOutputCompleteApplication = "select FK_ID_Application, " +
-                    "User_Surname, User_Name, User_Patronymic, Date_Of_Answer " +
-                    "from Ready_Application join Info_About_User on " +
-                    "Ready_Application.FK_Info_User = Info_About_User.ID_Info_User";
-
-
+        public string sqlComOutputCompleteApplication = "select FK_ID_Application, User_Surname, " +
+            "User_Name, User_Patronymic, Date_Of_Answer, Status_Name from " +
+            "Ready_Application join Info_About_User on " +
+            "Ready_Application.FK_Info_User = Info_About_User.ID_Info_User " +
+            "join Application_To_Company on Ready_Application.FK_ID_Application = " +
+            "Application_To_Company.ID_Application join Status_Application on " +
+            "Application_To_Company.FK_Status_Application = Status_Application.ID_Status ";
+        public string SqlComOutputAnswerAllWorkerWithDateTime
+            (string firstDate, string secondDate)
+        {
+            string sqlCom = "select FK_ID_Application, User_Surname, User_Name, " +
+                "User_Patronymic, Date_Of_Answer, Status_Name from Ready_Application " +
+                "join Info_About_User on Ready_Application.FK_Info_User = " +
+                "Info_About_User.ID_Info_User join Application_To_Company on " +
+                "Ready_Application.FK_ID_Application = Application_To_Company.ID_Application " +
+                "join Status_Application on Application_To_Company.FK_Status_Application = " +
+                "Status_Application.ID_Status where Date_Of_Request " +
+                $"BETWEEN '{firstDate}T00:00:00' AND '{secondDate}T23:59:59' order by Date_Of_Answer";
+            return sqlCom;
+        }
         #endregion
         #region [AddUserForm]
         // AddUserForm - InputUsersButton
@@ -233,11 +247,23 @@ namespace Napitki_Altay2.Classes
                 $"values ('{fam}', '{name}', '{otch}')";
             return sqlCom;
         }
+        public string SqlComInsertFioWithoutOtch(string name, string fam)
+        {
+            string sqlCom = $"insert into Info_About_User(User_Surname, User_Name) " +
+                $"values ('{fam}', '{name}')";
+            return sqlCom;
+        }
         // AddUserForm - InputUsersButton
         public string SqlComTakeFKFio(string name, string fam, string otch)
         {
             string sqlCom = "select * from Info_About_User where " +
                 $"User_Surname = '{fam}' and User_Name = '{name}' and User_Patronymic = '{otch}'";
+            return sqlCom;
+        }
+        public string SqlComTakeFKFi(string name, string fam)
+        {
+            string sqlCom = "select * from Info_About_User where " +
+                $"User_Surname = '{fam}' and User_Name = '{name}'";
             return sqlCom;
         }
         // AddUserForm - InputUsersButton
@@ -340,6 +366,12 @@ namespace Napitki_Altay2.Classes
                 $"and User_Patronymic = '{otch}'";
             return sqlCom;
         }
+        public string SqlComTakeFkInfoWorkerWithoutOtch(string name, string fam)
+        {
+            string sqlCom = "select * from Info_About_User where " +
+                $"User_Surname = '{fam}' and User_Name = '{name}'";
+            return sqlCom;
+        }
         public string SqlComCheckStatusID(string statusName)
         {
             string sqlCom = "select ID_Status from Status_Application " +
@@ -439,7 +471,20 @@ namespace Napitki_Altay2.Classes
                 $"Status_Application.ID_Status where User_Surname = '{fam}' " +
                 $"and User_Name = '{name}' and User_Patronymic = '{otch}'";
             return sqlCom;
-        } 
+        }
+        public string SqlComOutputAnswersWithoudOtch(string name, string fam)
+        {
+            string sqlCom = "select FK_ID_Application, User_Surname, " +
+                "User_Name, User_Patronymic, Date_Of_Answer, Status_Name from " +
+                "Ready_Application join Info_About_User on Ready_Application.FK_Info_User " +
+                $"= Info_About_User.ID_Info_User join Application_To_Company on " +
+                $"Ready_Application.FK_ID_Application = Application_To_Company.ID_Application " +
+                $"join Status_Application " +
+                $"on Application_To_Company.FK_Status_Application = " +
+                $"Status_Application.ID_Status where User_Surname = '{fam}' " +
+                $"and User_Name = '{name}'";
+            return sqlCom;
+        }
         public string sqlComOutputApplications = "select Id_Application, " +
             "Applicant_Company, User_Surname, User_Name, User_Patronymic, " +
             "Status_Name from Application_To_Company join Info_About_User on " +
@@ -566,16 +611,36 @@ namespace Napitki_Altay2.Classes
                 "join Status_Application on " +
                 "Application_To_Company.FK_Status_Application = Status_Application.ID_Status " +
                 $"where User_Surname = '{fam}' and User_Name = '{name}' " +
-                $"and User_Patronymic = '{otch}' and Date_Of_Request " +
+                $"and User_Patronymic = '{otch}' and Date_Of_Answer " +
+                $"BETWEEN '{firstDate}T00:00:00' AND '{secondDate}T23:59:59' order by Date_Of_Answer";
+            return sqlCom;
+        }
+        public string SqlComOutputAnswerWithDateTimeWithoutOtch
+            (string name, string fam, string firstDate, string secondDate)
+        {
+            string sqlCom = "select FK_ID_Application, User_Surname, User_Name, " +
+                "User_Patronymic, Date_Of_Answer, Status_Name from Ready_Application " +
+                "join Info_About_User on Ready_Application.FK_Info_User = Info_About_User.ID_Info_User " +
+                "join Application_To_Company on " +
+                "Ready_Application.FK_ID_Application = Application_To_Company.ID_Application " +
+                "join Status_Application on " +
+                "Application_To_Company.FK_Status_Application = Status_Application.ID_Status " +
+                $"where User_Surname = '{fam}' and User_Name = '{name}' and Date_Of_Answer " +
                 $"BETWEEN '{firstDate}T00:00:00' AND '{secondDate}T23:59:59' order by Date_Of_Answer";
             return sqlCom;
         }
         #endregion
         #region [AuthFioWorkerForm]
-        public string SqlComTakeIdWorker(string name, string fam, string otch)
+        public string SqlComTakeIdWorkerFull(string name, string fam, string otch)
         {
             string sqlCom = "select ID_Info_User from Info_About_User where " +
                 $"User_Surname = '{fam}' and User_Name = '{name}' and User_Patronymic = '{otch}'";
+            return sqlCom;
+        }
+        public string SqlComTakeIdWorker(string name, string fam)
+        {
+            string sqlCom = "select ID_Info_User from Info_About_User where " +
+                $"User_Surname = '{fam}' and User_Name = '{name}'";
             return sqlCom;
         }
         public string SqlComCheckAccountWorker(string idWorker)

@@ -46,41 +46,57 @@ namespace Napitki_Altay2.Forms
         /// </summary>
         private void CheckFioWorker()
         {
-            string sqlQuery = sqlQueries.SqlComTakeIdWorker
-                (EnterNameTextBox.Texts,
-                EnterFamTextBox.Texts,
-                EnterOtchTextBox.Texts);
-            idWorker = dataBaseWork.GetString(sqlQuery);
-            string sqlQuerySecond = sqlQueries.SqlComCheckAccountWorker(idWorker);
-            string idAccountWorker = dataBaseWork.GetString(sqlQuerySecond);
-            if (idWorker != string.Empty)
+            string sqlQuery;
+            if (EnterFamTextBox.Texts != string.Empty
+                || EnterNameTextBox.Texts != string.Empty)
             {
-                IsAccountWorker = false;
-                if (idAccountWorker == null)
+                if (EnterOtchTextBox.Texts == string.Empty)
                 {
-                    IsAccountWorker = true;
-                    workerFam = EnterFamTextBox.Texts;
-                    workerName = EnterNameTextBox.Texts;
-                    workerOtch = EnterOtchTextBox.Texts;
-                    MessageBox.Show($"Рады Вас видеть, {workerFam} {workerName} {workerOtch}! " +
-                        $"Продолжайте регистрацию и вы сможете приступить к работе.", "Информация",
-                        MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    Close();
+                    sqlQuery = sqlQueries.SqlComTakeIdWorker
+                        (EnterNameTextBox.Texts, EnterFamTextBox.Texts);
+                }
+                else
+                {
+                    sqlQuery = sqlQueries.SqlComTakeIdWorkerFull
+                        (EnterNameTextBox.Texts, 
+                        EnterFamTextBox.Texts,
+                        EnterOtchTextBox.Texts);
+                }
+                idWorker = dataBaseWork.GetString(sqlQuery);
+                string sqlQueryThree = sqlQueries.SqlComCheckAccountWorker(idWorker);
+                string idAccountWorker = dataBaseWork.GetString(sqlQueryThree);
+                if (idWorker != string.Empty)
+                {
+                    IsAccountWorker = false;
+                    if (idAccountWorker == null)
+                    {
+                        IsAccountWorker = true;
+                        workerFam = EnterFamTextBox.Texts;
+                        workerName = EnterNameTextBox.Texts;
+                        workerOtch = EnterOtchTextBox.Texts;
+                        MessageBox.Show($"Рады Вас видеть, {workerFam} {workerName} {workerOtch}! " +
+                            $"Продолжайте регистрацию и вы сможете приступить к работе.", "Информация",
+                            MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        Close();
+                    }
+                    else
+                    {
+                        IsAccountWorker = false;
+                        MessageBox.Show("Ваш аккаунт уже зарегистрирован!", "Ошибка",
+                            MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
                 else
                 {
                     IsAccountWorker = false;
-                    MessageBox.Show("Ваш аккаунт уже зарегистрирован!", "Ошибка",
+                    MessageBox.Show("Работник с таким ФИО отсутствует. " +
+                        "Проверьте правильность введённых данных!", "Ошибка",
                         MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             else
-            {
-                IsAccountWorker = false;
-                MessageBox.Show("Работник с таким ФИО отсутствует. " +
-                    "Проверьте правильность введённых данных!", "Ошибка",
+                MessageBox.Show("Не все поля данных заполнены!", "Ошибка", 
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
         }
         #endregion
     }

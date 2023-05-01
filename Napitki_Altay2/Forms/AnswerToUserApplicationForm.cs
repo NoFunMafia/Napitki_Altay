@@ -353,11 +353,21 @@ namespace Napitki_Altay2.Forms
         #region [Метод, получающий ID сотрудника-ответчика]
         private void TakeWorkerId(out List<string[]> listSearch)
         {
-            string sqlQueryFirst = sqlQueries.SqlComTakeFkInfoWorker
-                (MainWorkFormWorker.NameWorkerString,
-                MainWorkFormWorker.SurnameWorkerString,
-                MainWorkFormWorker.PatrWorkerString);
-            listSearch = dataBaseWork.GetMultiList(sqlQueryFirst, 4);
+            if (MainWorkFormWorker.PatrWorkerString != string.Empty)
+            {
+                string sqlQueryFirst = sqlQueries.SqlComTakeFkInfoWorker
+                    (MainWorkFormWorker.NameWorkerString,
+                    MainWorkFormWorker.SurnameWorkerString,
+                    MainWorkFormWorker.PatrWorkerString);
+                listSearch = dataBaseWork.GetMultiList(sqlQueryFirst, 4);
+            }
+            else
+            {
+                string sqlQueryFirst = sqlQueries.SqlComTakeFkInfoWorkerWithoutOtch
+                    (MainWorkFormWorker.NameWorkerString,
+                    MainWorkFormWorker.SurnameWorkerString);
+                listSearch = dataBaseWork.GetMultiList(sqlQueryFirst, 4);
+            }
         }
 
         private void AnswerToUserApplicationForm_FormClosed(object sender, FormClosedEventArgs e)

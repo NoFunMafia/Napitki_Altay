@@ -95,13 +95,21 @@ namespace Napitki_Altay2.Forms
                 if (checkInsertUser)
                 {
                     ReceiveFioFK(out string fioFK);
-                    ReceiveBoolCheckUpdateAuth(out bool checkUpdateAuth, fioFK);
-                    if (checkUpdateAuth)
+                    if(FamTextBox.Texts != string.Empty 
+                        && ImyaTextBox.Texts != string.Empty)
+                    {
+                        ReceiveBoolCheckUpdateAuth(out bool checkUpdateAuth, fioFK);
+                        if (checkUpdateAuth)
+                            MessageBox.Show("Пользователь успешно добавлен!",
+                                "Информация",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Information);
+                    }
+                    else
                         MessageBox.Show("Пользователь успешно добавлен!",
                             "Информация",
                             MessageBoxButtons.OK,
                             MessageBoxIcon.Information);
-
                 }
             }
         }
@@ -146,9 +154,18 @@ namespace Napitki_Altay2.Forms
         /// <param name="fioFK">Переменная, хранящая значение из sql-запроса</param>
         private void ReceiveFioFK(out string fioFK)
         {
-            string sqlQueryThree = sqlQueries.SqlComTakeFKFio(
-                ImyaTextBox.Texts, FamTextBox.Texts, OtchTextBox.Texts);
-            fioFK = dataBaseWork.GetString(sqlQueryThree);
+            if(OtchTextBox.Texts != string.Empty)
+            {
+                string sqlQueryThree = sqlQueries.SqlComTakeFKFio(
+                    ImyaTextBox.Texts, FamTextBox.Texts, OtchTextBox.Texts);
+                fioFK = dataBaseWork.GetString(sqlQueryThree);
+            }
+            else
+            {
+                string sqlQueryThree = sqlQueries.SqlComTakeFKFi(
+                    ImyaTextBox.Texts, FamTextBox.Texts);
+                fioFK = dataBaseWork.GetString(sqlQueryThree);
+            }
         }
         #endregion
         #region [Метод, формирующий bool значение проверки CheckInsertUser]
@@ -189,13 +206,14 @@ namespace Napitki_Altay2.Forms
             {
                 if (excludedTextBoxes != null && excludedTextBoxes.Contains(customTextBox))
                 {
-                    continue; // Пропускает textbox'ы которые находятся в списке исключений
+                    continue; // Пропускает textbox'ы, которые находятся в списке исключений
                 }
                 if (string.IsNullOrWhiteSpace(customTextBox.Texts))
                 {
-                    MessageBox.Show("Не все поля данных заполненны!",
+                    MessageBox.Show("Не все поля данных заполнены!",
                         "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     hasEmptyTextBoxes = true;
+                    break;
                 }
             }
             // Проверка на изменение исключенных textbox'ов
@@ -211,28 +229,51 @@ namespace Napitki_Altay2.Forms
                         break;
                     }
                 }
-                // Проверка на заполненность исключенных textbox'ов
+
                 if (hasEditedExcludedTextBoxes)
                 {
+                    bool emptyExcludedTextBoxFound = false;
+                    bool otchTextBoxIsEmpty = string.IsNullOrWhiteSpace(OtchTextBox.Texts);
+
                     foreach (CustomTextBox customTextBox in excludedTextBoxes)
                     {
-                        if (string.IsNullOrWhiteSpace(customTextBox.Texts))
+                        if (string.IsNullOrWhiteSpace(customTextBox.Texts) && customTextBox != OtchTextBox)
                         {
-                            MessageBox.Show("Вы начали заполнять поля данных ФИО, " +
-                                "пожалуйста, заполните их все!",
-                                "Предупреждение",
-                                MessageBoxButtons.OK,
-                                MessageBoxIcon.Warning);
-                            return false;
+                            emptyExcludedTextBoxFound = true;
+                            break;
                         }
                     }
-                    sqlQuery = sqlQueries.SqlComInsertFio(
-                        ImyaTextBox.Texts,
-                        FamTextBox.Texts,
-                        OtchTextBox.Texts);
-                    dataBaseWork.WithoutOutputQuery(sqlQuery);
+
+                    if (!emptyExcludedTextBoxFound)
+                    {
+                        if (otchTextBoxIsEmpty)
+                        {
+                            sqlQuery = sqlQueries.SqlComInsertFioWithoutOtch(
+                                ImyaTextBox.Texts,
+                                FamTextBox.Texts);
+                            dataBaseWork.WithoutOutputQuery(sqlQuery);
+                        }
+                        else
+                        {
+                            sqlQuery = sqlQueries.SqlComInsertFio(
+                                ImyaTextBox.Texts,
+                                FamTextBox.Texts,
+                                OtchTextBox.Texts);
+                            dataBaseWork.WithoutOutputQuery(sqlQuery);
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("Вы начали заполнять поля данных ФИО, " +
+                            "пожалуйста, заполните их все, кроме поля отчества, если оно отсутствует!",
+                            "Предупреждение",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Warning);
+                        return false;
+                    }
                 }
             }
+
             if (hasEmptyTextBoxes)
             {
                 return false;

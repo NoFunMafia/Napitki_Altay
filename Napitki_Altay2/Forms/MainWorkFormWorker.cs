@@ -76,7 +76,7 @@ namespace Napitki_Altay2.Forms
         {
             if (FolderPathBrowserDialog.ShowDialog() == DialogResult.OK)
                 FilePathTextBox.Texts = FolderPathBrowserDialog.SelectedPath;
-            if(FilePathTextBox.Texts != string.Empty)
+            if (FilePathTextBox.Texts != string.Empty)
                 GenerateExcelRaport(FirstDateToRaportDTP.Value, SecondDateToRaportDTP.Value);
         }
         #endregion
@@ -110,27 +110,40 @@ namespace Napitki_Altay2.Forms
         /// <param name="e"></param>
         private void SupplementReplyButton_Click(object sender, EventArgs e)
         {
-            if (CompleteApplicationDGW.CurrentRow.Cells[5].Value.ToString() != "Дополнено")
+            try
             {
-                SelectedRowID = CompleteApplicationDGW.CurrentRow.Cells[0].Value.ToString();
-                SupplementWorkForm supWorkForm = new SupplementWorkForm();
-                supWorkForm.Show();
-                supWorkForm.Location = new Point(740, 90);
-                supWorkForm.DisableControls();
-                UserApplicationInfoForWorkerForm userForm = new UserApplicationInfoForWorkerForm();
-                userForm.Show();
-                Hide();
+                if (CompleteApplicationDGW.RowCount != 0)
+                {
+                    if (CompleteApplicationDGW.CurrentRow.Cells[5].Value.ToString() != "Дополнено")
+                    {
+                        SelectedRowID = CompleteApplicationDGW.CurrentRow.Cells[0].Value.ToString();
+                        SupplementWorkForm supWorkForm = new SupplementWorkForm();
+                        supWorkForm.Show();
+                        supWorkForm.Location = new Point(740, 90);
+                        supWorkForm.DisableControls();
+                        UserApplicationInfoForWorkerForm userForm = new UserApplicationInfoForWorkerForm();
+                        userForm.Show();
+                        Hide();
+                    }
+                    else
+                    {
+                        SelectedRowID = CompleteApplicationDGW.CurrentRow.Cells[0].Value.ToString();
+                        SupplementWorkForm supWorkForm = new SupplementWorkForm();
+                        supWorkForm.Show();
+                        supWorkForm.Location = new Point(740, 90);
+                        supWorkForm.EnableControls();
+                        UserApplicationInfoForWorkerForm userForm = new UserApplicationInfoForWorkerForm();
+                        userForm.Show();
+                        Hide();
+                    }
+                }
+                else
+                    throw new Exception();
             }
-            else
+            catch (Exception)
             {
-                SelectedRowID = CompleteApplicationDGW.CurrentRow.Cells[0].Value.ToString();
-                SupplementWorkForm supWorkForm = new SupplementWorkForm();
-                supWorkForm.Show();
-                supWorkForm.Location = new Point(740, 90);
-                supWorkForm.EnableControls();
-                UserApplicationInfoForWorkerForm userForm = new UserApplicationInfoForWorkerForm();
-                userForm.Show();
-                Hide();
+                MessageBox.Show("Невозможно дополнить/просмотреть ответ не выделенного обращения!",
+                    "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
         #endregion
@@ -290,12 +303,23 @@ namespace Napitki_Altay2.Forms
         /// </summary>
         public void LoadDataInCompleteApplicationDGW()
         {
-            string sqlQueryFourth = sqlQueries.SqlComOutputAnswers
-                (NameWorkCreateTextBox.Texts, 
-                FamWorkCreateTextBox.Texts, 
-                PatrWorkCreateTextBox.Texts);
-            DataTable dataTable = dataBaseWork.OutputQuery(sqlQueryFourth);
-            OutputInTableSettingTwo(dataTable);
+            if (PatrWorkCreateTextBox.Texts != string.Empty)
+            {
+                string sqlQueryFourth = sqlQueries.SqlComOutputAnswers
+                    (NameWorkCreateTextBox.Texts,
+                    FamWorkCreateTextBox.Texts,
+                    PatrWorkCreateTextBox.Texts);
+                DataTable dataTable = dataBaseWork.OutputQuery(sqlQueryFourth);
+                OutputInTableSettingTwo(dataTable);
+            }
+            else
+            {
+                string sqlQueryFourth = sqlQueries.SqlComOutputAnswersWithoudOtch
+                    (NameWorkCreateTextBox.Texts,
+                    FamWorkCreateTextBox.Texts);
+                DataTable dataTable = dataBaseWork.OutputQuery(sqlQueryFourth);
+                OutputInTableSettingTwo(dataTable);
+            }
         }
         #endregion
         #region [Метод, выводящий данные в DataGridViewAnswer]
@@ -424,7 +448,7 @@ namespace Napitki_Altay2.Forms
             }
             catch (Exception)
             {
-                MessageBox.Show("Невозможно дать ответ на не выделенное обращение!", 
+                MessageBox.Show("Невозможно создать ответ на не выделенное обращение!", 
                     "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
@@ -463,12 +487,11 @@ namespace Napitki_Altay2.Forms
                 Excel.Worksheet IWorksheet = IWorkbook.Worksheets.get_Item(1);
                 // Заголовок отчета
                 string employeeName = $"{SurnameWorkerString} {NameWorkerString} {PatrWorkerString}";
-                IWorksheet.Cells[1, 1].Font.Size = 16;
+                IWorksheet.Cells[1, 1].Font.Size = 14;
                 IWorksheet.Cells[1, 1].Font.Bold = true;
-                IWorksheet.Cells[2, 1].Font.Size = 16;
-                IWorksheet.Cells[2, 1].Font.Bold = true;
-                IWorksheet.Cells[1, 1] = $"Отчет о проделанной работе";
-                IWorksheet.Cells[2, 1] = $"сотрудника {employeeName}";
+                IWorksheet.get_Range("A1", "E1").Merge();
+                IWorksheet.get_Range("A1", "E1").HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter;
+                IWorksheet.Cells[1, 1] = $"Отчет о проделанной работе сотрудника {employeeName}";
                 // Заголовки столбцов
                 int columnIndex = 1;
                 for (int i = 0; i < CompleteApplicationDGW.Columns.Count; i++)
@@ -550,7 +573,8 @@ namespace Napitki_Altay2.Forms
                 series.Name = "Завершенные обращения";
                 series.ChartType = Excel.XlChartType.xlColumnClustered;
                 chart.HasTitle = true;
-                chart.ChartTitle.Text = $"Завершенные обращения с {fromDate:dd.MM.yyyy} по {toDate:dd.MM.yyyy}";
+                chart.ChartTitle.Text = $"Обращения находящиеся в работе " +
+                    $"с {fromDate:dd.MM.yyyy} по {toDate:dd.MM.yyyy}";
                 chart.HasLegend = false;
                 // Назначение цветов для статусов
                 Excel.SeriesCollection seriesCollectionSecond = (Excel.SeriesCollection)chart.SeriesCollection(Type.Missing);
@@ -655,14 +679,27 @@ namespace Napitki_Altay2.Forms
         /// </summary>
         public void LoadDataInDataGridViewAnswerWithDate()
         {
-            string sqlQuery = sqlQueries.SqlComOutputAnswerWithDateTime
-                (NameWorkCreateTextBox.Texts,
-                FamWorkCreateTextBox.Texts,
-                PatrWorkCreateTextBox.Texts, 
-                FirstDateToRaportDTP.Value.Date.ToString("yyyy-MM-dd"), 
-                SecondDateToRaportDTP.Value.Date.ToString("yyyy-MM-dd"));
-            DataTable dataTable = dataBaseWork.OutputQuery(sqlQuery);
-            OutputInTableSettingTwo(dataTable);
+            if (PatrWorkCreateTextBox.Texts != string.Empty)
+            {
+                string sqlQuery = sqlQueries.SqlComOutputAnswerWithDateTime
+                    (NameWorkCreateTextBox.Texts,
+                    FamWorkCreateTextBox.Texts,
+                    PatrWorkCreateTextBox.Texts,
+                    FirstDateToRaportDTP.Value.Date.ToString("yyyy-MM-dd"),
+                    SecondDateToRaportDTP.Value.Date.ToString("yyyy-MM-dd"));
+                DataTable dataTable = dataBaseWork.OutputQuery(sqlQuery);
+                OutputInTableSettingTwo(dataTable);
+            }
+            else
+            {
+                string sqlQuery = sqlQueries.SqlComOutputAnswerWithDateTimeWithoutOtch
+                    (NameWorkCreateTextBox.Texts,
+                    FamWorkCreateTextBox.Texts,
+                    FirstDateToRaportDTP.Value.Date.ToString("yyyy-MM-dd"),
+                    SecondDateToRaportDTP.Value.Date.ToString("yyyy-MM-dd"));
+                DataTable dataTable = dataBaseWork.OutputQuery(sqlQuery);
+                OutputInTableSettingTwo(dataTable);
+            }
         }
         #endregion
     }
