@@ -7,6 +7,7 @@ using Excel = Microsoft.Office.Interop.Excel;
 using System.Drawing;
 using Napitki_Altay2.Classes;
 using System.Collections.Generic;
+using System.Linq;
 #endregion
 namespace Napitki_Altay2.Forms
 {
@@ -20,6 +21,7 @@ namespace Napitki_Altay2.Forms
         public static string SurnameWorkerString;
         public static string NameWorkerString;
         public static string PatrWorkerString;
+        private bool isButtonRaportToggled = false;
         #endregion
         public MainWorkFormWorker()
         {
@@ -42,6 +44,14 @@ namespace Napitki_Altay2.Forms
             CheckDataReaderRowsInfo(listSearch);
             LoadDataInDataGridViewAnswer();
             LoadDataInCompleteApplicationDGW();
+            if (FamWorkCreateTextBox.Texts != string.Empty)
+            {
+                MainWorkFormWorker mainWorkFormWorker = Application.OpenForms.OfType
+                    <MainWorkFormWorker>().FirstOrDefault();
+                mainWorkFormWorker.Text = $"Автоматизация документооборота. " +
+                    $"Сотрудник - {FamWorkCreateTextBox.Texts} {NameWorkCreateTextBox.Texts} " +
+                    $"{PatrWorkCreateTextBox.Texts}";
+            }
         }
         #endregion
         #region [Событие нажатия на кнопку CreateUserFIOButton]
@@ -74,10 +84,21 @@ namespace Napitki_Altay2.Forms
         /// <param name="e"></param>
         private void GenerateRaportButton_Click(object sender, EventArgs e)
         {
-            if (FolderPathBrowserDialog.ShowDialog() == DialogResult.OK)
-                FilePathTextBox.Texts = FolderPathBrowserDialog.SelectedPath;
-            if (FilePathTextBox.Texts != string.Empty)
-                GenerateExcelRaport(FirstDateToRaportDTP.Value, SecondDateToRaportDTP.Value);
+            if (!isButtonRaportToggled)
+            {
+                LoadDataInDataGridViewAnswerWithDate();
+                isButtonRaportToggled = true;
+            }
+            else
+            {
+                if (FolderPathBrowserDialog.ShowDialog() == DialogResult.OK)
+                    FilePathTextBox.Texts = FolderPathBrowserDialog.SelectedPath;
+                if (FilePathTextBox.Texts != string.Empty)
+                {
+                    GenerateExcelRaport(FirstDateToRaportDTP.Value, SecondDateToRaportDTP.Value);
+                    isButtonRaportToggled = false;
+                }
+            }
         }
         #endregion
         #region [Событие закрытия формы]
@@ -109,6 +130,11 @@ namespace Napitki_Altay2.Forms
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void SupplementReplyButton_Click(object sender, EventArgs e)
+        {
+            CreateSupplementReply();
+        }
+
+        private void CreateSupplementReply()
         {
             try
             {
@@ -156,6 +182,7 @@ namespace Napitki_Altay2.Forms
         private void FirstDateToRaportDTP_ValueChanged(object sender, EventArgs e)
         {
             SecondDateToRaportDTP.MinDate = FirstDateToRaportDTP.Value;
+            isButtonRaportToggled = false;
         }
         #endregion
         #region [Событие смены значения даты в SecondDateToRaportDTP]
@@ -167,6 +194,7 @@ namespace Napitki_Altay2.Forms
         private void SecondDateToRaportDTP_ValueChanged(object sender, EventArgs e)
         {
             FirstDateToRaportDTP.MaxDate = SecondDateToRaportDTP.Value;
+            isButtonRaportToggled = false;
         }
         #endregion
         #region [Метод, отправляющий sql-запросы на внесение ФИО в БД]
@@ -196,6 +224,11 @@ namespace Napitki_Altay2.Forms
                     FamWorkCreateTextBox.Enabled = false;
                     NameWorkCreateTextBox.Enabled = false;
                     PatrWorkCreateTextBox.Enabled = false;
+                    MainWorkFormWorker mainWorkForm = Application.OpenForms.OfType
+                        <MainWorkFormWorker>().FirstOrDefault();
+                    mainWorkForm.Text = $"Автоматизация документооборота. " +
+                        $"Сотрудник - {FamWorkCreateTextBox.Texts} {NameWorkCreateTextBox.Texts} " +
+                        $"{PatrWorkCreateTextBox.Texts}";
                 }
             }
         }
@@ -453,20 +486,6 @@ namespace Napitki_Altay2.Forms
             }
         }
         #endregion
-        #region [Метод, получающий русское название месяцев для выводного отчёта]
-        /// <summary>
-        /// Метод, получающий русское название месяцев для выводного отчёта
-        /// </summary>
-        /// <param name="month"></param>
-        /// <returns></returns>
-        private string GetRussianMonthName(int month)
-        {
-            string[] monthNames = { "Январь", "Февраль", "Март", "Апрель", 
-                "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", 
-                "Ноябрь", "Декабрь" };
-            return monthNames[month - 1];
-        }
-        #endregion
         #region [Метод, позволяющий сформировать excel рапорт]
         /// <summary>
         /// Метод, позволяющий сформировать excel рапорт
@@ -474,7 +493,6 @@ namespace Napitki_Altay2.Forms
         private void GenerateExcelRaport(DateTime fromDate, DateTime toDate)
         {
             FillStrings();
-            LoadDataInDataGridViewAnswerWithDate();
             DialogResult result = MessageBox.Show
                 ($"Вы уверены что хотите создать отчёт от " +
                 $"{fromDate:dd-MM-yyyy} до {toDate:dd-MM-yyyy}?",
@@ -489,8 +507,8 @@ namespace Napitki_Altay2.Forms
                 string employeeName = $"{SurnameWorkerString} {NameWorkerString} {PatrWorkerString}";
                 IWorksheet.Cells[1, 1].Font.Size = 14;
                 IWorksheet.Cells[1, 1].Font.Bold = true;
-                IWorksheet.get_Range("A1", "E1").Merge();
-                IWorksheet.get_Range("A1", "E1").HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter;
+                IWorksheet.get_Range("A1", "F1").Merge();
+                IWorksheet.get_Range("A1", "F1").HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter;
                 IWorksheet.Cells[1, 1] = $"Отчет о проделанной работе сотрудника {employeeName}";
                 // Заголовки столбцов
                 int columnIndex = 1;
@@ -552,18 +570,24 @@ namespace Napitki_Altay2.Forms
                 IWorksheet.Cells[summaryRow, 1] = "Количество обращений по статусам";
                 IWorksheet.Cells[summaryRow, 1].Font.Bold = true;
                 IWorksheet.Cells[summaryRow, 1].Interior.Color = Color.FromArgb(201, 235, 200);
-                IWorksheet.Cells[summaryRow, 1].Borders.Color = Color.Black;
+                IWorksheet.get_Range("A" + summaryRow, "B" + summaryRow).Merge();
+                IWorksheet.get_Range("A" + summaryRow, "B" + summaryRow).Borders.LineStyle = Excel.XlLineStyle.xlContinuous;
+                IWorksheet.get_Range("A" + summaryRow, "B" + summaryRow).Borders.Color = Color.Black;
                 int statusRow = summaryRow + 1;
                 foreach (var status in statusCounts)
                 {
                     IWorksheet.Cells[statusRow, 1] = $"{status.Key}: {status.Value}";
                     IWorksheet.Cells[statusRow, 1].Interior.Color = Color.FromArgb(218, 237, 255);
+                    IWorksheet.Cells[statusRow, 1].Borders.LineStyle = Excel.XlLineStyle.xlContinuous;
                     IWorksheet.Cells[statusRow, 1].Borders.Color = Color.Black;
+                    IWorksheet.Cells[statusRow, 2].Borders.LineStyle = Excel.XlLineStyle.xlContinuous;
+                    IWorksheet.Cells[statusRow, 2].Borders.Color = Color.Black;
+                    IWorksheet.get_Range("A" + statusRow, "B" + statusRow).Merge();
                     statusRow++;
                 }
                 // Добавление диаграммы
                 Excel.ChartObjects chartObjects = (Excel.ChartObjects)IWorksheet.ChartObjects(Type.Missing);
-                Excel.ChartObject chartObject = chartObjects.Add(610, 5, 370, 300); // Изменение размеров диаграммы
+                Excel.ChartObject chartObject = chartObjects.Add(480, 5, 370, 300); // Изменение размеров диаграммы
                 Excel.Chart chart = chartObject.Chart;
                 // Add data series
                 Excel.SeriesCollection seriesCollection = (Excel.SeriesCollection)chart.SeriesCollection(Type.Missing);
@@ -579,6 +603,12 @@ namespace Napitki_Altay2.Forms
                 // Назначение цветов для статусов
                 Excel.SeriesCollection seriesCollectionSecond = (Excel.SeriesCollection)chart.SeriesCollection(Type.Missing);
                 Excel.Series seriesSecond = seriesCollection.Item(1);
+                // Отображение значений на столбцах
+                series.HasDataLabels = true;
+                Excel.DataLabels dataLabels = series.DataLabels(Type.Missing);
+                dataLabels.Position = Excel.XlDataLabelPosition.xlLabelPositionInsideEnd;
+                dataLabels.Font.Size = 10;
+                dataLabels.Font.Bold = true;
                 for (int i = 1; i <= series.Points().Count; i++)
                 {
                     Excel.Point point = series.Points(i);
@@ -595,14 +625,15 @@ namespace Napitki_Altay2.Forms
                             break;
                     }
                 }
+
                 // Подпись и дата
                 int lastRow = statusRow + 1;
                 IWorksheet.Cells[lastRow, 1].Font.Bold = true;
                 IWorksheet.Cells[lastRow, 1] = $"Дата: {DateTime.Now:dd-MM-yyyy}";
-                IWorksheet.Cells[lastRow, 5] = "Подпись главы отдела:_____________";
-                IWorksheet.Cells[lastRow, 5].Font.Bold = true; // Выделение жирным
-                IWorksheet.Cells[lastRow + 1, 5] = "Место печати ";
-                IWorksheet.Cells[lastRow + 1, 5].Font.Bold = true; // Выделение жирным
+                IWorksheet.Cells[lastRow, 3] = "Подпись руководителя отдела:_____________";
+                IWorksheet.Cells[lastRow, 3].Font.Bold = true; // Выделение жирным
+                IWorksheet.Cells[lastRow + 1, 3] = "М.П.";
+                IWorksheet.Cells[lastRow + 1, 3].Font.Bold = true; // Выделение жирным
                 string excelFileName = $"Отчет о завершённых обращениях " +
                     $"сотрудника {employeeName} за период от " +
                     $"{fromDate:dd.MM.yyyy} до {toDate:dd.MM.yyyy}.xlsx";
@@ -633,6 +664,7 @@ namespace Napitki_Altay2.Forms
         private void UpdateDataDGWAnswer_Click(object sender, EventArgs e)
         {
             LoadDataInCompleteApplicationDGW();
+            isButtonRaportToggled = false;
         }
         #endregion
         #region [Метод, показывающий/скрывающий видимость пароля]
@@ -688,6 +720,10 @@ namespace Napitki_Altay2.Forms
                     FirstDateToRaportDTP.Value.Date.ToString("yyyy-MM-dd"),
                     SecondDateToRaportDTP.Value.Date.ToString("yyyy-MM-dd"));
                 DataTable dataTable = dataBaseWork.OutputQuery(sqlQuery);
+                MessageBox.Show("Обращения в работе были отсортированы. " +
+                    "Для формирования финального отчёта, пожалуйста, " +
+                    "нажмите на кнопку формирования ещё раз.", 
+                    "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 OutputInTableSettingTwo(dataTable);
             }
             else
@@ -698,6 +734,10 @@ namespace Napitki_Altay2.Forms
                     FirstDateToRaportDTP.Value.Date.ToString("yyyy-MM-dd"),
                     SecondDateToRaportDTP.Value.Date.ToString("yyyy-MM-dd"));
                 DataTable dataTable = dataBaseWork.OutputQuery(sqlQuery);
+                MessageBox.Show("Обращения в работе были отсортированы. " +
+                    "Для формирования финального отчёта, пожалуйста, " +
+                    "нажмите на кнопку формирования ещё раз.",
+                    "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 OutputInTableSettingTwo(dataTable);
             }
         }

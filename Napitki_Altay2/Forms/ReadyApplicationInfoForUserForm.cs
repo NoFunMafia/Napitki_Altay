@@ -123,7 +123,10 @@ namespace Napitki_Altay2.Forms
                     StatusCompleteTextBox.Texts = item[2];
                     DescripCompleteTextBox.Texts = item[3];
                     ApplCompleteDTP.Text = DateTime.Parse(item[4]).ToString();
-                    PinDocumentTextBox.Texts = item[5];
+                    if (item[5] != string.Empty)
+                        PinDocumentTextBox.Texts = item[5];
+                    else
+                        PinDocumentTextBox.Texts = "Отсутствует";
                 }
             }
             else

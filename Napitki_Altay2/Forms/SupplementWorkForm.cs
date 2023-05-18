@@ -12,6 +12,8 @@ using System.Globalization;
 using DocumentFormat.OpenXml.Packaging;
 using System.Text;
 using DocumentFormat.OpenXml.Wordprocessing;
+using MimeKit;
+using MailKit.Net.Smtp;
 #endregion
 namespace Napitki_Altay2.Forms
 {
@@ -22,6 +24,7 @@ namespace Napitki_Altay2.Forms
         readonly SqlQueries sqlQueries = new SqlQueries();
         readonly DataBaseWork dataBaseWork = new DataBaseWork();
         readonly CultureInfo russianCulture = new CultureInfo("ru-RU");
+        string userEmail;
         #endregion
         public SupplementWorkForm()
         {
@@ -37,17 +40,19 @@ namespace Napitki_Altay2.Forms
 
         public void DisableControls()
         {
-            StatusApplicationTextBox.Enabled = false;
-            DocumentWorkAnsTextBox.Enabled = false;
             ChooseAnsWorkDocumentButton.Enabled = false;
-            ChooseStatusApplPictureBox.Enabled = false;
             DeleteAnsWorkDocumentButton.Enabled = false;
-            DescripWorkAnsTextBox.Enabled = false;
+            ChooseStatusApplPictureBox.Visible = false;
+            DescripWorkAnsTextBox.ReadOnly = true;
             HelpCollaborationButton.Enabled = false;
             HelpDiscussionButton.Enabled = false;
             HelpThanksButton.Enabled = false;
             AnswerApplButton.Enabled = false;
             CloseAnsButton.Text = "Закрыть ответ";
+            Text = "Ваш ответ на обращение";
+            SelectAnsWorkDocumentLabel.Text = "Прикрепленный файл к ответу:";
+            SelectAnsWorkDocumentLabel.Location = new Point(335, 190);
+            DescripApplWorkLabel.Text = "Ответ на обращение пользователя:";
             LoadForm();
         }
 
@@ -55,17 +60,19 @@ namespace Napitki_Altay2.Forms
         {
             List<string[]> listSearch = GetApplicationInfoQuery();
             CheckDataReaderRowsInfo(listSearch);
-            StatusApplicationTextBox.Enabled = false;
-            DocumentWorkAnsTextBox.Enabled = false;
             ChooseAnsWorkDocumentButton.Enabled = true;
-            ChooseStatusApplPictureBox.Enabled = true;
             DeleteAnsWorkDocumentButton.Enabled = true;
-            DescripWorkAnsTextBox.Enabled = true;
+            ChooseStatusApplPictureBox.Visible = true;
+            DescripWorkAnsTextBox.ReadOnly = false;
             HelpCollaborationButton.Enabled = true;
             HelpDiscussionButton.Enabled = true;
             HelpThanksButton.Enabled = true;
             AnswerApplButton.Enabled = true;
             CloseAnsButton.Text = "Прекратить дополнение";
+            Text = "Ответ на доп. информацию по обращению";
+            SelectAnsWorkDocumentLabel.Text = "Прикрепить файл \nк ответу на обращение (опционально):";
+            SelectAnsWorkDocumentLabel.Location = new Point(335, 175);
+            DescripApplWorkLabel.Text = "Дополнение ответа на обращение:";
             LoadForm();
         }
         private void ОжиданиеToolStripMenuItem_Click(object sender, EventArgs e)
@@ -127,7 +134,7 @@ namespace Napitki_Altay2.Forms
             {
                 foreach (string[] item in strings)
                 {
-                    if(DescripWorkAnsTextBox.Enabled == true)
+                    if (DescripWorkAnsTextBox.ReadOnly != true)
                     {
                         DescripWorkAnsTextBox.Texts = item[3] + $"\r\n\r\nДополнение от {DateTime.Now}:\r\n";
                         StatusApplicationTextBox.Texts = "";
@@ -137,9 +144,12 @@ namespace Napitki_Altay2.Forms
                     {
                         StatusApplicationTextBox.Texts = item[2];
                         DescripWorkAnsTextBox.Texts = item[3];
-                        DocumentWorkAnsTextBox.Texts = item[5];
+                        if (item[5] != string.Empty)
+                            DocumentWorkAnsTextBox.Texts = item[5];
+                        else
+                            DocumentWorkAnsTextBox.Texts = "Отсутствует";
                     }
-                    ApplAnsWorkDTP.Text = DateTime.Parse(item[4]).ToString();
+                    //ApplAnsWorkDTP.Text = DateTime.Parse(item[4]).ToString();
                 }
             }
             else
@@ -158,6 +168,7 @@ namespace Napitki_Altay2.Forms
             if (string.IsNullOrEmpty(DocumentWorkAnsTextBox.Texts))
             {
                 CreateSupplementWorker();
+                SendAnEmail();
             }
             else
             {
@@ -176,9 +187,58 @@ namespace Napitki_Altay2.Forms
                         UpdateDocumentQuery(buffer, extension, name);
                     }
                     CreateSupplementWorker();
+                    SendAnEmail();
                 }
             }
         }
+        #region [Метод, отправляющий email уведомление о добавлении обращения]
+        private async void SendAnEmail()
+        {
+            List<string[]> listSearch = GetFioUser();
+            CheckEmailUser(listSearch);
+            MimeMessage mimeMessage = new MimeMessage();
+            mimeMessage.From.Add(new MailboxAddress("ЗАО «Волчихинский пивоваренный завод»",
+                "napitki-altay@mail.ru"));
+            mimeMessage.To.Add(MailboxAddress.Parse(userEmail));
+            mimeMessage.Subject = $"Получен ответ от сотрудника!";
+            mimeMessage.Body = new TextPart("html")
+            {
+                Text = $"<p>Сотрудник, работающий по вашему обращению дополнил свой ответ. " +
+                $"Мы надеемся что вы сможете посмотреть его в ближайшее время!" +
+                $"<p>С уважением,<br>Команда ЗАО «Волчихинский пивоваренный завод»</p>"
+            };
+            SmtpClient smtpClient = new SmtpClient();
+            await smtpClient.ConnectAsync("smtp.mail.ru", 465, true);
+            smtpClient.Authenticate("napitki-altay@mail.ru", "5TGsxjXKrXYpVxeajrgY");
+            smtpClient.Send(mimeMessage);
+            smtpClient.Disconnect(true);
+            smtpClient.Dispose();
+        }
+        #endregion
+        private void CheckEmailUser(List<string[]> strings)
+        {
+            if (strings != null)
+            {
+                foreach (string[] item in strings)
+                {
+                    string sqlQuery = sqlQueries.SqlComGetEmailWorker
+                        (item[1].ToString(), item[0].ToString(), item[2].ToString());
+                    userEmail = dataBaseWork.GetString(sqlQuery);
+                }
+            }
+        }
+        #region [Метод, получающий значение почты работника]
+        /// <summary>
+        /// Метод, заполняющий List список из sql-запроса
+        /// </summary>
+        /// <returns></returns>
+        private List<string[]> GetFioUser()
+        {
+            string sqlQuery = sqlQueries.SqlComGetFioUser(MainWorkFormWorker.SelectedRowID);
+            List<string[]> listSearch = dataBaseWork.GetMultiList(sqlQuery, 3);
+            return listSearch;
+        }
+        #endregion
         #region [Метод, вносящий прикрепляемый файл в БД]
         /// <summary>
         /// Метод, вносящий прикрепляемый файл в БД
@@ -254,12 +314,10 @@ namespace Napitki_Altay2.Forms
             }
         }
         #endregion
-
         private void DeleteAnsWorkDocumentButton_Click(object sender, EventArgs e)
         {
             DocumentWorkAnsTextBox.Texts = "";
         }
-
         private void ChooseAnsWorkDocumentButton_Click(object sender, EventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog
@@ -442,6 +500,7 @@ namespace Napitki_Altay2.Forms
             return newDocumentPath;
         }
         #endregion
+
         private void HelpCollaborationButton_Click(object sender, EventArgs e)
         {
             List<string[]> listSearch = GetFioFromQuery();

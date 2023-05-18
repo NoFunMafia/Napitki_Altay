@@ -5,6 +5,7 @@ using System.Windows.Forms;
 using Napitki_Altay2.Classes;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 #endregion
 namespace Napitki_Altay2.Forms
 {
@@ -40,6 +41,13 @@ namespace Napitki_Altay2.Forms
             CheckFIOinList(listSearch);
             LoadDataGridView();
             LoadDataGridViewComplete();
+            if (FamCreateTextBox.Texts != string.Empty)
+            {
+                MainWorkForm mainWorkForm = Application.OpenForms.OfType<MainWorkForm>().FirstOrDefault();
+                mainWorkForm.Text = $"Автоматизация документооборота. " +
+                    $"Заявитель - {FamCreateTextBox.Texts} {NameCreateTextBox.Texts} " +
+                    $"{PatrCreateTextBox.Texts}";
+            }
         }
         #endregion
         #region [Событие нажатия на кнопку UpdLogPassButton]
@@ -234,6 +242,10 @@ namespace Napitki_Altay2.Forms
                     FamCreateTextBox.Enabled = false;
                     NameCreateTextBox.Enabled = false;
                     PatrCreateTextBox.Enabled = false;
+                    MainWorkForm mainWorkForm = Application.OpenForms.OfType<MainWorkForm>().FirstOrDefault();
+                    mainWorkForm.Text = $"Автоматизация документооборота. " +
+                        $"Заявитель - {FamCreateTextBox.Texts} {NameCreateTextBox.Texts} " +
+                        $"{PatrCreateTextBox.Texts}";
                 }
                 dataBaseWork.WithoutOutputQuery(sqlQuerySecond);
             }
@@ -445,10 +457,8 @@ namespace Napitki_Altay2.Forms
             if (dataTable != null && dataTable.Rows.Count > 0)
             {
                 MessageBox.Show("Данное ФИО уже зарегистрировано " +
-                    "в системе, используйте другое!",
-                    "Ошибка",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Error);
+                    "в системе, используйте другое!", "Ошибка",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error); 
                 return true;
             }
             else
@@ -483,15 +493,15 @@ namespace Napitki_Altay2.Forms
             {
                 if (CompleteApplicationDGWUser.RowCount != 0)
                 {
-                    if (CompleteApplicationDGWUser.CurrentRow.Cells[5].Value.ToString() == "Завершено")
+                    if (CompleteApplicationDGWUser.CurrentRow.Cells[5].Value.ToString() != "Ожидание доп. информации")
                     {
+                        selectedRowIDInDGWC = CompleteApplicationDGWUser.CurrentRow.Cells[0].Value.ToString();
+                        SupplementForm supForm = new SupplementForm();
+                        supForm.Show();
+                        supForm.Location = new Point(40, 90);
+                        supForm.DisableControls();
+                        Hide();
                         OpenMessageFromWorker();
-                    }
-                    else if (CompleteApplicationDGWUser.CurrentRow.Cells[5].Value.ToString() == "Дополнено")
-                    {
-                        MessageBox.Show("Дополненное сообщение открыть нельзя. " +
-                            "Ожидайте ответ от сотрудника!", "Внимание",
-                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     }
                     else
                     {
@@ -499,6 +509,7 @@ namespace Napitki_Altay2.Forms
                         SupplementForm supForm = new SupplementForm();
                         supForm.Show();
                         supForm.Location = new Point(40, 90);
+                        supForm.EnableControls();
                         Hide();
                         OpenMessageFromWorker();
                     }

@@ -31,21 +31,21 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SupplementForm));
             this.SelectDocumentLabel = new System.Windows.Forms.Label();
-            this.ChooseDocumentButton = new Napitki_Altay2.Design.CustomButton();
-            this.DocumentTextBox = new Napitki_Altay2.Design.CustomTextBox();
-            this.CancelSupButton = new Napitki_Altay2.Design.CustomButton();
-            this.PlusSupButton = new Napitki_Altay2.Design.CustomButton();
             this.DateTimeDescrLabel = new System.Windows.Forms.Label();
             this.DescripApplLabel = new System.Windows.Forms.Label();
             this.TypeApplLabel = new System.Windows.Forms.Label();
             this.CompanyNameLabel = new System.Windows.Forms.Label();
             this.ApplDTP = new System.Windows.Forms.DateTimePicker();
+            this.SupPictureBox = new System.Windows.Forms.PictureBox();
+            this.DeleteDocumentButton = new Napitki_Altay2.Design.CustomButton();
+            this.ChooseDocumentButton = new Napitki_Altay2.Design.CustomButton();
+            this.DocumentTextBox = new Napitki_Altay2.Design.CustomTextBox();
+            this.CancelSupButton = new Napitki_Altay2.Design.CustomButton();
+            this.PlusSupButton = new Napitki_Altay2.Design.CustomButton();
             this.DescripTextBox = new Napitki_Altay2.Design.CustomTextBox();
             this.TypeApplTextBox = new Napitki_Altay2.Design.CustomTextBox();
             this.CompanyTextBox = new Napitki_Altay2.Design.CustomTextBox();
-            this.SupPictureBox = new System.Windows.Forms.PictureBox();
             this.CustomFormForAllProject = new Napitki_Altay2.Components.FormStyleCustom(this.components);
-            this.DeleteDocumentButton = new Napitki_Altay2.Design.CustomButton();
             ((System.ComponentModel.ISupportInitialize)(this.SupPictureBox)).BeginInit();
             this.SuspendLayout();
             // 
@@ -58,6 +58,90 @@
             this.SelectDocumentLabel.Size = new System.Drawing.Size(433, 25);
             this.SelectDocumentLabel.TabIndex = 36;
             this.SelectDocumentLabel.Text = "Прикрепить файл к дополнению (опционально):";
+            // 
+            // DateTimeDescrLabel
+            // 
+            this.DateTimeDescrLabel.AutoSize = true;
+            this.DateTimeDescrLabel.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
+            this.DateTimeDescrLabel.Location = new System.Drawing.Point(20, 606);
+            this.DateTimeDescrLabel.Name = "DateTimeDescrLabel";
+            this.DateTimeDescrLabel.Size = new System.Drawing.Size(316, 28);
+            this.DateTimeDescrLabel.TabIndex = 30;
+            this.DateTimeDescrLabel.Text = "Время дополнения обращения:";
+            // 
+            // DescripApplLabel
+            // 
+            this.DescripApplLabel.AutoSize = true;
+            this.DescripApplLabel.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
+            this.DescripApplLabel.Location = new System.Drawing.Point(20, 319);
+            this.DescripApplLabel.Name = "DescripApplLabel";
+            this.DescripApplLabel.Size = new System.Drawing.Size(182, 28);
+            this.DescripApplLabel.TabIndex = 29;
+            this.DescripApplLabel.Text = "Ваше обращение:";
+            // 
+            // TypeApplLabel
+            // 
+            this.TypeApplLabel.AutoSize = true;
+            this.TypeApplLabel.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
+            this.TypeApplLabel.Location = new System.Drawing.Point(20, 246);
+            this.TypeApplLabel.Name = "TypeApplLabel";
+            this.TypeApplLabel.Size = new System.Drawing.Size(165, 28);
+            this.TypeApplLabel.TabIndex = 28;
+            this.TypeApplLabel.Text = "Тип обращения:";
+            // 
+            // CompanyNameLabel
+            // 
+            this.CompanyNameLabel.AutoSize = true;
+            this.CompanyNameLabel.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
+            this.CompanyNameLabel.Location = new System.Drawing.Point(20, 170);
+            this.CompanyNameLabel.Name = "CompanyNameLabel";
+            this.CompanyNameLabel.Size = new System.Drawing.Size(262, 28);
+            this.CompanyNameLabel.TabIndex = 27;
+            this.CompanyNameLabel.Text = "Наименование компании:";
+            // 
+            // ApplDTP
+            // 
+            this.ApplDTP.Enabled = false;
+            this.ApplDTP.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.ApplDTP.Location = new System.Drawing.Point(25, 634);
+            this.ApplDTP.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.ApplDTP.Name = "ApplDTP";
+            this.ApplDTP.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.ApplDTP.Size = new System.Drawing.Size(285, 38);
+            this.ApplDTP.TabIndex = 26;
+            // 
+            // SupPictureBox
+            // 
+            this.SupPictureBox.BackColor = System.Drawing.Color.White;
+            this.SupPictureBox.Image = global::Napitki_Altay2.Properties.Resources.PictureLoginForm;
+            this.SupPictureBox.Location = new System.Drawing.Point(327, 4);
+            this.SupPictureBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.SupPictureBox.Name = "SupPictureBox";
+            this.SupPictureBox.Size = new System.Drawing.Size(239, 210);
+            this.SupPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.SupPictureBox.TabIndex = 22;
+            this.SupPictureBox.TabStop = false;
+            // 
+            // DeleteDocumentButton
+            // 
+            this.DeleteDocumentButton.BackColor = System.Drawing.Color.RoyalBlue;
+            this.DeleteDocumentButton.BackgroundColor = System.Drawing.Color.RoyalBlue;
+            this.DeleteDocumentButton.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
+            this.DeleteDocumentButton.BorderRadius = 0;
+            this.DeleteDocumentButton.BorderSize = 0;
+            this.DeleteDocumentButton.FlatAppearance.BorderSize = 0;
+            this.DeleteDocumentButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.DeleteDocumentButton.Font = new System.Drawing.Font("Segoe UI Semibold", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.DeleteDocumentButton.ForeColor = System.Drawing.Color.White;
+            this.DeleteDocumentButton.Location = new System.Drawing.Point(644, 254);
+            this.DeleteDocumentButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.DeleteDocumentButton.Name = "DeleteDocumentButton";
+            this.DeleteDocumentButton.Size = new System.Drawing.Size(179, 56);
+            this.DeleteDocumentButton.TabIndex = 37;
+            this.DeleteDocumentButton.Text = "Удалить файл";
+            this.DeleteDocumentButton.TextColor = System.Drawing.Color.White;
+            this.DeleteDocumentButton.UseVisualStyleBackColor = false;
+            this.DeleteDocumentButton.Click += new System.EventHandler(this.DeleteDocumentButton_Click);
             // 
             // ChooseDocumentButton
             // 
@@ -95,6 +179,7 @@
             this.DocumentTextBox.Name = "DocumentTextBox";
             this.DocumentTextBox.Padding = new System.Windows.Forms.Padding(7);
             this.DocumentTextBox.PasswordChar = false;
+            this.DocumentTextBox.ReadOnly = false;
             this.DocumentTextBox.ScrollBars = System.Windows.Forms.ScrollBars.None;
             this.DocumentTextBox.SelectionStart = 0;
             this.DocumentTextBox.Size = new System.Drawing.Size(383, 35);
@@ -144,57 +229,6 @@
             this.PlusSupButton.UseVisualStyleBackColor = false;
             this.PlusSupButton.Click += new System.EventHandler(this.PlusSupButton_Click);
             // 
-            // DateTimeDescrLabel
-            // 
-            this.DateTimeDescrLabel.AutoSize = true;
-            this.DateTimeDescrLabel.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
-            this.DateTimeDescrLabel.Location = new System.Drawing.Point(20, 606);
-            this.DateTimeDescrLabel.Name = "DateTimeDescrLabel";
-            this.DateTimeDescrLabel.Size = new System.Drawing.Size(305, 28);
-            this.DateTimeDescrLabel.TabIndex = 30;
-            this.DateTimeDescrLabel.Text = "Время дополнения заявления:";
-            // 
-            // DescripApplLabel
-            // 
-            this.DescripApplLabel.AutoSize = true;
-            this.DescripApplLabel.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
-            this.DescripApplLabel.Location = new System.Drawing.Point(20, 319);
-            this.DescripApplLabel.Name = "DescripApplLabel";
-            this.DescripApplLabel.Size = new System.Drawing.Size(182, 28);
-            this.DescripApplLabel.TabIndex = 29;
-            this.DescripApplLabel.Text = "Ваше обращение:";
-            // 
-            // TypeApplLabel
-            // 
-            this.TypeApplLabel.AutoSize = true;
-            this.TypeApplLabel.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
-            this.TypeApplLabel.Location = new System.Drawing.Point(20, 246);
-            this.TypeApplLabel.Name = "TypeApplLabel";
-            this.TypeApplLabel.Size = new System.Drawing.Size(165, 28);
-            this.TypeApplLabel.TabIndex = 28;
-            this.TypeApplLabel.Text = "Тип обращения:";
-            // 
-            // CompanyNameLabel
-            // 
-            this.CompanyNameLabel.AutoSize = true;
-            this.CompanyNameLabel.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
-            this.CompanyNameLabel.Location = new System.Drawing.Point(20, 170);
-            this.CompanyNameLabel.Name = "CompanyNameLabel";
-            this.CompanyNameLabel.Size = new System.Drawing.Size(262, 28);
-            this.CompanyNameLabel.TabIndex = 27;
-            this.CompanyNameLabel.Text = "Наименование компании:";
-            // 
-            // ApplDTP
-            // 
-            this.ApplDTP.Enabled = false;
-            this.ApplDTP.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.ApplDTP.Location = new System.Drawing.Point(25, 634);
-            this.ApplDTP.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.ApplDTP.Name = "ApplDTP";
-            this.ApplDTP.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.ApplDTP.Size = new System.Drawing.Size(285, 38);
-            this.ApplDTP.TabIndex = 26;
-            // 
             // DescripTextBox
             // 
             this.DescripTextBox.AutoScroll = true;
@@ -211,6 +245,7 @@
             this.DescripTextBox.Name = "DescripTextBox";
             this.DescripTextBox.Padding = new System.Windows.Forms.Padding(7);
             this.DescripTextBox.PasswordChar = false;
+            this.DescripTextBox.ReadOnly = false;
             this.DescripTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.DescripTextBox.SelectionStart = 0;
             this.DescripTextBox.Size = new System.Drawing.Size(839, 254);
@@ -233,6 +268,7 @@
             this.TypeApplTextBox.Name = "TypeApplTextBox";
             this.TypeApplTextBox.Padding = new System.Windows.Forms.Padding(7);
             this.TypeApplTextBox.PasswordChar = false;
+            this.TypeApplTextBox.ReadOnly = false;
             this.TypeApplTextBox.ScrollBars = System.Windows.Forms.ScrollBars.None;
             this.TypeApplTextBox.SelectionStart = 0;
             this.TypeApplTextBox.Size = new System.Drawing.Size(383, 35);
@@ -255,24 +291,13 @@
             this.CompanyTextBox.Name = "CompanyTextBox";
             this.CompanyTextBox.Padding = new System.Windows.Forms.Padding(7);
             this.CompanyTextBox.PasswordChar = false;
+            this.CompanyTextBox.ReadOnly = false;
             this.CompanyTextBox.ScrollBars = System.Windows.Forms.ScrollBars.None;
             this.CompanyTextBox.SelectionStart = 0;
             this.CompanyTextBox.Size = new System.Drawing.Size(383, 35);
             this.CompanyTextBox.TabIndex = 23;
             this.CompanyTextBox.Texts = "";
             this.CompanyTextBox.UnderlinedStyle = false;
-            // 
-            // SupPictureBox
-            // 
-            this.SupPictureBox.BackColor = System.Drawing.Color.White;
-            this.SupPictureBox.Image = global::Napitki_Altay2.Properties.Resources.PictureLoginForm;
-            this.SupPictureBox.Location = new System.Drawing.Point(327, 4);
-            this.SupPictureBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.SupPictureBox.Name = "SupPictureBox";
-            this.SupPictureBox.Size = new System.Drawing.Size(239, 210);
-            this.SupPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.SupPictureBox.TabIndex = 22;
-            this.SupPictureBox.TabStop = false;
             // 
             // CustomFormForAllProject
             // 
@@ -292,27 +317,6 @@
             this.CustomFormForAllProject.HeaderImage = null;
             this.CustomFormForAllProject.HeaderTextColor = System.Drawing.Color.White;
             this.CustomFormForAllProject.HeaderTextFont = new System.Drawing.Font("Segoe UI", 12F);
-            // 
-            // DeleteDocumentButton
-            // 
-            this.DeleteDocumentButton.BackColor = System.Drawing.Color.RoyalBlue;
-            this.DeleteDocumentButton.BackgroundColor = System.Drawing.Color.RoyalBlue;
-            this.DeleteDocumentButton.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
-            this.DeleteDocumentButton.BorderRadius = 0;
-            this.DeleteDocumentButton.BorderSize = 0;
-            this.DeleteDocumentButton.FlatAppearance.BorderSize = 0;
-            this.DeleteDocumentButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.DeleteDocumentButton.Font = new System.Drawing.Font("Segoe UI Semibold", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.DeleteDocumentButton.ForeColor = System.Drawing.Color.White;
-            this.DeleteDocumentButton.Location = new System.Drawing.Point(644, 254);
-            this.DeleteDocumentButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.DeleteDocumentButton.Name = "DeleteDocumentButton";
-            this.DeleteDocumentButton.Size = new System.Drawing.Size(179, 56);
-            this.DeleteDocumentButton.TabIndex = 37;
-            this.DeleteDocumentButton.Text = "Удалить файл";
-            this.DeleteDocumentButton.TextColor = System.Drawing.Color.White;
-            this.DeleteDocumentButton.UseVisualStyleBackColor = false;
-            this.DeleteDocumentButton.Click += new System.EventHandler(this.DeleteDocumentButton_Click);
             // 
             // SupplementForm
             // 

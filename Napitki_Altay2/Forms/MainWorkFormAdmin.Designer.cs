@@ -32,7 +32,9 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainWorkFormAdmin));
             this.MainWorkAdminTabControl = new System.Windows.Forms.TabControl();
             this.AllUsersPage = new System.Windows.Forms.TabPage();
-            this.InfoUsersLabel = new System.Windows.Forms.Label();
+            this.UpdateUserDataButton = new Napitki_Altay2.Design.CustomButton();
+            this.UpdateUserButton = new Napitki_Altay2.Design.CustomButton();
+            this.CreateUserButton = new Napitki_Altay2.Design.CustomButton();
             this.DataGridViewUsers = new System.Windows.Forms.DataGridView();
             this.AllApplicationPage = new System.Windows.Forms.TabPage();
             this.LatterPoLabel = new System.Windows.Forms.Label();
@@ -40,14 +42,11 @@
             this.SecondDateToRaportDTP = new System.Windows.Forms.DateTimePicker();
             this.FirstDateToRaportDTP = new System.Windows.Forms.DateTimePicker();
             this.FolderPathLabel = new System.Windows.Forms.Label();
-            this.DataGridViewApplication = new System.Windows.Forms.DataGridView();
-            this.FolderPathBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
-            this.UpdateUserButton = new Napitki_Altay2.Design.CustomButton();
-            this.DeleteUserButton = new Napitki_Altay2.Design.CustomButton();
-            this.CreateUserButton = new Napitki_Altay2.Design.CustomButton();
             this.FilePathTextBox = new Napitki_Altay2.Design.CustomTextBox();
             this.UpdateApplicationButton = new Napitki_Altay2.Design.CustomButton();
             this.GenerateRaportButton = new Napitki_Altay2.Design.CustomButton();
+            this.DataGridViewApplication = new System.Windows.Forms.DataGridView();
+            this.FolderPathBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
             this.CustomFormForAllProject = new Napitki_Altay2.Components.FormStyleCustom(this.components);
             this.MainWorkAdminTabControl.SuspendLayout();
             this.AllUsersPage.SuspendLayout();
@@ -69,9 +68,8 @@
             // 
             // AllUsersPage
             // 
-            this.AllUsersPage.Controls.Add(this.InfoUsersLabel);
+            this.AllUsersPage.Controls.Add(this.UpdateUserDataButton);
             this.AllUsersPage.Controls.Add(this.UpdateUserButton);
-            this.AllUsersPage.Controls.Add(this.DeleteUserButton);
             this.AllUsersPage.Controls.Add(this.CreateUserButton);
             this.AllUsersPage.Controls.Add(this.DataGridViewUsers);
             this.AllUsersPage.Location = new System.Drawing.Point(4, 27);
@@ -82,17 +80,68 @@
             this.AllUsersPage.Text = "Пользователи";
             this.AllUsersPage.UseVisualStyleBackColor = true;
             // 
-            // InfoUsersLabel
+            // UpdateUserDataButton
             // 
-            this.InfoUsersLabel.AutoSize = true;
-            this.InfoUsersLabel.Font = new System.Drawing.Font("Segoe UI Semibold", 10F, System.Drawing.FontStyle.Bold);
-            this.InfoUsersLabel.ForeColor = System.Drawing.Color.Black;
-            this.InfoUsersLabel.Location = new System.Drawing.Point(497, 3);
-            this.InfoUsersLabel.Name = "InfoUsersLabel";
-            this.InfoUsersLabel.Size = new System.Drawing.Size(465, 46);
-            this.InfoUsersLabel.TabIndex = 17;
-            this.InfoUsersLabel.Text = "Внимание! Удаление сотрудников и заявителей которые\r\nучаствовали в документооборо" +
-    "те недопустимо!";
+            this.UpdateUserDataButton.BackColor = System.Drawing.Color.RoyalBlue;
+            this.UpdateUserDataButton.BackgroundColor = System.Drawing.Color.RoyalBlue;
+            this.UpdateUserDataButton.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
+            this.UpdateUserDataButton.BorderRadius = 0;
+            this.UpdateUserDataButton.BorderSize = 0;
+            this.UpdateUserDataButton.FlatAppearance.BorderSize = 0;
+            this.UpdateUserDataButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.UpdateUserDataButton.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
+            this.UpdateUserDataButton.ForeColor = System.Drawing.Color.White;
+            this.UpdateUserDataButton.Location = new System.Drawing.Point(284, 8);
+            this.UpdateUserDataButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.UpdateUserDataButton.Name = "UpdateUserDataButton";
+            this.UpdateUserDataButton.Size = new System.Drawing.Size(207, 43);
+            this.UpdateUserDataButton.TabIndex = 16;
+            this.UpdateUserDataButton.Text = "Обновить данные";
+            this.UpdateUserDataButton.TextColor = System.Drawing.Color.White;
+            this.UpdateUserDataButton.UseVisualStyleBackColor = false;
+            this.UpdateUserDataButton.Click += new System.EventHandler(this.UpdateUserDataButton_Click);
+            // 
+            // UpdateUserButton
+            // 
+            this.UpdateUserButton.BackColor = System.Drawing.Color.RoyalBlue;
+            this.UpdateUserButton.BackgroundColor = System.Drawing.Color.RoyalBlue;
+            this.UpdateUserButton.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
+            this.UpdateUserButton.BorderRadius = 0;
+            this.UpdateUserButton.BorderSize = 0;
+            this.UpdateUserButton.FlatAppearance.BorderSize = 0;
+            this.UpdateUserButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.UpdateUserButton.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
+            this.UpdateUserButton.ForeColor = System.Drawing.Color.White;
+            this.UpdateUserButton.Location = new System.Drawing.Point(145, 8);
+            this.UpdateUserButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.UpdateUserButton.Name = "UpdateUserButton";
+            this.UpdateUserButton.Size = new System.Drawing.Size(133, 43);
+            this.UpdateUserButton.TabIndex = 15;
+            this.UpdateUserButton.Text = "Изменить";
+            this.UpdateUserButton.TextColor = System.Drawing.Color.White;
+            this.UpdateUserButton.UseVisualStyleBackColor = false;
+            this.UpdateUserButton.Click += new System.EventHandler(this.UpdateUserButton_Click);
+            // 
+            // CreateUserButton
+            // 
+            this.CreateUserButton.BackColor = System.Drawing.Color.RoyalBlue;
+            this.CreateUserButton.BackgroundColor = System.Drawing.Color.RoyalBlue;
+            this.CreateUserButton.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
+            this.CreateUserButton.BorderRadius = 0;
+            this.CreateUserButton.BorderSize = 0;
+            this.CreateUserButton.FlatAppearance.BorderSize = 0;
+            this.CreateUserButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.CreateUserButton.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.CreateUserButton.ForeColor = System.Drawing.Color.White;
+            this.CreateUserButton.Location = new System.Drawing.Point(6, 8);
+            this.CreateUserButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.CreateUserButton.Name = "CreateUserButton";
+            this.CreateUserButton.Size = new System.Drawing.Size(133, 43);
+            this.CreateUserButton.TabIndex = 14;
+            this.CreateUserButton.Text = "Создать";
+            this.CreateUserButton.TextColor = System.Drawing.Color.White;
+            this.CreateUserButton.UseVisualStyleBackColor = false;
+            this.CreateUserButton.Click += new System.EventHandler(this.CreateUserButton_Click);
             // 
             // DataGridViewUsers
             // 
@@ -177,82 +226,6 @@
             this.FolderPathLabel.TabIndex = 29;
             this.FolderPathLabel.Text = "Путь сохранения для формирования отчёта:";
             // 
-            // DataGridViewApplication
-            // 
-            this.DataGridViewApplication.AllowUserToAddRows = false;
-            this.DataGridViewApplication.AllowUserToDeleteRows = false;
-            this.DataGridViewApplication.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.DataGridViewApplication.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.DataGridViewApplication.Location = new System.Drawing.Point(3, 193);
-            this.DataGridViewApplication.Name = "DataGridViewApplication";
-            this.DataGridViewApplication.RowHeadersWidth = 51;
-            this.DataGridViewApplication.RowTemplate.Height = 24;
-            this.DataGridViewApplication.Size = new System.Drawing.Size(1005, 392);
-            this.DataGridViewApplication.TabIndex = 0;
-            // 
-            // UpdateUserButton
-            // 
-            this.UpdateUserButton.BackColor = System.Drawing.Color.RoyalBlue;
-            this.UpdateUserButton.BackgroundColor = System.Drawing.Color.RoyalBlue;
-            this.UpdateUserButton.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
-            this.UpdateUserButton.BorderRadius = 0;
-            this.UpdateUserButton.BorderSize = 0;
-            this.UpdateUserButton.FlatAppearance.BorderSize = 0;
-            this.UpdateUserButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.UpdateUserButton.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
-            this.UpdateUserButton.ForeColor = System.Drawing.Color.White;
-            this.UpdateUserButton.Location = new System.Drawing.Point(284, 8);
-            this.UpdateUserButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.UpdateUserButton.Name = "UpdateUserButton";
-            this.UpdateUserButton.Size = new System.Drawing.Size(207, 43);
-            this.UpdateUserButton.TabIndex = 16;
-            this.UpdateUserButton.Text = "Обновить данные";
-            this.UpdateUserButton.TextColor = System.Drawing.Color.White;
-            this.UpdateUserButton.UseVisualStyleBackColor = false;
-            this.UpdateUserButton.Click += new System.EventHandler(this.UpdateUserButton_Click);
-            // 
-            // DeleteUserButton
-            // 
-            this.DeleteUserButton.BackColor = System.Drawing.Color.RoyalBlue;
-            this.DeleteUserButton.BackgroundColor = System.Drawing.Color.RoyalBlue;
-            this.DeleteUserButton.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
-            this.DeleteUserButton.BorderRadius = 0;
-            this.DeleteUserButton.BorderSize = 0;
-            this.DeleteUserButton.FlatAppearance.BorderSize = 0;
-            this.DeleteUserButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.DeleteUserButton.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
-            this.DeleteUserButton.ForeColor = System.Drawing.Color.White;
-            this.DeleteUserButton.Location = new System.Drawing.Point(145, 8);
-            this.DeleteUserButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.DeleteUserButton.Name = "DeleteUserButton";
-            this.DeleteUserButton.Size = new System.Drawing.Size(133, 43);
-            this.DeleteUserButton.TabIndex = 15;
-            this.DeleteUserButton.Text = "Удалить";
-            this.DeleteUserButton.TextColor = System.Drawing.Color.White;
-            this.DeleteUserButton.UseVisualStyleBackColor = false;
-            this.DeleteUserButton.Click += new System.EventHandler(this.DeleteUserButton_Click);
-            // 
-            // CreateUserButton
-            // 
-            this.CreateUserButton.BackColor = System.Drawing.Color.RoyalBlue;
-            this.CreateUserButton.BackgroundColor = System.Drawing.Color.RoyalBlue;
-            this.CreateUserButton.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
-            this.CreateUserButton.BorderRadius = 0;
-            this.CreateUserButton.BorderSize = 0;
-            this.CreateUserButton.FlatAppearance.BorderSize = 0;
-            this.CreateUserButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.CreateUserButton.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.CreateUserButton.ForeColor = System.Drawing.Color.White;
-            this.CreateUserButton.Location = new System.Drawing.Point(6, 8);
-            this.CreateUserButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.CreateUserButton.Name = "CreateUserButton";
-            this.CreateUserButton.Size = new System.Drawing.Size(133, 43);
-            this.CreateUserButton.TabIndex = 14;
-            this.CreateUserButton.Text = "Создать";
-            this.CreateUserButton.TextColor = System.Drawing.Color.White;
-            this.CreateUserButton.UseVisualStyleBackColor = false;
-            this.CreateUserButton.Click += new System.EventHandler(this.CreateUserButton_Click);
-            // 
             // FilePathTextBox
             // 
             this.FilePathTextBox.BackColor = System.Drawing.Color.White;
@@ -268,6 +241,7 @@
             this.FilePathTextBox.Name = "FilePathTextBox";
             this.FilePathTextBox.Padding = new System.Windows.Forms.Padding(10);
             this.FilePathTextBox.PasswordChar = false;
+            this.FilePathTextBox.ReadOnly = false;
             this.FilePathTextBox.ScrollBars = System.Windows.Forms.ScrollBars.None;
             this.FilePathTextBox.SelectionStart = 0;
             this.FilePathTextBox.Size = new System.Drawing.Size(991, 41);
@@ -317,6 +291,19 @@
             this.GenerateRaportButton.UseVisualStyleBackColor = false;
             this.GenerateRaportButton.Click += new System.EventHandler(this.GenerateRaportButton_Click);
             // 
+            // DataGridViewApplication
+            // 
+            this.DataGridViewApplication.AllowUserToAddRows = false;
+            this.DataGridViewApplication.AllowUserToDeleteRows = false;
+            this.DataGridViewApplication.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.DataGridViewApplication.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.DataGridViewApplication.Location = new System.Drawing.Point(3, 193);
+            this.DataGridViewApplication.Name = "DataGridViewApplication";
+            this.DataGridViewApplication.RowHeadersWidth = 51;
+            this.DataGridViewApplication.RowTemplate.Height = 24;
+            this.DataGridViewApplication.Size = new System.Drawing.Size(1005, 392);
+            this.DataGridViewApplication.TabIndex = 0;
+            // 
             // CustomFormForAllProject
             // 
             this.CustomFormForAllProject.AllowUserResize = false;
@@ -350,7 +337,6 @@
             this.Load += new System.EventHandler(this.MainWorkFormAdmin_Load);
             this.MainWorkAdminTabControl.ResumeLayout(false);
             this.AllUsersPage.ResumeLayout(false);
-            this.AllUsersPage.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DataGridViewUsers)).EndInit();
             this.AllApplicationPage.ResumeLayout(false);
             this.AllApplicationPage.PerformLayout();
@@ -366,10 +352,9 @@
         private System.Windows.Forms.TabPage AllUsersPage;
         private System.Windows.Forms.TabPage AllApplicationPage;
         private System.Windows.Forms.DataGridView DataGridViewUsers;
+        private Design.CustomButton UpdateUserDataButton;
         private Design.CustomButton UpdateUserButton;
-        private Design.CustomButton DeleteUserButton;
         private Design.CustomButton CreateUserButton;
-        private System.Windows.Forms.Label InfoUsersLabel;
         private System.Windows.Forms.DataGridView DataGridViewApplication;
         private Design.CustomTextBox FilePathTextBox;
         private Design.CustomButton UpdateApplicationButton;

@@ -5,11 +5,8 @@ using System.Data;
 using System.Windows.Forms;
 using System.Drawing;
 using System.Collections.Generic;
-using System.Text;
-using System.Globalization;
 using Excel = Microsoft.Office.Interop.Excel;
 using System.IO;
-using System.Windows.Media.Animation;
 #endregion
 namespace Napitki_Altay2.Forms
 {
@@ -20,6 +17,8 @@ namespace Napitki_Altay2.Forms
         readonly SqlQueries sqlQueries = new SqlQueries();
         // Использование класса работы с БД
         readonly DataBaseWork dataBaseWork = new DataBaseWork();
+        public static string selectedRowId;
+        private bool isButtonRaportToggled = false;
         #endregion
         public MainWorkFormAdmin()
         {
@@ -92,7 +91,7 @@ namespace Napitki_Altay2.Forms
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void UpdateUserButton_Click(object sender, EventArgs e)
+        private void UpdateUserDataButton_Click(object sender, EventArgs e)
         {
             LoadDataGridViewUsers();
         }
@@ -103,13 +102,21 @@ namespace Napitki_Altay2.Forms
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void DeleteUserButton_Click(object sender, EventArgs e)
+        private void UpdateUserButton_Click(object sender, EventArgs e)
         {
-            ReceiveRowAndList(out string rowToDelete, out List<string[]> listSearch);
-            if (SendQueryFromList(listSearch))
+            try
             {
-                SendQueryToDeleteUser(rowToDelete);
-                LoadDataGridViewUsers();
+                if (DataGridViewUsers.RowCount != 0)
+                {
+                    selectedRowId = DataGridViewUsers.CurrentRow.Cells[0].Value.ToString();
+                    UpdateUserForm updateUserForm = new UpdateUserForm();
+                    updateUserForm.Show();
+                }
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Вы не выделили пользователя для изменения его данных!",
+                    "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
         #endregion
@@ -132,10 +139,21 @@ namespace Napitki_Altay2.Forms
         /// <param name="e"></param>
         private void GenerateRaportButton_Click(object sender, EventArgs e)
         {
-            if (FolderPathBrowserDialog.ShowDialog() == DialogResult.OK)
-                FilePathTextBox.Texts = FolderPathBrowserDialog.SelectedPath;
-            if (FilePathTextBox.Texts != string.Empty)
-                GenerateExcelRaport(FirstDateToRaportDTP.Value, SecondDateToRaportDTP.Value);
+            if (!isButtonRaportToggled)
+            {
+                LoadDataInDataGridViewAnswersWithDate();
+                isButtonRaportToggled = true;
+            }
+            else
+            {
+                if (FolderPathBrowserDialog.ShowDialog() == DialogResult.OK)
+                    FilePathTextBox.Texts = FolderPathBrowserDialog.SelectedPath;
+                if (FilePathTextBox.Texts != string.Empty)
+                {
+                    GenerateExcelRaport(FirstDateToRaportDTP.Value, SecondDateToRaportDTP.Value);
+                    isButtonRaportToggled = false;
+                }
+            }
         }
         #endregion
         #region [Метод, отправляющий sql-запрос на удаление пользователя]
@@ -150,47 +168,6 @@ namespace Napitki_Altay2.Forms
             if (checkDelete)
                 MessageBox.Show("Пользователь успешно удален!", "Информация",
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
-        #endregion
-        #region [Метод, создающий запрос в БД из List списка]
-        /// <summary>
-        /// Метод, создающий запрос в БД из List списка
-        /// </summary>
-        /// <param name="listSearch">List список для формирования sql-запроса</param>
-        private bool SendQueryFromList(List<string[]> listSearch)
-        {
-            if (listSearch != null)
-            {
-                StringBuilder sqlQueryBuilder = new StringBuilder();
-                foreach (string[] item in listSearch)
-                {
-                    string name = item[0].ToString();
-                    string fam = item[1].ToString();
-                    string otch = item[2].ToString();
-                    string sqlQueryItem = sqlQueries.SqlComDeleteFio(fam, name, otch);
-                    sqlQueryBuilder.AppendLine(sqlQueryItem);
-                }
-                string sqlQuerySecond = sqlQueryBuilder.ToString();
-                bool checkDeleteFio = dataBaseWork.WithoutOutputQuery(sqlQuerySecond);
-                if (!checkDeleteFio)
-                    return false;
-                return true;
-            }
-            return false;
-        }
-        #endregion
-        #region [Метод, для получения строки из DataGridView и List объекта, содержащего данные из sql-запроса]
-        /// <summary>
-        /// Метод, для получения строки из DataGridView 
-        /// и List объекта, содержащего данные из sql-запроса
-        /// </summary>
-        /// <param name="rowToDelete"></param>
-        /// <param name="listSearch"></param>
-        private void ReceiveRowAndList(out string rowToDelete, out List<string[]> listSearch)
-        {
-            rowToDelete = DataGridViewUsers.CurrentRow.Cells[0].Value.ToString();
-            string sqlQuery = sqlQueries.SqlComTakeFio(rowToDelete);
-            listSearch = dataBaseWork.GetMultiList(sqlQuery, 3);
         }
         #endregion
         #region [Метод, использующийся для вывода данных в таблицу DataGridViewUsers]
@@ -268,7 +245,7 @@ namespace Napitki_Altay2.Forms
             DataGridViewApplication.Columns[4].Width = 130;
             DataGridViewApplication.Columns[5].HeaderText =
                 "Статус обращения";
-            DataGridViewApplication.Columns[5].Width = 188;
+            DataGridViewApplication.Columns[5].Width = 174;
         }
         #endregion
         #region [Метод, получающий русское название месяцев для выводного отчёта]
@@ -284,7 +261,6 @@ namespace Napitki_Altay2.Forms
         /// </summary>
         private void GenerateExcelRaport(DateTime fromDate, DateTime toDate)
         {
-            LoadDataInDataGridViewAnswersWithDate();
             DialogResult result = MessageBox.Show
                 ($"Вы уверены что хотите создать отчёт от " +
                 $"{fromDate:dd-MM-yyyy} до {toDate:dd-MM-yyyy}?",
@@ -301,9 +277,8 @@ namespace Napitki_Altay2.Forms
                     IWorksheet.Cells[1, 1].Font.Size = 14;
                     IWorksheet.Cells[1, 1].Font.Bold = true;
                     IWorksheet.Cells[1, 1] = $"Отчет о проделанной работе сотрудника: {employeeName}";
-                    IWorksheet.Range["A1", "E1"].Merge();
-                    IWorksheet.Range["A1", "E1"].HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter;
-
+                    IWorksheet.Range["A1", "F1"].Merge();
+                    IWorksheet.Range["A1", "F1"].HorizontalAlignment = Excel.XlHAlign.xlHAlignLeft;
                     int columnIndex = 1;
                     for (int i = 0; i < DataGridViewApplication.Columns.Count; i++)
                     {
@@ -394,28 +369,24 @@ namespace Napitki_Altay2.Forms
                     // Заполнение цветом ячеек "Статус" и "Количество обращений"
                     headerRange.Interior.Color = Color.FromArgb(201, 235, 200);
                     rowIndex++;
-
                     // Применение границ для итоговой таблицы
                     Excel.Range summaryRange = IWorksheet.Range[IWorksheet.Cells[rowIndex, 1], IWorksheet.Cells[rowIndex + statusCounts.Count - 1, 2]];
                     ApplyBorder(summaryRange);
-
                     foreach (var statusCount in statusCounts)
                     {
                         IWorksheet.Cells[rowIndex, 1] = statusCount.Key;
                         IWorksheet.Cells[rowIndex, 2] = statusCount.Value;
                         rowIndex++;
                     }
-
                     // Создание диаграммы для каждого сотрудника
                     Excel.ChartObjects chartObjects = (Excel.ChartObjects)IWorksheet.ChartObjects(Type.Missing);
-                    Excel.ChartObject chartObject = chartObjects.Add(400, 60, 400, 300); // Изменение размеров диаграммы
+                    Excel.ChartObject chartObject = chartObjects.Add(170, 25, 400, 300); // Изменение размеров диаграммы
                     Excel.Chart chart = chartObject.Chart;
                     chart.ChartType = Excel.XlChartType.xlColumnClustered;
                     chart.HasTitle = true;
                     chart.ChartTitle.Text = $"Обращения находящиеся в работе " +
                         $"с {fromDate:dd.MM.yyyy} по {toDate:dd.MM.yyyy}";
                     chart.HasLegend = true;
-
                     int chartRowIndex = rowIndex - statusCounts.Count;
                     foreach (var statusCount in statusCounts)
                     {
@@ -425,11 +396,9 @@ namespace Napitki_Altay2.Forms
                         series.XValues = IWorksheet.Range[IWorksheet.Cells[chartRowIndex, 1], IWorksheet.Cells[chartRowIndex, 1]];
                         chartRowIndex++;
                     }
-
                     IWorksheet.Columns.AutoFit();
                     sheetIndex++;
                 }
-
                 // Сохранение файла
                 string finalFileName = "Отчет о завершенных обращениях сотрудников за период от " +
                     $"{fromDate:dd.MM.yyyy} до {toDate:dd.MM.yyyy}.xlsx";
@@ -441,12 +410,19 @@ namespace Napitki_Altay2.Forms
                 }
                 else
                 {
-                    finalFileName = Path.Combine(filePath, finalFileName);
-                    IWorkbook.SaveAs(finalFileName);
-                    MessageBox.Show("Отчёт успешно сформирован!", "Информация",
-                    MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    IWorkbook.Close(true, missingValue, missingValue);
-                    IApplication.Quit();
+                    try
+                    {
+                        finalFileName = Path.Combine(filePath, finalFileName);
+                        IWorkbook.SaveAs(finalFileName);
+                        MessageBox.Show("Отчёт успешно сформирован!", "Информация",
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        IWorkbook.Close(true, missingValue, missingValue);
+                        IApplication.Quit();
+                    }
+                    catch (Exception)
+                    {
+
+                    }
                 }
             }
         }
@@ -481,6 +457,7 @@ namespace Napitki_Altay2.Forms
         private void FirstDateToRaportDTP_ValueChanged(object sender, EventArgs e)
         {
             SecondDateToRaportDTP.MinDate = FirstDateToRaportDTP.Value;
+            isButtonRaportToggled = false;
         }
         #endregion
         #region [Событие смены значения даты в SecondDateToRaportDTP]
@@ -492,6 +469,7 @@ namespace Napitki_Altay2.Forms
         private void SecondDateToRaportDTP_ValueChanged(object sender, EventArgs e)
         {
             FirstDateToRaportDTP.MaxDate = SecondDateToRaportDTP.Value;
+            isButtonRaportToggled = false;
         }
         #endregion
         private void LoadDataInDataGridViewAnswersWithDate()
@@ -500,6 +478,10 @@ namespace Napitki_Altay2.Forms
                 (FirstDateToRaportDTP.Value.Date.ToString("yyyy-MM-dd"),
                 SecondDateToRaportDTP.Value.Date.ToString("yyyy-MM-dd"));
             DataTable dataTable = dataBaseWork.OutputQuery(sqlQuery);
+            MessageBox.Show("Обращения в работе были отсортированы. " +
+                   "Для формирования финального отчёта, пожалуйста, " +
+                   "нажмите на кнопку формирования ещё раз.",
+                   "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
             OutputSettingDataGridViewApplication(dataTable);
         }
     }

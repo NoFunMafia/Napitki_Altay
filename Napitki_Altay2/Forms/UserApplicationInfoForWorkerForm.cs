@@ -81,7 +81,10 @@ namespace Napitki_Altay2.Forms
                     TypeApplWorkTextBox.Texts = item[2];
                     DescripWorkTextBox.Texts = item[3];
                     ApplWorkDTP.Text = DateTime.Parse(item[4]).ToString();
-                    DocumentWorkTextBox.Texts = item[5];
+                    if (item[5] != string.Empty)
+                        DocumentWorkTextBox.Texts = item[5];
+                    else
+                        DocumentWorkTextBox.Texts = "Отсутствует";
                     companyWork = item[1];
                     typeApplication = item[2];
                     description = item[3];

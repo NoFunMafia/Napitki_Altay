@@ -594,7 +594,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MainWorkFormWorker";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Автоматизация документооборота";
+            this.Text = "Автоматизация документооборота. Сотрудник - данные не определены";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainWorkFormWorker_FormClosed);
             this.Load += new System.EventHandler(this.MainWorkFormWorker_Load);
             this.MainWorkWorkerTabControl.ResumeLayout(false);

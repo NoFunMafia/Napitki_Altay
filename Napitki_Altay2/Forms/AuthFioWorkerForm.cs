@@ -65,7 +65,7 @@ namespace Napitki_Altay2.Forms
                 idWorker = dataBaseWork.GetString(sqlQuery);
                 string sqlQueryThree = sqlQueries.SqlComCheckAccountWorker(idWorker);
                 string idAccountWorker = dataBaseWork.GetString(sqlQueryThree);
-                if (idWorker != string.Empty)
+                if (idWorker != null)
                 {
                     IsAccountWorker = false;
                     if (idAccountWorker == null)

@@ -10,18 +10,18 @@ using System.Windows.Forms;
 #endregion
 namespace Napitki_Altay2.Forms
 {
-    public partial class AddUserForm : Form
+    public partial class UpdateUserForm : Form
     {
         #region [Подключение классов, объявление переменных]
         // Класс запросов в БД
         readonly SqlQueries sqlQueries = new SqlQueries();
         // Использование класса работы с БД
         readonly DataBaseWork dataBaseWork = new DataBaseWork();
+        private string oldUserLogin;
         #endregion
-        public AddUserForm()
+        public UpdateUserForm()
         {
             InitializeComponent();
-            DoubleBuffered = true; // Включение двойной буферизации
         }
         #region [Событие нажатия на кнопку RolePictureBox]
         /// <summary>
@@ -91,25 +91,20 @@ namespace Napitki_Altay2.Forms
             if (allChecks.All(x => x))
             {
                 ReceiveRoleID(out string roleID);
-                ReceiveBoolCheckInsertUser(out bool checkInsertUser, roleID);
+                ReceiveBoolCheckUpdateUser(out bool checkInsertUser, roleID);
                 if (checkInsertUser)
                 {
                     ReceiveFioFK(out string fioFK);
-                    if(FamTextBox.Texts != string.Empty 
-                        && ImyaTextBox.Texts != string.Empty)
+                    if (FamTextBox.Texts != string.Empty && ImyaTextBox.Texts != string.Empty)
                     {
                         ReceiveBoolCheckUpdateAuth(out bool checkUpdateAuth, fioFK);
                         if (checkUpdateAuth)
-                            MessageBox.Show("Пользователь успешно добавлен!",
-                                "Информация",
-                                MessageBoxButtons.OK,
-                                MessageBoxIcon.Information);
+                            MessageBox.Show("Пользовательские данные обновлены!", "Информация", 
+                                MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                     else
-                        MessageBox.Show("Пользователь успешно добавлен!",
-                            "Информация",
-                            MessageBoxButtons.OK,
-                            MessageBoxIcon.Information);
+                        MessageBox.Show("Пользовательские данные обновлены!", "Информация",
+                            MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
         }
@@ -130,7 +125,7 @@ namespace Napitki_Altay2.Forms
             {
                 IsValidEmail(EmailTextBox.Texts),
                 CheckTextBoxIsNull(excludedTextBoxes),
-                CheckLoginUserInDB()
+                CheckLoginUserInDB(oldUserLogin, MainWorkFormAdmin.selectedRowId)
             };
             return allChecks;
         }
@@ -154,7 +149,7 @@ namespace Napitki_Altay2.Forms
         /// <param name="fioFK">Переменная, хранящая значение из sql-запроса</param>
         private void ReceiveFioFK(out string fioFK)
         {
-            if(OtchTextBox.Texts != string.Empty)
+            if (OtchTextBox.Texts != string.Empty)
             {
                 string sqlQueryThree = sqlQueries.SqlComTakeFKFio(
                     ImyaTextBox.Texts, FamTextBox.Texts, OtchTextBox.Texts);
@@ -172,14 +167,14 @@ namespace Napitki_Altay2.Forms
         /// <summary>
         /// Метод, формирующий bool значение проверки CheckInsertUser
         /// </summary>
-        /// <param name="checkInsertUser">Bool значение выполненного sql-запроса</param>
+        /// <param name="checkUpdateUser">Bool значение выполненного sql-запроса</param>
         /// <param name="roleID">Переменная, использующаяся в формировании sql-запроса</param>
-        private void ReceiveBoolCheckInsertUser(out bool checkInsertUser, string roleID)
+        private void ReceiveBoolCheckUpdateUser(out bool checkUpdateUser, string roleID)
         {
-            string sqlQuerySecond = sqlQueries.SqlComInsertUser(
-                LoginTextBox.Texts, PasswordTextBox.Texts, 
-                roleID, EmailTextBox.Texts);
-            checkInsertUser = dataBaseWork.WithoutOutputQuery(sqlQuerySecond);
+            string sqlQuerySecond = sqlQueries.SqlComUpdateUser
+                (MainWorkFormAdmin.selectedRowId, LoginTextBox.Texts, 
+                PasswordTextBox.Texts, roleID, EmailTextBox.Texts);
+            checkUpdateUser = dataBaseWork.WithoutOutputQuery(sqlQuerySecond);
         }
         #endregion
         #region [Метод, формирующий string значение roleID из полученного результата sql-запроса]
@@ -229,7 +224,6 @@ namespace Napitki_Altay2.Forms
                         break;
                     }
                 }
-
                 if (hasEditedExcludedTextBoxes)
                 {
                     bool emptyExcludedTextBoxFound = false;
@@ -247,17 +241,15 @@ namespace Napitki_Altay2.Forms
                     {
                         if (otchTextBoxIsEmpty)
                         {
-                            sqlQuery = sqlQueries.SqlComInsertFioWithoutOtch(
-                                ImyaTextBox.Texts,
-                                FamTextBox.Texts);
+                            sqlQuery = sqlQueries.SqlComUpdateFioWithoutOtch
+                                (ImyaTextBox.Texts, FamTextBox.Texts, MainWorkFormAdmin.selectedRowId);
                             dataBaseWork.WithoutOutputQuery(sqlQuery);
                         }
                         else
                         {
-                            sqlQuery = sqlQueries.SqlComInsertFio(
-                                ImyaTextBox.Texts,
-                                FamTextBox.Texts,
-                                OtchTextBox.Texts);
+                            sqlQuery = sqlQueries.SqlComUpdateFio
+                                (ImyaTextBox.Texts, FamTextBox.Texts,
+                                OtchTextBox.Texts, MainWorkFormAdmin.selectedRowId);
                             dataBaseWork.WithoutOutputQuery(sqlQuery);
                         }
                     }
@@ -265,7 +257,9 @@ namespace Napitki_Altay2.Forms
                     {
                         MessageBox.Show("Вы начали заполнять поля данных ФИО, " +
                             "пожалуйста, заполните их все, кроме поля отчества, если оно отсутствует!",
-                            "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            "Внимание",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Warning);
                         return false;
                     }
                 }
@@ -286,9 +280,7 @@ namespace Napitki_Altay2.Forms
         /// <returns></returns>
         private Boolean IsValidEmail(string email)
         {
-            Regex emailRegex = new Regex
-                (@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$",
-                RegexOptions.IgnoreCase);
+            Regex emailRegex = new Regex (@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$", RegexOptions.IgnoreCase);
             if (emailRegex.IsMatch(email))
                 return true;
             else
@@ -307,20 +299,64 @@ namespace Napitki_Altay2.Forms
         /// </summary>
         /// <returns>True - логин свободен, 
         /// Ложь - логин занят</returns>
-        private bool CheckLoginUserInDB()
+        private bool CheckLoginUserInDB(string oldLogin, string userId)
         {
-            string sqlQuery = sqlQueries.SqlComCheckLogin(LoginTextBox.Texts);
-            List<string[]> listSearch = dataBaseWork.GetMultiList(sqlQuery, 2);
-            if (listSearch != null)
+            if (LoginTextBox.Texts != oldLogin)
             {
-                MessageBox.Show("Вносимый логин уже зарегистрирован в БД!",
-                    "Ошибка",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Error);
-                return false;
+                string sqlQuery = sqlQueries.SqlComCheckLogin(LoginTextBox.Texts);
+                List<string[]> listSearch = dataBaseWork.GetMultiList(sqlQuery, 2);
+                if (listSearch != null)
+                {
+                    string foundUserId = listSearch[0][1];
+                    if (foundUserId != userId)
+                    {
+                        MessageBox.Show("Вносимый логин уже зарегистрирован в БД!",
+                            "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return false;
+                    }
+                }
             }
             return true;
         }
         #endregion
+        private void UpdateUserForm_Load(object sender, EventArgs e)
+        {
+            List<string[]> listSearch = GetAccountInfo();
+            FillTextBoxWithAccountInfo(listSearch);
+        }
+        private void FillTextBoxWithAccountInfo(List<string[]> listSearch)
+        {
+            if (listSearch != null)
+            {
+                foreach (string[] item in listSearch)
+                {
+                    LoginTextBox.Texts = item[0];
+                    PasswordTextBox.Texts = item[1];
+                    EmailTextBox.Texts = item[2];
+                    FamTextBox.Texts = item[3];
+                    ImyaTextBox.Texts = item[4];
+                    OtchTextBox.Texts = item[5];
+                    RoleTextBox.Texts = item[6];
+                    oldUserLogin = item[0];
+                }
+            }
+            else
+            {
+                LoginTextBox.Texts = "";
+                PasswordTextBox.Texts = "";
+                EmailTextBox.Texts = "";
+                FamTextBox.Texts = "";
+                ImyaTextBox.Texts = "";
+                OtchTextBox.Texts = "";
+                RoleTextBox.Texts = "";
+            }
+        }
+
+        private List<string[]> GetAccountInfo()
+        {
+            string sqlQuery = sqlQueries.SqlComCheckAccountInfo(MainWorkFormAdmin.selectedRowId);
+            List<string[]> listSearch = dataBaseWork.GetMultiList(sqlQuery, 7);
+            return listSearch;
+        }
     }
 }

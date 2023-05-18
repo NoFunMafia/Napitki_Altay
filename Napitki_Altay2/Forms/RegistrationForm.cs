@@ -10,6 +10,8 @@ using Napitki_Altay2.Classes;
 using System.Collections.Generic;
 using Napitki_Altay2.Design;
 using System.Linq;
+using System.Threading;
+using System.Net.Sockets;
 #endregion
 
 namespace Napitki_Altay2
@@ -176,12 +178,14 @@ namespace Napitki_Altay2
             {
                 if (!CheckLoginUserInDB())
                     return;
+                if (!CheckMailUserInDB())
+                    return;
                 if (CheckPass(PasswordCreateTextBox.Texts, 7, 15))
                     return;
                 if (!IsValidEmail(EmailTextBox.Texts))
                     return;
                 Enabled = false;
-                if(ChooseRoleTextBox.Texts == "Сотрудник")
+                if (ChooseRoleTextBox.Texts == "Сотрудник")
                 {
                     AuthFioWorkerForm authFioWorker = new AuthFioWorkerForm();
                     authFioWorker.FormClosed += new FormClosedEventHandler(AuthFioWorkerForm_FormClosed);
@@ -272,11 +276,11 @@ namespace Napitki_Altay2
         }
         #endregion
         #region [Метод, отправляющий письмо на Email почту]
-        public async void SendAnEmail()
+        private void SendAnEmail()
         {
             GetUniqueCode();
             MimeMessage mimeMessage = new MimeMessage();
-            mimeMessage.From.Add(new MailboxAddress("Волчихинский Пивоваренный Завод",
+            mimeMessage.From.Add(new MailboxAddress("ЗАО «Волчихинский пивоваренный завод»",
                 "napitki-altay@mail.ru"));
             mimeMessage.To.Add(MailboxAddress.Parse(EmailTextBox.Texts));
             mimeMessage.Subject = $"Код подтверждения: {uniqueCode}";
@@ -290,24 +294,43 @@ namespace Napitki_Altay2
                 $"<p>С уважением,<br>Команда ЗАО «Волчихинский пивоваренный завод»</p>"
             };
             SmtpClient smtpClient = new SmtpClient();
-            try
+            using (CancellationTokenSource cts = new CancellationTokenSource(TimeSpan.FromSeconds(15)))
             {
-                await smtpClient.ConnectAsync("smtp.mail.ru", 465, true);
-                smtpClient.Authenticate("napitki-altay@mail.ru", "5TGsxjXKrXYpVxeajrgY");
-                smtpClient.Send(mimeMessage);
-                AuthEmailForm authEmailForm = new AuthEmailForm();
-                authEmailForm.FormClosed += new FormClosedEventHandler(AuthEmailForm_FormClosed);
-                authEmailForm.Show();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Ошибка", 
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            finally
-            {
-                smtpClient.Disconnect(true);
-                smtpClient.Dispose();
+                try
+                {
+                    smtpClient.Connect("smtp.mail.ru", 465, true, cts.Token);
+                    smtpClient.Authenticate("napitki-altay@mail.ru", "5TGsxjXKrXYpVxeajrgY", cts.Token);
+                    smtpClient.Send(mimeMessage, cts.Token);
+                    AuthEmailForm authEmailForm = new AuthEmailForm();
+                    authEmailForm.FormClosed += new FormClosedEventHandler(AuthEmailForm_FormClosed);
+                    authEmailForm.Show();
+                }
+                catch (TimeoutException)
+                {
+                    throw new Exception();
+                }
+                catch (SocketException)
+                {
+                    throw new Exception();
+                }
+                catch (SmtpCommandException)
+                {
+                    MessageBox.Show("Не удалось отправить электронное сообщение на указанную вами почту, " +
+                        "проверьте правильность введенных данных и попробуйте позже!", "Ошибка", 
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    Enabled = true;
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("Не удаётся подключиться к почтовым сервисам, " +
+                        "повторите попытку позже!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    Enabled = true;
+                }
+                finally
+                {
+                    smtpClient.Disconnect(true);
+                    smtpClient.Dispose();
+                }
             }
         }
         #endregion
@@ -350,11 +373,19 @@ namespace Napitki_Altay2
             {
                 if (string.IsNullOrWhiteSpace(customTextBox.Texts))
                 {
+                    return false;
+                }
+                else if (LoginCreateTextBox.Texts == "Создание логина" ||
+                    PasswordCreateTextBox.Texts == "Создание пароля" ||
+                    EmailTextBox.Texts == "Ваш Email" ||
+                    ChooseRoleTextBox.Texts == "Роль пользователя")
+                {
                     MessageBox.Show("Не все поля данных заполненны!",
                         "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return false;
                 }
-                return true;
+                else
+                    return true;
             }
             return false;
         }
@@ -371,7 +402,26 @@ namespace Napitki_Altay2
             List<string[]> listSearch = dataBaseWork.GetMultiList(sqlQuery, 2);
             if (listSearch != null)
             {
-                MessageBox.Show("Вносимый логин уже зарегистрирован в БД!",
+                MessageBox.Show("Пользователь с таким логином уже существует!",
+                    "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+            return true;
+        }
+        #endregion
+        #region [Метод, проверяющий уникальность добавляемого логина в БД]
+        /// <summary>
+        /// Метод, проверяющий уникальность добавляемого логина в БД
+        /// </summary>
+        /// <returns>True - логин свободен, 
+        /// Ложь - логин занят</returns>
+        private bool CheckMailUserInDB()
+        {
+            string sqlQuery = sqlQueries.SqlComCheckEmail(EmailTextBox.Texts);
+            List<string[]> listSearch = dataBaseWork.GetMultiList(sqlQuery, 2);
+            if (listSearch != null)
+            {
+                MessageBox.Show("Вносимый адрес электронной почты уже зарегистрирован в базе данных!",
                     "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
@@ -389,9 +439,7 @@ namespace Napitki_Altay2
             else
             {
                 MessageBox.Show("Адрес электронной почты введен некорректно!",
-                    "Ошибка",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Error);
+                    "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
         }
@@ -399,7 +447,7 @@ namespace Napitki_Altay2
         #region [Метод, проверяющий пароль на надёжность]
         public Boolean CheckPass(string inputPass, int minLenght, int maxLenght)
         {
-            bool hasCap = true, hasLow = true, hasSpec = true;
+            bool hasCap = false, hasLow = false, hasSpec = false;
             char currentCharacter;
             bool hasNum;
             if (!(inputPass.Length <= minLenght
@@ -409,10 +457,8 @@ namespace Napitki_Altay2
             }
             else
             {
-                MessageBox.Show("Пароль не соответствует требованиям!",
-                    "Ошибка",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Error);
+                MessageBox.Show("Пароль не соответствует требованиям!", "Ошибка",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return true;
             }
             for (int i = 0; i < inputPass.Length; i++)
@@ -430,10 +476,8 @@ namespace Napitki_Altay2
             if (hasNum && hasCap && hasLow && hasSpec)
                 return false;
             else
-                MessageBox.Show("Пароль не соответствует требованиям!", 
-                    "Ошибка", 
-                    MessageBoxButtons.OK, 
-                    MessageBoxIcon.Error);
+                MessageBox.Show("Пароль не соответствует требованиям!", "Ошибка", 
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
             return true;
         }
         #endregion

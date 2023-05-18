@@ -38,6 +38,7 @@
             this.CreateApplicationButton = new Napitki_Altay2.Design.CustomButton();
             this.DataGridViewApplication = new System.Windows.Forms.DataGridView();
             this.AnswerForUserApplicPage = new System.Windows.Forms.TabPage();
+            this.UpdateDataDGWCButton = new Napitki_Altay2.Design.CustomButton();
             this.MoreInformationButton = new Napitki_Altay2.Design.CustomButton();
             this.CompleteApplicationDGWUser = new System.Windows.Forms.DataGridView();
             this.DocumentTypeInfoPage = new System.Windows.Forms.TabPage();
@@ -78,7 +79,6 @@
             this.AboutOurCompanyLabel = new System.Windows.Forms.Label();
             this.MainWorkFormPictureBox2 = new System.Windows.Forms.PictureBox();
             this.CustomFormForAllProject = new Napitki_Altay2.Components.FormStyleCustom(this.components);
-            this.UpdateDataDGWCButton = new Napitki_Altay2.Design.CustomButton();
             this.MainWorkTabControl.SuspendLayout();
             this.ApplicationPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DataGridViewApplication)).BeginInit();
@@ -236,6 +236,27 @@
             this.AnswerForUserApplicPage.Size = new System.Drawing.Size(1011, 520);
             this.AnswerForUserApplicPage.TabIndex = 1;
             this.AnswerForUserApplicPage.Text = "Обращения в работе";
+            // 
+            // UpdateDataDGWCButton
+            // 
+            this.UpdateDataDGWCButton.BackColor = System.Drawing.Color.RoyalBlue;
+            this.UpdateDataDGWCButton.BackgroundColor = System.Drawing.Color.RoyalBlue;
+            this.UpdateDataDGWCButton.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
+            this.UpdateDataDGWCButton.BorderRadius = 0;
+            this.UpdateDataDGWCButton.BorderSize = 0;
+            this.UpdateDataDGWCButton.FlatAppearance.BorderSize = 0;
+            this.UpdateDataDGWCButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.UpdateDataDGWCButton.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
+            this.UpdateDataDGWCButton.ForeColor = System.Drawing.Color.White;
+            this.UpdateDataDGWCButton.Location = new System.Drawing.Point(365, 9);
+            this.UpdateDataDGWCButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.UpdateDataDGWCButton.Name = "UpdateDataDGWCButton";
+            this.UpdateDataDGWCButton.Size = new System.Drawing.Size(168, 73);
+            this.UpdateDataDGWCButton.TabIndex = 14;
+            this.UpdateDataDGWCButton.Text = "Обновить данные";
+            this.UpdateDataDGWCButton.TextColor = System.Drawing.Color.White;
+            this.UpdateDataDGWCButton.UseVisualStyleBackColor = false;
+            this.UpdateDataDGWCButton.Click += new System.EventHandler(this.UpdateDataDGWCButton_Click);
             // 
             // MoreInformationButton
             // 
@@ -811,27 +832,6 @@
             this.CustomFormForAllProject.HeaderTextColor = System.Drawing.Color.White;
             this.CustomFormForAllProject.HeaderTextFont = new System.Drawing.Font("Segoe UI", 12F);
             // 
-            // UpdateDataDGWCButton
-            // 
-            this.UpdateDataDGWCButton.BackColor = System.Drawing.Color.RoyalBlue;
-            this.UpdateDataDGWCButton.BackgroundColor = System.Drawing.Color.RoyalBlue;
-            this.UpdateDataDGWCButton.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
-            this.UpdateDataDGWCButton.BorderRadius = 0;
-            this.UpdateDataDGWCButton.BorderSize = 0;
-            this.UpdateDataDGWCButton.FlatAppearance.BorderSize = 0;
-            this.UpdateDataDGWCButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.UpdateDataDGWCButton.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
-            this.UpdateDataDGWCButton.ForeColor = System.Drawing.Color.White;
-            this.UpdateDataDGWCButton.Location = new System.Drawing.Point(365, 9);
-            this.UpdateDataDGWCButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.UpdateDataDGWCButton.Name = "UpdateDataDGWCButton";
-            this.UpdateDataDGWCButton.Size = new System.Drawing.Size(168, 73);
-            this.UpdateDataDGWCButton.TabIndex = 14;
-            this.UpdateDataDGWCButton.Text = "Обновить данные";
-            this.UpdateDataDGWCButton.TextColor = System.Drawing.Color.White;
-            this.UpdateDataDGWCButton.UseVisualStyleBackColor = false;
-            this.UpdateDataDGWCButton.Click += new System.EventHandler(this.UpdateDataDGWCButton_Click);
-            // 
             // MainWorkForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -843,7 +843,7 @@
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "MainWorkForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Автоматизация документооборота";
+            this.Text = "Автоматизация документооборота. Заявитель - данные не определены";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainWorkForm_FormClosed);
             this.Load += new System.EventHandler(this.MainWorkForm_Load);
             this.MainWorkTabControl.ResumeLayout(false);

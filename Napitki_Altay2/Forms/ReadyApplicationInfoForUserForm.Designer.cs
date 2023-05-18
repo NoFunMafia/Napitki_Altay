@@ -146,6 +146,7 @@
             this.PinDocumentTextBox.Name = "PinDocumentTextBox";
             this.PinDocumentTextBox.Padding = new System.Windows.Forms.Padding(7);
             this.PinDocumentTextBox.PasswordChar = false;
+            this.PinDocumentTextBox.ReadOnly = false;
             this.PinDocumentTextBox.ScrollBars = System.Windows.Forms.ScrollBars.None;
             this.PinDocumentTextBox.SelectionStart = 0;
             this.PinDocumentTextBox.Size = new System.Drawing.Size(383, 35);
@@ -169,7 +170,7 @@
             this.CloseCompleteApplicationButton.Name = "CloseCompleteApplicationButton";
             this.CloseCompleteApplicationButton.Size = new System.Drawing.Size(399, 82);
             this.CloseCompleteApplicationButton.TabIndex = 46;
-            this.CloseCompleteApplicationButton.Text = "Закрыть обращение";
+            this.CloseCompleteApplicationButton.Text = "Закрыть ответ";
             this.CloseCompleteApplicationButton.TextColor = System.Drawing.Color.White;
             this.CloseCompleteApplicationButton.UseVisualStyleBackColor = false;
             this.CloseCompleteApplicationButton.Click += new System.EventHandler(this.CloseCompleteApplicationButton_Click);
@@ -180,7 +181,6 @@
             this.DescripCompleteTextBox.BorderColor = System.Drawing.Color.RoyalBlue;
             this.DescripCompleteTextBox.BorderFocusColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
             this.DescripCompleteTextBox.BorderSize = 2;
-            this.DescripCompleteTextBox.Enabled = false;
             this.DescripCompleteTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F);
             this.DescripCompleteTextBox.ForeColor = System.Drawing.Color.Black;
             this.DescripCompleteTextBox.Location = new System.Drawing.Point(27, 348);
@@ -189,6 +189,7 @@
             this.DescripCompleteTextBox.Name = "DescripCompleteTextBox";
             this.DescripCompleteTextBox.Padding = new System.Windows.Forms.Padding(7);
             this.DescripCompleteTextBox.PasswordChar = false;
+            this.DescripCompleteTextBox.ReadOnly = true;
             this.DescripCompleteTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.DescripCompleteTextBox.SelectionStart = 0;
             this.DescripCompleteTextBox.Size = new System.Drawing.Size(839, 254);
@@ -211,6 +212,7 @@
             this.StatusCompleteTextBox.Name = "StatusCompleteTextBox";
             this.StatusCompleteTextBox.Padding = new System.Windows.Forms.Padding(7);
             this.StatusCompleteTextBox.PasswordChar = false;
+            this.StatusCompleteTextBox.ReadOnly = false;
             this.StatusCompleteTextBox.ScrollBars = System.Windows.Forms.ScrollBars.None;
             this.StatusCompleteTextBox.SelectionStart = 0;
             this.StatusCompleteTextBox.Size = new System.Drawing.Size(383, 35);
@@ -262,6 +264,7 @@
             this.TypeAppealAnswerTextBox.Name = "TypeAppealAnswerTextBox";
             this.TypeAppealAnswerTextBox.Padding = new System.Windows.Forms.Padding(7);
             this.TypeAppealAnswerTextBox.PasswordChar = false;
+            this.TypeAppealAnswerTextBox.ReadOnly = false;
             this.TypeAppealAnswerTextBox.ScrollBars = System.Windows.Forms.ScrollBars.None;
             this.TypeAppealAnswerTextBox.SelectionStart = 0;
             this.TypeAppealAnswerTextBox.Size = new System.Drawing.Size(383, 35);

@@ -7,6 +7,8 @@ using System.Data;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
+using MimeKit;
+using MailKit.Net.Smtp;
 #endregion
 namespace Napitki_Altay2.Forms
 {
@@ -19,6 +21,7 @@ namespace Napitki_Altay2.Forms
         // Класс запросов в БД
         readonly SqlQueries sqlQueries = new SqlQueries();
         public static string companyWork;
+        string workerEmail;
         public static string typeApplication;
         public static string description;
         public static DateTime dateTimeWork;
@@ -69,6 +72,11 @@ namespace Napitki_Altay2.Forms
         /// <param name="e"></param>
         private void SupplementForm_Load(object sender, EventArgs e)
         {
+            LoadForm();
+        }
+
+        private void LoadForm()
+        {
             List<string[]> listSearch = GetApplicationInfoQuery();
             CheckDataReaderRowsInfo(listSearch);
         }
@@ -80,6 +88,7 @@ namespace Napitki_Altay2.Forms
             if (string.IsNullOrEmpty(DocumentTextBox.Texts))
             {
                 CreateSupplement();
+                SendAnEmail();
             }
             else
             {
@@ -97,8 +106,33 @@ namespace Napitki_Altay2.Forms
                         UpdateDocumentQuery(buffer, extension, name);
                     }
                     CreateSupplement();
+                    SendAnEmail();
                 }
             }
+        }
+        #endregion
+        #region [Метод, отправляющий email уведомление о добавлении обращения]
+        private async void SendAnEmail()
+        {
+            List<string[]> listSearch = GetFioWorker();
+            CheckEmailWorker(listSearch);
+            MimeMessage mimeMessage = new MimeMessage();
+            mimeMessage.From.Add(new MailboxAddress("ЗАО «Волчихинский пивоваренный завод»",
+                "napitki-altay@mail.ru"));
+            mimeMessage.To.Add(MailboxAddress.Parse(workerEmail));
+            mimeMessage.Subject = $"Получен ответ от заявителя!";
+            mimeMessage.Body = new TextPart("html")
+            {
+                Text = $"<p>Заявитель, с которым Вы работаете, дополнил своё обращение. " +
+                $"Пожалуйста, ответьте на него в ближайшее время!</p>" +
+                $"<p>С уважением,<br>Ваша автоматизированная система документооборота.</p>"
+            };
+            SmtpClient smtpClient = new SmtpClient();
+            await smtpClient.ConnectAsync("smtp.mail.ru", 465, true);
+            smtpClient.Authenticate("napitki-altay@mail.ru", "5TGsxjXKrXYpVxeajrgY");
+            smtpClient.Send(mimeMessage);
+            smtpClient.Disconnect(true);
+            smtpClient.Dispose();
         }
         #endregion
         #region [Метод закрытия формы]
@@ -124,6 +158,30 @@ namespace Napitki_Altay2.Forms
             return listSearch;
         }
         #endregion
+        #region [Метод, получающий значение почты работника]
+        /// <summary>
+        /// Метод, заполняющий List список из sql-запроса
+        /// </summary>
+        /// <returns></returns>
+        private List<string[]> GetFioWorker()
+        {
+            string sqlQuery = sqlQueries.SqlComGetFioWorker(MainWorkForm.selectedRowIDInDGWC);
+            List<string[]> listSearch = dataBaseWork.GetMultiList(sqlQuery, 3);
+            return listSearch;
+        }
+        #endregion
+        private void CheckEmailWorker(List<string[]> strings)
+        {
+            if (strings != null)
+            {
+                foreach (string[] item in strings)
+                {
+                    string sqlQuery = sqlQueries.SqlComGetEmailWorker
+                        (item[1].ToString(), item[0].ToString(), item[2].ToString());
+                    workerEmail = dataBaseWork.GetString(sqlQuery);
+                }
+            }
+        }
         #region [Метод, заполняющий TextBox'ы данными из sql-запроса]
         /// <summary>
         /// Метод, заполняющий TextBox'ы
@@ -135,13 +193,30 @@ namespace Napitki_Altay2.Forms
             {
                 foreach (string[] item in strings)
                 {
-                    CompanyTextBox.Texts = item[1];
-                    TypeApplTextBox.Texts = item[2];
-                    DescripTextBox.Texts = item[3] + $"\r\n\r\nДополнение от {DateTime.Now}:\r\n";
-                    companyWork = item[1];
-                    typeApplication = item[2];
-                    description = item[3];
-                    dateTimeWork = DateTime.Parse(ApplDTP.Text);
+                    if (DescripTextBox.ReadOnly != true)
+                    {
+                        DescripTextBox.Texts = item[3] + $"\r\n\r\nДополнение от {DateTime.Now}:\r\n";
+                        CompanyTextBox.Texts = item[1];
+                        TypeApplTextBox.Texts = item[2];
+                        companyWork = item[1];
+                        typeApplication = item[2];
+                        description = item[3];
+                        dateTimeWork = DateTime.Parse(ApplDTP.Text);
+                    }
+                    else
+                    {
+                        if (item[5] != string.Empty)
+                            DocumentTextBox.Texts = item[5];
+                        else
+                            DocumentTextBox.Texts = "Отсутствует";
+                        DescripTextBox.Texts = item[3];
+                        CompanyTextBox.Texts = item[1];
+                        TypeApplTextBox.Texts = item[2];
+                        companyWork = item[1];
+                        typeApplication = item[2];
+                        description = item[3];
+                        dateTimeWork = DateTime.Parse(ApplDTP.Text);
+                    }
                 }
             }
             else
@@ -168,8 +243,7 @@ namespace Napitki_Altay2.Forms
             try
             {
                 dataBaseWork.OpenConnection();
-                SqlCommand sqlCommand = new SqlCommand
-                    (sqlQueryFifth, dataBaseWork.GetConnection());
+                SqlCommand sqlCommand = new SqlCommand(sqlQueryFifth, dataBaseWork.GetConnection());
                 sqlCommand.Parameters.Add("@filename", SqlDbType.VarChar).Value = name;
                 sqlCommand.Parameters.Add("@data", SqlDbType.VarBinary).Value = buffer;
                 sqlCommand.Parameters.Add("@extn", SqlDbType.Char).Value = extn;
@@ -177,8 +251,7 @@ namespace Napitki_Altay2.Forms
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Ошибка", 
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             finally
             {
@@ -224,5 +297,28 @@ namespace Napitki_Altay2.Forms
             }
         }
         #endregion
+        public void DisableControls()
+        {
+            ChooseDocumentButton.Enabled = false;
+            DeleteDocumentButton.Enabled = false;
+            DescripTextBox.ReadOnly = true;
+            PlusSupButton.Enabled = false;
+            CancelSupButton.Text = "Закрыть обращение";
+            SelectDocumentLabel.Text = "Прикрепленный файл к ответу:";
+            Text = "Ваше обращение";
+            LoadForm();
+        }
+
+        public void EnableControls()
+        {
+            List<string[]> listSearch = GetApplicationInfoQuery();
+            CheckDataReaderRowsInfo(listSearch);
+            DeleteDocumentButton.Enabled = true;
+            DescripTextBox.ReadOnly = false;
+            PlusSupButton.Enabled = true;
+            CancelSupButton.Text = "Прекратить дополнение";
+            Text = "Добавление доп. информации к обращению";
+            LoadForm();
+        }
     }
 }

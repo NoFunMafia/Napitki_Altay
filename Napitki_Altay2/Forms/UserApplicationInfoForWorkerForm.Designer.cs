@@ -60,12 +60,12 @@
             // DateTimeDescrWorkLabel
             // 
             this.DateTimeDescrWorkLabel.AutoSize = true;
-            this.DateTimeDescrWorkLabel.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
+            this.DateTimeDescrWorkLabel.Font = new System.Drawing.Font("Segoe UI Semibold", 10.5F, System.Drawing.FontStyle.Bold);
             this.DateTimeDescrWorkLabel.Location = new System.Drawing.Point(20, 606);
             this.DateTimeDescrWorkLabel.Name = "DateTimeDescrWorkLabel";
-            this.DateTimeDescrWorkLabel.Size = new System.Drawing.Size(269, 28);
+            this.DateTimeDescrWorkLabel.Size = new System.Drawing.Size(371, 25);
             this.DateTimeDescrWorkLabel.TabIndex = 30;
-            this.DateTimeDescrWorkLabel.Text = "Время подачи обращения:";
+            this.DateTimeDescrWorkLabel.Text = "Время создания/обновления обращения:";
             // 
             // DescripApplWorkLabel
             // 
@@ -124,6 +124,7 @@
             this.DocumentWorkTextBox.Name = "DocumentWorkTextBox";
             this.DocumentWorkTextBox.Padding = new System.Windows.Forms.Padding(7);
             this.DocumentWorkTextBox.PasswordChar = false;
+            this.DocumentWorkTextBox.ReadOnly = false;
             this.DocumentWorkTextBox.ScrollBars = System.Windows.Forms.ScrollBars.None;
             this.DocumentWorkTextBox.SelectionStart = 0;
             this.DocumentWorkTextBox.Size = new System.Drawing.Size(383, 35);
@@ -158,7 +159,6 @@
             this.DescripWorkTextBox.BorderColor = System.Drawing.Color.RoyalBlue;
             this.DescripWorkTextBox.BorderFocusColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
             this.DescripWorkTextBox.BorderSize = 2;
-            this.DescripWorkTextBox.Enabled = false;
             this.DescripWorkTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F);
             this.DescripWorkTextBox.ForeColor = System.Drawing.Color.Black;
             this.DescripWorkTextBox.Location = new System.Drawing.Point(27, 348);
@@ -167,7 +167,8 @@
             this.DescripWorkTextBox.Name = "DescripWorkTextBox";
             this.DescripWorkTextBox.Padding = new System.Windows.Forms.Padding(7);
             this.DescripWorkTextBox.PasswordChar = false;
-            this.DescripWorkTextBox.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            this.DescripWorkTextBox.ReadOnly = true;
+            this.DescripWorkTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.DescripWorkTextBox.SelectionStart = 0;
             this.DescripWorkTextBox.Size = new System.Drawing.Size(839, 254);
             this.DescripWorkTextBox.TabIndex = 25;
@@ -220,6 +221,7 @@
             this.CompanyWorkTextBox.Name = "CompanyWorkTextBox";
             this.CompanyWorkTextBox.Padding = new System.Windows.Forms.Padding(7);
             this.CompanyWorkTextBox.PasswordChar = false;
+            this.CompanyWorkTextBox.ReadOnly = false;
             this.CompanyWorkTextBox.ScrollBars = System.Windows.Forms.ScrollBars.None;
             this.CompanyWorkTextBox.SelectionStart = 0;
             this.CompanyWorkTextBox.Size = new System.Drawing.Size(383, 35);
@@ -252,6 +254,7 @@
             this.TypeApplWorkTextBox.Name = "TypeApplWorkTextBox";
             this.TypeApplWorkTextBox.Padding = new System.Windows.Forms.Padding(7);
             this.TypeApplWorkTextBox.PasswordChar = false;
+            this.TypeApplWorkTextBox.ReadOnly = false;
             this.TypeApplWorkTextBox.ScrollBars = System.Windows.Forms.ScrollBars.None;
             this.TypeApplWorkTextBox.SelectionStart = 0;
             this.TypeApplWorkTextBox.Size = new System.Drawing.Size(383, 35);

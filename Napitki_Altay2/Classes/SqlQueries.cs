@@ -178,19 +178,6 @@ namespace Napitki_Altay2.Classes
             "from Authentication_ join Role_User on " +
             "Authentication_.FK_Role_User = Role_User.ID_Role_User left join " +
             "Info_About_User on Authentication_.FK_Info_User = Info_About_User.ID_Info_User";
-        // MainWorkFormAdmin - ReceiveRowAndList
-        public string SqlComTakeFio(string loginID)
-        {
-            string sqlCom = $"select * from Authentication_ where ID_User = '{loginID}'";
-            return sqlCom;
-        }
-        // MainWorkFormAdmin - SendQueryFromList
-        public string SqlComDeleteFio(string name, string fam, string otch)
-        {
-            string sqlCom = $"delete from Info_About_User where User_Surname = '{fam}' " +
-                $"and User_Name = '{name}' and User_Patronymic = '{otch}'";
-            return sqlCom;
-        }
         // MainWorkFormAdmin - SendQueryToDeleteUser
         public string SqlComDeleteUser(string loginID)
         {
@@ -232,12 +219,25 @@ namespace Napitki_Altay2.Classes
             string sqlCom = $"select * from Authentication_ where Login_User = '{login}'";
             return sqlCom;
         }
+        public string SqlComCheckEmail(string email)
+        {
+            string sqlCom = $"select * from Authentication_ where Email = '{email}'";
+            return sqlCom;
+        }
         // AddUserForm - InputUsersButton
         public string SqlComInsertUser(string login, string pass, string role, string email)
         {
             string sqlCom = "insert into Authentication_" +
                 "(Login_User, Password_User, FK_Role_User, Email) " +
                 $"values('{login}', '{pass}', '{role}', '{email}')";
+            return sqlCom;
+        }
+        public string SqlComUpdateUser
+            (string idUser, string login, string pass, string role, string email)
+        {
+            string sqlCom = $"update Authentication_ set Login_User = '{login}', " +
+                $"Password_User = '{pass}', FK_Role_User = '{role}', " +
+                $"Email = '{email}' where ID_User = '{idUser}'";
             return sqlCom;
         }
         // AddUserForm - CheckTextBoxIsNull
@@ -251,6 +251,32 @@ namespace Napitki_Altay2.Classes
         {
             string sqlCom = $"insert into Info_About_User(User_Surname, User_Name) " +
                 $"values ('{fam}', '{name}')";
+            return sqlCom;
+        }
+        public string SqlComUpdateFio(string name, string fam, string otch, string idRow)
+        {
+            string sqlCom = $"update Info_About_User set User_Surname = '{fam}', " +
+                $"User_Name = '{name}', User_Patronymic = '{otch}' " +
+                $"from Authentication_ join Info_About_User " +
+                $"on Authentication_.FK_Info_User = Info_About_User.ID_Info_User " +
+                $"where ID_User = '{idRow}'";
+            return sqlCom;
+        }
+        public string SqlComUpdateFioWithoutOtch(string name, string fam, string idRow)
+        {
+            string sqlCom = $"update Info_About_User set User_Surname = '{fam}', " +
+                $"User_Name = '{name}', User_Patronymic = '' " +
+                $"from Authentication_ join Info_About_User " +
+                $"on Authentication_.FK_Info_User = Info_About_User.ID_Info_User " +
+                $"where ID_User = '{idRow}'";
+            return sqlCom;
+        }
+        public string SqlComCheckAccountInfo(string idUser)
+        {
+            string sqlCom = "select Login_User, Password_User, Email, User_Surname, " +
+                "User_Name, User_Patronymic, Role_Title from Authentication_ join Info_About_User " +
+                "on Authentication_.FK_Info_User = Info_About_User.ID_Info_User join Role_User " +
+                $"on Authentication_.FK_Role_User = Role_User.ID_Role_User where ID_User = '{idUser}'";
             return sqlCom;
         }
         // AddUserForm - InputUsersButton
@@ -550,6 +576,37 @@ namespace Napitki_Altay2.Classes
                     $"ID_Document_From_User where " +
                     $"Id_Application = " +
                     $"'{idRow}'";
+            return sqlCom;
+        }
+        public string SqlComGetFioWorker(string idRow)
+        {
+            string sqlCom = "select User_Surname, User_Name, User_Patronymic " +
+                "from Ready_Application join Info_About_User on " +
+                "Ready_Application.FK_Info_User = Info_About_User.ID_Info_User " +
+                "join Application_To_Company " +
+                "on Application_To_Company.ID_Application = Ready_Application.FK_ID_Application " +
+                "join Status_Application " +
+                "on Status_Application.ID_Status = Application_To_Company.FK_Status_Application " +
+                $"where Application_To_Company.ID_Application = '{idRow}'";
+            return sqlCom;
+        }
+        public string SqlComGetFioUser(string idRow)
+        {
+            string sqlCom = "select User_Surname, User_Name, User_Patronymic " +
+                "from Application_To_Company join Info_About_User " +
+                "on Application_To_Company.FK_Info_User = Info_About_User.ID_Info_User " +
+                "join Status_Application " +
+                "on Status_Application.ID_Status = Application_To_Company.FK_Status_Application " +
+                "join Ready_Application " +
+                "on Ready_Application.FK_ID_Application = Application_To_Company.ID_Application " +
+                $"where Ready_Application.ID_Ready_Application = '{idRow}'";
+            return sqlCom;
+        }
+        public string SqlComGetEmailWorker(string name, string fam, string otch)
+        {
+            string sqlCom = "select Email from Authentication_ " +
+                "join Info_About_User on Authentication_.FK_Info_User = Info_About_User.ID_Info_User " +
+                $"where User_Surname = '{fam}' and User_Name = '{name}' and User_Patronymic = '{otch}'";
             return sqlCom;
         }
         public string SqlComUpdateApplication(string desc, string dateTime, string idRow)

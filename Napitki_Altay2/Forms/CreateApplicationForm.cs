@@ -221,10 +221,10 @@ namespace Napitki_Altay2.Forms
         private async void SendAnEmail()
         {
             MimeMessage mimeMessage = new MimeMessage();
-            mimeMessage.From.Add(new MailboxAddress("Волчихинский Пивоваренный Завод",
+            mimeMessage.From.Add(new MailboxAddress("ЗАО «Волчихинский пивоваренный завод»",
                 "napitki-altay@mail.ru"));
             mimeMessage.To.Add(MailboxAddress.Parse(GetEmailUser(fkInfoUser)));
-            mimeMessage.Subject = $"Заявление успешно создано!";
+            mimeMessage.Subject = $"Обращение успешно создано!";
             mimeMessage.Body = new TextPart("html")
             {
                 Text = $"<h1>Спасибо за создание обращения в приложении «Автоматизация документооборота»!</h1>" +

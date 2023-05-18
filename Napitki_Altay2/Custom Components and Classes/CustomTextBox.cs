@@ -14,6 +14,7 @@ namespace Napitki_Altay2.Design
         private bool underlinedStyle = false;
         private Color borderFocusColor = Color.HotPink;
         private bool isFocused = false;
+        private bool _readOnly;
         // Конструктор
         public CustomTextBox()
         {
@@ -127,6 +128,16 @@ namespace Napitki_Altay2.Design
             }
         }
         [Category("Конфигурация")]
+        public bool ReadOnly
+        {
+            get { return _readOnly; }
+            set
+            {
+                _readOnly = value;
+                SetReadOnlyMode();
+            }
+        }
+        [Category("Конфигурация")]
         public ScrollBars ScrollBars
         {
             get
@@ -209,6 +220,18 @@ namespace Napitki_Altay2.Design
             base.OnLoad(e);
             UpdateControlHeight();
         }
+
+        private void SetReadOnlyMode()
+        {
+            if (ReadOnly)
+            {
+                base.KeyPress += TextBoxForCustomSetting_KeyPress;
+            }
+            else
+            {
+                base.KeyPress -= TextBoxForCustomSetting_KeyPress;
+            }
+        }
         private void UpdateControlHeight()
         {
             if (TextBoxForCustomSetting.Multiline == false)
@@ -245,7 +268,10 @@ namespace Napitki_Altay2.Design
         private void TextBoxForCustomSetting_KeyPress
             (object sender, KeyPressEventArgs e)
         {
-            this.OnKeyPress(e);
+            if (ReadOnly)
+            {
+                e.Handled = true; // Игнорировать нажатие клавиши, если режим ReadOnly активирован
+            }
         }
         private void TextBoxForCustomSetting_Enter
             (object sender, EventArgs e)

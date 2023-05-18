@@ -260,6 +260,12 @@
     <Compile Include="Forms\SupplementWorkForm.Designer.cs">
       <DependentUpon>SupplementWorkForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\UpdateUserForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\UpdateUserForm.Designer.cs">
+      <DependentUpon>UpdateUserForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\UserApplicationInfoForWorkerForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -314,6 +320,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\SupplementWorkForm.resx">
       <DependentUpon>SupplementWorkForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\UpdateUserForm.resx">
+      <DependentUpon>UpdateUserForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\UserApplicationInfoForWorkerForm.resx">
       <DependentUpon>UserApplicationInfoForWorkerForm.cs</DependentUpon>
