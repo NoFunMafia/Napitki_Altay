@@ -25,6 +25,10 @@ namespace Napitki_Altay2.Forms
         readonly DataBaseWork dataBaseWork = new DataBaseWork();
         readonly CultureInfo russianCulture = new CultureInfo("ru-RU");
         string userEmail;
+        string documentName;
+        string documentExtansion;
+        string fkInfoUser;
+        string fkDocumentId;
         #endregion
         public SupplementWorkForm()
         {
@@ -248,27 +252,99 @@ namespace Napitki_Altay2.Forms
         /// <param name="name"></param>
         private void UpdateDocumentQuery(byte[] buffer, string extn, string name)
         {
-            string sqlQueryFifth = sqlQueries.SqlComUpdateDocumentUser
-                (MainWorkForm.selectedRowIDInDGWC);
-            try
+            string sqlQuerySixth = sqlQueries.SqlComOpenWorkerAnswerDocInfo
+                (MainWorkFormWorker.SelectedRowID);
+            string documentCheckName = dataBaseWork.GetString(sqlQuerySixth);
+            if (documentCheckName == string.Empty || documentCheckName == "")
             {
-                dataBaseWork.OpenConnection();
-                SqlCommand sqlCommand = new SqlCommand
-                    (sqlQueryFifth, dataBaseWork.GetConnection());
-                sqlCommand.Parameters.Add("@filename", SqlDbType.VarChar).Value = name;
-                sqlCommand.Parameters.Add("@data", SqlDbType.VarBinary).Value = buffer;
-                sqlCommand.Parameters.Add("@extn", SqlDbType.Char).Value = extn;
-                sqlCommand.ExecuteNonQuery();
+                CheckFkIdUser(out List<string[]> listSearch);
+                CheckUserIdInfo(listSearch);
+                string sqlQueryFour = sqlQueries.SqlComAddWorkDocument(fkInfoUser);
+                documentName = name;
+                documentExtansion = extn;
+                try
+                {
+                    dataBaseWork.OpenConnection();
+                    SqlCommand sqlCommand = new SqlCommand
+                        (sqlQueryFour, dataBaseWork.GetConnection());
+                    sqlCommand.Parameters.Add("@fileName", SqlDbType.VarChar).Value = name;
+                    sqlCommand.Parameters.Add("@data", SqlDbType.VarBinary).Value = buffer;
+                    sqlCommand.Parameters.Add("@extension", SqlDbType.Char).Value = extn;
+                    sqlCommand.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message,
+                        "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                finally
+                {
+                    dataBaseWork.CloseConnection();
+                }
+                TakeDocumentIdInfo(out List<string[]> listSearchSecond);
+                CheckDataRowsIDDocument(listSearchSecond);
+                string sqlQueryCheckId = sqlQueries.SqlComTakeApplId
+                    (MainWorkFormWorker.SelectedRowID);
+                string checkApplId = dataBaseWork.GetString(sqlQueryCheckId);
+                string sqlUpdateDoc = sqlQueries.SqlComUpdateDocumentWorkNew
+                    (fkDocumentId, checkApplId);
+                dataBaseWork.WithoutOutputQuery(sqlUpdateDoc);
             }
-            catch (Exception ex)
+            else
             {
-                MessageBox.Show(ex.Message, "Ошибка",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                string sqlQueryFifth = sqlQueries.SqlComUpdateDocumentUser
+                (MainWorkFormWorker.SelectedRowID);
+                try
+                {
+                    dataBaseWork.OpenConnection();
+                    SqlCommand sqlCommand = new SqlCommand
+                        (sqlQueryFifth, dataBaseWork.GetConnection());
+                    sqlCommand.Parameters.Add("@filename", SqlDbType.VarChar).Value = name;
+                    sqlCommand.Parameters.Add("@data", SqlDbType.VarBinary).Value = buffer;
+                    sqlCommand.Parameters.Add("@extn", SqlDbType.Char).Value = extn;
+                    sqlCommand.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Ошибка",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                finally
+                {
+                    dataBaseWork.CloseConnection();
+                }
             }
-            finally
+        }
+        private void CheckDataRowsIDDocument(List<string[]> strings)
+        {
+            if (strings != null)
             {
-                dataBaseWork.CloseConnection();
+                foreach (string[] item in strings)
+                {
+                    fkDocumentId = item[0];
+                }
             }
+        }
+        private void TakeDocumentIdInfo(out List<string[]> listSearchSecond)
+        {
+            string sqlQueryFive = sqlQueries.SqlComInfoAboutWDocument
+                (documentName, documentExtansion);
+            listSearchSecond = dataBaseWork.GetMultiList(sqlQueryFive, 4);
+        }
+        private void CheckUserIdInfo(List<string[]> strings)
+        {
+            if (strings != null)
+            {
+                foreach (string[] item in strings)
+                {
+                    fkInfoUser = item[0];
+                }
+            }
+        }
+        private void CheckFkIdUser(out List<string[]> listSearch)
+        {
+            string sqlQuery = sqlQueries.sqlComFkInfoWorkUser;
+            listSearch = dataBaseWork.GetMultiList(sqlQuery, 4);
         }
         #endregion
         #region [Метод, получающий информацию о прикрепляемом документе]

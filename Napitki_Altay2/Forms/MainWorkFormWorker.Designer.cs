@@ -195,7 +195,7 @@
             // 
             this.LatterPoLabel.AutoSize = true;
             this.LatterPoLabel.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
-            this.LatterPoLabel.Location = new System.Drawing.Point(539, 143);
+            this.LatterPoLabel.Location = new System.Drawing.Point(363, 143);
             this.LatterPoLabel.Name = "LatterPoLabel";
             this.LatterPoLabel.Size = new System.Drawing.Size(42, 28);
             this.LatterPoLabel.TabIndex = 33;
@@ -205,7 +205,7 @@
             // 
             this.LatterOtLabel.AutoSize = true;
             this.LatterOtLabel.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
-            this.LatterOtLabel.Location = new System.Drawing.Point(544, 101);
+            this.LatterOtLabel.Location = new System.Drawing.Point(368, 101);
             this.LatterOtLabel.Name = "LatterOtLabel";
             this.LatterOtLabel.Size = new System.Drawing.Size(37, 28);
             this.LatterOtLabel.TabIndex = 32;
@@ -214,7 +214,7 @@
             // SecondDateToRaportDTP
             // 
             this.SecondDateToRaportDTP.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.SecondDateToRaportDTP.Location = new System.Drawing.Point(587, 138);
+            this.SecondDateToRaportDTP.Location = new System.Drawing.Point(411, 138);
             this.SecondDateToRaportDTP.Name = "SecondDateToRaportDTP";
             this.SecondDateToRaportDTP.Size = new System.Drawing.Size(198, 34);
             this.SecondDateToRaportDTP.TabIndex = 31;
@@ -223,7 +223,7 @@
             // FirstDateToRaportDTP
             // 
             this.FirstDateToRaportDTP.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.FirstDateToRaportDTP.Location = new System.Drawing.Point(587, 96);
+            this.FirstDateToRaportDTP.Location = new System.Drawing.Point(411, 96);
             this.FirstDateToRaportDTP.Name = "FirstDateToRaportDTP";
             this.FirstDateToRaportDTP.Size = new System.Drawing.Size(198, 34);
             this.FirstDateToRaportDTP.TabIndex = 30;
@@ -290,6 +290,7 @@
             this.FilePathTextBox.Name = "FilePathTextBox";
             this.FilePathTextBox.Padding = new System.Windows.Forms.Padding(10);
             this.FilePathTextBox.PasswordChar = false;
+            this.FilePathTextBox.ReadOnly = false;
             this.FilePathTextBox.ScrollBars = System.Windows.Forms.ScrollBars.None;
             this.FilePathTextBox.SelectionStart = 0;
             this.FilePathTextBox.Size = new System.Drawing.Size(991, 41);
@@ -308,7 +309,7 @@
             this.UpdateDataDGWAnswer.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.UpdateDataDGWAnswer.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
             this.UpdateDataDGWAnswer.ForeColor = System.Drawing.Color.White;
-            this.UpdateDataDGWAnswer.Location = new System.Drawing.Point(314, 87);
+            this.UpdateDataDGWAnswer.Location = new System.Drawing.Point(833, 87);
             this.UpdateDataDGWAnswer.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.UpdateDataDGWAnswer.Name = "UpdateDataDGWAnswer";
             this.UpdateDataDGWAnswer.Size = new System.Drawing.Size(168, 92);
@@ -329,7 +330,7 @@
             this.GenerateRaportButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.GenerateRaportButton.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.GenerateRaportButton.ForeColor = System.Drawing.Color.White;
-            this.GenerateRaportButton.Location = new System.Drawing.Point(801, 87);
+            this.GenerateRaportButton.Location = new System.Drawing.Point(625, 87);
             this.GenerateRaportButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.GenerateRaportButton.Name = "GenerateRaportButton";
             this.GenerateRaportButton.Size = new System.Drawing.Size(200, 92);
@@ -496,6 +497,7 @@
             this.PassWorkCreaUpdaTextBox.Name = "PassWorkCreaUpdaTextBox";
             this.PassWorkCreaUpdaTextBox.Padding = new System.Windows.Forms.Padding(7);
             this.PassWorkCreaUpdaTextBox.PasswordChar = true;
+            this.PassWorkCreaUpdaTextBox.ReadOnly = false;
             this.PassWorkCreaUpdaTextBox.ScrollBars = System.Windows.Forms.ScrollBars.None;
             this.PassWorkCreaUpdaTextBox.SelectionStart = 0;
             this.PassWorkCreaUpdaTextBox.Size = new System.Drawing.Size(239, 35);
@@ -517,6 +519,7 @@
             this.PatrWorkCreateTextBox.Name = "PatrWorkCreateTextBox";
             this.PatrWorkCreateTextBox.Padding = new System.Windows.Forms.Padding(7);
             this.PatrWorkCreateTextBox.PasswordChar = false;
+            this.PatrWorkCreateTextBox.ReadOnly = false;
             this.PatrWorkCreateTextBox.ScrollBars = System.Windows.Forms.ScrollBars.None;
             this.PatrWorkCreateTextBox.SelectionStart = 0;
             this.PatrWorkCreateTextBox.Size = new System.Drawing.Size(239, 35);
@@ -538,6 +541,7 @@
             this.NameWorkCreateTextBox.Name = "NameWorkCreateTextBox";
             this.NameWorkCreateTextBox.Padding = new System.Windows.Forms.Padding(7);
             this.NameWorkCreateTextBox.PasswordChar = false;
+            this.NameWorkCreateTextBox.ReadOnly = false;
             this.NameWorkCreateTextBox.ScrollBars = System.Windows.Forms.ScrollBars.None;
             this.NameWorkCreateTextBox.SelectionStart = 0;
             this.NameWorkCreateTextBox.Size = new System.Drawing.Size(239, 35);
@@ -559,6 +563,7 @@
             this.FamWorkCreateTextBox.Name = "FamWorkCreateTextBox";
             this.FamWorkCreateTextBox.Padding = new System.Windows.Forms.Padding(7);
             this.FamWorkCreateTextBox.PasswordChar = false;
+            this.FamWorkCreateTextBox.ReadOnly = false;
             this.FamWorkCreateTextBox.ScrollBars = System.Windows.Forms.ScrollBars.None;
             this.FamWorkCreateTextBox.SelectionStart = 0;
             this.FamWorkCreateTextBox.Size = new System.Drawing.Size(239, 35);

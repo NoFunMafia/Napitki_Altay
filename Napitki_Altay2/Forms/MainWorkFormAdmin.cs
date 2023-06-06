@@ -270,15 +270,14 @@ namespace Napitki_Altay2.Forms
                 object missingValue = Type.Missing;
                 Excel.Application IApplication = new Excel.Application();
                 Excel.Workbook IWorkbook = IApplication.Workbooks.Add(missingValue);
-
                 // Заголовок отчета и столбцов
                 void CreateHeader(Excel.Worksheet IWorksheet, string employeeName)
                 {
                     IWorksheet.Cells[1, 1].Font.Size = 14;
                     IWorksheet.Cells[1, 1].Font.Bold = true;
                     IWorksheet.Cells[1, 1] = $"Отчет о проделанной работе сотрудника: {employeeName}";
-                    IWorksheet.Range["A1", "F1"].Merge();
-                    IWorksheet.Range["A1", "F1"].HorizontalAlignment = Excel.XlHAlign.xlHAlignLeft;
+                    IWorksheet.Range["A1", "E1"].Merge();
+                    IWorksheet.Range["A1", "E1"].HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter;
                     int columnIndex = 1;
                     for (int i = 0; i < DataGridViewApplication.Columns.Count; i++)
                     {
@@ -321,10 +320,15 @@ namespace Napitki_Altay2.Forms
                     }
                     IWorksheet.Name = $"{currentEmployeeFullName}";
                     CreateHeader(IWorksheet, currentEmployeeFullName); // передаем имя сотрудника в функцию CreateHeader
-
+                    Dictionary<string, int> employeeTasksCount = new Dictionary<string, int>();
+                    Dictionary<string, int> statusCounts = new Dictionary<string, int>()
+                    {
+                        { "Дополнено", 0 },
+                        { "Завершено", 0 },
+                        { "Ожидание доп. информации", 0 }
+                    };
                     // Заполнение таблицы данными
                     int rowIndex = 4;
-                    Dictionary<string, int> statusCounts = new Dictionary<string, int>();
                     for (int i = 0; i < DataGridViewApplication.Rows.Count; i++)
                     {
                         if (DataGridViewApplication.Rows[i].Cells["User_Surname"].Value.ToString() == DataGridViewApplication.Rows[j].Cells["User_Surname"].Value.ToString() &&
@@ -339,9 +343,14 @@ namespace Napitki_Altay2.Forms
                                     DataGridViewApplication.Columns[k].HeaderText == "Отчество")
                                     continue;
 
-                                IWorksheet.Cells[rowIndex, columnIndex] = DataGridViewApplication.Rows[i].Cells[k].Value;
+                                Excel.Range cell = IWorksheet.Cells[rowIndex, columnIndex];
+                                cell.Value = DataGridViewApplication.Rows[i].Cells[k].Value;
+                                cell.Borders.LineStyle = Excel.XlLineStyle.xlContinuous;
+                                cell.Borders.Color = Color.Black;
+                                cell.Interior.Color = Color.FromArgb(218, 237, 255);
                                 columnIndex++;
                             }
+
                             rowIndex++;
 
                             string currentStatus = $"{DataGridViewApplication.Rows[i].Cells["Status_Name"].Value}";
@@ -352,52 +361,75 @@ namespace Napitki_Altay2.Forms
                             statusCounts[currentStatus]++;
                         }
                     }
-
-                    // Применение границ для таблицы данных
-                    Excel.Range dataRange = IWorksheet.Range[IWorksheet.Cells[4, 1], IWorksheet.Cells[rowIndex - 1, DataGridViewApplication.Columns.Count - 3]];
-                    ApplyBorder(dataRange);
-
-                    // Вставка итоговой таблицы с числом обращений по каждому статусу
-                    rowIndex += 2;
-                    IWorksheet.Cells[rowIndex, 1] = "Статус";
-                    IWorksheet.Cells[rowIndex, 2] = "Количество обращений";
-                    IWorksheet.Cells[rowIndex, 1].Font.Bold = true;
-                    IWorksheet.Cells[rowIndex, 2].Font.Bold = true;
-                    // Обводка ячеек "Статус" и "Количество обращений"
-                    Excel.Range headerRange = IWorksheet.Range[IWorksheet.Cells[rowIndex, 1], IWorksheet.Cells[rowIndex, 2]];
-                    ApplyBorder(headerRange);
-                    // Заполнение цветом ячеек "Статус" и "Количество обращений"
-                    headerRange.Interior.Color = Color.FromArgb(201, 235, 200);
-                    rowIndex++;
-                    // Применение границ для итоговой таблицы
-                    Excel.Range summaryRange = IWorksheet.Range[IWorksheet.Cells[rowIndex, 1], IWorksheet.Cells[rowIndex + statusCounts.Count - 1, 2]];
-                    ApplyBorder(summaryRange);
-                    foreach (var statusCount in statusCounts)
+                    IWorksheet.Columns.AutoFit();
+                    // Вывод статистики по сотрудникам и статусам
+                    int summaryRow = DataGridViewApplication.Rows.Count + 6;
+                    IWorksheet.Cells[summaryRow, 1] = "Количество обращений по статусам";
+                    IWorksheet.Cells[summaryRow, 1].Font.Bold = true;
+                    IWorksheet.Cells[summaryRow, 1].Interior.Color = Color.FromArgb(201, 235, 200);
+                    IWorksheet.get_Range("A" + summaryRow, "B" + summaryRow).Merge();
+                    IWorksheet.get_Range("A" + summaryRow, "B" + summaryRow).Borders.LineStyle = Excel.XlLineStyle.xlContinuous;
+                    IWorksheet.get_Range("A" + summaryRow, "B" + summaryRow).Borders.Color = Color.Black;
+                    int statusRow = summaryRow + 1;
+                    foreach (var status in statusCounts)
                     {
-                        IWorksheet.Cells[rowIndex, 1] = statusCount.Key;
-                        IWorksheet.Cells[rowIndex, 2] = statusCount.Value;
-                        rowIndex++;
+                        IWorksheet.Cells[statusRow, 1] = $"{status.Key}: {status.Value}";
+                        IWorksheet.Cells[statusRow, 1].Interior.Color = Color.FromArgb(218, 237, 255);
+                        IWorksheet.Cells[statusRow, 1].Borders.LineStyle = Excel.XlLineStyle.xlContinuous;
+                        IWorksheet.Cells[statusRow, 1].Borders.Color = Color.Black;
+                        IWorksheet.Cells[statusRow, 2].Borders.LineStyle = Excel.XlLineStyle.xlContinuous;
+                        IWorksheet.Cells[statusRow, 2].Borders.Color = Color.Black;
+                        IWorksheet.get_Range("A" + statusRow, "B" + statusRow).Merge();
+                        statusRow++;
                     }
-                    // Создание диаграммы для каждого сотрудника
+                    // Подпись и дата
+                    int lastRow = statusRow + 1;
+                    IWorksheet.Cells[lastRow, 1].Font.Bold = true;
+                    IWorksheet.Cells[lastRow, 1] = $"Дата: {DateTime.Now:dd-MM-yyyy}";
+                    IWorksheet.Cells[lastRow, 3] = "Подпись руководителя отдела:_____________";
+                    IWorksheet.Cells[lastRow, 3].Font.Bold = true; // Выделение жирным
+                    IWorksheet.Cells[lastRow + 1, 3] = "М.П.";
+                    IWorksheet.Cells[lastRow + 1, 3].Font.Bold = true; // Выделение жирным
+                    // Добавление диаграммы
                     Excel.ChartObjects chartObjects = (Excel.ChartObjects)IWorksheet.ChartObjects(Type.Missing);
-                    Excel.ChartObject chartObject = chartObjects.Add(170, 25, 400, 300); // Изменение размеров диаграммы
+                    Excel.ChartObject chartObject = chartObjects.Add(480, 5, 370, 300); // Изменение размеров диаграммы
                     Excel.Chart chart = chartObject.Chart;
-                    chart.ChartType = Excel.XlChartType.xlColumnClustered;
+                    // Add data series
+                    Excel.SeriesCollection seriesCollection = (Excel.SeriesCollection)chart.SeriesCollection(Type.Missing);
+                    Excel.Series series = seriesCollection.NewSeries();
+                    series.XValues = new string[] { "Дополнено", "Завершено", "Ожидание доп. информации" };
+                    series.Values = new int[] { statusCounts["Дополнено"], statusCounts["Завершено"], statusCounts["Ожидание доп. информации"] };
+                    series.Name = "Завершенные обращения";
+                    series.ChartType = Excel.XlChartType.xlColumnClustered;
                     chart.HasTitle = true;
                     chart.ChartTitle.Text = $"Обращения находящиеся в работе " +
                         $"с {fromDate:dd.MM.yyyy} по {toDate:dd.MM.yyyy}";
-                    chart.HasLegend = true;
-                    int chartRowIndex = rowIndex - statusCounts.Count;
-                    foreach (var statusCount in statusCounts)
+                    chart.HasLegend = false;
+                    // Назначение цветов для статусов
+                    Excel.SeriesCollection seriesCollectionSecond = (Excel.SeriesCollection)chart.SeriesCollection(Type.Missing);
+                    Excel.Series seriesSecond = seriesCollection.Item(1);
+                    // Отображение значений на столбцах
+                    series.HasDataLabels = true;
+                    Excel.DataLabels dataLabels = series.DataLabels(Type.Missing);
+                    dataLabels.Position = Excel.XlDataLabelPosition.xlLabelPositionInsideEnd;
+                    dataLabels.Font.Size = 10;
+                    dataLabels.Font.Bold = true;
+                    for (int i = 1; i <= series.Points().Count; i++)
                     {
-                        Excel.Series series = (Excel.Series)chart.SeriesCollection().NewSeries;
-                        series.Name = statusCount.Key;
-                        series.Values = IWorksheet.Range[IWorksheet.Cells[chartRowIndex, 2], IWorksheet.Cells[chartRowIndex, 2]];
-                        series.XValues = IWorksheet.Range[IWorksheet.Cells[chartRowIndex, 1], IWorksheet.Cells[chartRowIndex, 1]];
-                        chartRowIndex++;
+                        Excel.Point point = series.Points(i);
+                        switch (i)
+                        {
+                            case 1:
+                                point.Interior.Color = Color.FromArgb(255, 99, 71); // Дополнено - красный
+                                break;
+                            case 2:
+                                point.Interior.Color = Color.FromArgb(50, 205, 50); // Завершено - зеленый
+                                break;
+                            case 3:
+                                point.Interior.Color = Color.FromArgb(255, 215, 0); // Ожидание доп. информации - желтый
+                                break;
+                        }
                     }
-                    IWorksheet.Columns.AutoFit();
-                    sheetIndex++;
                 }
                 // Сохранение файла
                 string finalFileName = "Отчет о завершенных обращениях сотрудников за период от " +
@@ -424,6 +456,7 @@ namespace Napitki_Altay2.Forms
 
                     }
                 }
+
             }
         }
         #endregion

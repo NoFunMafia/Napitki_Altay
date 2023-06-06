@@ -34,8 +34,8 @@ namespace Napitki_Altay2.Classes
                     $"Info_About_User.User_Surname = " +
                     $"'{fam}' and " +
                     $"Info_About_User.User_Patronymic = " +
-                    $"'{otch}' and ID_Status = '1' " +
-                    $"or ID_Status = '2'";
+                    $"'{otch}' and (ID_Status = '1' " +
+                    $"or ID_Status = '2')";
             return sqlCom;
         }
 
@@ -331,6 +331,10 @@ namespace Napitki_Altay2.Classes
             $"User_Surname = '{MainWorkForm.surnameUserString}' and " +
             $"User_Name = '{MainWorkForm.nameUserString}' and " +
             $"User_Patronymic = '{MainWorkForm.patronymicUserString}'";
+        public string sqlComFkInfoWorkUser = "select * from Info_About_User where " +
+            $"User_Surname = '{MainWorkFormWorker.SurnameWorkerString}' and " +
+            $"User_Name = '{MainWorkFormWorker.NameWorkerString}' and " +
+            $"User_Patronymic = '{MainWorkFormWorker.PatrWorkerString}'";
         public string SqlComCheckTypeID(string typeName)
         {
             string sqlCom = "select Id_Type_Of_Appeal " +
@@ -353,11 +357,25 @@ namespace Napitki_Altay2.Classes
                 $"@data, @extension, '{infoUser}')";
             return sqlCom;
         }
+        public string SqlComAddWorkDocument(string infoUser)
+        {
+            string sqlCom = "insert into Answer_Document_From_Worker(Document_Name_W, " +
+                $"Document_Data_W, Document_Extension_W, FK_Info_User) values (@fileName, " +
+                $"@data, @extension, '{infoUser}')";
+            return sqlCom;
+        }
         public string SqlComInfoAboutDocument(string documentName, string documentExtansion)
         {
             string sqlCom = "select * from Application_Document_From_User " +
                 $"where Document_Name = '{documentName}' " +
                 $"and Document_Extension = '{documentExtansion}'";
+            return sqlCom;
+        }
+        public string SqlComInfoAboutWDocument(string documentName, string documentExtansion)
+        {
+            string sqlCom = "select * from Answer_Document_From_Worker " +
+                $"where Document_Name_W = '{documentName}' " +
+                $"and Document_Extension_W = '{documentExtansion}'";
             return sqlCom;
         }
         public string SqlComAddApplicationSecond(string company, string type,
@@ -557,8 +575,33 @@ namespace Napitki_Altay2.Classes
                 $"Status_Application.ID_Status where FK_ID_Application = '{idRow}'";
             return sqlCom;
         }
+        public string SqlComOpenWorkerAnswerDocInfo(string idRow)
+        {
+            string sqlCom = "select Document_Name_W from Ready_Application " +
+                "full join Answer_Document_From_Worker " +
+                "on Ready_Application.FK_Answer_Document_From_Worker = Answer_Document_From_Worker.ID_Document_From_Worker " +
+                "join Application_To_Company " +
+                "on Application_To_Company.ID_Application = Ready_Application.FK_ID_Application " +
+                "join Type_Of_Appeal " +
+                "on Application_To_Company.FK_Type_Of_Appeal = Type_Of_Appeal.ID_Type_Of_Appeal " +
+                "join Status_Application " +
+                "on Application_To_Company.FK_Status_Application = Status_Application.ID_Status " +
+                $"where FK_ID_Application = '{idRow}'";
+            return sqlCom;
+        }
         #endregion
         #region [SupplementForm]
+        public string SqlComSupplementDocumentInfo(string idRow)
+        {
+            string sqlCom = "select Document_Name from Application_To_Company join " +
+                "Type_Of_Appeal " +
+                "on Application_To_Company.FK_Type_Of_Appeal = Type_Of_Appeal.ID_Type_Of_Appeal " +
+                "full join Application_Document_From_User " +
+                "on Application_To_Company.FK_Application_Document_From_User " +
+                "= Application_Document_From_User.ID_Document_From_User " +
+                $"where Id_Application = '{idRow}'";
+            return sqlCom;
+        }
         public string SqlComSupplementInfo(string idRow)
         {
             string sqlCom = "select " +
@@ -622,6 +665,20 @@ namespace Napitki_Altay2.Classes
                 $"FK_Status_Application = '5' where ID_Application = '{idRow}'";
             return sqlCom;
         }
+        public string SqlComUpdateDocumentUserNew(string idDoc, string idRow)
+        {
+            string sqlCom = $"update Application_To_Company " +
+                $"set FK_Application_Document_From_User = '{idDoc}' " +
+                $"where ID_Application = '{idRow}'";
+            return sqlCom;
+        }
+        public string SqlComUpdateDocumentWorkNew(string idDoc, string idRow)
+        {
+            string sqlCom = $"update Ready_Application " +
+                $"set FK_Answer_Document_From_Worker = '{idDoc}' " +
+                $"where ID_Ready_Application = '{idRow}'";
+            return sqlCom;
+        }
         public string SqlComUpdateDocumentUser(string idRow)
         {
             string sqlCom = "update Application_Document_From_User set " +
@@ -630,6 +687,12 @@ namespace Napitki_Altay2.Classes
                 "Application_To_Company.FK_Application_Document_From_User " +
                 "= Application_Document_From_User.ID_Document_From_User " +
                 $"where ID_Application = '{idRow}'";
+            return sqlCom;
+        }
+        public string SqlComTakeApplId(string idAppl)
+        {
+            string sqlCom = "select ID_Ready_Application " +
+                $"from Ready_Application where FK_ID_Application = '{idAppl}'";
             return sqlCom;
         }
         #endregion

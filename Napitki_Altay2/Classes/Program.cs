@@ -19,12 +19,12 @@ namespace Napitki_Altay2
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new AuthForm());
-            if (Classes.InternetCheck.CheckConnection())
-            {
-                Application.Run(new AuthForm());
-            }
-            else
-                Application.Run(new NoInternetForm());
+            //if (Classes.InternetCheck.CheckConnection())
+            //{
+            //    Application.Run(new AuthForm());
+            //}
+            //else
+            //    Application.Run(new NoInternetForm());
         }
     }
 }

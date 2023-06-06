@@ -88,6 +88,7 @@ namespace Napitki_Altay2.Forms
             {
                 LoadDataInDataGridViewAnswerWithDate();
                 isButtonRaportToggled = true;
+                UpdateDataDGWAnswer.Text = "Сбросить фильтрацию";
             }
             else
             {
@@ -97,6 +98,7 @@ namespace Napitki_Altay2.Forms
                 {
                     GenerateExcelRaport(FirstDateToRaportDTP.Value, SecondDateToRaportDTP.Value);
                     isButtonRaportToggled = false;
+                    UpdateDataDGWAnswer.Text = "Обновить данные";
                 }
             }
         }
@@ -625,7 +627,6 @@ namespace Napitki_Altay2.Forms
                             break;
                     }
                 }
-
                 // Подпись и дата
                 int lastRow = statusRow + 1;
                 IWorksheet.Cells[lastRow, 1].Font.Bold = true;
@@ -645,12 +646,19 @@ namespace Napitki_Altay2.Forms
                 }
                 else
                 {
-                    excelFileName = Path.Combine(filePath, excelFileName);
-                    IWorkbook.SaveAs(excelFileName);
-                    MessageBox.Show("Отчёт успешно сформирован!", "Информация",
-                    MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    IWorkbook.Close(true, missingValue, missingValue);
-                    IApplication.Quit();
+                    try
+                    {
+                        excelFileName = Path.Combine(filePath, excelFileName);
+                        IWorkbook.SaveAs(excelFileName);
+                        MessageBox.Show("Отчёт успешно сформирован!", "Информация",
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        IWorkbook.Close(true, missingValue, missingValue);
+                        IApplication.Quit();
+                    }
+                    catch (Exception)
+                    {
+
+                    }
                 }
             }
         }
@@ -665,6 +673,7 @@ namespace Napitki_Altay2.Forms
         {
             LoadDataInCompleteApplicationDGW();
             isButtonRaportToggled = false;
+            UpdateDataDGWAnswer.Text = "Обновить данные";
         }
         #endregion
         #region [Метод, показывающий/скрывающий видимость пароля]
