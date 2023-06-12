@@ -470,8 +470,8 @@ namespace Napitki_Altay2.Forms
                 { "{applicationNumber}", MainWorkFormWorker.SelectedRowID?.ToString() ?? "Неизвестно" },
                 { "{companyName}", UserApplicationInfoForWorkerForm.companyWork?.ToString() ?? "Неизвестно" },
                 { "{imya}", userName?.Substring(0, 1).ToString() ?? "Неизвестно" },
-                { "{fam}", userFam?.Substring(0, 1).ToString() ?? "Неизвестно" },
-                { "{otchFull}", userOtch?.ToString() ?? "Неизвестно"},
+                { "{famFull}", userFam?.ToString().ToString() ?? "Неизвестно" },
+                { "{otch}", userOtch?.Substring(0, 1).ToString() ?? "Неизвестно"},
                 { "{day}", DateTime.Today.Day.ToString() },
                 { "{monthName}", russianCulture.DateTimeFormat.GetMonthName(DateTime.Today.Month) },
                 { "{year}", DateTime.Today.Year.ToString() },
@@ -546,10 +546,10 @@ namespace Napitki_Altay2.Forms
             string assemblyPath = System.Reflection.Assembly.GetExecutingAssembly().Location;
             string assemblyDirectory = Path.GetDirectoryName(assemblyPath);
             string subfolderName = "WordDocuments";
-            string templateFileName = "Пример для составления ответа на проблему.docx";
+            string templateFileName = "Пример для составления ответа на благодарность.docx";
             string templatePath = Path.Combine(assemblyDirectory, subfolderName, templateFileName);
             string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-            string newDocumentName = "Ответ на проблему.docx";
+            string newDocumentName = "Ответ на благодарность.docx";
             string newDocumentPath = Path.Combine(desktopPath, newDocumentName);
             // Создание копии шаблона
             File.Copy(templatePath, newDocumentPath, true);

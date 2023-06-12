@@ -112,6 +112,9 @@
             this.PasswordTextBox.Name = "PasswordTextBox";
             this.PasswordTextBox.Padding = new System.Windows.Forms.Padding(7);
             this.PasswordTextBox.PasswordChar = false;
+            this.PasswordTextBox.ReadOnly = false;
+            this.PasswordTextBox.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            this.PasswordTextBox.SelectionStart = 0;
             this.PasswordTextBox.Size = new System.Drawing.Size(239, 37);
             this.PasswordTextBox.TabIndex = 1;
             this.PasswordTextBox.Texts = "Пароль";
@@ -133,6 +136,9 @@
             this.LoginTextBox.Name = "LoginTextBox";
             this.LoginTextBox.Padding = new System.Windows.Forms.Padding(7);
             this.LoginTextBox.PasswordChar = false;
+            this.LoginTextBox.ReadOnly = false;
+            this.LoginTextBox.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            this.LoginTextBox.SelectionStart = 0;
             this.LoginTextBox.Size = new System.Drawing.Size(239, 37);
             this.LoginTextBox.TabIndex = 0;
             this.LoginTextBox.Texts = "Логин";
@@ -166,7 +172,7 @@
             this.VisiblePassCheck.Cursor = System.Windows.Forms.Cursors.Default;
             this.VisiblePassCheck.FlatAppearance.BorderColor = System.Drawing.SystemColors.Window;
             this.VisiblePassCheck.Font = new System.Drawing.Font("Segoe UI Variable Text", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.VisiblePassCheck.Location = new System.Drawing.Point(356, 261);
+            this.VisiblePassCheck.Location = new System.Drawing.Point(355, 261);
             this.VisiblePassCheck.Name = "VisiblePassCheck";
             this.VisiblePassCheck.Size = new System.Drawing.Size(95, 24);
             this.VisiblePassCheck.TabIndex = 6;

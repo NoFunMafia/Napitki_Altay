@@ -350,10 +350,10 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <None Include="WordDocuments\Пример для составления ответа на претензию.docx">
+    <None Include="WordDocuments\Пример для составления ответа на благодарность.docx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="WordDocuments\Пример для составления ответа на проблему.docx">
+    <None Include="WordDocuments\Пример для составления ответа на претензию.docx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="WordDocuments\Пример для составления ответа на сотрудничество.docx">

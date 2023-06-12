@@ -204,7 +204,7 @@
             this.HelpDiscussionButton.Name = "HelpDiscussionButton";
             this.HelpDiscussionButton.Size = new System.Drawing.Size(171, 52);
             this.HelpDiscussionButton.TabIndex = 75;
-            this.HelpDiscussionButton.Text = "Обсуждение проблемы";
+            this.HelpDiscussionButton.Text = "Письмо-\r\n-благодарность";
             this.HelpDiscussionButton.TextColor = System.Drawing.Color.White;
             this.HelpDiscussionButton.UseVisualStyleBackColor = false;
             this.HelpDiscussionButton.Click += new System.EventHandler(this.HelpDiscussionButton_Click);

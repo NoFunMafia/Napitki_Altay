@@ -300,15 +300,12 @@ namespace Napitki_Altay2.Forms
                 {
                     string currentEmployeeFullName = $"{DataGridViewApplication.Rows[j].Cells["User_Surname"].Value}" + $" {DataGridViewApplication.Rows[j].Cells["User_Name"].Value}" +
                         $" {DataGridViewApplication.Rows[j].Cells["User_Patronymic"].Value}";
-
                     // Если лист для текущего сотрудника уже создан, переходим к следующей итерации цикла
                     if (createdEmployeeNames.Contains(currentEmployeeFullName))
                     {
                         continue;
                     }
-
                     createdEmployeeNames.Add(currentEmployeeFullName);
-
                     Excel.Worksheet IWorksheet;
                     if (sheetIndex == 1)
                     {
@@ -350,9 +347,7 @@ namespace Napitki_Altay2.Forms
                                 cell.Interior.Color = Color.FromArgb(218, 237, 255);
                                 columnIndex++;
                             }
-
                             rowIndex++;
-
                             string currentStatus = $"{DataGridViewApplication.Rows[i].Cells["Status_Name"].Value}";
                             if (!statusCounts.ContainsKey(currentStatus))
                             {
@@ -430,6 +425,7 @@ namespace Napitki_Altay2.Forms
                                 break;
                         }
                     }
+                    sheetIndex++;
                 }
                 // Сохранение файла
                 string finalFileName = "Отчет о завершенных обращениях сотрудников за период от " +

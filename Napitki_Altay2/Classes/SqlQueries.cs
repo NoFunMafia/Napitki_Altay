@@ -73,6 +73,14 @@ namespace Napitki_Altay2.Classes
             return sqlCom;
         }
 
+        public string SqlComCheckInfoAcc(string idAcc)
+        {
+            string sqlCom = "select Login_User, Password_User, Email, " +
+                "Role_Title from Authentication_ join Role_User " +
+                "on Authentication_.FK_Role_User = Role_User.ID_Role_User " +
+                $"where ID_User = '{idAcc}'";
+            return sqlCom;
+        }
         // MainWorkForm - UpdLogPassButton_Click
         public string SqlComUpdPass(string pass)
         {

@@ -652,7 +652,7 @@ namespace Napitki_Altay2.Components
             if (Cursor.Position.Y == Screen.FromHandle(Form.Handle).WorkingArea.Y
                 && Form.WindowState == FormWindowState.Normal)
             {
-                Form.WindowState = FormWindowState.Maximized;
+                //Form.WindowState = FormWindowState.Maximized;
                 FormNeedReposition = true;
             }
 
@@ -682,10 +682,10 @@ namespace Napitki_Altay2.Components
                             Form.Location = moveStartPosition;
                         }
                     }
-                    else if (Form.WindowState == FormWindowState.Normal)
-                    {
-                        Form.WindowState = FormWindowState.Maximized;
-                    }
+                    //else if (Form.WindowState == FormWindowState.Normal)
+                    //{
+                    //    Form.WindowState = FormWindowState.Maximized;
+                    //}
                 }
 
                 // Min Button Click
@@ -742,14 +742,14 @@ namespace Napitki_Altay2.Components
 
             if (MousePressed && LastClickedMouseButton == MouseButtons.Left && rectHeader.Contains(Form.PointToClient(Cursor.Position)))
             {
-                if (Form.WindowState == FormWindowState.Maximized)
-                {
-                    Form.WindowState = FormWindowState.Normal;
-                }
-                else if (Form.WindowState == FormWindowState.Normal)
-                {
-                    Form.WindowState = FormWindowState.Maximized;
-                }
+                //if (Form.WindowState == FormWindowState.Maximized)
+                //{
+                //    Form.WindowState = FormWindowState.Normal;
+                //}
+                //else if (Form.WindowState == FormWindowState.Normal)
+                //{
+                //    Form.WindowState = FormWindowState.Maximized;
+                //}
             }
         }
 

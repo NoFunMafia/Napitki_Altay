@@ -204,7 +204,7 @@
             this.HelpDiscussionButton.Name = "HelpDiscussionButton";
             this.HelpDiscussionButton.Size = new System.Drawing.Size(171, 52);
             this.HelpDiscussionButton.TabIndex = 57;
-            this.HelpDiscussionButton.Text = "Обсуждение проблемы";
+            this.HelpDiscussionButton.Text = "Письмо-\r\n-благодарность";
             this.HelpDiscussionButton.TextColor = System.Drawing.Color.White;
             this.HelpDiscussionButton.UseVisualStyleBackColor = false;
             this.HelpDiscussionButton.Click += new System.EventHandler(this.HelpDiscussionButton_Click);
@@ -308,6 +308,7 @@
             this.DocumentWorkAnsTextBox.Name = "DocumentWorkAnsTextBox";
             this.DocumentWorkAnsTextBox.Padding = new System.Windows.Forms.Padding(7);
             this.DocumentWorkAnsTextBox.PasswordChar = false;
+            this.DocumentWorkAnsTextBox.ReadOnly = false;
             this.DocumentWorkAnsTextBox.ScrollBars = System.Windows.Forms.ScrollBars.None;
             this.DocumentWorkAnsTextBox.SelectionStart = 0;
             this.DocumentWorkAnsTextBox.Size = new System.Drawing.Size(383, 35);
@@ -350,6 +351,7 @@
             this.DescripWorkAnsTextBox.Name = "DescripWorkAnsTextBox";
             this.DescripWorkAnsTextBox.Padding = new System.Windows.Forms.Padding(7);
             this.DescripWorkAnsTextBox.PasswordChar = false;
+            this.DescripWorkAnsTextBox.ReadOnly = false;
             this.DescripWorkAnsTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.DescripWorkAnsTextBox.SelectionStart = 0;
             this.DescripWorkAnsTextBox.Size = new System.Drawing.Size(839, 254);
@@ -372,6 +374,7 @@
             this.StatusApplicationTextBox.Name = "StatusApplicationTextBox";
             this.StatusApplicationTextBox.Padding = new System.Windows.Forms.Padding(7);
             this.StatusApplicationTextBox.PasswordChar = false;
+            this.StatusApplicationTextBox.ReadOnly = false;
             this.StatusApplicationTextBox.ScrollBars = System.Windows.Forms.ScrollBars.None;
             this.StatusApplicationTextBox.SelectionStart = 0;
             this.StatusApplicationTextBox.Size = new System.Drawing.Size(383, 35);

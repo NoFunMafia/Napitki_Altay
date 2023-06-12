@@ -40,7 +40,6 @@
             this.FamTextBox = new Napitki_Altay2.Design.CustomTextBox();
             this.CancelButton = new Napitki_Altay2.Design.CustomButton();
             this.InputUsersButton = new Napitki_Altay2.Design.CustomButton();
-            this.RolePictureBox = new System.Windows.Forms.PictureBox();
             this.RoleLabel = new System.Windows.Forms.Label();
             this.RoleTextBox = new Napitki_Altay2.Design.CustomTextBox();
             this.PasswordLabel = new System.Windows.Forms.Label();
@@ -53,7 +52,6 @@
             this.администраторToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.сотрудникToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.заявительToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            ((System.ComponentModel.ISupportInitialize)(this.RolePictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.UsersPictureBox)).BeginInit();
             this.RoleMenuStrip.SuspendLayout();
             this.SuspendLayout();
@@ -227,19 +225,6 @@
             this.InputUsersButton.TextColor = System.Drawing.Color.White;
             this.InputUsersButton.UseVisualStyleBackColor = false;
             this.InputUsersButton.Click += new System.EventHandler(this.InputUsersButton_Click);
-            // 
-            // RolePictureBox
-            // 
-            this.RolePictureBox.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.RolePictureBox.Image = global::Napitki_Altay2.Properties.Resources.PictureRegForm;
-            this.RolePictureBox.Location = new System.Drawing.Point(202, 375);
-            this.RolePictureBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.RolePictureBox.Name = "RolePictureBox";
-            this.RolePictureBox.Size = new System.Drawing.Size(32, 27);
-            this.RolePictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.RolePictureBox.TabIndex = 40;
-            this.RolePictureBox.TabStop = false;
-            this.RolePictureBox.Click += new System.EventHandler(this.RolePictureBox_Click);
             // 
             // RoleLabel
             // 
@@ -417,7 +402,6 @@
             this.Controls.Add(this.FamTextBox);
             this.Controls.Add(this.CancelButton);
             this.Controls.Add(this.InputUsersButton);
-            this.Controls.Add(this.RolePictureBox);
             this.Controls.Add(this.RoleLabel);
             this.Controls.Add(this.RoleTextBox);
             this.Controls.Add(this.PasswordLabel);
@@ -430,7 +414,6 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Обновление пользователя";
             this.Load += new System.EventHandler(this.UpdateUserForm_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.RolePictureBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.UsersPictureBox)).EndInit();
             this.RoleMenuStrip.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -450,7 +433,6 @@
         private Design.CustomTextBox FamTextBox;
         private Design.CustomButton CancelButton;
         private Design.CustomButton InputUsersButton;
-        private System.Windows.Forms.PictureBox RolePictureBox;
         private System.Windows.Forms.Label RoleLabel;
         private Design.CustomTextBox RoleTextBox;
         private System.Windows.Forms.Label PasswordLabel;

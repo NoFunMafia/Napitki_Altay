@@ -84,7 +84,7 @@
             this.VisiblePassCheckRegForm.Cursor = System.Windows.Forms.Cursors.Default;
             this.VisiblePassCheckRegForm.FlatAppearance.BorderColor = System.Drawing.SystemColors.Window;
             this.VisiblePassCheckRegForm.Font = new System.Drawing.Font("Segoe UI Variable Text", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.VisiblePassCheckRegForm.Location = new System.Drawing.Point(356, 261);
+            this.VisiblePassCheckRegForm.Location = new System.Drawing.Point(355, 261);
             this.VisiblePassCheckRegForm.Name = "VisiblePassCheckRegForm";
             this.VisiblePassCheckRegForm.Size = new System.Drawing.Size(95, 24);
             this.VisiblePassCheckRegForm.TabIndex = 11;
@@ -122,6 +122,9 @@
             this.EmailTextBox.Name = "EmailTextBox";
             this.EmailTextBox.Padding = new System.Windows.Forms.Padding(7);
             this.EmailTextBox.PasswordChar = false;
+            this.EmailTextBox.ReadOnly = false;
+            this.EmailTextBox.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            this.EmailTextBox.SelectionStart = 0;
             this.EmailTextBox.Size = new System.Drawing.Size(239, 37);
             this.EmailTextBox.TabIndex = 14;
             this.EmailTextBox.Texts = "Ваш Email";
@@ -164,6 +167,9 @@
             this.ChooseRoleTextBox.Name = "ChooseRoleTextBox";
             this.ChooseRoleTextBox.Padding = new System.Windows.Forms.Padding(7);
             this.ChooseRoleTextBox.PasswordChar = false;
+            this.ChooseRoleTextBox.ReadOnly = false;
+            this.ChooseRoleTextBox.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            this.ChooseRoleTextBox.SelectionStart = 0;
             this.ChooseRoleTextBox.Size = new System.Drawing.Size(239, 37);
             this.ChooseRoleTextBox.TabIndex = 7;
             this.ChooseRoleTextBox.Texts = "Роль пользователя";
@@ -183,6 +189,9 @@
             this.PasswordCreateTextBox.Name = "PasswordCreateTextBox";
             this.PasswordCreateTextBox.Padding = new System.Windows.Forms.Padding(7);
             this.PasswordCreateTextBox.PasswordChar = false;
+            this.PasswordCreateTextBox.ReadOnly = false;
+            this.PasswordCreateTextBox.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            this.PasswordCreateTextBox.SelectionStart = 0;
             this.PasswordCreateTextBox.Size = new System.Drawing.Size(239, 37);
             this.PasswordCreateTextBox.TabIndex = 6;
             this.PasswordCreateTextBox.Texts = "Создание пароля";
@@ -204,6 +213,9 @@
             this.LoginCreateTextBox.Name = "LoginCreateTextBox";
             this.LoginCreateTextBox.Padding = new System.Windows.Forms.Padding(7);
             this.LoginCreateTextBox.PasswordChar = false;
+            this.LoginCreateTextBox.ReadOnly = false;
+            this.LoginCreateTextBox.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            this.LoginCreateTextBox.SelectionStart = 0;
             this.LoginCreateTextBox.Size = new System.Drawing.Size(239, 37);
             this.LoginCreateTextBox.TabIndex = 5;
             this.LoginCreateTextBox.Texts = "Создание логина";

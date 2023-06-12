@@ -122,6 +122,8 @@ namespace Napitki_Altay2.Forms
         /// <param name="e"></param>
         private void UpdLogPassButton_Click(object sender, EventArgs e)
         {
+            if (CheckPass(PassWorkCreaUpdaTextBox.Texts, 7, 15))
+                return;
             UpdatePassQuery();
         }
         #endregion
@@ -135,7 +137,43 @@ namespace Napitki_Altay2.Forms
         {
             CreateSupplementReply();
         }
-
+        #region [Метод, проверяющий пароль на надёжность]
+        public Boolean CheckPass(string inputPass, int minLenght, int maxLenght)
+        {
+            bool hasCap = false, hasLow = false, hasSpec = false;
+            char currentCharacter;
+            bool hasNum;
+            if (!(inputPass.Length <= minLenght
+                || inputPass.Length >= maxLenght))
+            {
+                hasNum = false;
+            }
+            else
+            {
+                MessageBox.Show("Пароль не соответствует требованиям!", "Ошибка",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return true;
+            }
+            for (int i = 0; i < inputPass.Length; i++)
+            {
+                currentCharacter = inputPass[i];
+                if (char.IsDigit(currentCharacter))
+                    hasNum = true;
+                else if (char.IsUpper(currentCharacter))
+                    hasCap = true;
+                else if (char.IsLower(currentCharacter))
+                    hasLow = true;
+                else if (!char.IsLetterOrDigit(currentCharacter))
+                    hasSpec = true;
+            }
+            if (hasNum && hasCap && hasLow && hasSpec)
+                return false;
+            else
+                MessageBox.Show("Пароль не соответствует требованиям!", "Ошибка",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            return true;
+        }
+        #endregion
         private void CreateSupplementReply()
         {
             try

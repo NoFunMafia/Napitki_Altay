@@ -213,7 +213,6 @@
             this.DataGridViewApplication.AllowUserToDeleteRows = false;
             this.DataGridViewApplication.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.DataGridViewApplication.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.DataGridViewApplication.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.DataGridViewApplication.Location = new System.Drawing.Point(3, 60);
             this.DataGridViewApplication.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.DataGridViewApplication.Name = "DataGridViewApplication";
@@ -689,6 +688,7 @@
             this.PassCreaUpdaTextBox.Name = "PassCreaUpdaTextBox";
             this.PassCreaUpdaTextBox.Padding = new System.Windows.Forms.Padding(7);
             this.PassCreaUpdaTextBox.PasswordChar = true;
+            this.PassCreaUpdaTextBox.ReadOnly = false;
             this.PassCreaUpdaTextBox.ScrollBars = System.Windows.Forms.ScrollBars.None;
             this.PassCreaUpdaTextBox.SelectionStart = 0;
             this.PassCreaUpdaTextBox.Size = new System.Drawing.Size(239, 35);
@@ -710,6 +710,7 @@
             this.PatrCreateTextBox.Name = "PatrCreateTextBox";
             this.PatrCreateTextBox.Padding = new System.Windows.Forms.Padding(7);
             this.PatrCreateTextBox.PasswordChar = false;
+            this.PatrCreateTextBox.ReadOnly = false;
             this.PatrCreateTextBox.ScrollBars = System.Windows.Forms.ScrollBars.None;
             this.PatrCreateTextBox.SelectionStart = 0;
             this.PatrCreateTextBox.Size = new System.Drawing.Size(239, 35);
@@ -731,6 +732,7 @@
             this.NameCreateTextBox.Name = "NameCreateTextBox";
             this.NameCreateTextBox.Padding = new System.Windows.Forms.Padding(7);
             this.NameCreateTextBox.PasswordChar = false;
+            this.NameCreateTextBox.ReadOnly = false;
             this.NameCreateTextBox.ScrollBars = System.Windows.Forms.ScrollBars.None;
             this.NameCreateTextBox.SelectionStart = 0;
             this.NameCreateTextBox.Size = new System.Drawing.Size(239, 35);
@@ -752,6 +754,7 @@
             this.FamCreateTextBox.Name = "FamCreateTextBox";
             this.FamCreateTextBox.Padding = new System.Windows.Forms.Padding(7);
             this.FamCreateTextBox.PasswordChar = false;
+            this.FamCreateTextBox.ReadOnly = false;
             this.FamCreateTextBox.ScrollBars = System.Windows.Forms.ScrollBars.None;
             this.FamCreateTextBox.SelectionStart = 0;
             this.FamCreateTextBox.Size = new System.Drawing.Size(239, 35);
