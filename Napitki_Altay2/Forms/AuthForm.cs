@@ -106,12 +106,17 @@ namespace Napitki_Altay2
         private void LogInAppButton_Click
             (object sender, EventArgs e)
         {
-            if (LoginTextBox.Texts.Equals("Логин") || 
-                PasswordTextBox.Texts.Equals("Пароль"))
+            if (LoginTextBox.Texts.Equals("Логин") || PasswordTextBox.Texts.Equals("Пароль"))
+            {
                 MessageBox.Show("Данные для входа не введены!",
                     "Ошибка",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
+            }
+            else if (!dataBaseWork.IsConnectionAvailable())
+            {
+                return;
+            }
             else
             {
                 List<string[]> listSearch = FillListQuery();

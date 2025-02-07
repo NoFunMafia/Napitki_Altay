@@ -13,11 +13,7 @@ namespace Napitki_Altay2
         private readonly List<string> connectionStrings = new List<string>
         {
             //БД для тестирования в домашних условиях с использ. локал.
-            @"Data Source=MYHOMIES;Initial Catalog=Altai_zavodBackup;Persist Security Info=True;User ID=Admin;Password=Admin",
-            //БД для тестирования в домашних условиях и подкл. к колледжу
-            @"Data Source=62.78.81.19;Initial Catalog=Altai_Napitki;Persist Security Info=True;User ID=25-тпмоксингв;Password=650131",
-            //БД для тестирования в учебных условиях
-            @"Data Source=sql1c;Initial Catalog=Altai_Napitki;Persist Security Info=True;User ID=25-тпмоксингв;Password=650131"
+            @"Data Source=MYHOMIES;Initial Catalog=Altai_zavodBackup;Persist Security Info=True;User ID=Admin;Password=Admin;Connection Timeout=2",
         };
         private SqlConnection _sqlCon;
         public SqlConnection SqlCon
@@ -32,31 +28,37 @@ namespace Napitki_Altay2
             }
         }
         #endregion
+        private bool _errorDisplayed = false;
         private SqlConnection ConnectToDatabase()
         {
-            SqlConnection connection = null;
+            _errorDisplayed = false;
             foreach (string connectionString in connectionStrings)
             {
+                SqlConnection connection;
                 try
                 {
                     connection = new SqlConnection(connectionString);
                     connection.Open();
-                    break;
+                    return connection;
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
-                    MessageBox.Show($"Ошибка: {ex.Message}", "Ошибка", 
-                        MessageBoxButtons.OK, MessageBoxIcon.Error);
                     connection = null;
                 }
             }
-            if (connection == null)
+            if (!_errorDisplayed)
             {
                 MessageBox.Show($"Ошибка подключения к доступным базам данных. Повторите попытку позже!",
                     "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _errorDisplayed = true; // Устанавливаем флаг, чтобы больше не показывать сообщение
             }
-            return connection;
+            return null;
         }
+        public bool IsConnectionAvailable()
+        {
+            return SqlCon != null && SqlCon.State == ConnectionState.Open;
+        }
+
         #region [Метод, получающий значение sqlCon]
         /// <summary>
         /// Метод, получающий значение sqlCon
@@ -73,7 +75,7 @@ namespace Napitki_Altay2
         /// </summary>
         public void OpenConnection()
         {
-            if (SqlCon.State == ConnectionState.Closed)
+            if (SqlCon != null && SqlCon.State == ConnectionState.Closed)
             {
                 SqlCon.Open();
             }
@@ -83,7 +85,7 @@ namespace Napitki_Altay2
         /// </summary>
         public void CloseConnection()
         {
-            if (SqlCon.State == ConnectionState.Open)
+            if (SqlCon != null && SqlCon.State == ConnectionState.Open)
             {
                 SqlCon.Close();
             }
@@ -127,10 +129,6 @@ namespace Napitki_Altay2
             catch(Exception)
             {
                 CloseConnection();
-                MessageBox.Show("Возникла непредвиденная ошибка!",
-                    "Ошибка",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Error);
                 return null;
             }
         }
