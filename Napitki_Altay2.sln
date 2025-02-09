@@ -5,8 +5,6 @@ VisualStudioVersion = 17.3.32922.545
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Napitki_Altay2", "Napitki_Altay2\Napitki_Altay2.csproj", "{E99D02F3-7141-40AC-AA9A-05AE774499D6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TelegramBotNapitki", "TelegramBotNapitki\TelegramBotNapitki.csproj", "{DEBB8103-FA84-4151-8BD6-36257D85913B}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,10 +15,6 @@ Global
 		{E99D02F3-7141-40AC-AA9A-05AE774499D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E99D02F3-7141-40AC-AA9A-05AE774499D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E99D02F3-7141-40AC-AA9A-05AE774499D6}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DEBB8103-FA84-4151-8BD6-36257D85913B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DEBB8103-FA84-4151-8BD6-36257D85913B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DEBB8103-FA84-4151-8BD6-36257D85913B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DEBB8103-FA84-4151-8BD6-36257D85913B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

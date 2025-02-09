@@ -13,7 +13,7 @@ namespace Napitki_Altay2
         private readonly List<string> connectionStrings = new List<string>
         {
             //БД для тестирования в домашних условиях с использ. локал.
-            @"Data Source=MYHOMIES;Initial Catalog=Altai_zavodBackup;Persist Security Info=True;User ID=Admin;Password=Admin;Connection Timeout=2",
+            @"Data Source=ASUSROG;Initial Catalog=FORWORK;Persist Security Info=True;User ID=Admin;Password=admin;TrustServerCertificate=True;Connect Timeout=2",
         };
         private SqlConnection _sqlCon;
         public SqlConnection SqlCon

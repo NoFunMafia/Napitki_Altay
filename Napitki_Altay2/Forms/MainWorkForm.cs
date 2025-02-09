@@ -429,8 +429,8 @@ namespace Napitki_Altay2.Forms
             DataGridViewApplication.Columns[3].Width = 90;
             DataGridViewApplication.Columns[4].HeaderText = "Отчество";
             DataGridViewApplication.Columns[4].Width = 110;
-            DataGridViewApplication.Columns[5].HeaderText = "Статус обращения";
-            DataGridViewApplication.Columns[5].Width = 197;
+            /*DataGridViewApplication.Columns[5].HeaderText = "Статус обращения";
+            DataGridViewApplication.Columns[5].Width = 197;*/
         }
         #endregion
         #region [Метод, проверяющий наличие у пользователя заполненного ФИО в БД]

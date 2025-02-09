@@ -57,14 +57,13 @@ namespace Napitki_Altay2
         #endregion
         #region [Событие нажатия на item "сотрудник" ToolStrip'а]
         /// <summary>
-        /// Событие нажатия на кнопку "Сотрудник" в ToolStripMenu
+        /// Событие нажатия на кнопку "Муниципальный служащий" в ToolStripMenu
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void СотрудникToolStripMenuItem_Click
-            (object sender, EventArgs e)
+        private void МунСлужToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ChooseRoleTextBox.Texts = "Сотрудник";
+            ChooseRoleTextBox.Texts = "Муниципальный служащий";
         }
         #endregion
         #region [Событие нажатия на item "заявитель" ToolStrip'а]
@@ -185,7 +184,7 @@ namespace Napitki_Altay2
                 if (!IsValidEmail(EmailTextBox.Texts))
                     return;
                 Enabled = false;
-                if (ChooseRoleTextBox.Texts == "Сотрудник")
+                if (ChooseRoleTextBox.Texts == "Муниципальный служащий")
                 {
                     AuthFioWorkerForm authFioWorker = new AuthFioWorkerForm();
                     authFioWorker.FormClosed += new FormClosedEventHandler(AuthFioWorkerForm_FormClosed);
@@ -196,6 +195,7 @@ namespace Napitki_Altay2
             }
         }
         #endregion
+        #region [Событие закрытия формы AuthFioWorkerForm]
         void AuthFioWorkerForm_FormClosed(object sender, FormClosedEventArgs e)
         {
             Enabled = true;
@@ -215,6 +215,7 @@ namespace Napitki_Altay2
                 }
             }
         }
+        #endregion
         #region [Событие закрытия формы AuthEmailForm]
         void AuthEmailForm_FormClosed(object sender, FormClosedEventArgs e)
         {
@@ -280,18 +281,18 @@ namespace Napitki_Altay2
         {
             GetUniqueCode();
             MimeMessage mimeMessage = new MimeMessage();
-            mimeMessage.From.Add(new MailboxAddress("ЗАО «Волчихинский пивоваренный завод»",
+            mimeMessage.From.Add(new MailboxAddress("Администрация Волчихинского района Алтайского края",
                 "napitki-altay@mail.ru"));
             mimeMessage.To.Add(MailboxAddress.Parse(EmailTextBox.Texts));
             mimeMessage.Subject = $"Код подтверждения: {uniqueCode}";
             mimeMessage.Body = new TextPart("html")
             {
-                Text = $"<h1>Благодарим за регистрацию в приложении «Автоматизация документоборота»!</h1>" +
-                $"<p>Наше приложение предоставит Вам, множество функций и возможностей для работы с документами.</p>" +
-                $"<p>Для завершения процесса регистрации, пожалуйста, введите код подтверждения в соответствующее поле в приложении:</p>" +
-                $"<h2 style='color: #007BFF;'>{uniqueCode}</h2>" +
-                $"<p>Мы надеемся, что оно станет незаменимым инструментом в Вашей работе!</p>" +
-                $"<p>С уважением,<br>Команда ЗАО «Волчихинский пивоваренный завод»</p>"
+                Text = $"<h1>Уважаемый пользователь!</h1>" +
+                $"<p>Благодарим Вас за регистрацию в приложении «Единая система образования Волчихинского района». Ваш доступ к сервисам автоматизированной обработки документов будет активирован после завершения процедуры подтверждения.</p>" +
+                $"<p>Для завершения регистрации, пожалуйста, введите нижеуказанный код подтверждения в соответствующее поле приложения:</p>" +
+                $"<h2 style='color: #CF1401; text-align: center;'>{uniqueCode}</h2>" +
+                $"<p>Данное приложение разработано в целях упрощения документооборота и повышения эффективности взаимодействия с органами управления образованием.</p>" +
+                $"<p>С уважением,<br>Комитет по образованию и делам молодежи<br>Администрации Волчихинского района Алтайского края</p>"
             };
             SmtpClient smtpClient = new SmtpClient();
             using (CancellationTokenSource cts = new CancellationTokenSource(TimeSpan.FromSeconds(15)))
@@ -299,7 +300,7 @@ namespace Napitki_Altay2
                 try
                 {
                     smtpClient.Connect("smtp.mail.ru", 465, true, cts.Token);
-                    smtpClient.Authenticate("napitki-altay@mail.ru", "5TGsxjXKrXYpVxeajrgY", cts.Token);
+                    smtpClient.Authenticate("napitki-altay@mail.ru", "zqfuuDCwzsSzyuMsrktn", cts.Token);
                     smtpClient.Send(mimeMessage, cts.Token);
                     AuthEmailForm authEmailForm = new AuthEmailForm();
                     authEmailForm.FormClosed += new FormClosedEventHandler(AuthEmailForm_FormClosed);
@@ -409,7 +410,7 @@ namespace Napitki_Altay2
             return true;
         }
         #endregion
-        #region [Метод, проверяющий уникальность добавляемого логина в БД]
+        #region [Метод, проверяющий уникальность добавляемого email в БД]
         /// <summary>
         /// Метод, проверяющий уникальность добавляемого логина в БД
         /// </summary>

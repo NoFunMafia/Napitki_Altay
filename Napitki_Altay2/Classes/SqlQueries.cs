@@ -8,34 +8,28 @@ namespace Napitki_Altay2.Classes
     {
         #region [MainWorkForm]
         // MainWorkForm - MainWorkForm_Load
-        public string sqlComRecFIO = $"select * from Info_About_User " +
-                $"join Authentication_ on Authentication_.FK_Info_User " +
-                $"= Info_About_User.ID_Info_User " +
-                $"where Authentication_.Login_User = " +
+        public string sqlComRecFIO = $"select * from User_Info " +
+                $"join User_Auth on User_Auth.User_ID " +
+                $"= User_Info.User_ID " +
+                $"where User_Auth.Username = " +
                 $"'{AuthForm.LoginString}'";
 
         // MainWorkForm - LoadDataGridView
         public string SqlOutputMWF(string name, string fam, string otch)
         {
-            string sqlCom = "select Id_Application, " +
-                    "Applicant_Company, User_Surname, " +
-                    "User_Name, " +
-                    "User_Patronymic, " +
-                    "Status_Name " +
-                    "from Application_To_Company" +
-                    " join Info_About_User on " +
-                    "Application_To_Company.FK_Info_User = " +
-                    "Info_About_User.ID_Info_User join " +
-                    "Status_Application on " +
-                    "Application_To_Company.FK_Status_Application" +
-                    " = Status_Application.ID_Status " +
-                    $"where Info_About_User.User_Name = " +
-                    $"'{name}' and " +
-                    $"Info_About_User.User_Surname = " +
-                    $"'{fam}' and " +
-                    $"Info_About_User.User_Patronymic = " +
-                    $"'{otch}' and (ID_Status = '1' " +
-                    $"or ID_Status = '2')";
+            string sqlCom = "SELECT " +
+                "User_Appeal.Appeal_ID, " +
+                "User_Info.Last_Name, " +
+                "User_Info.First_Name, " +
+                "User_Info.Middle_Name, " +
+                "Appeal_Status.Status_Name " +
+                "FROM User_Appeal " +
+                "JOIN User_Info ON User_Appeal.User_ID = User_Info.User_ID " +
+                "JOIN Appeal_Status ON User_Appeal.Status_ID = Appeal_Status.Status_ID " +
+                $"WHERE User_Info.First_Name = '{name}' " +
+                $"AND User_Info.Last_Name = '{fam}' " +
+                $"AND User_Info.Middle_Name = '{otch}' " +
+                $"AND (Appeal_Status.Status_ID = 1 OR Appeal_Status.Status_ID = 2)";
             return sqlCom;
         }
 
@@ -43,11 +37,11 @@ namespace Napitki_Altay2.Classes
         public string SqlComIDUser(string fam, string name, string otch)
         {
             string sqlCom = $"select * " +
-                    $"from Info_About_User " +
-                    $"where User_Surname = " +
+                    $"from User_Info " +
+                    $"where Last_Name = " +
                     $"'{fam}' " +
-                    $"and User_Name = '{name}' " +
-                    $"and User_Patronymic = " +
+                    $"and First_Name = '{name}' " +
+                    $"and Middle_Name = " +
                     $"'{otch}'";
             return sqlCom;
         }
@@ -55,56 +49,53 @@ namespace Napitki_Altay2.Classes
         // MainWorkForm - LoadDataGridViewComplete2
         public string SqlComFKInfo(string fkInfoUser)
         {
-            string sqlCom = "select FK_ID_Application, " +
-                    "User_Surname, User_Name, " +
-                    "User_Patronymic, " +
-                    "Date_Of_Answer, Status_Name " +
-                    "from Ready_Application " +
-                    "join Info_About_User on " +
-                    "Ready_Application.FK_Info_User " +
-                    "= Info_About_User.ID_Info_User " +
-                    "join Application_To_Company " +
-                    "on Application_To_Company.ID_Application " +
-                    "= Ready_Application.FK_ID_Application " +
-                    "join Status_Application " +
-                    "on Status_Application.ID_Status = Application_To_Company.FK_Status_Application " +
-                    $"where Application_To_Company.FK_Info_User = " +
-                    $"'{fkInfoUser}'";
+            string sqlCom = "SELECT " +
+            "Appeal_Response.Appeal_ID, " +
+            "User_Info.Last_Name, " +
+            "User_Info.First_Name, " +
+            "User_Info.Middle_Name, " +
+            "Appeal_Response.Response_Date, " +
+            "Appeal_Status.Status_Name " +
+            "FROM Appeal_Response " +
+            "JOIN User_Info ON Appeal_Response.Worker_ID = User_Info.User_ID " +
+            "JOIN User_Appeal ON User_Appeal.Appeal_ID = Appeal_Response.Appeal_ID " +
+            "JOIN Appeal_Status ON Appeal_Status.Status_ID = User_Appeal.Status_ID " +
+            $"WHERE User_Appeal.User_ID = '{fkInfoUser}'";
             return sqlCom;
         }
 
         public string SqlComCheckInfoAcc(string idAcc)
         {
-            string sqlCom = "select Login_User, Password_User, Email, " +
-                "Role_Title from Authentication_ join Role_User " +
-                "on Authentication_.FK_Role_User = Role_User.ID_Role_User " +
-                $"where ID_User = '{idAcc}'";
+            string sqlCom = "select Username, User_Password, Email, " +
+                "Role_Name from User_Auth join User_Role " +
+                "on User_Auth.Role_ID = User_Role.Role_ID " +
+                $"where Auth_ID = '{idAcc}'";
             return sqlCom;
         }
         // MainWorkForm - UpdLogPassButton_Click
         public string SqlComUpdPass(string pass)
         {
-            string sqlCom = "update Authentication_ " +
-                "set Password_User = " +
-                $"'{pass}' where Login_User = '{AuthForm.LoginString}'";
+            string sqlCom = "update User_Auth " +
+                "set User_Password = " +
+                $"'{pass}' where Username = '{AuthForm.LoginString}'";
             return sqlCom;
         }
 
         // MainWorkForm - CheckFIOUserInDB
         public string SqlComCheckINFOonFIO(string fam, string name, string otch)
         {
-            string sqlCom = "select * from Info_About_User " +
-                $"where User_Surname = '{fam}' " +
-                $"and User_Name = '{name}' " +
-                $"and User_Patronymic = '{otch}'";
+            string sqlCom = "select * from User_Info " +
+                $"where Last_Name = '{fam}' " +
+                $"and First_Name = '{name}' " +
+                $"and Middle_Name = '{otch}'";
             return sqlCom;
         }
 
         // MainWorkForm - CreateUserFIOButton_Click
         public string SqlComInsFIO(string fam, string name, string otch)
         {
-            string sqlQuery = "insert into Info_About_User " +
-            "(User_Surname, User_Name, User_Patronymic) " +
+            string sqlQuery = "insert into User_Info " +
+            "(Last_Name, First_Name, Middle_Name) " +
             $"values ('{fam}', '{name}', '{otch}')";
             return sqlQuery;
         }
@@ -112,36 +103,35 @@ namespace Napitki_Altay2.Classes
         // MainWorkForm - CreateUserFIOButton_Click
         public string SqlComInsFIOSec(string fam, string name, string otch)
         {
-            string sqlQuery = "update Authentication_ " +
-                $"set FK_Info_User = Info_About_User.ID_Info_User " +
-                $"from Info_About_User where " +
-                $"Info_About_User.User_Surname = '{fam}' " +
-                $"and Info_About_User.User_Name = '{name}' " +
-                $"and Info_About_User.User_Patronymic = '{otch}' " +
-                $"and Authentication_.Login_User = '{AuthForm.LoginString}'";
+            string sqlQuery = "update User_Auth " +
+                $"set User_ID = User_Info.User_ID " +
+                $"from User_Info where " +
+                $"User_Info.Last_Name = '{fam}' " +
+                $"and User_Info.First_Name = '{name}' " +
+                $"and User_Info.Middle_Name = '{otch}' " +
+                $"and User_Auth.Username = '{AuthForm.LoginString}'";
             return sqlQuery;
         }
 
         // MainWorkForm - UpdateDataInDGW_Click
         public string SqlComUpdateDGW(string fam, string name, string otch)
         {
-            string sqlCom = "select Id_Application, " +
-                "Applicant_Company, User_Surname, " +
-                "User_Name, " +
-                "User_Patronymic, Status_Name " +
-                "from Application_To_Company" +
-                " join Info_About_User on " +
-                "Application_To_Company.FK_Info_User = " +
-                "Info_About_User.ID_Info_User join " +
-                "Status_Application on " +
-                "Application_To_Company.FK_Status_Application" +
-                " = Status_Application.ID_Status " +
-                "where Info_About_User.User_Name = " +
-                $"'{name}' and " +
-                $"Info_About_User.User_Surname = " +
-                $"'{fam}' and " +
-                $"Info_About_User.User_Patronymic = " +
-                $"'{otch}' and ID_Status = '1' or ID_Status = '2'";
+            string sqlCom = "SELECT User_Appeal.Appeal_ID, " +
+                "User_Info.Last_Name, " +
+                "User_Info.First_Name, " +
+                "User_Info.Middle_Name, " +
+                "Appeal_Status.Status_Name " +
+                "FROM User_Appeal " +
+                "JOIN User_Info ON " +
+                "User_Appeal.User_ID = User_Info.User_ID " +
+                "JOIN Appeal_Status ON " +
+                "User_Appeal.Status_ID = Appeal_Status.Status_ID " +
+                "WHERE User_Info.First_Name = " +
+                $"'{name}' AND " +
+                $"User_Info.Last_Name = " +
+                $"'{fam}' AND " +
+                $"User_Info.Middle_Name = " +
+                $"'{otch}' AND (Appeal_Status.Status_ID = 1 OR Appeal_Status.Status_ID = 2)";
             return sqlCom;
         }
 
@@ -149,8 +139,8 @@ namespace Napitki_Altay2.Classes
         public string SqlComDelete(string deleteRow)
         {
             string sqlCom = "delete from " +
-                "Application_To_Company " +
-                "where ID_Application " +
+                "User_Appeal " +
+                "where Appeal_ID " +
                 $"= '{deleteRow}'";
             return sqlCom;
         }
@@ -159,23 +149,23 @@ namespace Napitki_Altay2.Classes
         // AuthForm - LogInAppButton_Click
         public string SqlComRoleUser(string login, string pass)
         {
-            string sqlCom = "select * from Authentication_ " +
-                $"where Login_User = '{login}' and Password_User = '{pass}'";
+            string sqlCom = "select * from User_Auth " +
+                $"where Username = '{login}' and User_Password = '{pass}'";
             return sqlCom;
         }
         // AuthForm - LogInAppButton_Click
         public string SqlComRole(string login, string pass, string role)
         {
-            string sqlCom = "select * from Authentication_ " +
-                $"where Login_User = '{login}' and Password_User = '{pass}' " +
-                $"and FK_Role_User = '{role}'";
+            string sqlCom = "select * from User_Auth " +
+                $"where Username = '{login}' and User_Password = '{pass}' " +
+                $"and Role_ID = '{role}'";
             return sqlCom;
         }
         // AuthForm - OpenSpecificForm
         public string SqlComTitleRole(string role)
         {
-            string sqlCom = $"select Role_Title from Role_User " +
-                $"where ID_Role_User = '{role}'";
+            string sqlCom = $"select Role_Name from User_Role " +
+                $"where Role_ID = '{role}'";
             return sqlCom;
         }
         #endregion
@@ -218,25 +208,25 @@ namespace Napitki_Altay2.Classes
         // AddUserForm - InputUsersButton
         public string SqlComRoleAddUser(string role)
         {
-            string sqlCom = $"select ID_Role_User from Role_User where Role_Title = '{role}'";
+            string sqlCom = $"select Role_ID from User_Role where Role_Name = '{role}'";
             return sqlCom;
         }
         // AddUserForm - InputUsersButton
         public string SqlComCheckLogin(string login)
         {
-            string sqlCom = $"select * from Authentication_ where Login_User = '{login}'";
+            string sqlCom = $"select * from User_Auth where Username = '{login}'";
             return sqlCom;
         }
         public string SqlComCheckEmail(string email)
         {
-            string sqlCom = $"select * from Authentication_ where Email = '{email}'";
+            string sqlCom = $"select * from User_Auth where Email = '{email}'";
             return sqlCom;
         }
         // AddUserForm - InputUsersButton
         public string SqlComInsertUser(string login, string pass, string role, string email)
         {
-            string sqlCom = "insert into Authentication_" +
-                "(Login_User, Password_User, FK_Role_User, Email) " +
+            string sqlCom = "insert into User_Auth" +
+                "(Username, User_Password, Role_ID, Email) " +
                 $"values('{login}', '{pass}', '{role}', '{email}')";
             return sqlCom;
         }
@@ -780,8 +770,8 @@ namespace Napitki_Altay2.Classes
         #region [RegistrationForm]
         public string SqlComSetWorkerIdToAccount(string idWorker, string login)
         {
-            string sqlCom = $"update Authentication_ set FK_Info_User = '{idWorker}' " +
-                $"where Login_User = '{login}'";
+            string sqlCom = $"update User_Auth set User_ID = '{idWorker}' " +
+                $"where Username = '{login}'";
             return sqlCom;
         }
         #endregion

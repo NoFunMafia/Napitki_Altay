@@ -61,10 +61,11 @@
             // AuthEmPictureBox
             // 
             this.AuthEmPictureBox.BackColor = System.Drawing.Color.White;
-            this.AuthEmPictureBox.Image = global::Napitki_Altay2.Properties.Resources.PictureLoginForm;
-            this.AuthEmPictureBox.Location = new System.Drawing.Point(114, 12);
+            this.AuthEmPictureBox.Image = global::Napitki_Altay2.Properties.Resources.Герб_Алтайского_края;
+            this.AuthEmPictureBox.Location = new System.Drawing.Point(182, 18);
+            this.AuthEmPictureBox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.AuthEmPictureBox.Name = "AuthEmPictureBox";
-            this.AuthEmPictureBox.Size = new System.Drawing.Size(179, 157);
+            this.AuthEmPictureBox.Size = new System.Drawing.Size(248, 225);
             this.AuthEmPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.AuthEmPictureBox.TabIndex = 5;
             this.AuthEmPictureBox.TabStop = false;
@@ -73,35 +74,39 @@
             // 
             this.EnterCodeLabel.AutoSize = true;
             this.EnterCodeLabel.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.EnterCodeLabel.Location = new System.Drawing.Point(12, 158);
+            this.EnterCodeLabel.Location = new System.Drawing.Point(18, 247);
+            this.EnterCodeLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.EnterCodeLabel.Name = "EnterCodeLabel";
-            this.EnterCodeLabel.Size = new System.Drawing.Size(362, 28);
+            this.EnterCodeLabel.Size = new System.Drawing.Size(582, 45);
             this.EnterCodeLabel.TabIndex = 6;
             this.EnterCodeLabel.Text = "Введите код высланный вам на почту:";
             // 
             // EnterCodeTextBox
             // 
             this.EnterCodeTextBox.BackColor = System.Drawing.Color.White;
-            this.EnterCodeTextBox.BorderColor = System.Drawing.Color.RoyalBlue;
-            this.EnterCodeTextBox.BorderFocusColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
+            this.EnterCodeTextBox.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(56)))), ((int)(((byte)(165)))));
+            this.EnterCodeTextBox.BorderFocusColor = System.Drawing.Color.FromArgb(((int)(((byte)(207)))), ((int)(((byte)(20)))), ((int)(((byte)(1)))));
             this.EnterCodeTextBox.BorderSize = 2;
             this.EnterCodeTextBox.Font = new System.Drawing.Font("Segoe UI Variable Text", 10.2F);
             this.EnterCodeTextBox.ForeColor = System.Drawing.Color.Black;
-            this.EnterCodeTextBox.Location = new System.Drawing.Point(17, 190);
-            this.EnterCodeTextBox.Margin = new System.Windows.Forms.Padding(4);
+            this.EnterCodeTextBox.Location = new System.Drawing.Point(26, 297);
+            this.EnterCodeTextBox.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.EnterCodeTextBox.Multiline = false;
             this.EnterCodeTextBox.Name = "EnterCodeTextBox";
-            this.EnterCodeTextBox.Padding = new System.Windows.Forms.Padding(7);
+            this.EnterCodeTextBox.Padding = new System.Windows.Forms.Padding(10, 11, 10, 11);
             this.EnterCodeTextBox.PasswordChar = false;
-            this.EnterCodeTextBox.Size = new System.Drawing.Size(377, 37);
+            this.EnterCodeTextBox.ReadOnly = false;
+            this.EnterCodeTextBox.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            this.EnterCodeTextBox.SelectionStart = 0;
+            this.EnterCodeTextBox.Size = new System.Drawing.Size(566, 60);
             this.EnterCodeTextBox.TabIndex = 7;
             this.EnterCodeTextBox.Texts = "";
             this.EnterCodeTextBox.UnderlinedStyle = false;
             // 
             // EnterCodeButton
             // 
-            this.EnterCodeButton.BackColor = System.Drawing.Color.RoyalBlue;
-            this.EnterCodeButton.BackgroundColor = System.Drawing.Color.RoyalBlue;
+            this.EnterCodeButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(56)))), ((int)(((byte)(165)))));
+            this.EnterCodeButton.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(56)))), ((int)(((byte)(165)))));
             this.EnterCodeButton.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
             this.EnterCodeButton.BorderRadius = 8;
             this.EnterCodeButton.BorderSize = 0;
@@ -109,9 +114,10 @@
             this.EnterCodeButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.EnterCodeButton.Font = new System.Drawing.Font("Segoe UI Semibold", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.EnterCodeButton.ForeColor = System.Drawing.Color.White;
-            this.EnterCodeButton.Location = new System.Drawing.Point(55, 234);
+            this.EnterCodeButton.Location = new System.Drawing.Point(80, 366);
+            this.EnterCodeButton.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.EnterCodeButton.Name = "EnterCodeButton";
-            this.EnterCodeButton.Size = new System.Drawing.Size(126, 54);
+            this.EnterCodeButton.Size = new System.Drawing.Size(189, 84);
             this.EnterCodeButton.TabIndex = 10;
             this.EnterCodeButton.Text = "ОК";
             this.EnterCodeButton.TextColor = System.Drawing.Color.White;
@@ -120,8 +126,8 @@
             // 
             // CancelCodeButton
             // 
-            this.CancelCodeButton.BackColor = System.Drawing.Color.RoyalBlue;
-            this.CancelCodeButton.BackgroundColor = System.Drawing.Color.RoyalBlue;
+            this.CancelCodeButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(56)))), ((int)(((byte)(165)))));
+            this.CancelCodeButton.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(56)))), ((int)(((byte)(165)))));
             this.CancelCodeButton.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
             this.CancelCodeButton.BorderRadius = 8;
             this.CancelCodeButton.BorderSize = 0;
@@ -129,9 +135,10 @@
             this.CancelCodeButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.CancelCodeButton.Font = new System.Drawing.Font("Segoe UI Semibold", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.CancelCodeButton.ForeColor = System.Drawing.Color.White;
-            this.CancelCodeButton.Location = new System.Drawing.Point(228, 234);
+            this.CancelCodeButton.Location = new System.Drawing.Point(342, 366);
+            this.CancelCodeButton.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.CancelCodeButton.Name = "CancelCodeButton";
-            this.CancelCodeButton.Size = new System.Drawing.Size(126, 54);
+            this.CancelCodeButton.Size = new System.Drawing.Size(189, 84);
             this.CancelCodeButton.TabIndex = 11;
             this.CancelCodeButton.Text = "Отмена";
             this.CancelCodeButton.TextColor = System.Drawing.Color.White;
@@ -140,16 +147,17 @@
             // 
             // AuthEmailForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(408, 301);
+            this.ClientSize = new System.Drawing.Size(612, 470);
             this.Controls.Add(this.CancelCodeButton);
             this.Controls.Add(this.EnterCodeButton);
             this.Controls.Add(this.EnterCodeTextBox);
             this.Controls.Add(this.EnterCodeLabel);
             this.Controls.Add(this.AuthEmPictureBox);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "AuthEmailForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Подтверждение регистрации";
