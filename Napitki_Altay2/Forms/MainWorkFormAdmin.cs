@@ -156,20 +156,6 @@ namespace Napitki_Altay2.Forms
             }
         }
         #endregion
-        #region [Метод, отправляющий sql-запрос на удаление пользователя]
-        /// <summary>
-        /// Метод, отправляющий sql-запрос на удаление пользователя
-        /// </summary>
-        /// <param name="rowToDelete">Строка, содержащая данные из DataGridView</param>
-        private void SendQueryToDeleteUser(string rowToDelete)
-        {
-            string sqlQueryThree = sqlQueries.SqlComDeleteUser(rowToDelete);
-            bool checkDelete = dataBaseWork.WithoutOutputQuery(sqlQueryThree);
-            if (checkDelete)
-                MessageBox.Show("Пользователь успешно удален!", "Информация",
-                    MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
-        #endregion
         #region [Метод, использующийся для вывода данных в таблицу DataGridViewUsers]
         /// <summary>
         /// Метод, использующийся для вывода данных в таблицу DataGridViewUsers
@@ -228,23 +214,17 @@ namespace Napitki_Altay2.Forms
         private void OutputSettingDataGridViewApplication(DataTable dataTable)
         {
             DataGridViewApplication.DataSource = dataTable;
-            DataGridViewApplication.Columns[0].HeaderText =
-                "Номер обращения";
+            DataGridViewApplication.Columns[0].HeaderText = "Номер обращения";
             DataGridViewApplication.Columns[0].Width = 80;
-            DataGridViewApplication.Columns[1].HeaderText =
-                "Фамилия";
+            DataGridViewApplication.Columns[1].HeaderText = "Фамилия";
             DataGridViewApplication.Columns[1].Width = 100;
-            DataGridViewApplication.Columns[2].HeaderText =
-                "Имя";
+            DataGridViewApplication.Columns[2].HeaderText = "Имя";
             DataGridViewApplication.Columns[2].Width = 100;
-            DataGridViewApplication.Columns[3].HeaderText =
-                "Отчество";
+            DataGridViewApplication.Columns[3].HeaderText = "Отчество";
             DataGridViewApplication.Columns[3].Width = 100;
-            DataGridViewApplication.Columns[4].HeaderText =
-                "Время ответа сотрудника";
+            DataGridViewApplication.Columns[4].HeaderText = "Время ответа сотрудника";
             DataGridViewApplication.Columns[4].Width = 130;
-            DataGridViewApplication.Columns[5].HeaderText =
-                "Статус обращения";
+            DataGridViewApplication.Columns[5].HeaderText = "Статус обращения";
             DataGridViewApplication.Columns[5].Width = 174;
         }
         #endregion

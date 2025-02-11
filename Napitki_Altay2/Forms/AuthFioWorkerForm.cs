@@ -65,10 +65,12 @@ namespace Napitki_Altay2.Forms
                 idWorker = dataBaseWork.GetString(sqlQuery);
                 string sqlQueryThree = sqlQueries.SqlComCheckAccountWorker(idWorker);
                 string idAccountWorker = dataBaseWork.GetString(sqlQueryThree);
+                string sqlQueryFourth = sqlQueries.SqlComTakeEmployeeNumber(idWorker);
+                string employeeNumber = dataBaseWork.GetString(sqlQueryFourth);
                 if (idWorker != null)
                 {
                     IsAccountWorker = false;
-                    if (idAccountWorker == null)
+                    if (idAccountWorker == null && employeeNumber != "")
                     {
                         IsAccountWorker = true;
                         workerFam = EnterFamTextBox.Texts;
@@ -78,6 +80,12 @@ namespace Napitki_Altay2.Forms
                             $"Продолжайте регистрацию и вы сможете приступить к работе.", "Информация",
                             MessageBoxButtons.OK, MessageBoxIcon.Information);
                         Close();
+                    }
+                    else if(employeeNumber == "")
+                    {
+                        IsAccountWorker = false;
+                        MessageBox.Show("Ваш табельный номер не определен, обратитесь к администратору!", 
+                            "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                     else
                     {

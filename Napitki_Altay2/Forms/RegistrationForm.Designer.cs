@@ -61,7 +61,7 @@
             this.сотрудникToolStripMenuItem,
             this.заказчикToolStripMenuItem});
             this.RoleContextMenuStip.Name = "RoleContextMenuStip";
-            this.RoleContextMenuStip.Size = new System.Drawing.Size(450, 92);
+            this.RoleContextMenuStip.Size = new System.Drawing.Size(450, 136);
             // 
             // сотрудникToolStripMenuItem
             // 
@@ -121,7 +121,7 @@
             this.EmailTextBox.Font = new System.Drawing.Font("Segoe UI Variable Text", 10.2F);
             this.EmailTextBox.ForeColor = System.Drawing.Color.Black;
             this.EmailTextBox.Location = new System.Drawing.Point(155, 426);
-            this.EmailTextBox.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.EmailTextBox.Margin = new System.Windows.Forms.Padding(6);
             this.EmailTextBox.Multiline = false;
             this.EmailTextBox.Name = "EmailTextBox";
             this.EmailTextBox.Padding = new System.Windows.Forms.Padding(10, 11, 10, 11);
@@ -167,7 +167,7 @@
             this.ChooseRoleTextBox.Font = new System.Drawing.Font("Segoe UI Variable Text", 10.2F);
             this.ChooseRoleTextBox.ForeColor = System.Drawing.Color.Black;
             this.ChooseRoleTextBox.Location = new System.Drawing.Point(155, 509);
-            this.ChooseRoleTextBox.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.ChooseRoleTextBox.Margin = new System.Windows.Forms.Padding(6);
             this.ChooseRoleTextBox.Multiline = false;
             this.ChooseRoleTextBox.Name = "ChooseRoleTextBox";
             this.ChooseRoleTextBox.Padding = new System.Windows.Forms.Padding(10, 11, 10, 11);
@@ -189,7 +189,7 @@
             this.PasswordCreateTextBox.Font = new System.Drawing.Font("Segoe UI Variable Text", 10.2F);
             this.PasswordCreateTextBox.ForeColor = System.Drawing.Color.Black;
             this.PasswordCreateTextBox.Location = new System.Drawing.Point(155, 343);
-            this.PasswordCreateTextBox.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.PasswordCreateTextBox.Margin = new System.Windows.Forms.Padding(6);
             this.PasswordCreateTextBox.Multiline = false;
             this.PasswordCreateTextBox.Name = "PasswordCreateTextBox";
             this.PasswordCreateTextBox.Padding = new System.Windows.Forms.Padding(10, 11, 10, 11);
@@ -213,7 +213,7 @@
             this.LoginCreateTextBox.Font = new System.Drawing.Font("Segoe UI Variable Text", 10.2F);
             this.LoginCreateTextBox.ForeColor = System.Drawing.Color.Black;
             this.LoginCreateTextBox.Location = new System.Drawing.Point(155, 260);
-            this.LoginCreateTextBox.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.LoginCreateTextBox.Margin = new System.Windows.Forms.Padding(6);
             this.LoginCreateTextBox.Multiline = false;
             this.LoginCreateTextBox.Name = "LoginCreateTextBox";
             this.LoginCreateTextBox.Padding = new System.Windows.Forms.Padding(10, 11, 10, 11);

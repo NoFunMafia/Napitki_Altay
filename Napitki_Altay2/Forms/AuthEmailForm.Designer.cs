@@ -49,10 +49,10 @@
             this.CustomFormForAllProject.EnableControlBoxMouseLight = false;
             this.CustomFormForAllProject.Form = this;
             this.CustomFormForAllProject.FormStyle = Napitki_Altay2.Components.FormStyleCustom.fStyle.UserStyle;
-            this.CustomFormForAllProject.HeaderColor = System.Drawing.Color.RoyalBlue;
-            this.CustomFormForAllProject.HeaderColorAdditional = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(48)))), ((int)(((byte)(207)))));
+            this.CustomFormForAllProject.HeaderColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(56)))), ((int)(((byte)(165)))));
+            this.CustomFormForAllProject.HeaderColorAdditional = System.Drawing.Color.FromArgb(((int)(((byte)(207)))), ((int)(((byte)(20)))), ((int)(((byte)(1)))));
             this.CustomFormForAllProject.HeaderColorGradientEnable = true;
-            this.CustomFormForAllProject.HeaderColorGradientMode = System.Drawing.Drawing2D.LinearGradientMode.Vertical;
+            this.CustomFormForAllProject.HeaderColorGradientMode = System.Drawing.Drawing2D.LinearGradientMode.Horizontal;
             this.CustomFormForAllProject.HeaderHeight = 29;
             this.CustomFormForAllProject.HeaderImage = null;
             this.CustomFormForAllProject.HeaderTextColor = System.Drawing.Color.White;
@@ -90,7 +90,7 @@
             this.EnterCodeTextBox.Font = new System.Drawing.Font("Segoe UI Variable Text", 10.2F);
             this.EnterCodeTextBox.ForeColor = System.Drawing.Color.Black;
             this.EnterCodeTextBox.Location = new System.Drawing.Point(26, 297);
-            this.EnterCodeTextBox.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.EnterCodeTextBox.Margin = new System.Windows.Forms.Padding(6);
             this.EnterCodeTextBox.Multiline = false;
             this.EnterCodeTextBox.Name = "EnterCodeTextBox";
             this.EnterCodeTextBox.Padding = new System.Windows.Forms.Padding(10, 11, 10, 11);

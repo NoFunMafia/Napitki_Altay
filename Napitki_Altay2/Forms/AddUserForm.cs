@@ -46,17 +46,23 @@ namespace Napitki_Altay2.Forms
         private void АдминистраторToolStripMenuItem_Click(object sender, EventArgs e)
         {
             RoleTextBox.Texts = "Администратор";
+            EmpNumLabel.Visible = true;
+            EmpNumTextBox.Visible = true;
+            EmpNumTextBox.Texts = "";
         }
         #endregion
-        #region [Событие нажатия на item "сотрудник" ToolStrip'а]
+        #region [Событие нажатия на item "муниципальный служащий" ToolStrip'а]
         /// <summary>
         /// Событие нажатия на item "сотрудник" ToolStrip'а
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void СотрудникToolStripMenuItem_Click(object sender, EventArgs e)
+        private void МунСлужToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            RoleTextBox.Texts = "Сотрудник";
+            RoleTextBox.Texts = "Муниципальный служащий";
+            EmpNumLabel.Visible = true;
+            EmpNumTextBox.Visible = true;
+            EmpNumTextBox.Texts = "";
         }
         #endregion
         #region [Событие нажатия на item "заявитель" ToolStrip'а]
@@ -68,6 +74,9 @@ namespace Napitki_Altay2.Forms
         private void ЗаявительToolStripMenuItem_Click(object sender, EventArgs e)
         {
             RoleTextBox.Texts = "Заявитель";
+            EmpNumLabel.Visible = false;
+            EmpNumTextBox.Visible = false;
+            EmpNumTextBox.Texts = "";
         }
         #endregion
         #region [Событие нажатия на кнопку CancelButton]
@@ -92,43 +101,62 @@ namespace Napitki_Altay2.Forms
             List<bool> allChecks = CheckIsNullOrEmptyTextBox();
             if (allChecks.All(x => x))
             {
-                InsertFio();
+                InsertFioAndEmpNum();
                 ReceiveRoleID(out string roleID);
                 ReceiveBoolCheckInsertUser(out bool checkInsertUser, roleID);
                 if (checkInsertUser)
                 {
                     ReceiveFioFK(out string fioFK);
-                    if (FamTextBox.Texts != string.Empty
-                        && ImyaTextBox.Texts != string.Empty)
+                    if (FamTextBox.Texts != string.Empty && ImyaTextBox.Texts != string.Empty)
                     {
                         ReceiveBoolCheckUpdateAuth(out bool checkUpdateAuth, fioFK);
                         if (checkUpdateAuth)
-                            MessageBox.Show("Пользователь успешно добавлен!",
-                                "Информация",
-                                MessageBoxButtons.OK,
-                                MessageBoxIcon.Information);
+                        {
+                            MessageBox.Show("Пользователь успешно добавлен!", "Информация",
+                                MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
                     }
                     else
-                        MessageBox.Show("Пользователь успешно добавлен!",
-                            "Информация",
-                            MessageBoxButtons.OK,
-                            MessageBoxIcon.Information);
+                    {
+                        ReceiveBoolCheckUpdateAuth(out bool checkUpdateAuth, fioFK);
+                        MessageBox.Show("Пользователь успешно добавлен!", "Информация",
+                            MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
                 }
             }
         }
-        private void InsertFio()
+        private void InsertFioAndEmpNum()
         {
-            if (OtchTextBox.Texts.IsNullOrWhiteSpace())
+            if (EmpNumTextBox.Texts.IsNullOrWhiteSpace())
             {
-                string sqlQuery = sqlQueries.SqlComInsertFioWithoutOtch
-                    (ImyaTextBox.Texts, FamTextBox.Texts);
-                dataBaseWork.WithoutOutputQuery(sqlQuery);
+                
+                if (OtchTextBox.Texts.IsNullOrWhiteSpace())
+                {
+                    string sqlQuery = sqlQueries.SqlComInsertFioWithoutOtch
+                        (ImyaTextBox.Texts, FamTextBox.Texts, null);
+                    dataBaseWork.WithoutOutputQuery(sqlQuery);
+                }
+                else
+                {
+                    string sqlQuery = sqlQueries.SqlComInsertFio
+                        (ImyaTextBox.Texts, FamTextBox.Texts, OtchTextBox.Texts, null);
+                    dataBaseWork.WithoutOutputQuery(sqlQuery);
+                }
             }
             else
             {
-                string sqlQuery = sqlQueries.SqlComInsertFio
-                    (ImyaTextBox.Texts, FamTextBox.Texts, OtchTextBox.Texts);
-                dataBaseWork.WithoutOutputQuery(sqlQuery);
+                if (OtchTextBox.Texts.IsNullOrWhiteSpace())
+                {
+                    string sqlQuery = sqlQueries.SqlComInsertFioWithoutOtch
+                        (ImyaTextBox.Texts, FamTextBox.Texts, EmpNumTextBox.Texts);
+                    dataBaseWork.WithoutOutputQuery(sqlQuery);
+                }
+                else
+                {
+                    string sqlQuery = sqlQueries.SqlComInsertFio
+                        (ImyaTextBox.Texts, FamTextBox.Texts, OtchTextBox.Texts, EmpNumTextBox.Texts);
+                    dataBaseWork.WithoutOutputQuery(sqlQuery);
+                }
             }
         }
         #endregion
@@ -150,7 +178,8 @@ namespace Napitki_Altay2.Forms
                 CheckLoginUserInDB(),
                 CheckFIOUserInDB(),
                 CheckTextBoxIsNull(excludedTextBoxes),
-                CheckMailUserInDB()
+                CheckMailUserInDB(),
+                CheckEmpNumUserInDB()
             };
             return allChecks;
         }
@@ -228,6 +257,11 @@ namespace Napitki_Altay2.Forms
                 {
                     continue; // Пропускает textbox'ы, которые находятся в списке исключений
                 }
+                // Пропускаем проверку табельного номера, если роль - заявитель
+                if (RoleTextBox.Texts == "Заявитель" && customTextBox == EmpNumTextBox)
+                {
+                    continue;
+                }
                 if (string.IsNullOrWhiteSpace(customTextBox.Texts))
                 {
                     MessageBox.Show("Не все поля данных заполнены!",
@@ -272,7 +306,6 @@ namespace Napitki_Altay2.Forms
                     }
                 }
             }
-
             if (hasEmptyTextBoxes)
             {
                 return false;
@@ -328,13 +361,11 @@ namespace Napitki_Altay2.Forms
         /// <summary>
         /// Метод, проверяющий занятость ФИО в БД
         /// </summary>
-        /// <returns>True - ФИО занято, False - ФИО свободно</returns>
+        /// <returns>True - ФИО свободно, False - ФИО занято</returns>
         public Boolean CheckFIOUserInDB()
         {
             string sqlQuery = sqlQueries.SqlComCheckINFOonFIO
-                (FamTextBox.Texts,
-                ImyaTextBox.Texts,
-                OtchTextBox.Texts);
+                (FamTextBox.Texts, ImyaTextBox.Texts, OtchTextBox.Texts);
             DataTable dataTable = dataBaseWork.OutputQuery(sqlQuery);
             if (dataTable != null && dataTable.Rows.Count > 0)
             {
@@ -347,12 +378,12 @@ namespace Napitki_Altay2.Forms
                 return true;
         }
         #endregion
-        #region [Метод, проверяющий уникальность добавляемого логина в БД]
+        #region [Метод, проверяющий почту пользователя в БД]
         /// <summary>
-        /// Метод, проверяющий уникальность добавляемого логина в БД
+        /// Метод, проверяющий добавляемого e-mail в БД
         /// </summary>
-        /// <returns>True - логин свободен, 
-        /// Ложь - логин занят</returns>
+        /// <returns>True - почта свободна, 
+        /// Ложь - почта занята</returns>
         private bool CheckMailUserInDB()
         {
             string sqlQuery = sqlQueries.SqlComCheckEmail(EmailTextBox.Texts);
@@ -360,6 +391,25 @@ namespace Napitki_Altay2.Forms
             if (listSearch != null)
             {
                 MessageBox.Show("Вносимый адрес электронной почты уже зарегистрирован в базе данных!",
+                    "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+            return true;
+        }
+        #endregion
+        #region [Метод, проверяющий уникальность добавляемого логина в БД]
+        /// <summary>
+        /// Метод, проверяющий уникальность табельного номера в БД
+        /// </summary>
+        /// <returns>True - табельный номер свободен, 
+        /// Ложь - табельный номер занят</returns>
+        private bool CheckEmpNumUserInDB()
+        {
+            string sqlQuery = sqlQueries.SqlComCheckEmpNum(EmpNumTextBox.Texts, RoleTextBox.Texts);
+            List<string[]> listSearch = dataBaseWork.GetMultiList(sqlQuery, 2);
+            if (listSearch != null)
+            {
+                MessageBox.Show("Вносимый табельный номер уже зарегистрирован в базе данных!",
                     "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }

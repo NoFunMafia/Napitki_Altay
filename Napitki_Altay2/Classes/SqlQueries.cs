@@ -67,7 +67,7 @@ namespace Napitki_Altay2.Classes
         public string SqlComCheckInfoAcc(string idAcc)
         {
             string sqlCom = "select Username, User_Password, Email, " +
-                "Role_Name from User_Auth join User_Role " +
+                "Role_Name, Employee_Number from User_Auth join User_Role " +
                 "on User_Auth.Role_ID = User_Role.Role_ID " +
                 $"where Auth_ID = '{idAcc}'";
             return sqlCom;
@@ -171,36 +171,31 @@ namespace Napitki_Altay2.Classes
         #endregion
         #region [MainWorkFormAdmin]
         // MainWorkFormAdmin - MainWorkFormAdmin_Load
-        public string sqlComOutputUsers = "select ID_User, Login_User, Password_User, " +
-            "User_Surname, User_Name, User_Patronymic, Role_Title, Email " +
-            "from Authentication_ join Role_User on " +
-            "Authentication_.FK_Role_User = Role_User.ID_Role_User left join " +
-            "Info_About_User on Authentication_.FK_Info_User = Info_About_User.ID_Info_User";
-        // MainWorkFormAdmin - SendQueryToDeleteUser
-        public string SqlComDeleteUser(string loginID)
-        {
-            string sqlCom = $"delete from Authentication_ where ID_User = '{loginID}'";
-            return sqlCom;
-        }
+        public string sqlComOutputUsers = "select Auth_ID, Username, User_Password, " +
+            "Last_Name, First_Name, Middle_Name, Role_Name, Email " +
+            "from User_Auth join User_Role on " +
+            "User_Auth.Role_ID = User_Role.Role_ID left join " +
+            "User_Info on User_Auth.User_ID = User_Info.User_ID";
         // MainWorkFormAdmin - LoadDataGridViewApplication
-        public string sqlComOutputCompleteApplication = "select FK_ID_Application, User_Surname, " +
-            "User_Name, User_Patronymic, Date_Of_Answer, Status_Name from " +
-            "Ready_Application join Info_About_User on " +
-            "Ready_Application.FK_Info_User = Info_About_User.ID_Info_User " +
-            "join Application_To_Company on Ready_Application.FK_ID_Application = " +
-            "Application_To_Company.ID_Application join Status_Application on " +
-            "Application_To_Company.FK_Status_Application = Status_Application.ID_Status ";
+        public string sqlComOutputCompleteApplication = "SELECT Appeal_Responce.Appeal_ID, " +
+                "User_Info.Last_Name, User_Info.First_Name, User_Info.Middle_Name, " +
+                "Appeal_Responce.Response_Date, Appeal_Status.Status_Name " +
+                "FROM Appeal_Response Appeal_Responce " +
+                "JOIN User_Info ON Appeal_Responce.Worker_ID = User_Info.User_ID " +
+                "JOIN User_Appeal ON Appeal_Responce.Appeal_ID = User_Appeal.Appeal_ID " +
+                "JOIN Appeal_Status ON User_Appeal.Status_ID = Appeal_Status.Status_ID";
         public string SqlComOutputAnswerAllWorkerWithDateTime
             (string firstDate, string secondDate)
         {
-            string sqlCom = "select FK_ID_Application, User_Surname, User_Name, " +
-                "User_Patronymic, Date_Of_Answer, Status_Name from Ready_Application " +
-                "join Info_About_User on Ready_Application.FK_Info_User = " +
-                "Info_About_User.ID_Info_User join Application_To_Company on " +
-                "Ready_Application.FK_ID_Application = Application_To_Company.ID_Application " +
-                "join Status_Application on Application_To_Company.FK_Status_Application = " +
-                "Status_Application.ID_Status where Date_Of_Request " +
-                $"BETWEEN '{firstDate}T00:00:00' AND '{secondDate}T23:59:59' order by Date_Of_Answer";
+            string sqlCom = "SELECT Appeal_Response.Appeal_ID, " +
+                "User_Info.Last_Name, User_Info.First_Name, User_Info.Middle_Name, " +
+                "Appeal_Response.Response_Date, Appeal_Status.Status_Name " +
+                "FROM Appeal_Response " +
+                "JOIN User_Info ON Appeal_Response.Worker_ID = User_Info.User_ID " +
+                "JOIN User_Appeal ON Appeal_Response.Appeal_ID = User_Appeal.Appeal_ID " +
+                "JOIN Appeal_Status ON User_Appeal.Status_ID = Appeal_Status.Status_ID " +
+                $"WHERE User_Appeal.Appeal_Date BETWEEN '{firstDate}T00:00:00' AND '{secondDate}T23:59:59' " +
+                "ORDER BY Appeal_Response.Response_Date";
             return sqlCom;
         }
         #endregion
@@ -222,6 +217,20 @@ namespace Napitki_Altay2.Classes
             string sqlCom = $"select * from User_Auth where Email = '{email}'";
             return sqlCom;
         }
+        public string SqlComCheckEmpNum(string empNum, string role)
+        {
+            string sqlCom;
+            if (role == "Администратор" || role == "Муниципальный служащий")
+            {
+                sqlCom = $"SELECT COUNT(*) FROM User_Info WHERE Employee_Number = '{empNum}'";
+            }
+            else
+            {
+                sqlCom = "SELECT 0"; // Если роль - заявитель, то проверка всегда пройдет
+            }
+            return sqlCom;
+        }
+
         // AddUserForm - InputUsersButton
         public string SqlComInsertUser(string login, string pass, string role, string email)
         {
@@ -233,68 +242,68 @@ namespace Napitki_Altay2.Classes
         public string SqlComUpdateUser
             (string idUser, string login, string pass, string role, string email)
         {
-            string sqlCom = $"update Authentication_ set Login_User = '{login}', " +
-                $"Password_User = '{pass}', FK_Role_User = '{role}', " +
-                $"Email = '{email}' where ID_User = '{idUser}'";
+            string sqlCom = $"update User_Auth set Username = '{login}', " +
+                $"User_Password = '{pass}', Role_ID = '{role}', " +
+                $"Email = '{email}' where User_ID = '{idUser}'";
             return sqlCom;
         }
         // AddUserForm - CheckTextBoxIsNull
-        public string SqlComInsertFio(string name, string fam, string otch)
+        public string SqlComInsertFio(string name, string fam, string otch, string empNum)
         {
-            string sqlCom = $"insert into Info_About_User(User_Surname, User_Name, User_Patronymic) " +
-                $"values ('{fam}', '{name}', '{otch}')";
+            string sqlCom = $"insert into User_Info(Last_Name, First_Name, Middle_Name, Employee_Number) " +
+                $"values ('{fam}', '{name}', '{otch}', '{empNum}')";
             return sqlCom;
         }
-        public string SqlComInsertFioWithoutOtch(string name, string fam)
+        public string SqlComInsertFioWithoutOtch(string name, string fam, string empNum)
         {
-            string sqlCom = $"insert into Info_About_User(User_Surname, User_Name) " +
-                $"values ('{fam}', '{name}')";
+            string sqlCom = $"insert into User_Info(Last_Name, First_Name, Employee_Number) " +
+                $"values ('{fam}', '{name}', '{empNum}')";
             return sqlCom;
         }
         public string SqlComUpdateFio(string name, string fam, string otch, string idRow)
         {
-            string sqlCom = $"update Info_About_User set User_Surname = '{fam}', " +
-                $"User_Name = '{name}', User_Patronymic = '{otch}' " +
-                $"from Authentication_ join Info_About_User " +
-                $"on Authentication_.FK_Info_User = Info_About_User.ID_Info_User " +
-                $"where ID_User = '{idRow}'";
+            string sqlCom = $"update User_Info set Last_Name = '{fam}', " +
+                $"First_Name = '{name}', Middle_Name = '{otch}' " +
+                $"from User_Auth join User_Info " +
+                $"on User_Auth.User_ID = User_Info.User_ID " +
+                $"where User_ID = '{idRow}'";
             return sqlCom;
         }
         public string SqlComUpdateFioWithoutOtch(string name, string fam, string idRow)
         {
-            string sqlCom = $"update Info_About_User set User_Surname = '{fam}', " +
-                $"User_Name = '{name}', User_Patronymic = '' " +
-                $"from Authentication_ join Info_About_User " +
-                $"on Authentication_.FK_Info_User = Info_About_User.ID_Info_User " +
-                $"where ID_User = '{idRow}'";
+            string sqlCom = $"update User_Info set Last_Name = '{fam}', " +
+                $"First_Name = '{name}', Middle_Name = '' " +
+                $"from User_Auth join User_Info " +
+                $"on User_Auth.User_ID = User_Info.User_ID " +
+                $"where User_ID = '{idRow}'";
             return sqlCom;
         }
         public string SqlComCheckAccountInfo(string idUser)
         {
-            string sqlCom = "select Login_User, Password_User, Email, User_Surname, " +
-                "User_Name, User_Patronymic, Role_Title from Authentication_ join Info_About_User " +
-                "on Authentication_.FK_Info_User = Info_About_User.ID_Info_User join Role_User " +
-                $"on Authentication_.FK_Role_User = Role_User.ID_Role_User where ID_User = '{idUser}'";
+            string sqlCom = "select Username, User_Password, Email, Employee_Number, Last_Name, " +
+                "First_Name, Middle_Name, Role_Name from User_Auth join User_Info " +
+                "on User_Auth.User_ID = User_Info.User_ID join User_Role " +
+                $"on User_Auth.Role_ID = User_Role.Role_ID where User_Auth.Auth_ID = '{idUser}'";
             return sqlCom;
         }
         // AddUserForm - InputUsersButton
         public string SqlComTakeFKFio(string name, string fam, string otch)
         {
-            string sqlCom = "select * from Info_About_User where " +
-                $"User_Surname = '{fam}' and User_Name = '{name}' and User_Patronymic = '{otch}'";
+            string sqlCom = "select * from User_Info where " +
+                $"Last_Name = '{fam}' and First_Name = '{name}' and Middle_Name = '{otch}'";
             return sqlCom;
         }
         public string SqlComTakeFKFi(string name, string fam)
         {
-            string sqlCom = "select * from Info_About_User where " +
-                $"User_Surname = '{fam}' and User_Name = '{name}'";
+            string sqlCom = "select * from User_Info where " +
+                $"Last_Name = '{fam}' and First_Name = '{name}'";
             return sqlCom;
         }
         // AddUserForm - InputUsersButton
         public string SqlComUpdateAuth(string fioFK, string login)
         {
-            string sqlCom = $"update Authentication_ set " +
-                $"FK_Info_User = '{fioFK}' where Login_User = '{login}'";
+            string sqlCom = $"update User_Auth set " +
+                $"User_ID = '{fioFK}' where Username = '{login}'";
             return sqlCom;
         }
         #endregion
@@ -751,19 +760,24 @@ namespace Napitki_Altay2.Classes
         #region [AuthFioWorkerForm]
         public string SqlComTakeIdWorkerFull(string name, string fam, string otch)
         {
-            string sqlCom = "select ID_Info_User from Info_About_User where " +
-                $"User_Surname = '{fam}' and User_Name = '{name}' and User_Patronymic = '{otch}'";
+            string sqlCom = "select User_ID, Employee_Number from User_Info where " +
+                $"Last_Name = '{fam}' and First_Name = '{name}' and Middle_Name = '{otch}'";
             return sqlCom;
         }
         public string SqlComTakeIdWorker(string name, string fam)
         {
-            string sqlCom = "select ID_Info_User from Info_About_User where " +
-                $"User_Surname = '{fam}' and User_Name = '{name}'";
+            string sqlCom = "select User_ID from User_Info where " +
+                $"Last_Name = '{fam}' and First_Name = '{name}'";
             return sqlCom;
         }
         public string SqlComCheckAccountWorker(string idWorker)
         {
-            string sqlCom = $"select ID_User from Authentication_ where FK_Info_User = '{idWorker}'";
+            string sqlCom = $"select Auth_ID from User_Auth where User_ID = '{idWorker}'";
+            return sqlCom;
+        }
+        public string SqlComTakeEmployeeNumber(string idWorker)
+        {
+            string sqlCom = $"select Employee_Number from User_Info where User_ID = '{idWorker}'";
             return sqlCom;
         }
         #endregion

@@ -88,11 +88,11 @@
             this.VisiblePassCheck.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.VisiblePassCheck.Cursor = System.Windows.Forms.Cursors.Default;
             this.VisiblePassCheck.FlatAppearance.BorderColor = System.Drawing.SystemColors.Window;
-            this.VisiblePassCheck.Font = new System.Drawing.Font("Segoe UI Variable Text", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.VisiblePassCheck.Location = new System.Drawing.Point(537, 436);
+            this.VisiblePassCheck.Font = new System.Drawing.Font("Segoe UI Variable Text", 8.5F);
+            this.VisiblePassCheck.Location = new System.Drawing.Point(535, 436);
             this.VisiblePassCheck.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.VisiblePassCheck.Name = "VisiblePassCheck";
-            this.VisiblePassCheck.Size = new System.Drawing.Size(146, 36);
+            this.VisiblePassCheck.Size = new System.Drawing.Size(141, 35);
             this.VisiblePassCheck.TabIndex = 6;
             this.VisiblePassCheck.Text = "Показать";
             this.VisiblePassCheck.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;

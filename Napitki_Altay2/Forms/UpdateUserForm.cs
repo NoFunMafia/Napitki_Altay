@@ -104,37 +104,32 @@ namespace Napitki_Altay2.Forms
         }
         private void InsertOrUpdateFio()
         {
-            if (oldUserFam != null &&
-                oldUserName != null &&
-                oldUserOtch != null)
+            if (oldUserFam != null && oldUserName != null && oldUserOtch != null)
             {
                 string sqlQuery = sqlQueries.SqlComUpdateFio
                     (ImyaTextBox.Texts, FamTextBox.Texts,
                     OtchTextBox.Texts, MainWorkFormAdmin.selectedRowId);
                 dataBaseWork.WithoutOutputQuery(sqlQuery);
             }
-            else if (oldUserFam != null &&
-                oldUserName != null)
+            else if (oldUserFam != null && oldUserName != null)
             {
                 string sqlQuery = sqlQueries.SqlComUpdateFioWithoutOtch
                     (ImyaTextBox.Texts, FamTextBox.Texts,
                     MainWorkFormAdmin.selectedRowId);
                 dataBaseWork.WithoutOutputQuery(sqlQuery);
             }
-            else if (oldUserFam == null &&
-                oldUserName == null &&
-                oldUserOtch == null)
+            else if (oldUserFam == null && oldUserName == null && oldUserOtch == null)
             {
                 if (OtchTextBox.Texts.IsNullOrWhiteSpace())
                 {
                     string sqlQuery = sqlQueries.SqlComInsertFioWithoutOtch
-                        (ImyaTextBox.Texts, FamTextBox.Texts);
+                        (ImyaTextBox.Texts, FamTextBox.Texts, FamTextBox.Texts);
                     dataBaseWork.WithoutOutputQuery(sqlQuery);
                 }
                 else
                 {
                     string sqlQuery = sqlQueries.SqlComInsertFio
-                        (ImyaTextBox.Texts, FamTextBox.Texts, OtchTextBox.Texts);
+                        (ImyaTextBox.Texts, FamTextBox.Texts, OtchTextBox.Texts, FamTextBox.Texts);
                     dataBaseWork.WithoutOutputQuery(sqlQuery);
                 }
             }
@@ -383,7 +378,7 @@ namespace Napitki_Altay2.Forms
         private List<string[]> GetAccountInfoSec()
         {
             string sqlQuery = sqlQueries.SqlComCheckInfoAcc(MainWorkFormAdmin.selectedRowId);
-            List<string[]> listSearchSec = dataBaseWork.GetMultiList(sqlQuery, 4);
+            List<string[]> listSearchSec = dataBaseWork.GetMultiList(sqlQuery, 5);
             return listSearchSec;
         }
         private void FillTextBoxWithAccountInfoSec(List<string[]> listSearch)
@@ -394,6 +389,7 @@ namespace Napitki_Altay2.Forms
                 PasswordTextBox.Texts = item[1];
                 EmailTextBox.Texts = item[2];
                 RoleTextBox.Texts = item[3];
+                EmpNumTextBox.Texts = item[4];
                 oldUserLogin = item[0];
             }
         }
@@ -404,10 +400,11 @@ namespace Napitki_Altay2.Forms
                 LoginTextBox.Texts = item[0];
                 PasswordTextBox.Texts = item[1];
                 EmailTextBox.Texts = item[2];
-                FamTextBox.Texts = item[3];
-                ImyaTextBox.Texts = item[4];
-                OtchTextBox.Texts = item[5];
-                RoleTextBox.Texts = item[6];
+                EmpNumTextBox.Texts = item[3];
+                FamTextBox.Texts = item[4];
+                ImyaTextBox.Texts = item[5];
+                OtchTextBox.Texts = item[6];
+                RoleTextBox.Texts = item[7];
                 oldUserLogin = item[0];
                 oldUserFam = item[3];
                 oldUserName = item[4];
@@ -417,7 +414,7 @@ namespace Napitki_Altay2.Forms
         private List<string[]> GetAccountInfo()
         {
             string sqlQuery = sqlQueries.SqlComCheckAccountInfo(MainWorkFormAdmin.selectedRowId);
-            List<string[]> listSearch = dataBaseWork.GetMultiList(sqlQuery, 7);
+            List<string[]> listSearch = dataBaseWork.GetMultiList(sqlQuery, 8);
             return listSearch;
         }
         #region [Метод, проверяющий уникальность добавляемого логина в БД]
