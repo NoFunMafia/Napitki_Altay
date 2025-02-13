@@ -80,8 +80,7 @@ namespace Napitki_Altay2.Forms
             bool hasCap = false, hasLow = false, hasSpec = false;
             char currentCharacter;
             bool hasNum;
-            if (!(inputPass.Length <= minLenght
-                || inputPass.Length >= maxLenght))
+            if (!(inputPass.Length <= minLenght || inputPass.Length >= maxLenght))
             {
                 hasNum = false;
             }
@@ -147,56 +146,6 @@ namespace Napitki_Altay2.Forms
             DeleteApplicationQuery();
         }
         #endregion
-        #region [Событие нажатия на кнопку OpenPriceListButton]
-        /// <summary>
-        /// Событие нажатия на кнопку OpenPriceListButton
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void OpenPriceListButton_Click(object sender, EventArgs e)
-        {
-            System.Diagnostics.Process.Start
-                ("https://napitki-altay.ru/wp-content/uploads/2022/01/" +
-                "Прайс-лист-01.11.2021-3.pdf");
-        }
-        #endregion
-        #region [События нажатия на кнопки открытия СОУТов]
-        /// <summary>
-        /// Событие нажатия на кнопку OpenSout2016Button
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void OpenSout2016Button_Click(object sender, EventArgs e)
-        {
-            System.Diagnostics.Process.Start
-                ("https://napitki-altay.ru/wp-content/uploads/2018/09/" +
-                "результаты-СОУТ-2016-2017.pdf");
-        }
-        /// <summary>
-        /// Событие нажатия на кнопку OpenSout2018Button
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void OpenSout2018Button_Click(object sender, EventArgs e)
-        {
-            System.Diagnostics.Process.Start
-                ("https://napitki-altay.ru/wp-content/uploads/2018/09/" +
-                "результаты-СОУТ-2018.pdf");
-        }
-        /// <summary>
-        /// Событие нажатия на кнопку OpenSout2021Button
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void OpenSout2021Button_Click(object sender, EventArgs e)
-        {
-            System.Diagnostics.Process.Start
-                ("https://napitki-altay.ru/wp-content/uploads/2021/11/" +
-                "Сводная-ведомость-результатов-" +
-                "проведения-специальной-оценки" +
-                "-условий-труда-01.11.2021г.pdf");
-        }
-        #endregion
         #region [Событие, закрывающее приложение при закрытии формы]
         private void MainWorkForm_FormClosed(object sender, FormClosedEventArgs e)
         {
@@ -225,7 +174,7 @@ namespace Napitki_Altay2.Forms
             }
             catch (Exception)
             {
-                MessageBox.Show("Невозможно открыть не выделенное обращение!",
+                MessageBox.Show("Невозможно открыть не выделенное заявление!",
                     "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
@@ -261,13 +210,9 @@ namespace Napitki_Altay2.Forms
                 if (CheckFIOUserInDB())
                     return;
                 string sqlQueryFirst = sqlQueries.SqlComInsFIO
-                    (FamCreateTextBox.Texts,
-                    NameCreateTextBox.Texts,
-                    PatrCreateTextBox.Texts);
+                    (FamCreateTextBox.Texts, NameCreateTextBox.Texts, PatrCreateTextBox.Texts);
                 string sqlQuerySecond = sqlQueries.SqlComInsFIOSec
-                    (FamCreateTextBox.Texts,
-                    NameCreateTextBox.Texts,
-                    PatrCreateTextBox.Texts);
+                    (FamCreateTextBox.Texts, NameCreateTextBox.Texts, PatrCreateTextBox.Texts);
                 bool checkQueryFirst = dataBaseWork.WithoutOutputQuery(sqlQueryFirst);
                 MessageBox.Show("Операция с данными проведена успешно!",
                     "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -301,16 +246,18 @@ namespace Napitki_Altay2.Forms
                 if (DataGridViewApplication.RowCount != 0)
                 {
                     DialogResult result = MessageBox.Show
-                        ("Вы действительно хотите удалить обращение?",
-                        "Внимание", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                        ("Вы действительно хотите удалить обращение?", "Внимание", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                     if (result == DialogResult.Yes)
                     {
                         deletedRow = DataGridViewApplication.CurrentRow.Cells[0].Value.ToString();
                         string sqlQuery = sqlQueries.SqlComDelete(deletedRow);
                         bool checkDelete = dataBaseWork.WithoutOutputQuery(sqlQuery);
-                        if (checkDelete != true)
-                            MessageBox.Show("Завершенные обращения удалять нельзя!",
+                        if (!checkDelete)
+                            MessageBox.Show("Закрытые заявления удалять нельзя!",
                                 "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        else
+                            MessageBox.Show("Обращение успешно удалено!",
+                                "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         LoadDataGridView();
                     }
                 }
@@ -319,7 +266,7 @@ namespace Napitki_Altay2.Forms
             }
             catch (Exception)
             {
-                MessageBox.Show("Невозможно удалить не выделенное обращение!", "Ошибка",
+                MessageBox.Show("Невозможно удалить не выделенное заявление!", "Ошибка",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
@@ -396,7 +343,7 @@ namespace Napitki_Altay2.Forms
         private void OutputInTableSettingTwo(DataTable dataTable)
         {
             CompleteApplicationDGWUser.DataSource = dataTable;
-            CompleteApplicationDGWUser.Columns[0].HeaderText = "Номер обращения";
+            CompleteApplicationDGWUser.Columns[0].HeaderText = "Номер заявления";
             CompleteApplicationDGWUser.Columns[0].Width = 74;
             CompleteApplicationDGWUser.Columns[1].HeaderText = "Фамилия";
             CompleteApplicationDGWUser.Columns[1].Width = 95;
@@ -406,7 +353,7 @@ namespace Napitki_Altay2.Forms
             CompleteApplicationDGWUser.Columns[3].Width = 95;
             CompleteApplicationDGWUser.Columns[4].HeaderText = "Время ответа сотрудника";
             CompleteApplicationDGWUser.Columns[4].Width = 118;
-            CompleteApplicationDGWUser.Columns[5].HeaderText = "Статус обращения";
+            CompleteApplicationDGWUser.Columns[5].HeaderText = "Статус заявления";
             CompleteApplicationDGWUser.Columns[5].Width = 220;
         }
         #endregion
@@ -419,18 +366,16 @@ namespace Napitki_Altay2.Forms
         private void OutputInTableSetting(DataTable dataTable)
         {
             DataGridViewApplication.DataSource = dataTable;
-            DataGridViewApplication.Columns[0].HeaderText = "Номер обращения";
-            DataGridViewApplication.Columns[0].Width = 80;
-            DataGridViewApplication.Columns[1].HeaderText = "Компания";
-            DataGridViewApplication.Columns[1].Width = 130;
-            DataGridViewApplication.Columns[2].HeaderText = "Фамилия";
-            DataGridViewApplication.Columns[2].Width = 90;
-            DataGridViewApplication.Columns[3].HeaderText = "Имя";
-            DataGridViewApplication.Columns[3].Width = 90;
-            DataGridViewApplication.Columns[4].HeaderText = "Отчество";
-            DataGridViewApplication.Columns[4].Width = 110;
-            /*DataGridViewApplication.Columns[5].HeaderText = "Статус обращения";
-            DataGridViewApplication.Columns[5].Width = 197;*/
+            DataGridViewApplication.Columns[0].HeaderText = "Номер заявления";
+            DataGridViewApplication.Columns[0].Width = 110;
+            DataGridViewApplication.Columns[1].HeaderText = "Фамилия";
+            DataGridViewApplication.Columns[1].Width = 140;
+            DataGridViewApplication.Columns[2].HeaderText = "Имя";
+            DataGridViewApplication.Columns[2].Width = 140;
+            DataGridViewApplication.Columns[3].HeaderText = "Отчество";
+            DataGridViewApplication.Columns[3].Width = 140;
+            DataGridViewApplication.Columns[4].HeaderText = "Статус заявления";
+            DataGridViewApplication.Columns[4].Width = 170;
         }
         #endregion
         #region [Метод, проверяющий наличие у пользователя заполненного ФИО в БД]

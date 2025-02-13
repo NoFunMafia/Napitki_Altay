@@ -10,26 +10,24 @@ using System.Collections.Generic;
 using MimeKit;
 using MailKit.Net.Smtp;
 using System.Linq;
+using System.Net.Sockets;
+using System.Threading;
 #endregion
 namespace Napitki_Altay2.Forms
 {
     public partial class CreateApplicationForm : Form
     {
         #region [Подключение классов, обьявление переменных]
-        // Использование класса работы с БД
         readonly DataBaseWork dataBaseWork = new DataBaseWork();
-        // Класс запросов в БД
         readonly SqlQueries sqlQueries = new SqlQueries();
-        string fkInfoUser;
-        string fkDocumentId;
-        string checkType;
-        string documentName;
-        string documentExtansion;
-        string documentPath;
+        private string fkInfoUser;
+        private string checkType;
+        private List<string> selectedFiles = new List<string>();
         #endregion
         public CreateApplicationForm()
         {
             InitializeComponent();
+            this.Size = new Size((int)(1645 / 1.98), (int)(1888 / 1.93));
             DoubleBuffered = true; // Включение двойной буферизации
         }
         #region [Событие нажатия на кнопку CancelApplButton]
@@ -55,46 +53,29 @@ namespace Napitki_Altay2.Forms
         /// <param name="e"></param>
         private void RegApplButton_Click(object sender, EventArgs e)
         {
-            TakeFilePathAndList(out string filePath, out List<string[]> listSearch);
-            CheckDataReaderRowsInfo(listSearch);
-            if (string.IsNullOrEmpty(DocumentTextBox.Texts))
+            fkInfoUser = dataBaseWork.GetString(sqlQueries.sqlComFkInfoUser);
+            if (string.IsNullOrEmpty(TypeApplTextBox.Texts) || string.IsNullOrEmpty(DescripTextBox.Texts))
             {
-                if (string.IsNullOrEmpty(CompanyTextBox.Texts)
-                    || string.IsNullOrEmpty(TypeApplTextBox.Texts)
-                    || string.IsNullOrEmpty(DescripTextBox.Texts))
+                MessageBox.Show("Не все поля заполнены!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            checkType = dataBaseWork.GetString(sqlQueries.SqlComCheckTypeID(TypeApplTextBox.Texts));
+            // Создаем обращение и получаем ID
+            string sqlCreateAppeal = sqlQueries.SqlComAddApplicationSecond(checkType, DescripTextBox.Texts, ApplDTP.Value, fkInfoUser);
+            string newAppealId = dataBaseWork.GetString(sqlCreateAppeal);
+            // Загружаем прикрепленные файлы
+            if (selectedFiles.Any())
+            {
+                foreach (string filePath in selectedFiles)
                 {
-                    MessageBox.Show("Не все поля заполнены!",
-                        "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-                else
-                {
-                    CreateApplicationWithoutDocument();
-                    SendAnEmail();
+                    InsertDocumentQuery(filePath, newAppealId);
                 }
             }
-            else
-            {
-                if (string.IsNullOrEmpty(CompanyTextBox.Texts)
-                    || string.IsNullOrEmpty(TypeApplTextBox.Texts)
-                    || string.IsNullOrEmpty(DescripTextBox.Texts))
-                {
-                    MessageBox.Show("Не все поля заполнены!",
-                        "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-                else
-                {
-                    using (Stream stream = File.OpenRead(documentPath))
-                    {
-                        GetDocumentInfo(filePath, stream, out byte[] buffer,
-                            out string extension, out string name);
-                        InsertDocumentQuery(buffer, extension, name);
-                    }
-                    TakeDocumentIdInfo(out List<string[]> listSearchSecond);
-                    CheckDataRowsIDDocument(listSearchSecond);
-                    CreateApplicationWithDocument();
-                    SendAnEmail();
-                }
-            }
+            MessageBox.Show("Обращение успешно создано!", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            SendAnEmail();
+            MainWorkForm mainWorkForm = Application.OpenForms.OfType<MainWorkForm>().FirstOrDefault();
+            mainWorkForm?.LoadDataGridView(); // Вызываем метод обновления DataGridView
+            Close();
         }
         #endregion
         #region [События работы с ToolStripMenu, выбор типа обращения]
@@ -111,85 +92,69 @@ namespace Napitki_Altay2.Forms
                 new Point(0, ChooseTypeApplPictureBox.Height));
         }
         /// <summary>
-        /// Событие нажатия на кнопку "Сотрудничество" в ToolStripMenu
+        /// Событие нажатия на кнопку "Компенсация" в ToolStripMenu
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void СотрудничествоToolStripMenuItem_Click
-            (object sender, EventArgs e)
+        private void КомпенсацияToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            TypeApplTextBox.Texts = "Сотрудничество";
+            TypeApplTextBox.Texts = "Компенсация родительской платы";
         }
         /// <summary>
         /// Событие нажатия на кнопку 
-        /// "Обсуждение проблемы" в ToolStripMenu
+        /// "Постановка" в ToolStripMenu
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void ОбсуждениеПроблемыToolStripMenuItem_Click
-            (object sender, EventArgs e)
+        private void ПостановкаToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            TypeApplTextBox.Texts = "Обсуждение проблемы";
+            TypeApplTextBox.Texts = "Постановка на учет в образовательные организации";
         }
         /// <summary>
         /// Событие нажатия на кнопку 
-        /// "Ознакомление с каталогом продукции" в ToolStripMenu
+        /// "Получение" в ToolStripMenu
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void ОзнакомлениеСКаталогомПродукцииToolStripMenuItem_Click
-            (object sender, EventArgs e)
+        private void ПолучениеToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            TypeApplTextBox.Texts = "Вопросы по каталогу продукции";
-        }
-        /// <summary>
-        /// Событие нажатия на кнопку 
-        /// "Письмо-притензия" в ToolStripMenu
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void ПисьмопритензияToolStripMenuItem_Click
-            (object sender, EventArgs e)
-        {
-            TypeApplTextBox.Texts = "Письмо-претензия";
-        }
-        /// <summary>
-        /// Событие нажатия на кнопку 
-        /// "Письмо-благодарность" в ToolStripMenu
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void ПисьмоблагодарностьToolStripMenuItem_Click
-            (object sender, EventArgs e)
-        {
-            TypeApplTextBox.Texts = "Письмо-благодарность";
+            TypeApplTextBox.Texts = "Получение информации об образовании";
         }
         #endregion
         #region [Событие нажатия на кнопку ChooseDocumentButton]
         /// <summary>
-        /// Событие нажатия на кнопку ChooseDocumentButton
+        /// Событие нажатия на кнопку ChooseDocumentButton (выбор нескольких документов)
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void ChooseDocumentButton_Click
-            (object sender, EventArgs e)
+        private void ChooseDocumentButton_Click(object sender, EventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog
             {
-                Filter = "Документы|*.docx;*.doc;*.xlsx;*.xls;*.pdf"
+                Filter = "Документы|*.docx;*.doc;*.xlsx;*.xls;*.pdf",
+                Multiselect = true // Разрешаем выбирать несколько файлов
             };
+
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
-                string fileName = Path.GetFileName(openFileDialog.FileName);
-                DocumentTextBox.Texts = fileName;
-                documentPath = openFileDialog.FileName;
+                foreach (string file in openFileDialog.FileNames)
+                {
+                    string fileName = Path.GetFileName(file);
+                    if (!selectedFiles.Contains(file)) // Избегаем дубликатов
+                    {
+                        selectedFiles.Add(file);
+                        DocumentListBox.Items.Add(fileName); // Добавляем в ListBox
+                    }
+                }
             }
         }
         #endregion
-        #region [Событие нажатия на кнопку DeleteDocumentButton]
-        private void DeleteDocumentButton_Click(object sender, EventArgs e)
+        #region [Очистка списка файлов]
+        /// <summary>
+        /// Очищает список прикрепленных документов
+        /// </summary>
+        private void ClearFilesButton_Click(object sender, EventArgs e)
         {
-            DocumentTextBox.Texts = "";
+            selectedFiles.Clear(); // Очищаем список файлов
+            DocumentListBox.Items.Clear(); // Очищаем ListBox
         }
         #endregion
         #region [Событие закрытия формы]
@@ -210,9 +175,9 @@ namespace Napitki_Altay2.Forms
         #region [Метод, получающий значение email пользователя]
         private string GetEmailUser(string idUser)
         {
-            string sqlQueryEmail = "select Email from Authentication_ " +
-                "join Info_About_User on Authentication_.FK_Info_User = " +
-                $"Info_About_User.ID_Info_User where FK_Info_User = '{idUser}'";
+            string sqlQueryEmail = "select Email from User_Auth " +
+                "join User_Info on User_Auth.User_ID = " +
+                $"User_Info.User_ID where User_Auth.User_ID = '{idUser}'";
             string emailAdress = dataBaseWork.GetString(sqlQueryEmail);
             return emailAdress;
         }
@@ -220,74 +185,53 @@ namespace Napitki_Altay2.Forms
         #region [Метод, отправляющий email уведомление о добавлении обращения]
         private async void SendAnEmail()
         {
-            MimeMessage mimeMessage = new MimeMessage();
-            mimeMessage.From.Add(new MailboxAddress("ЗАО «Волчихинский пивоваренный завод»",
-                "napitki-altay@mail.ru"));
-            mimeMessage.To.Add(MailboxAddress.Parse(GetEmailUser(fkInfoUser)));
-            mimeMessage.Subject = $"Обращение успешно создано!";
-            mimeMessage.Body = new TextPart("html")
-            {
-                Text = $"<h1>Спасибо за создание обращения в приложении «Автоматизация документооборота»!</h1>" +
-                "<p>Мы приложим максимум усилий для его быстрой обработки и подготовки ответа на ваш вопрос.</p>" +
-                "<p>С уважением,<br>Команда ЗАО «Волчихинский пивоваренный завод»</p>"
-            };
-            SmtpClient smtpClient = new SmtpClient();
             try
             {
-                await smtpClient.ConnectAsync("smtp.mail.ru", 465, true);
-                smtpClient.Authenticate("napitki-altay@mail.ru", "5TGsxjXKrXYpVxeajrgY");
-                smtpClient.Send(mimeMessage);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Ошибка",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            finally
-            {
-                smtpClient.Disconnect(true);
-                smtpClient.Dispose();
-            }
-        }
-        #endregion
-        #region [Метод, отправляющий sql-запрос на создание обращения с документом]
-        /// <summary>
-        /// Метод, отправляющий sql-запрос на создание обращения с документом
-        /// </summary>
-        private void CreateApplicationWithDocument()
-        {
-            string sqlQuerySecond = sqlQueries.SqlComCheckTypeID(TypeApplTextBox.Texts);
-            checkType = dataBaseWork.GetString(sqlQuerySecond);
-            string sqlQuerySix = sqlQueries.SqlComAddApplicationSecond
-                (CompanyTextBox.Texts, checkType, DescripTextBox.Texts,
-                ApplDTP.Value, fkInfoUser, fkDocumentId);
-            bool checkInsertApplication = dataBaseWork.WithoutOutputQuery(sqlQuerySix);
-            if (checkInsertApplication)
-            {
-                MessageBox.Show("Обращение создано!", "Информация",
-                    MessageBoxButtons.OK, MessageBoxIcon.Information);
-                Hide();
-                // Найдите открытую форму MainWorkFormWorker
-                MainWorkForm mainWorkForm = Application.OpenForms.OfType<MainWorkForm>().FirstOrDefault();
-                // Если форма найдена, вызовите методы обновления
-                if (mainWorkForm != null)
+                MimeMessage mimeMessage = new MimeMessage();
+                mimeMessage.From.Add(new MailboxAddress("Администрация Волчихинского района Алтайского края",
+                    "napitki-altay@mail.ru"));
+                mimeMessage.To.Add(MailboxAddress.Parse(GetEmailUser(fkInfoUser)));
+                mimeMessage.Subject = "Уведомление о подаче заявления";
+                mimeMessage.Body = new TextPart("html")
                 {
-                    mainWorkForm.LoadDataGridView();
-                    mainWorkForm.Show();
+                    Text = "<h2>Ваше заявление успешно подано</h2>" +
+                    "<p>Благодарим вас за обращение. Ваш запрос будет обработан в установленные сроки.</p>" +
+                    "<p>С уважением,<br>Администрация Волчихинского района Алтайского края</p>"
+                };
+                using (var smtpClient = new SmtpClient())
+                {
+                    try
+                    {
+                        await smtpClient.ConnectAsync("smtp.mail.ru", 465, true);
+                        await smtpClient.AuthenticateAsync("napitki-altay@mail.ru", "zqfuuDCwzsSzyuMsrktn");
+                        await smtpClient.SendAsync(mimeMessage);
+                    }
+                    catch (SmtpCommandException)
+                    {
+                        MessageBox.Show("Не удалось отправить уведомление на указанную почту. Проверьте правильность данных или попробуйте позже.",
+                            "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+                    catch (SocketException)
+                    {
+                        MessageBox.Show("Ошибка соединения с почтовым сервером. Попробуйте позже.",
+                            "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+                    catch (Exception)
+                    {
+                        MessageBox.Show("Не удалось отправить письмо. Это не повлияет на регистрацию заявления.",
+                            "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    finally
+                    {
+                        await smtpClient.DisconnectAsync(true);
+                    }
                 }
             }
-        }
-        #endregion
-        #region [Метод, принимающий значение id документа из sql-запроса]
-        /// <summary>
-        /// Метод, принимающий значение id документа из sql-запроса
-        /// </summary>
-        /// <param name="listSearchSecond"></param>
-        private void TakeDocumentIdInfo(out List<string[]> listSearchSecond)
-        {
-            string sqlQueryFive = sqlQueries.SqlComInfoAboutDocument
-                (documentName, documentExtansion);
-            listSearchSecond = dataBaseWork.GetMultiList(sqlQueryFive, 4);
+            catch (Exception)
+            {
+                MessageBox.Show("Произошла непредвиденная ошибка при отправке письма. Ваше заявление зарегистрировано.",
+                    "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
         #endregion
         #region [Метод, отправляющий sql-запрос на внесение документа]
@@ -297,133 +241,67 @@ namespace Napitki_Altay2.Forms
         /// <param name="buffer"></param>
         /// <param name="extension"></param>
         /// <param name="name"></param>
-        private void InsertDocumentQuery(byte[] buffer, string extension, string name)
+        private void InsertDocumentQuery(string filePath, string appealId)
         {
-            string sqlQueryFour = sqlQueries.SqlComAddDocument(fkInfoUser);
-            documentName = name;
-            documentExtansion = extension;
+            byte[] fileData;
+            string fileName = Path.GetFileName(filePath);
+            string fileExtension = Path.GetExtension(filePath);
+
+            using (Stream stream = File.OpenRead(filePath))
+            {
+                fileData = new byte[stream.Length];
+                stream.Read(fileData, 0, fileData.Length);
+            }
+            string sqlInsertDocument = sqlQueries.SqlComAddDocument(fkInfoUser);
             try
             {
                 dataBaseWork.OpenConnection();
-                SqlCommand sqlCommand = new SqlCommand
-                    (sqlQueryFour, dataBaseWork.GetConnection());
-                sqlCommand.Parameters.Add("@fileName", SqlDbType.VarChar).Value = name;
-                sqlCommand.Parameters.Add("@data", SqlDbType.VarBinary).Value = buffer;
-                sqlCommand.Parameters.Add("@extension", SqlDbType.Char).Value = extension;
+                SqlCommand sqlCommand = new SqlCommand(sqlInsertDocument, dataBaseWork.GetConnection());
+                sqlCommand.Parameters.Add("@fileName", SqlDbType.VarChar).Value = fileName;
+                sqlCommand.Parameters.Add("@data", SqlDbType.VarBinary).Value = fileData;
+                sqlCommand.Parameters.Add("@extension", SqlDbType.Char).Value = fileExtension;
                 sqlCommand.ExecuteNonQuery();
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message,
-                    "Ошибка",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Error);
+                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             finally
             {
                 dataBaseWork.CloseConnection();
             }
-        }
-        #endregion
-        #region [Метод, получающий информацию о прикрепляемом документе]
-        /// <summary>
-        /// Метод, получающий информацию о прикрепляемом документе
-        /// </summary>
-        /// <param name="filePath"></param>
-        /// <param name="stream"></param>
-        /// <param name="buffer"></param>
-        /// <param name="extension"></param>
-        /// <param name="name"></param>
-        private static void GetDocumentInfo(string filePath, Stream stream, 
-            out byte[] buffer, out string extension, out string name)
-        { 
-            buffer = new byte[stream.Length];
-            stream.Read(buffer, 0, buffer.Length);
-            var fileInfo = new FileInfo(filePath);
-            extension = fileInfo.Extension;
-            name = fileInfo.Name;
-        }
-        #endregion
-        #region [Метод, отправляющий sql-запрос на создание обращения без документа]
-        /// <summary>
-        /// Метод, отправляющий sql-запрос на создание обращения без документа
-        /// </summary>
-        private void CreateApplicationWithoutDocument()
-        {
-            if (string.IsNullOrEmpty(CompanyTextBox.Texts)
-                || string.IsNullOrEmpty(TypeApplTextBox.Texts)
-                || string.IsNullOrEmpty(DescripTextBox.Texts))
+            // Получаем ID загруженного документа
+            string docId = dataBaseWork.GetString(sqlQueries.SqlComInfoAboutDocument(fileName, fileExtension, fkInfoUser));
+            // Привязываем документ к обращению
+            if (!string.IsNullOrEmpty(docId))
             {
-                MessageBox.Show("Не все поля заполнены!",
-                    "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            else
-            {
-                string sqlQuerySecond = sqlQueries.SqlComCheckTypeID(TypeApplTextBox.Texts);
-                checkType = dataBaseWork.GetString(sqlQuerySecond);
-                string sqlQueryThree = sqlQueries.SqlComAddApplication
-                    (CompanyTextBox.Texts, checkType,
-                    DescripTextBox.Texts, ApplDTP.Value, fkInfoUser);
-                bool checkInsertQuery = dataBaseWork.WithoutOutputQuery(sqlQueryThree);
-                if (checkInsertQuery)
+                dataBaseWork.WithoutOutputQuerySecond(sqlQueries.LinkDocumentToAppealQuery(), new Dictionary<string, object>
                 {
-                    MessageBox.Show("Обращение создано!", "Информация",
-                        MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    Hide();
-                    // Найдите открытую форму MainWorkFormWorker
-                    MainWorkForm mainWorkForm = Application.OpenForms.OfType<MainWorkForm>().FirstOrDefault();
-                    // Если форма найдена, вызовите методы обновления
-                    if (mainWorkForm != null)
+                    { "@AppealId", appealId },
+                    { "@DocId", docId }
+                });
+            }
+        }
+        #endregion
+        #region [Удаление конкретного файла из списка]
+        /// <summary>
+        /// Удаляет выбранный файл из списка при двойном клике
+        /// </summary>
+        private void DocumentListBox_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            if (DocumentListBox.SelectedIndex != -1)
+            {
+                string selectedFile = DocumentListBox.SelectedItem.ToString();
+                string fullPath = selectedFiles.FirstOrDefault(f => Path.GetFileName(f) == selectedFile);
+                if (fullPath != null)
+                {
+                    DialogResult result = MessageBox.Show("Вы уверены что хотите открепить выбранный файл?", "Внимание", 
+                        MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
+                    if(result == DialogResult.OK)
                     {
-                        mainWorkForm.LoadDataGridView();
-                        mainWorkForm.Show();
+                        selectedFiles.Remove(fullPath);
+                        DocumentListBox.Items.Remove(selectedFile);
                     }
-                }
-            }
-        }
-        #endregion
-        #region [Метод, заполняющий переменную пути к документу и List список из sql-запроса]
-        /// <summary>
-        /// Метод, заполняющий переменную пути 
-        /// к документу и List список из sql-запроса
-        /// </summary>
-        /// <param name="filePath"></param>
-        /// <param name="listSearch"></param>
-        private void TakeFilePathAndList(out string filePath, out List<string[]> listSearch)
-        {
-            filePath = DocumentTextBox.Texts;
-            string sqlQuery = sqlQueries.sqlComFkInfoUser;
-            listSearch = dataBaseWork.GetMultiList(sqlQuery, 4);
-        }
-        #endregion
-        #region [Метод получения ID пользователя при составлении обращения]
-        /// <summary>
-        /// Метод получения ID пользователя при составлении обращения
-        /// </summary>
-        /// <param name="datareader"></param>
-        private void CheckDataReaderRowsInfo(List<string[]> strings)
-        {
-            if (strings != null)
-            {
-                foreach (string[] item in strings)
-                {
-                    fkInfoUser = item[0];
-                }
-            }
-        }
-        #endregion
-        #region [Метод получения ID документа]
-        /// <summary>
-        /// Метод получения ID документа
-        /// </summary>
-        /// <param name="datareader"></param>
-        private void CheckDataRowsIDDocument(List<string[]> strings)
-        {
-            if (strings != null)
-            {
-                foreach (string[] item in strings)
-                {
-                    fkDocumentId = item[0];
                 }
             }
         }

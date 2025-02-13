@@ -273,8 +273,8 @@ namespace Napitki_Altay2.Forms
                 {
                     dataBaseWork.CloseConnection();
                 }
-                TakeDocumentIdInfo(out List<string[]> listSearchSecond);
-                CheckDataRowsIDDocument(listSearchSecond);
+                //TakeDocumentIdInfo(out List<string[]> listSearchSecond);
+                //CheckDataRowsIDDocument(listSearchSecond);
                 string sqlUpdateDoc = sqlQueries.SqlComUpdateDocumentUserNew
                     (fkDocumentId, MainWorkForm.selectedRowIDInDGWC);
                 dataBaseWork.WithoutOutputQuery(sqlUpdateDoc);
@@ -312,12 +312,12 @@ namespace Napitki_Altay2.Forms
                 }
             }
         }
-        private void TakeDocumentIdInfo(out List<string[]> listSearchSecond)
+        /*private void TakeDocumentIdInfo(out List<string[]> listSearchSecond)
         {
             string sqlQueryFive = sqlQueries.SqlComInfoAboutDocument
                 (documentName, documentExtansion);
             listSearchSecond = dataBaseWork.GetMultiList(sqlQueryFive, 4);
-        }
+        }*/
         private void CheckUserIdInfo(List<string[]> strings)
         {
             if (strings != null)

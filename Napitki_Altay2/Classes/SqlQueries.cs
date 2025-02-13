@@ -138,10 +138,17 @@ namespace Napitki_Altay2.Classes
         // MainWorkForm - DeleteApplicationButton_Click
         public string SqlComDelete(string deleteRow)
         {
-            string sqlCom = "delete from " +
-                "User_Appeal " +
-                "where Appeal_ID " +
-                $"= '{deleteRow}'";
+            string sqlCom = $@"
+            -- Удаляем сами документы, если они больше нигде не используются
+            DELETE FROM User_Document 
+            WHERE Document_ID IN (
+            SELECT Document_ID FROM Appeal_Documents 
+            GROUP BY Document_ID 
+            HAVING COUNT(Appeal_ID) = 1);
+            -- Удаляем связи между обращением и документами
+            DELETE FROM Appeal_Documents WHERE Appeal_ID = '{deleteRow}';
+            -- Удаляем само обращение
+            DELETE FROM User_Appeal WHERE Appeal_ID = '{deleteRow}';";
             return sqlCom;
         }
         #endregion
@@ -244,7 +251,7 @@ namespace Napitki_Altay2.Classes
         {
             string sqlCom = $"update User_Auth set Username = '{login}', " +
                 $"User_Password = '{pass}', Role_ID = '{role}', " +
-                $"Email = '{email}' where User_ID = '{idUser}'";
+                $"Email = '{email}' where User_Auth.Auth_ID = '{idUser}'";
             return sqlCom;
         }
         // AddUserForm - CheckTextBoxIsNull
@@ -266,7 +273,7 @@ namespace Napitki_Altay2.Classes
                 $"First_Name = '{name}', Middle_Name = '{otch}' " +
                 $"from User_Auth join User_Info " +
                 $"on User_Auth.User_ID = User_Info.User_ID " +
-                $"where User_ID = '{idRow}'";
+                $"where User_Info.User_ID = '{idRow}'";
             return sqlCom;
         }
         public string SqlComUpdateFioWithoutOtch(string name, string fam, string idRow)
@@ -281,7 +288,7 @@ namespace Napitki_Altay2.Classes
         public string SqlComCheckAccountInfo(string idUser)
         {
             string sqlCom = "select Username, User_Password, Email, Employee_Number, Last_Name, " +
-                "First_Name, Middle_Name, Role_Name from User_Auth join User_Info " +
+                "First_Name, Middle_Name, Role_Name from User_Auth left join User_Info " +
                 "on User_Auth.User_ID = User_Info.User_ID join User_Role " +
                 $"on User_Auth.Role_ID = User_Role.Role_ID where User_Auth.Auth_ID = '{idUser}'";
             return sqlCom;
@@ -334,33 +341,32 @@ namespace Napitki_Altay2.Classes
                 $"'{MainWorkFormWorker.SelectedRowID}'";
         #endregion
         #region [CreateApplicationForm]
-        public string sqlComFkInfoUser = "select * from Info_About_User where " +
-            $"User_Surname = '{MainWorkForm.surnameUserString}' and " +
-            $"User_Name = '{MainWorkForm.nameUserString}' and " +
-            $"User_Patronymic = '{MainWorkForm.patronymicUserString}'";
-        public string sqlComFkInfoWorkUser = "select * from Info_About_User where " +
-            $"User_Surname = '{MainWorkFormWorker.SurnameWorkerString}' and " +
-            $"User_Name = '{MainWorkFormWorker.NameWorkerString}' and " +
-            $"User_Patronymic = '{MainWorkFormWorker.PatrWorkerString}'";
+        public string sqlComFkInfoUser = "select * from User_Info where " +
+            $"Last_Name = '{MainWorkForm.surnameUserString}' and " +
+            $"First_Name = '{MainWorkForm.nameUserString}' and " +
+            $"Middle_Name = '{MainWorkForm.patronymicUserString}'";
+        public string sqlComFkInfoWorkUser = "select * from User_Info where " +
+            $"Last_Name = '{MainWorkFormWorker.SurnameWorkerString}' and " +
+            $"First_Name = '{MainWorkFormWorker.NameWorkerString}' and " +
+            $"Middle_Name = '{MainWorkFormWorker.PatrWorkerString}'";
         public string SqlComCheckTypeID(string typeName)
         {
-            string sqlCom = "select Id_Type_Of_Appeal " +
-                $"from Type_Of_Appeal where Type_Appeal = '{typeName}'";
+            string sqlCom = "select Appeal_Type_ID " +
+                $"from Appeal_Type where Appeal_Name = '{typeName}'";
             return sqlCom;
         }
-        public string SqlComAddApplication(string company, string type,
+        public string SqlComAddApplication(string type,
             string description, DateTime dateTime, string infoUser)
         {
-            string sqlCom = "insert into Application_To_Company (Applicant_Company, " +
-                "FK_Type_Of_Appeal, Description_Of_Appeal, Date_Of_Request, " +
-                $"FK_Info_User, FK_Status_Application) values ('{company}', " +
-                $"'{type}', '{description}', '{dateTime}', '{infoUser}', '1')";
+            string sqlCom = "insert into User_Appeal (Appeal_Type_ID, " +
+                "Appeal_Description, Appeal_Date, Date_Of_Request, " +
+                $"User_ID, Status_ID) values ('{type}', '{description}', '{dateTime}', '{infoUser}', '1')";
             return sqlCom;
         }
         public string SqlComAddDocument(string infoUser)
         {
-            string sqlCom = "insert into Application_Document_From_User(Document_Name, " +
-                $"Document_Data, Document_Extension, FK_Info_User) values (@fileName, " +
+            string sqlCom = "insert into User_Document(Document_Name, " +
+                $"Document_Data, Document_Extension, User_ID) values (@fileName, " +
                 $"@data, @extension, '{infoUser}')";
             return sqlCom;
         }
@@ -371,11 +377,11 @@ namespace Napitki_Altay2.Classes
                 $"@data, @extension, '{infoUser}')";
             return sqlCom;
         }
-        public string SqlComInfoAboutDocument(string documentName, string documentExtansion)
+        public string SqlComInfoAboutDocument(string documentName, string documentExtansion, string userID)
         {
-            string sqlCom = "select * from Application_Document_From_User " +
+            string sqlCom = "select Document_ID from User_Document " +
                 $"where Document_Name = '{documentName}' " +
-                $"and Document_Extension = '{documentExtansion}'";
+                $"and Document_Extension = '{documentExtansion}' and User_ID = '{userID}'";
             return sqlCom;
         }
         public string SqlComInfoAboutWDocument(string documentName, string documentExtansion)
@@ -385,22 +391,25 @@ namespace Napitki_Altay2.Classes
                 $"and Document_Extension_W = '{documentExtansion}'";
             return sqlCom;
         }
-        public string SqlComAddApplicationSecond(string company, string type,
-            string description, DateTime dateTime, string infoUser, string documentId)
+        public string SqlComAddApplicationSecond(string type,
+            string description, DateTime dateTime, string infoUser)
         {
-            string sqlCom = "insert into Application_To_Company (Applicant_Company, " +
-                "FK_Type_Of_Appeal, Description_Of_Appeal, Date_Of_Request, " +
-                "FK_Info_User, FK_Application_Document_From_User, " +
-                $"FK_Status_Application) values ('{company}', " +
-                $"'{type}', '{description}', '{dateTime}', " +
-                $"'{infoUser}', '{documentId}', '1')";
+            string sqlCom = "insert into User_Appeal (Appeal_Type_ID, " +
+                "Appeal_Description, Appeal_Date, User_ID, Status_ID) " +
+                $"OUTPUT INSERTED.Appeal_ID values ('{type}', '{description}', '{dateTime}', '{infoUser}', '1')";
             return sqlCom;
         }
-        public string SqlComCheckDocumentName(string name)
+        public string LinkDocumentToAppealQuery()
         {
-            string sqlCom = "select * from Application_Document_From_User " +
-                $"where Document_Name = '{name}'";
-            return sqlCom;
+            return "INSERT INTO Appeal_Documents (Appeal_ID, Document_ID) VALUES (@AppealId, @DocId)";
+        }
+        public string GetLastAppealIdQuery(string userId)
+        {
+            return $"SELECT TOP 1 Appeal_ID FROM User_Appeal WHERE User_ID = '{userId}' ORDER BY Appeal_Date DESC";
+        }
+        public string GetAllDocumentsForUserQuery(string userId)
+        {
+            return $"SELECT Document_ID FROM User_Document WHERE User_ID = '{userId}'";
         }
         #endregion
         #region [AnswerToUserApplicationForm]
@@ -512,41 +521,29 @@ namespace Napitki_Altay2.Classes
         }
         public string SqlComOutputAnswers(string name, string fam, string otch)
         {
-            string sqlCom = "select FK_ID_Application, User_Surname, " +
-                "User_Name, User_Patronymic, Date_Of_Answer, Status_Name from " +
-                "Ready_Application join Info_About_User on Ready_Application.FK_Info_User " +
-                $"= Info_About_User.ID_Info_User join Application_To_Company on " +
-                $"Ready_Application.FK_ID_Application = Application_To_Company.ID_Application " +
-                $"join Status_Application " +
-                $"on Application_To_Company.FK_Status_Application = " +
-                $"Status_Application.ID_Status where User_Surname = '{fam}' " +
-                $"and User_Name = '{name}' and User_Patronymic = '{otch}'";
+            string sqlCom = "SELECT ar.Appeal_ID AS FK_ID_Application, " +
+                "ui.Last_Name AS User_Surname, ui.First_Name AS User_Name, " +
+                "ui.Middle_Name AS User_Patronymic, ar.Response_Date AS Date_Of_Answer, " +
+                "asu.Status_Name " +
+                "FROM Appeal_Response ar " +
+                "JOIN User_Appeal ua ON ar.Appeal_ID = ua.Appeal_ID " +
+                "JOIN User_Info ui ON ua.User_ID = ui.User_ID " +
+                "JOIN Appeal_Status asu ON ua.Status_ID = asu.Status_ID " +
+                $"WHERE ui.Last_Name = '{fam}' " +
+                $"AND ui.First_Name = '{name}' " +
+                $"AND (ui.Middle_Name = '{otch}' OR ui.Middle_Name IS NULL)";
             return sqlCom;
         }
-        public string SqlComOutputAnswersWithoudOtch(string name, string fam)
-        {
-            string sqlCom = "select FK_ID_Application, User_Surname, " +
-                "User_Name, User_Patronymic, Date_Of_Answer, Status_Name from " +
-                "Ready_Application join Info_About_User on Ready_Application.FK_Info_User " +
-                $"= Info_About_User.ID_Info_User join Application_To_Company on " +
-                $"Ready_Application.FK_ID_Application = Application_To_Company.ID_Application " +
-                $"join Status_Application " +
-                $"on Application_To_Company.FK_Status_Application = " +
-                $"Status_Application.ID_Status where User_Surname = '{fam}' " +
-                $"and User_Name = '{name}'";
-            return sqlCom;
-        }
-        public string sqlComOutputApplications = "select Id_Application, " +
-            "Applicant_Company, User_Surname, User_Name, User_Patronymic, " +
-            "Status_Name from Application_To_Company join Info_About_User on " +
-            "Application_To_Company.FK_Info_User = Info_About_User.ID_Info_User " +
-            "join Status_Application on Application_To_Company.FK_Status_Application = " +
-            "Status_Application.ID_Status full join " +
-            "Application_Document_From_User on " +
-            "Application_To_Company.FK_Application_Document_From_User = " +
-            "Application_Document_From_User.ID_Document_From_User " +
-            "where Status_Application.Status_Name = 'Новое обращение' or " +
-            "Status_Application.Status_Name = 'В процессе рассмотрения'";
+        public string sqlComOutputApplications = "SELECT ua.Appeal_ID, " +
+            "ui.Last_Name AS User_Surname, ui.First_Name AS User_Name, ui.Middle_Name AS User_Patronymic, " +
+            "at.Appeal_Name, asu.Status_Name, ud.Document_Name, ud.Document_Extension " +
+            "FROM User_Appeal ua " +
+            "JOIN User_Info ui ON ua.User_ID = ui.User_ID " +
+            "JOIN Appeal_Status asu ON ua.Status_ID = asu.Status_ID " +
+            "JOIN Appeal_Type at ON ua.Appeal_Type_ID = at.Appeal_Type_ID " +
+            "LEFT JOIN Appeal_Documents ad ON ua.Appeal_ID = ad.Appeal_ID " +
+            "LEFT JOIN User_Document ud ON ad.Document_ID = ud.Document_ID " +
+            "WHERE asu.Status_Name IN ('Принято к рассмотрению', 'На исполнении')";
         public string sqlComCheckStatusId = "select ID_Status from Status_Application " +
             "where Status_Name = 'В процессе рассмотрения'";
         public string SqlComUpdateStatusApplication(string idStatus, string idRow)

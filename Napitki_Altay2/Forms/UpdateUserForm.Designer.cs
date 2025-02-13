@@ -31,31 +31,26 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UpdateUserForm));
             this.EmailLabel = new System.Windows.Forms.Label();
-            this.EmailTextBox = new Napitki_Altay2.Design.CustomTextBox();
             this.OtchLabel = new System.Windows.Forms.Label();
-            this.OtchTextBox = new Napitki_Altay2.Design.CustomTextBox();
             this.ImyaLabel = new System.Windows.Forms.Label();
-            this.ImyaTextBox = new Napitki_Altay2.Design.CustomTextBox();
             this.FamLabel = new System.Windows.Forms.Label();
+            this.RoleLabel = new System.Windows.Forms.Label();
+            this.PasswordLabel = new System.Windows.Forms.Label();
+            this.LoginLabel = new System.Windows.Forms.Label();
+            this.UsersPictureBox = new System.Windows.Forms.PictureBox();
+            this.EmpNumLabel = new System.Windows.Forms.Label();
+            this.EmpNumTextBox = new Napitki_Altay2.Design.CustomTextBox();
+            this.EmailTextBox = new Napitki_Altay2.Design.CustomTextBox();
+            this.OtchTextBox = new Napitki_Altay2.Design.CustomTextBox();
+            this.ImyaTextBox = new Napitki_Altay2.Design.CustomTextBox();
             this.FamTextBox = new Napitki_Altay2.Design.CustomTextBox();
             this.CancelButton = new Napitki_Altay2.Design.CustomButton();
             this.InputUsersButton = new Napitki_Altay2.Design.CustomButton();
-            this.RoleLabel = new System.Windows.Forms.Label();
             this.RoleTextBox = new Napitki_Altay2.Design.CustomTextBox();
-            this.PasswordLabel = new System.Windows.Forms.Label();
             this.PasswordTextBox = new Napitki_Altay2.Design.CustomTextBox();
-            this.LoginLabel = new System.Windows.Forms.Label();
             this.LoginTextBox = new Napitki_Altay2.Design.CustomTextBox();
-            this.UsersPictureBox = new System.Windows.Forms.PictureBox();
             this.CustomFormForAllProject = new Napitki_Altay2.Components.FormStyleCustom(this.components);
-            this.RoleMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.администраторToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.сотрудникToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.заявительToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.EmpNumLabel = new System.Windows.Forms.Label();
-            this.EmpNumTextBox = new Napitki_Altay2.Design.CustomTextBox();
             ((System.ComponentModel.ISupportInitialize)(this.UsersPictureBox)).BeginInit();
-            this.RoleMenuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // EmailLabel
@@ -69,28 +64,6 @@
             this.EmailLabel.TabIndex = 50;
             this.EmailLabel.Text = "Почта (e-mail адрес):";
             // 
-            // EmailTextBox
-            // 
-            this.EmailTextBox.BackColor = System.Drawing.Color.White;
-            this.EmailTextBox.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(56)))), ((int)(((byte)(165)))));
-            this.EmailTextBox.BorderFocusColor = System.Drawing.Color.FromArgb(((int)(((byte)(207)))), ((int)(((byte)(20)))), ((int)(((byte)(1)))));
-            this.EmailTextBox.BorderSize = 2;
-            this.EmailTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F);
-            this.EmailTextBox.ForeColor = System.Drawing.Color.Black;
-            this.EmailTextBox.Location = new System.Drawing.Point(27, 694);
-            this.EmailTextBox.Margin = new System.Windows.Forms.Padding(8, 8, 8, 8);
-            this.EmailTextBox.Multiline = false;
-            this.EmailTextBox.Name = "EmailTextBox";
-            this.EmailTextBox.Padding = new System.Windows.Forms.Padding(10, 11, 10, 11);
-            this.EmailTextBox.PasswordChar = false;
-            this.EmailTextBox.ReadOnly = false;
-            this.EmailTextBox.ScrollBars = System.Windows.Forms.ScrollBars.None;
-            this.EmailTextBox.SelectionStart = 0;
-            this.EmailTextBox.Size = new System.Drawing.Size(330, 55);
-            this.EmailTextBox.TabIndex = 49;
-            this.EmailTextBox.Texts = "";
-            this.EmailTextBox.UnderlinedStyle = false;
-            // 
             // OtchLabel
             // 
             this.OtchLabel.AutoSize = true;
@@ -101,28 +74,6 @@
             this.OtchLabel.Size = new System.Drawing.Size(156, 41);
             this.OtchLabel.TabIndex = 48;
             this.OtchLabel.Text = "Отчество:";
-            // 
-            // OtchTextBox
-            // 
-            this.OtchTextBox.BackColor = System.Drawing.Color.White;
-            this.OtchTextBox.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(56)))), ((int)(((byte)(165)))));
-            this.OtchTextBox.BorderFocusColor = System.Drawing.Color.FromArgb(((int)(((byte)(207)))), ((int)(((byte)(20)))), ((int)(((byte)(1)))));
-            this.OtchTextBox.BorderSize = 2;
-            this.OtchTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F);
-            this.OtchTextBox.ForeColor = System.Drawing.Color.Black;
-            this.OtchTextBox.Location = new System.Drawing.Point(402, 578);
-            this.OtchTextBox.Margin = new System.Windows.Forms.Padding(8, 8, 8, 8);
-            this.OtchTextBox.Multiline = false;
-            this.OtchTextBox.Name = "OtchTextBox";
-            this.OtchTextBox.Padding = new System.Windows.Forms.Padding(10, 11, 10, 11);
-            this.OtchTextBox.PasswordChar = false;
-            this.OtchTextBox.ReadOnly = false;
-            this.OtchTextBox.ScrollBars = System.Windows.Forms.ScrollBars.None;
-            this.OtchTextBox.SelectionStart = 0;
-            this.OtchTextBox.Size = new System.Drawing.Size(330, 55);
-            this.OtchTextBox.TabIndex = 47;
-            this.OtchTextBox.Texts = "";
-            this.OtchTextBox.UnderlinedStyle = false;
             // 
             // ImyaLabel
             // 
@@ -135,6 +86,139 @@
             this.ImyaLabel.TabIndex = 46;
             this.ImyaLabel.Text = "Имя:";
             // 
+            // FamLabel
+            // 
+            this.FamLabel.AutoSize = true;
+            this.FamLabel.Font = new System.Drawing.Font("Segoe UI Semibold", 11F, System.Drawing.FontStyle.Bold);
+            this.FamLabel.Location = new System.Drawing.Point(394, 286);
+            this.FamLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.FamLabel.Name = "FamLabel";
+            this.FamLabel.Size = new System.Drawing.Size(155, 41);
+            this.FamLabel.TabIndex = 44;
+            this.FamLabel.Text = "Фамилия:";
+            // 
+            // RoleLabel
+            // 
+            this.RoleLabel.AutoSize = true;
+            this.RoleLabel.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
+            this.RoleLabel.Location = new System.Drawing.Point(20, 522);
+            this.RoleLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.RoleLabel.Name = "RoleLabel";
+            this.RoleLabel.Size = new System.Drawing.Size(316, 45);
+            this.RoleLabel.TabIndex = 39;
+            this.RoleLabel.Text = "Роль пользователя:";
+            // 
+            // PasswordLabel
+            // 
+            this.PasswordLabel.AutoSize = true;
+            this.PasswordLabel.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
+            this.PasswordLabel.Location = new System.Drawing.Point(20, 402);
+            this.PasswordLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.PasswordLabel.Name = "PasswordLabel";
+            this.PasswordLabel.Size = new System.Drawing.Size(142, 45);
+            this.PasswordLabel.TabIndex = 37;
+            this.PasswordLabel.Text = "Пароль:";
+            // 
+            // LoginLabel
+            // 
+            this.LoginLabel.AutoSize = true;
+            this.LoginLabel.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
+            this.LoginLabel.Location = new System.Drawing.Point(20, 281);
+            this.LoginLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.LoginLabel.Name = "LoginLabel";
+            this.LoginLabel.Size = new System.Drawing.Size(120, 45);
+            this.LoginLabel.TabIndex = 35;
+            this.LoginLabel.Text = "Логин:";
+            // 
+            // UsersPictureBox
+            // 
+            this.UsersPictureBox.BackColor = System.Drawing.Color.White;
+            this.UsersPictureBox.Image = global::Napitki_Altay2.Properties.Resources.Герб_Алтайского_края;
+            this.UsersPictureBox.Location = new System.Drawing.Point(256, 23);
+            this.UsersPictureBox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.UsersPictureBox.Name = "UsersPictureBox";
+            this.UsersPictureBox.Size = new System.Drawing.Size(258, 228);
+            this.UsersPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.UsersPictureBox.TabIndex = 33;
+            this.UsersPictureBox.TabStop = false;
+            // 
+            // EmpNumLabel
+            // 
+            this.EmpNumLabel.AutoSize = true;
+            this.EmpNumLabel.Font = new System.Drawing.Font("Segoe UI Semibold", 11F, System.Drawing.FontStyle.Bold);
+            this.EmpNumLabel.Location = new System.Drawing.Point(394, 643);
+            this.EmpNumLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.EmpNumLabel.Name = "EmpNumLabel";
+            this.EmpNumLabel.Size = new System.Drawing.Size(281, 41);
+            this.EmpNumLabel.TabIndex = 52;
+            this.EmpNumLabel.Text = "Табельный номер:";
+            // 
+            // EmpNumTextBox
+            // 
+            this.EmpNumTextBox.BackColor = System.Drawing.Color.White;
+            this.EmpNumTextBox.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(56)))), ((int)(((byte)(165)))));
+            this.EmpNumTextBox.BorderFocusColor = System.Drawing.Color.FromArgb(((int)(((byte)(207)))), ((int)(((byte)(20)))), ((int)(((byte)(1)))));
+            this.EmpNumTextBox.BorderSize = 2;
+            this.EmpNumTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F);
+            this.EmpNumTextBox.ForeColor = System.Drawing.Color.Black;
+            this.EmpNumTextBox.Location = new System.Drawing.Point(402, 694);
+            this.EmpNumTextBox.Margin = new System.Windows.Forms.Padding(8);
+            this.EmpNumTextBox.Multiline = false;
+            this.EmpNumTextBox.Name = "EmpNumTextBox";
+            this.EmpNumTextBox.Padding = new System.Windows.Forms.Padding(10, 11, 10, 11);
+            this.EmpNumTextBox.PasswordChar = false;
+            this.EmpNumTextBox.ReadOnly = false;
+            this.EmpNumTextBox.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            this.EmpNumTextBox.SelectionStart = 0;
+            this.EmpNumTextBox.Size = new System.Drawing.Size(330, 55);
+            this.EmpNumTextBox.TabIndex = 51;
+            this.EmpNumTextBox.Texts = "";
+            this.EmpNumTextBox.UnderlinedStyle = false;
+            // 
+            // EmailTextBox
+            // 
+            this.EmailTextBox.BackColor = System.Drawing.Color.White;
+            this.EmailTextBox.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(56)))), ((int)(((byte)(165)))));
+            this.EmailTextBox.BorderFocusColor = System.Drawing.Color.FromArgb(((int)(((byte)(207)))), ((int)(((byte)(20)))), ((int)(((byte)(1)))));
+            this.EmailTextBox.BorderSize = 2;
+            this.EmailTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F);
+            this.EmailTextBox.ForeColor = System.Drawing.Color.Black;
+            this.EmailTextBox.Location = new System.Drawing.Point(27, 694);
+            this.EmailTextBox.Margin = new System.Windows.Forms.Padding(8);
+            this.EmailTextBox.Multiline = false;
+            this.EmailTextBox.Name = "EmailTextBox";
+            this.EmailTextBox.Padding = new System.Windows.Forms.Padding(10, 11, 10, 11);
+            this.EmailTextBox.PasswordChar = false;
+            this.EmailTextBox.ReadOnly = false;
+            this.EmailTextBox.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            this.EmailTextBox.SelectionStart = 0;
+            this.EmailTextBox.Size = new System.Drawing.Size(330, 55);
+            this.EmailTextBox.TabIndex = 49;
+            this.EmailTextBox.Texts = "";
+            this.EmailTextBox.UnderlinedStyle = false;
+            // 
+            // OtchTextBox
+            // 
+            this.OtchTextBox.BackColor = System.Drawing.Color.White;
+            this.OtchTextBox.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(56)))), ((int)(((byte)(165)))));
+            this.OtchTextBox.BorderFocusColor = System.Drawing.Color.FromArgb(((int)(((byte)(207)))), ((int)(((byte)(20)))), ((int)(((byte)(1)))));
+            this.OtchTextBox.BorderSize = 2;
+            this.OtchTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F);
+            this.OtchTextBox.ForeColor = System.Drawing.Color.Black;
+            this.OtchTextBox.Location = new System.Drawing.Point(402, 578);
+            this.OtchTextBox.Margin = new System.Windows.Forms.Padding(8);
+            this.OtchTextBox.Multiline = false;
+            this.OtchTextBox.Name = "OtchTextBox";
+            this.OtchTextBox.Padding = new System.Windows.Forms.Padding(10, 11, 10, 11);
+            this.OtchTextBox.PasswordChar = false;
+            this.OtchTextBox.ReadOnly = false;
+            this.OtchTextBox.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            this.OtchTextBox.SelectionStart = 0;
+            this.OtchTextBox.Size = new System.Drawing.Size(330, 55);
+            this.OtchTextBox.TabIndex = 47;
+            this.OtchTextBox.Texts = "";
+            this.OtchTextBox.UnderlinedStyle = false;
+            // 
             // ImyaTextBox
             // 
             this.ImyaTextBox.BackColor = System.Drawing.Color.White;
@@ -144,7 +228,7 @@
             this.ImyaTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F);
             this.ImyaTextBox.ForeColor = System.Drawing.Color.Black;
             this.ImyaTextBox.Location = new System.Drawing.Point(402, 458);
-            this.ImyaTextBox.Margin = new System.Windows.Forms.Padding(8, 8, 8, 8);
+            this.ImyaTextBox.Margin = new System.Windows.Forms.Padding(8);
             this.ImyaTextBox.Multiline = false;
             this.ImyaTextBox.Name = "ImyaTextBox";
             this.ImyaTextBox.Padding = new System.Windows.Forms.Padding(10, 11, 10, 11);
@@ -157,17 +241,6 @@
             this.ImyaTextBox.Texts = "";
             this.ImyaTextBox.UnderlinedStyle = false;
             // 
-            // FamLabel
-            // 
-            this.FamLabel.AutoSize = true;
-            this.FamLabel.Font = new System.Drawing.Font("Segoe UI Semibold", 11F, System.Drawing.FontStyle.Bold);
-            this.FamLabel.Location = new System.Drawing.Point(394, 286);
-            this.FamLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.FamLabel.Name = "FamLabel";
-            this.FamLabel.Size = new System.Drawing.Size(155, 41);
-            this.FamLabel.TabIndex = 44;
-            this.FamLabel.Text = "Фамилия:";
-            // 
             // FamTextBox
             // 
             this.FamTextBox.BackColor = System.Drawing.Color.White;
@@ -177,7 +250,7 @@
             this.FamTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F);
             this.FamTextBox.ForeColor = System.Drawing.Color.Black;
             this.FamTextBox.Location = new System.Drawing.Point(402, 338);
-            this.FamTextBox.Margin = new System.Windows.Forms.Padding(8, 8, 8, 8);
+            this.FamTextBox.Margin = new System.Windows.Forms.Padding(8);
             this.FamTextBox.Multiline = false;
             this.FamTextBox.Name = "FamTextBox";
             this.FamTextBox.Padding = new System.Windows.Forms.Padding(10, 11, 10, 11);
@@ -232,17 +305,6 @@
             this.InputUsersButton.UseVisualStyleBackColor = false;
             this.InputUsersButton.Click += new System.EventHandler(this.InputUsersButton_Click);
             // 
-            // RoleLabel
-            // 
-            this.RoleLabel.AutoSize = true;
-            this.RoleLabel.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
-            this.RoleLabel.Location = new System.Drawing.Point(20, 522);
-            this.RoleLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.RoleLabel.Name = "RoleLabel";
-            this.RoleLabel.Size = new System.Drawing.Size(316, 45);
-            this.RoleLabel.TabIndex = 39;
-            this.RoleLabel.Text = "Роль пользователя:";
-            // 
             // RoleTextBox
             // 
             this.RoleTextBox.BackColor = System.Drawing.Color.White;
@@ -253,7 +315,7 @@
             this.RoleTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F);
             this.RoleTextBox.ForeColor = System.Drawing.Color.Black;
             this.RoleTextBox.Location = new System.Drawing.Point(27, 578);
-            this.RoleTextBox.Margin = new System.Windows.Forms.Padding(8, 8, 8, 8);
+            this.RoleTextBox.Margin = new System.Windows.Forms.Padding(8);
             this.RoleTextBox.Multiline = false;
             this.RoleTextBox.Name = "RoleTextBox";
             this.RoleTextBox.Padding = new System.Windows.Forms.Padding(10, 11, 10, 11);
@@ -266,17 +328,6 @@
             this.RoleTextBox.Texts = "";
             this.RoleTextBox.UnderlinedStyle = false;
             // 
-            // PasswordLabel
-            // 
-            this.PasswordLabel.AutoSize = true;
-            this.PasswordLabel.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
-            this.PasswordLabel.Location = new System.Drawing.Point(20, 402);
-            this.PasswordLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.PasswordLabel.Name = "PasswordLabel";
-            this.PasswordLabel.Size = new System.Drawing.Size(142, 45);
-            this.PasswordLabel.TabIndex = 37;
-            this.PasswordLabel.Text = "Пароль:";
-            // 
             // PasswordTextBox
             // 
             this.PasswordTextBox.BackColor = System.Drawing.Color.White;
@@ -286,7 +337,7 @@
             this.PasswordTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F);
             this.PasswordTextBox.ForeColor = System.Drawing.Color.Black;
             this.PasswordTextBox.Location = new System.Drawing.Point(27, 458);
-            this.PasswordTextBox.Margin = new System.Windows.Forms.Padding(8, 8, 8, 8);
+            this.PasswordTextBox.Margin = new System.Windows.Forms.Padding(8);
             this.PasswordTextBox.Multiline = false;
             this.PasswordTextBox.Name = "PasswordTextBox";
             this.PasswordTextBox.Padding = new System.Windows.Forms.Padding(10, 11, 10, 11);
@@ -299,17 +350,6 @@
             this.PasswordTextBox.Texts = "";
             this.PasswordTextBox.UnderlinedStyle = false;
             // 
-            // LoginLabel
-            // 
-            this.LoginLabel.AutoSize = true;
-            this.LoginLabel.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
-            this.LoginLabel.Location = new System.Drawing.Point(20, 281);
-            this.LoginLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.LoginLabel.Name = "LoginLabel";
-            this.LoginLabel.Size = new System.Drawing.Size(120, 45);
-            this.LoginLabel.TabIndex = 35;
-            this.LoginLabel.Text = "Логин:";
-            // 
             // LoginTextBox
             // 
             this.LoginTextBox.BackColor = System.Drawing.Color.White;
@@ -319,7 +359,7 @@
             this.LoginTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F);
             this.LoginTextBox.ForeColor = System.Drawing.Color.Black;
             this.LoginTextBox.Location = new System.Drawing.Point(27, 338);
-            this.LoginTextBox.Margin = new System.Windows.Forms.Padding(8, 8, 8, 8);
+            this.LoginTextBox.Margin = new System.Windows.Forms.Padding(8);
             this.LoginTextBox.Multiline = false;
             this.LoginTextBox.Name = "LoginTextBox";
             this.LoginTextBox.Padding = new System.Windows.Forms.Padding(10, 11, 10, 11);
@@ -332,18 +372,6 @@
             this.LoginTextBox.Texts = "";
             this.LoginTextBox.UnderlinedStyle = false;
             // 
-            // UsersPictureBox
-            // 
-            this.UsersPictureBox.BackColor = System.Drawing.Color.White;
-            this.UsersPictureBox.Image = global::Napitki_Altay2.Properties.Resources.Герб_Алтайского_края;
-            this.UsersPictureBox.Location = new System.Drawing.Point(256, 23);
-            this.UsersPictureBox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.UsersPictureBox.Name = "UsersPictureBox";
-            this.UsersPictureBox.Size = new System.Drawing.Size(258, 228);
-            this.UsersPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.UsersPictureBox.TabIndex = 33;
-            this.UsersPictureBox.TabStop = false;
-            // 
             // CustomFormForAllProject
             // 
             this.CustomFormForAllProject.AllowUserResize = false;
@@ -354,79 +382,14 @@
             this.CustomFormForAllProject.EnableControlBoxMouseLight = false;
             this.CustomFormForAllProject.Form = this;
             this.CustomFormForAllProject.FormStyle = Napitki_Altay2.Components.FormStyleCustom.fStyle.UserStyle;
-            this.CustomFormForAllProject.HeaderColor = System.Drawing.Color.RoyalBlue;
-            this.CustomFormForAllProject.HeaderColorAdditional = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(48)))), ((int)(((byte)(207)))));
+            this.CustomFormForAllProject.HeaderColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(56)))), ((int)(((byte)(165)))));
+            this.CustomFormForAllProject.HeaderColorAdditional = System.Drawing.Color.FromArgb(((int)(((byte)(207)))), ((int)(((byte)(20)))), ((int)(((byte)(1)))));
             this.CustomFormForAllProject.HeaderColorGradientEnable = true;
-            this.CustomFormForAllProject.HeaderColorGradientMode = System.Drawing.Drawing2D.LinearGradientMode.Vertical;
+            this.CustomFormForAllProject.HeaderColorGradientMode = System.Drawing.Drawing2D.LinearGradientMode.Horizontal;
             this.CustomFormForAllProject.HeaderHeight = 29;
             this.CustomFormForAllProject.HeaderImage = null;
             this.CustomFormForAllProject.HeaderTextColor = System.Drawing.Color.White;
             this.CustomFormForAllProject.HeaderTextFont = new System.Drawing.Font("Segoe UI", 12F);
-            // 
-            // RoleMenuStrip
-            // 
-            this.RoleMenuStrip.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
-            this.RoleMenuStrip.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.RoleMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.администраторToolStripMenuItem,
-            this.сотрудникToolStripMenuItem,
-            this.заявительToolStripMenuItem});
-            this.RoleMenuStrip.Name = "RoleMenuStrip";
-            this.RoleMenuStrip.Size = new System.Drawing.Size(301, 162);
-            // 
-            // администраторToolStripMenuItem
-            // 
-            this.администраторToolStripMenuItem.Name = "администраторToolStripMenuItem";
-            this.администраторToolStripMenuItem.Size = new System.Drawing.Size(260, 38);
-            this.администраторToolStripMenuItem.Text = "Администратор";
-            this.администраторToolStripMenuItem.Click += new System.EventHandler(this.АдминистраторToolStripMenuItem_Click);
-            // 
-            // сотрудникToolStripMenuItem
-            // 
-            this.сотрудникToolStripMenuItem.Name = "сотрудникToolStripMenuItem";
-            this.сотрудникToolStripMenuItem.Size = new System.Drawing.Size(260, 38);
-            this.сотрудникToolStripMenuItem.Text = "Сотрудник";
-            this.сотрудникToolStripMenuItem.Click += new System.EventHandler(this.СотрудникToolStripMenuItem_Click);
-            // 
-            // заявительToolStripMenuItem
-            // 
-            this.заявительToolStripMenuItem.Name = "заявительToolStripMenuItem";
-            this.заявительToolStripMenuItem.Size = new System.Drawing.Size(260, 38);
-            this.заявительToolStripMenuItem.Text = "Заявитель";
-            this.заявительToolStripMenuItem.Click += new System.EventHandler(this.ЗаявительToolStripMenuItem_Click);
-            // 
-            // EmpNumLabel
-            // 
-            this.EmpNumLabel.AutoSize = true;
-            this.EmpNumLabel.Font = new System.Drawing.Font("Segoe UI Semibold", 11F, System.Drawing.FontStyle.Bold);
-            this.EmpNumLabel.Location = new System.Drawing.Point(394, 643);
-            this.EmpNumLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.EmpNumLabel.Name = "EmpNumLabel";
-            this.EmpNumLabel.Size = new System.Drawing.Size(281, 41);
-            this.EmpNumLabel.TabIndex = 52;
-            this.EmpNumLabel.Text = "Табельный номер:";
-            // 
-            // EmpNumTextBox
-            // 
-            this.EmpNumTextBox.BackColor = System.Drawing.Color.White;
-            this.EmpNumTextBox.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(56)))), ((int)(((byte)(165)))));
-            this.EmpNumTextBox.BorderFocusColor = System.Drawing.Color.FromArgb(((int)(((byte)(207)))), ((int)(((byte)(20)))), ((int)(((byte)(1)))));
-            this.EmpNumTextBox.BorderSize = 2;
-            this.EmpNumTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F);
-            this.EmpNumTextBox.ForeColor = System.Drawing.Color.Black;
-            this.EmpNumTextBox.Location = new System.Drawing.Point(402, 694);
-            this.EmpNumTextBox.Margin = new System.Windows.Forms.Padding(8);
-            this.EmpNumTextBox.Multiline = false;
-            this.EmpNumTextBox.Name = "EmpNumTextBox";
-            this.EmpNumTextBox.Padding = new System.Windows.Forms.Padding(10, 11, 10, 11);
-            this.EmpNumTextBox.PasswordChar = false;
-            this.EmpNumTextBox.ReadOnly = false;
-            this.EmpNumTextBox.ScrollBars = System.Windows.Forms.ScrollBars.None;
-            this.EmpNumTextBox.SelectionStart = 0;
-            this.EmpNumTextBox.Size = new System.Drawing.Size(330, 55);
-            this.EmpNumTextBox.TabIndex = 51;
-            this.EmpNumTextBox.Texts = "";
-            this.EmpNumTextBox.UnderlinedStyle = false;
             // 
             // UpdateUserForm
             // 
@@ -460,7 +423,6 @@
             this.Text = "Обновление пользователя";
             this.Load += new System.EventHandler(this.UpdateUserForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.UsersPictureBox)).EndInit();
-            this.RoleMenuStrip.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -486,10 +448,6 @@
         private Design.CustomTextBox LoginTextBox;
         private System.Windows.Forms.PictureBox UsersPictureBox;
         private Components.FormStyleCustom CustomFormForAllProject;
-        private System.Windows.Forms.ContextMenuStrip RoleMenuStrip;
-        private System.Windows.Forms.ToolStripMenuItem администраторToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem сотрудникToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem заявительToolStripMenuItem;
         private System.Windows.Forms.Label EmpNumLabel;
         private Design.CustomTextBox EmpNumTextBox;
     }

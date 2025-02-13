@@ -460,6 +460,7 @@
     <None Include="Resources\Герб Алтайского края1.png" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\Лента флага2.png" />
     <Content Include="Герб-Алтайского-края.ico" />
   </ItemGroup>
   <ItemGroup>

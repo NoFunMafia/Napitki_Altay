@@ -376,23 +376,9 @@ namespace Napitki_Altay2.Forms
         /// </summary>
         public void LoadDataInCompleteApplicationDGW()
         {
-            if (PatrWorkCreateTextBox.Texts != string.Empty)
-            {
-                string sqlQueryFourth = sqlQueries.SqlComOutputAnswers
-                    (NameWorkCreateTextBox.Texts,
-                    FamWorkCreateTextBox.Texts,
-                    PatrWorkCreateTextBox.Texts);
-                DataTable dataTable = dataBaseWork.OutputQuery(sqlQueryFourth);
-                OutputInTableSettingTwo(dataTable);
-            }
-            else
-            {
-                string sqlQueryFourth = sqlQueries.SqlComOutputAnswersWithoudOtch
-                    (NameWorkCreateTextBox.Texts,
-                    FamWorkCreateTextBox.Texts);
-                DataTable dataTable = dataBaseWork.OutputQuery(sqlQueryFourth);
-                OutputInTableSettingTwo(dataTable);
-            }
+            string sqlQueryFourth = sqlQueries.SqlComOutputAnswers(NameWorkCreateTextBox.Texts, FamWorkCreateTextBox.Texts, PatrWorkCreateTextBox.Texts);
+            DataTable dataTable = dataBaseWork.OutputQuery(sqlQueryFourth);
+            OutputInTableSettingTwo(dataTable);
         }
         #endregion
         #region [Метод, выводящий данные в DataGridViewAnswer]

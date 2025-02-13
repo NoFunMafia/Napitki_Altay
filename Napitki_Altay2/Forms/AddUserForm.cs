@@ -205,14 +205,12 @@ namespace Napitki_Altay2.Forms
         {
             if(OtchTextBox.Texts != string.Empty)
             {
-                string sqlQueryThree = sqlQueries.SqlComTakeFKFio(
-                    ImyaTextBox.Texts, FamTextBox.Texts, OtchTextBox.Texts);
+                string sqlQueryThree = sqlQueries.SqlComTakeFKFio(ImyaTextBox.Texts, FamTextBox.Texts, OtchTextBox.Texts);
                 fioFK = dataBaseWork.GetString(sqlQueryThree);
             }
             else
             {
-                string sqlQueryThree = sqlQueries.SqlComTakeFKFi(
-                    ImyaTextBox.Texts, FamTextBox.Texts);
+                string sqlQueryThree = sqlQueries.SqlComTakeFKFi(ImyaTextBox.Texts, FamTextBox.Texts);
                 fioFK = dataBaseWork.GetString(sqlQueryThree);
             }
         }
@@ -226,8 +224,7 @@ namespace Napitki_Altay2.Forms
         private void ReceiveBoolCheckInsertUser(out bool checkInsertUser, string roleID)
         {
             string sqlQuerySecond = sqlQueries.SqlComInsertUser(
-                LoginTextBox.Texts, PasswordTextBox.Texts, 
-                roleID, EmailTextBox.Texts);
+                LoginTextBox.Texts, PasswordTextBox.Texts, roleID, EmailTextBox.Texts);
             checkInsertUser = dataBaseWork.WithoutOutputQuery(sqlQuerySecond);
         }
         #endregion

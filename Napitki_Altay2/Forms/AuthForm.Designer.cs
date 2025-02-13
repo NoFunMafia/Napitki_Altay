@@ -46,7 +46,7 @@
             // DetailsPictureBox
             // 
             this.DetailsPictureBox.Image = global::Napitki_Altay2.Properties.Resources.Лента_флага;
-            this.DetailsPictureBox.Location = new System.Drawing.Point(3, 605);
+            this.DetailsPictureBox.Location = new System.Drawing.Point(3, 601);
             this.DetailsPictureBox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.DetailsPictureBox.Name = "DetailsPictureBox";
             this.DetailsPictureBox.Size = new System.Drawing.Size(686, 200);

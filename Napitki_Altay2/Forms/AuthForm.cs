@@ -186,7 +186,7 @@ namespace Napitki_Altay2
                 mainWorkForm.Show();
                 Hide();
             }
-            else if (TitleRole.Equals("Сотрудник"))
+            else if (TitleRole.Equals("Муниципальный служащий"))
             {
                 MainWorkFormWorker mainWorkFormWorker = new MainWorkFormWorker();
                 mainWorkFormWorker.Show();

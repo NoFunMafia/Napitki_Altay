@@ -226,6 +226,39 @@ namespace Napitki_Altay2
                 CloseConnection();
             }
         }
+        /// <summary>
+        /// Метод, выполняющий SQL-запрос с параметрами
+        /// </summary>
+        /// <param name="sqlQuery">Строка запроса</param>
+        /// <param name="parameters">Словарь параметров для SQL-запроса</param>
+        public Boolean WithoutOutputQuerySecond(string sqlQuery, Dictionary<string, object> parameters)
+        {
+            try
+            {
+                OpenConnection();
+                SqlCommand sqlCommand = new SqlCommand(sqlQuery, GetConnection());
+                // Добавляем параметры в SQL-команду
+                foreach (var param in parameters)
+                {
+                    sqlCommand.Parameters.AddWithValue(param.Key, param.Value);
+                }
+                sqlCommand.ExecuteNonQuery();
+                return true;
+            }
+            catch (Exception)
+            {
+                CloseConnection();
+                MessageBox.Show("Возникла непредвиденная ошибка!",
+                    "Ошибка",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+                return false;
+            }
+            finally
+            {
+                CloseConnection();
+            }
+        }
         #endregion
     }
 }
