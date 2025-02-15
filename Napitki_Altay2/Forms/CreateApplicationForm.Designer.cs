@@ -73,9 +73,9 @@
             this.TypeApplLabel.Location = new System.Drawing.Point(33, 530);
             this.TypeApplLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.TypeApplLabel.Name = "TypeApplLabel";
-            this.TypeApplLabel.Size = new System.Drawing.Size(263, 45);
+            this.TypeApplLabel.Size = new System.Drawing.Size(247, 45);
             this.TypeApplLabel.TabIndex = 11;
-            this.TypeApplLabel.Text = "Тип обращения:";
+            this.TypeApplLabel.Text = "Тип заявления:";
             // 
             // DescripApplLabel
             // 
@@ -84,9 +84,9 @@
             this.DescripApplLabel.Location = new System.Drawing.Point(30, 735);
             this.DescripApplLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.DescripApplLabel.Name = "DescripApplLabel";
-            this.DescripApplLabel.Size = new System.Drawing.Size(359, 45);
+            this.DescripApplLabel.Size = new System.Drawing.Size(343, 45);
             this.DescripApplLabel.TabIndex = 12;
-            this.DescripApplLabel.Text = "Описание обращения:";
+            this.DescripApplLabel.Text = "Описание заявления:";
             // 
             // DateTimeDescrLabel
             // 
@@ -95,9 +95,9 @@
             this.DateTimeDescrLabel.Location = new System.Drawing.Point(30, 1487);
             this.DateTimeDescrLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.DateTimeDescrLabel.Name = "DateTimeDescrLabel";
-            this.DateTimeDescrLabel.Size = new System.Drawing.Size(427, 45);
+            this.DateTimeDescrLabel.Size = new System.Drawing.Size(411, 45);
             this.DateTimeDescrLabel.TabIndex = 13;
-            this.DateTimeDescrLabel.Text = "Время подачи обращения:";
+            this.DateTimeDescrLabel.Text = "Время подачи заявления:";
             // 
             // TypeApplMenuStrip
             // 
@@ -109,7 +109,7 @@
             this.постановкаToolStripMenuItem,
             this.получениеToolStripMenuItem});
             this.TypeApplMenuStrip.Name = "TypeApplMenuStip";
-            this.TypeApplMenuStrip.Size = new System.Drawing.Size(774, 180);
+            this.TypeApplMenuStrip.Size = new System.Drawing.Size(774, 136);
             // 
             // компенсацияToolStripMenuItem
             // 
@@ -139,12 +139,12 @@
             // 
             this.SelectDocumentLabel.AutoSize = true;
             this.SelectDocumentLabel.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
-            this.SelectDocumentLabel.Location = new System.Drawing.Point(747, 68);
+            this.SelectDocumentLabel.Location = new System.Drawing.Point(715, 67);
             this.SelectDocumentLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.SelectDocumentLabel.Name = "SelectDocumentLabel";
-            this.SelectDocumentLabel.Size = new System.Drawing.Size(540, 45);
+            this.SelectDocumentLabel.Size = new System.Drawing.Size(524, 45);
             this.SelectDocumentLabel.TabIndex = 20;
-            this.SelectDocumentLabel.Text = "Прикрепить файлы к обращению:";
+            this.SelectDocumentLabel.Text = "Прикрепить файлы к заявлению:";
             // 
             // ChooseTypeApplPictureBox
             // 
@@ -197,7 +197,7 @@
             this.ClearFilesButton.Location = new System.Drawing.Point(1216, 669);
             this.ClearFilesButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.ClearFilesButton.Name = "ClearFilesButton";
-            this.ClearFilesButton.Size = new System.Drawing.Size(301, 88);
+            this.ClearFilesButton.Size = new System.Drawing.Size(307, 88);
             this.ClearFilesButton.TabIndex = 21;
             this.ClearFilesButton.Text = "Удалить файлы";
             this.ClearFilesButton.TextColor = System.Drawing.Color.White;
@@ -220,7 +220,7 @@
             this.ChooseDocumentButton.Name = "ChooseDocumentButton";
             this.ChooseDocumentButton.Size = new System.Drawing.Size(307, 88);
             this.ChooseDocumentButton.TabIndex = 18;
-            this.ChooseDocumentButton.Text = "Выбрать файл";
+            this.ChooseDocumentButton.Text = "Выбрать файлы";
             this.ChooseDocumentButton.TextColor = System.Drawing.Color.White;
             this.ChooseDocumentButton.UseVisualStyleBackColor = false;
             this.ChooseDocumentButton.Click += new System.EventHandler(this.ChooseDocumentButton_Click);
@@ -262,7 +262,7 @@
             this.RegApplButton.Name = "RegApplButton";
             this.RegApplButton.Size = new System.Drawing.Size(598, 128);
             this.RegApplButton.TabIndex = 14;
-            this.RegApplButton.Text = "Создать обращение";
+            this.RegApplButton.Text = "Создать заявление";
             this.RegApplButton.TextColor = System.Drawing.Color.White;
             this.RegApplButton.UseVisualStyleBackColor = false;
             this.RegApplButton.Click += new System.EventHandler(this.RegApplButton_Click);
@@ -370,7 +370,7 @@
             this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Name = "CreateApplicationForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Создание обращения";
+            this.Text = "Создание заявления";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.CreateApplicationForm_FormClosed);
             this.TypeApplMenuStrip.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.ChooseTypeApplPictureBox)).EndInit();

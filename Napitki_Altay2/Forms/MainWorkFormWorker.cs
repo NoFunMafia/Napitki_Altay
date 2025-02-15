@@ -376,7 +376,10 @@ namespace Napitki_Altay2.Forms
         /// </summary>
         public void LoadDataInCompleteApplicationDGW()
         {
-            string sqlQueryFourth = sqlQueries.SqlComOutputAnswers(NameWorkCreateTextBox.Texts, FamWorkCreateTextBox.Texts, PatrWorkCreateTextBox.Texts);
+            string sqlComWorkerFinder = sqlQueries.SqlComGetWorkerId
+                (NameWorkCreateTextBox.Texts, FamWorkCreateTextBox.Texts, PatrWorkCreateTextBox.Texts);
+            string workerID = dataBaseWork.GetString(sqlComWorkerFinder);
+            string sqlQueryFourth = sqlQueries.SqlComOutputAnswers(workerID);
             DataTable dataTable = dataBaseWork.OutputQuery(sqlQueryFourth);
             OutputInTableSettingTwo(dataTable);
         }
@@ -412,17 +415,17 @@ namespace Napitki_Altay2.Forms
         private void OutputInTableSetting(DataTable dataTable)
         {
             DataGridViewAnswer.DataSource = dataTable;
-            DataGridViewAnswer.Columns[0].HeaderText = "Номер обращения";
+            DataGridViewAnswer.Columns[0].HeaderText = "Номер заявления";
             DataGridViewAnswer.Columns[0].Width = 80;
-            DataGridViewAnswer.Columns[1].HeaderText = "Компания";
+            DataGridViewAnswer.Columns[1].HeaderText = "Фамилия";
             DataGridViewAnswer.Columns[1].Width = 100;
-            DataGridViewAnswer.Columns[2].HeaderText = "Фамилия";
+            DataGridViewAnswer.Columns[2].HeaderText = "Имя";
             DataGridViewAnswer.Columns[2].Width = 100;
-            DataGridViewAnswer.Columns[3].HeaderText = "Имя";
+            DataGridViewAnswer.Columns[3].HeaderText = "Отчество";
             DataGridViewAnswer.Columns[3].Width = 100;
-            DataGridViewAnswer.Columns[4].HeaderText = "Отчество";
+            DataGridViewAnswer.Columns[4].HeaderText = "Тип заявления";
             DataGridViewAnswer.Columns[4].Width = 100;
-            DataGridViewAnswer.Columns[5].HeaderText = "Статус обращения";
+            DataGridViewAnswer.Columns[5].HeaderText = "Статус заявления";
             DataGridViewAnswer.Columns[5].Width = 218;
         }
         #endregion
@@ -434,23 +437,17 @@ namespace Napitki_Altay2.Forms
         private void OutputInTableSettingTwo(DataTable dataTable)
         {
             CompleteApplicationDGW.DataSource = dataTable;
-            CompleteApplicationDGW.Columns[0].HeaderText = 
-                "Номер обращения";
+            CompleteApplicationDGW.Columns[0].HeaderText = "Номер обращения";
             CompleteApplicationDGW.Columns[0].Width = 80;
-            CompleteApplicationDGW.Columns[1].HeaderText = 
-                "Фамилия";
+            CompleteApplicationDGW.Columns[1].HeaderText = "Фамилия";
             CompleteApplicationDGW.Columns[1].Width = 100;
-            CompleteApplicationDGW.Columns[2].HeaderText = 
-                "Имя";
+            CompleteApplicationDGW.Columns[2].HeaderText = "Имя";
             CompleteApplicationDGW.Columns[2].Width = 100;
-            CompleteApplicationDGW.Columns[3].HeaderText = 
-                "Отчество";
+            CompleteApplicationDGW.Columns[3].HeaderText = "Отчество";
             CompleteApplicationDGW.Columns[3].Width = 100;
-            CompleteApplicationDGW.Columns[4].HeaderText = 
-                "Время ответа сотрудника";
+            CompleteApplicationDGW.Columns[4].HeaderText = "Время ответа сотрудника";
             CompleteApplicationDGW.Columns[4].Width = 130;
-            CompleteApplicationDGW.Columns[5].HeaderText =
-                "Статус обращения";
+            CompleteApplicationDGW.Columns[5].HeaderText ="Статус обращения";
             CompleteApplicationDGW.Columns[5].Width = 188;
         }
         #endregion
@@ -476,12 +473,11 @@ namespace Napitki_Altay2.Forms
                 if (DataGridViewAnswer.RowCount != 0)
                 {
                     SelectedRowID = DataGridViewAnswer.CurrentRow.Cells[0].Value.ToString();
-                    if (DataGridViewAnswer.CurrentRow.Cells[5].Value.ToString() == "Новое обращение")
+                    if (DataGridViewAnswer.CurrentRow.Cells[5].Value.ToString() == "Принято к рассмотрению")
                     {
                         string sqlQuerySix = sqlQueries.sqlComCheckStatusId;
                         string statusName = dataBaseWork.GetString(sqlQuerySix);
-                        string sqlQuerySeven = sqlQueries.SqlComUpdateStatusApplication
-                            (statusName, SelectedRowID);
+                        string sqlQuerySeven = sqlQueries.SqlComUpdateStatusApplication(statusName, SelectedRowID);
                         bool checkInsert = dataBaseWork.WithoutOutputQuery(sqlQuerySeven);
                         if (checkInsert)
                         {
@@ -553,9 +549,8 @@ namespace Napitki_Altay2.Forms
                 Dictionary<string, int> employeeTasksCount = new Dictionary<string, int>();
                 Dictionary<string, int> statusCounts = new Dictionary<string, int>()
                 {
-                    { "Дополнено", 0 },
-                    { "Завершено", 0 },
-                    { "Ожидание доп. информации", 0 }
+                    { "Рассмотрено и закрыто", 0 },
+                    { "Отказано в рассмотрении", 0 }
                 };
                 // Данные таблицы
                 for (int j = 0; j < CompleteApplicationDGW.Rows.Count; j++)
@@ -593,7 +588,7 @@ namespace Napitki_Altay2.Forms
                 IWorksheet.Columns.AutoFit();
                 // Вывод статистики по сотрудникам и статусам
                 int summaryRow = CompleteApplicationDGW.Rows.Count + 6;
-                IWorksheet.Cells[summaryRow, 1] = "Количество обращений по статусам";
+                IWorksheet.Cells[summaryRow, 1] = "Количество заявлений по статусам";
                 IWorksheet.Cells[summaryRow, 1].Font.Bold = true;
                 IWorksheet.Cells[summaryRow, 1].Interior.Color = Color.FromArgb(201, 235, 200);
                 IWorksheet.get_Range("A" + summaryRow, "B" + summaryRow).Merge();
@@ -618,8 +613,8 @@ namespace Napitki_Altay2.Forms
                 // Add data series
                 Excel.SeriesCollection seriesCollection = (Excel.SeriesCollection)chart.SeriesCollection(Type.Missing);
                 Excel.Series series = seriesCollection.NewSeries();
-                series.XValues = new string[] { "Дополнено", "Завершено", "Ожидание доп. информации" };
-                series.Values = new int[] { statusCounts["Дополнено"], statusCounts["Завершено"], statusCounts["Ожидание доп. информации"] };
+                series.XValues = new string[] { "Рассмотрено и закрыто", "Отказано в рассмотрении" };
+                series.Values = new int[] { statusCounts["Рассмотрено и закрыто"], statusCounts["Отказано в рассмотрении"] };
                 series.Name = "Завершенные обращения";
                 series.ChartType = Excel.XlChartType.xlColumnClustered;
                 chart.HasTitle = true;
@@ -641,13 +636,10 @@ namespace Napitki_Altay2.Forms
                     switch (i)
                     {
                         case 1:
-                            point.Interior.Color = Color.FromArgb(255, 99, 71); // Дополнено - красный
+                            point.Interior.Color = Color.FromArgb(50, 205, 50); // Рассмотрено и закрыто - зеленый
                             break;
                         case 2:
-                            point.Interior.Color = Color.FromArgb(50, 205, 50); // Завершено - зеленый
-                            break;
-                        case 3:
-                            point.Interior.Color = Color.FromArgb(255, 215, 0); // Ожидание доп. информации - желтый
+                            point.Interior.Color = Color.FromArgb(255, 99, 71); // Отказано в рассмотрении - красный
                             break;
                     }
                 }
@@ -744,35 +736,17 @@ namespace Napitki_Altay2.Forms
         /// </summary>
         public void LoadDataInDataGridViewAnswerWithDate()
         {
-            if (PatrWorkCreateTextBox.Texts != string.Empty)
-            {
-                string sqlQuery = sqlQueries.SqlComOutputAnswerWithDateTime
-                    (NameWorkCreateTextBox.Texts,
-                    FamWorkCreateTextBox.Texts,
-                    PatrWorkCreateTextBox.Texts,
-                    FirstDateToRaportDTP.Value.Date.ToString("yyyy-MM-dd"),
-                    SecondDateToRaportDTP.Value.Date.ToString("yyyy-MM-dd"));
-                DataTable dataTable = dataBaseWork.OutputQuery(sqlQuery);
-                MessageBox.Show("Обращения в работе были отсортированы. " +
-                    "Для формирования финального отчёта, пожалуйста, " +
-                    "нажмите на кнопку формирования ещё раз.", 
-                    "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                OutputInTableSettingTwo(dataTable);
-            }
-            else
-            {
-                string sqlQuery = sqlQueries.SqlComOutputAnswerWithDateTimeWithoutOtch
-                    (NameWorkCreateTextBox.Texts,
-                    FamWorkCreateTextBox.Texts,
-                    FirstDateToRaportDTP.Value.Date.ToString("yyyy-MM-dd"),
-                    SecondDateToRaportDTP.Value.Date.ToString("yyyy-MM-dd"));
-                DataTable dataTable = dataBaseWork.OutputQuery(sqlQuery);
-                MessageBox.Show("Обращения в работе были отсортированы. " +
-                    "Для формирования финального отчёта, пожалуйста, " +
-                    "нажмите на кнопку формирования ещё раз.",
-                    "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                OutputInTableSettingTwo(dataTable);
-            }
+            string sqlComWorkerFinder = sqlQueries.SqlComGetWorkerId
+                (NameWorkCreateTextBox.Texts, FamWorkCreateTextBox.Texts, PatrWorkCreateTextBox.Texts);
+            string workerID = dataBaseWork.GetString(sqlComWorkerFinder);
+            string sqlQuery = sqlQueries.SqlComOutputAnswerWithDateTime
+                (workerID, FirstDateToRaportDTP.Value.Date.ToString("yyyy-MM-dd"), SecondDateToRaportDTP.Value.Date.ToString("yyyy-MM-dd"));
+            DataTable dataTable = dataBaseWork.OutputQuery(sqlQuery);
+            MessageBox.Show("Обращения в работе были отсортированы. " +
+                "Для формирования финального отчёта, пожалуйста, " +
+                "нажмите на кнопку формирования ещё раз.",
+                "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            OutputInTableSettingTwo(dataTable);
         }
         #endregion
     }

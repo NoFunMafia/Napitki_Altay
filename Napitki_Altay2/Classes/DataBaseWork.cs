@@ -260,5 +260,38 @@ namespace Napitki_Altay2
             }
         }
         #endregion
+        public int InsertAndGetId(string sqlQuery, Tuple<string, byte[], string> document = null)
+        {
+            int insertedId = -1;
+            try
+            {
+                OpenConnection();
+                using (SqlCommand sqlCommand = new SqlCommand(sqlQuery, GetConnection()))
+                {
+                    if (document != null)
+                    {
+                        sqlCommand.Parameters.Add("@filename", SqlDbType.NVarChar).Value = document.Item1;
+                        sqlCommand.Parameters.Add("@data", SqlDbType.VarBinary).Value = document.Item2;
+                        sqlCommand.Parameters.Add("@extn", SqlDbType.Char).Value = document.Item3;
+                    }
+
+                    // Выполняем запрос и возвращаем ID вставленной записи
+                    object result = sqlCommand.ExecuteScalar();
+                    if (result != null && int.TryParse(result.ToString(), out int id))
+                    {
+                        insertedId = id;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка при вставке данных: {ex.Message}", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                CloseConnection();
+            }
+            return insertedId;
+        }
     }
 }

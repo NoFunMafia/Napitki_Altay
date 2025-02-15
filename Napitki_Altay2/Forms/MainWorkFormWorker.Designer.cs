@@ -99,12 +99,12 @@
             this.AnswerToApplicationPage.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.AnswerToApplicationPage.Size = new System.Drawing.Size(1512, 928);
             this.AnswerToApplicationPage.TabIndex = 1;
-            this.AnswerToApplicationPage.Text = "Создать ответ на обращение";
+            this.AnswerToApplicationPage.Text = "Создать ответ на заявление";
             // 
             // UpdateAnswerInDGW
             // 
-            this.UpdateAnswerInDGW.BackColor = System.Drawing.Color.RoyalBlue;
-            this.UpdateAnswerInDGW.BackgroundColor = System.Drawing.Color.RoyalBlue;
+            this.UpdateAnswerInDGW.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(56)))), ((int)(((byte)(165)))));
+            this.UpdateAnswerInDGW.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(56)))), ((int)(((byte)(165)))));
             this.UpdateAnswerInDGW.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
             this.UpdateAnswerInDGW.BorderRadius = 0;
             this.UpdateAnswerInDGW.BorderSize = 0;
@@ -124,8 +124,8 @@
             // 
             // AnswerToApplicationButton
             // 
-            this.AnswerToApplicationButton.BackColor = System.Drawing.Color.RoyalBlue;
-            this.AnswerToApplicationButton.BackgroundColor = System.Drawing.Color.RoyalBlue;
+            this.AnswerToApplicationButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(56)))), ((int)(((byte)(165)))));
+            this.AnswerToApplicationButton.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(56)))), ((int)(((byte)(165)))));
             this.AnswerToApplicationButton.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
             this.AnswerToApplicationButton.BorderRadius = 0;
             this.AnswerToApplicationButton.BorderSize = 0;
@@ -192,7 +192,7 @@
             this.DoneApplicationPage.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.DoneApplicationPage.Size = new System.Drawing.Size(1512, 928);
             this.DoneApplicationPage.TabIndex = 0;
-            this.DoneApplicationPage.Text = " Обращения в доработке и завершенные";
+            this.DoneApplicationPage.Text = "Закрытые заявления (отчетность)";
             // 
             // LatterPoLabel
             // 
@@ -252,7 +252,7 @@
             this.SupplementReplyButton.Name = "SupplementReplyButton";
             this.SupplementReplyButton.Size = new System.Drawing.Size(446, 144);
             this.SupplementReplyButton.TabIndex = 29;
-            this.SupplementReplyButton.Text = "Дополнить ответ или посмотреть информацию обращения\r\n";
+            this.SupplementReplyButton.Text = "Посмотреть информацию и ответ на заявление";
             this.SupplementReplyButton.TextColor = System.Drawing.Color.White;
             this.SupplementReplyButton.UseVisualStyleBackColor = false;
             this.SupplementReplyButton.Click += new System.EventHandler(this.SupplementReplyButton_Click);
@@ -371,7 +371,7 @@
             this.WorkerDataPage.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.WorkerDataPage.Size = new System.Drawing.Size(1512, 928);
             this.WorkerDataPage.TabIndex = 3;
-            this.WorkerDataPage.Text = "Данные о сотруднике";
+            this.WorkerDataPage.Text = "Данные о муниципальном служащем";
             // 
             // VisiblePassCheckMain
             // 
@@ -459,8 +459,8 @@
             // 
             // UpdLogPassButton
             // 
-            this.UpdLogPassButton.BackColor = System.Drawing.Color.RoyalBlue;
-            this.UpdLogPassButton.BackgroundColor = System.Drawing.Color.RoyalBlue;
+            this.UpdLogPassButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(56)))), ((int)(((byte)(165)))));
+            this.UpdLogPassButton.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(56)))), ((int)(((byte)(165)))));
             this.UpdLogPassButton.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
             this.UpdLogPassButton.BorderRadius = 0;
             this.UpdLogPassButton.BorderSize = 0;
@@ -480,8 +480,8 @@
             // 
             // CreateUserFIOButton
             // 
-            this.CreateUserFIOButton.BackColor = System.Drawing.Color.RoyalBlue;
-            this.CreateUserFIOButton.BackgroundColor = System.Drawing.Color.RoyalBlue;
+            this.CreateUserFIOButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(56)))), ((int)(((byte)(165)))));
+            this.CreateUserFIOButton.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(56)))), ((int)(((byte)(165)))));
             this.CreateUserFIOButton.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
             this.CreateUserFIOButton.BorderRadius = 0;
             this.CreateUserFIOButton.BorderSize = 0;
@@ -502,13 +502,13 @@
             // PassWorkCreaUpdaTextBox
             // 
             this.PassWorkCreaUpdaTextBox.BackColor = System.Drawing.Color.White;
-            this.PassWorkCreaUpdaTextBox.BorderColor = System.Drawing.Color.RoyalBlue;
-            this.PassWorkCreaUpdaTextBox.BorderFocusColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
+            this.PassWorkCreaUpdaTextBox.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(56)))), ((int)(((byte)(165)))));
+            this.PassWorkCreaUpdaTextBox.BorderFocusColor = System.Drawing.Color.FromArgb(((int)(((byte)(207)))), ((int)(((byte)(20)))), ((int)(((byte)(1)))));
             this.PassWorkCreaUpdaTextBox.BorderSize = 2;
             this.PassWorkCreaUpdaTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F);
             this.PassWorkCreaUpdaTextBox.ForeColor = System.Drawing.Color.Black;
             this.PassWorkCreaUpdaTextBox.Location = new System.Drawing.Point(776, 236);
-            this.PassWorkCreaUpdaTextBox.Margin = new System.Windows.Forms.Padding(8, 8, 8, 8);
+            this.PassWorkCreaUpdaTextBox.Margin = new System.Windows.Forms.Padding(8);
             this.PassWorkCreaUpdaTextBox.Multiline = false;
             this.PassWorkCreaUpdaTextBox.Name = "PassWorkCreaUpdaTextBox";
             this.PassWorkCreaUpdaTextBox.Padding = new System.Windows.Forms.Padding(10, 11, 10, 11);
@@ -524,13 +524,13 @@
             // PatrWorkCreateTextBox
             // 
             this.PatrWorkCreateTextBox.BackColor = System.Drawing.Color.White;
-            this.PatrWorkCreateTextBox.BorderColor = System.Drawing.Color.RoyalBlue;
-            this.PatrWorkCreateTextBox.BorderFocusColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
+            this.PatrWorkCreateTextBox.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(56)))), ((int)(((byte)(165)))));
+            this.PatrWorkCreateTextBox.BorderFocusColor = System.Drawing.Color.FromArgb(((int)(((byte)(207)))), ((int)(((byte)(20)))), ((int)(((byte)(1)))));
             this.PatrWorkCreateTextBox.BorderSize = 2;
             this.PatrWorkCreateTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F);
             this.PatrWorkCreateTextBox.ForeColor = System.Drawing.Color.Black;
             this.PatrWorkCreateTextBox.Location = new System.Drawing.Point(342, 469);
-            this.PatrWorkCreateTextBox.Margin = new System.Windows.Forms.Padding(8, 8, 8, 8);
+            this.PatrWorkCreateTextBox.Margin = new System.Windows.Forms.Padding(8);
             this.PatrWorkCreateTextBox.Multiline = false;
             this.PatrWorkCreateTextBox.Name = "PatrWorkCreateTextBox";
             this.PatrWorkCreateTextBox.Padding = new System.Windows.Forms.Padding(10, 11, 10, 11);
@@ -546,13 +546,13 @@
             // NameWorkCreateTextBox
             // 
             this.NameWorkCreateTextBox.BackColor = System.Drawing.Color.White;
-            this.NameWorkCreateTextBox.BorderColor = System.Drawing.Color.RoyalBlue;
-            this.NameWorkCreateTextBox.BorderFocusColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
+            this.NameWorkCreateTextBox.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(56)))), ((int)(((byte)(165)))));
+            this.NameWorkCreateTextBox.BorderFocusColor = System.Drawing.Color.FromArgb(((int)(((byte)(207)))), ((int)(((byte)(20)))), ((int)(((byte)(1)))));
             this.NameWorkCreateTextBox.BorderSize = 2;
             this.NameWorkCreateTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F);
             this.NameWorkCreateTextBox.ForeColor = System.Drawing.Color.Black;
             this.NameWorkCreateTextBox.Location = new System.Drawing.Point(342, 352);
-            this.NameWorkCreateTextBox.Margin = new System.Windows.Forms.Padding(8, 8, 8, 8);
+            this.NameWorkCreateTextBox.Margin = new System.Windows.Forms.Padding(8);
             this.NameWorkCreateTextBox.Multiline = false;
             this.NameWorkCreateTextBox.Name = "NameWorkCreateTextBox";
             this.NameWorkCreateTextBox.Padding = new System.Windows.Forms.Padding(10, 11, 10, 11);
@@ -568,13 +568,13 @@
             // FamWorkCreateTextBox
             // 
             this.FamWorkCreateTextBox.BackColor = System.Drawing.Color.White;
-            this.FamWorkCreateTextBox.BorderColor = System.Drawing.Color.RoyalBlue;
-            this.FamWorkCreateTextBox.BorderFocusColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
+            this.FamWorkCreateTextBox.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(56)))), ((int)(((byte)(165)))));
+            this.FamWorkCreateTextBox.BorderFocusColor = System.Drawing.Color.FromArgb(((int)(((byte)(207)))), ((int)(((byte)(20)))), ((int)(((byte)(1)))));
             this.FamWorkCreateTextBox.BorderSize = 2;
             this.FamWorkCreateTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F);
             this.FamWorkCreateTextBox.ForeColor = System.Drawing.Color.Black;
             this.FamWorkCreateTextBox.Location = new System.Drawing.Point(342, 236);
-            this.FamWorkCreateTextBox.Margin = new System.Windows.Forms.Padding(8, 8, 8, 8);
+            this.FamWorkCreateTextBox.Margin = new System.Windows.Forms.Padding(8);
             this.FamWorkCreateTextBox.Multiline = false;
             this.FamWorkCreateTextBox.Name = "FamWorkCreateTextBox";
             this.FamWorkCreateTextBox.Padding = new System.Windows.Forms.Padding(10, 11, 10, 11);

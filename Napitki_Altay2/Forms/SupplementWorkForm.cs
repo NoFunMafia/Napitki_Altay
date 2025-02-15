@@ -468,7 +468,7 @@ namespace Napitki_Altay2.Forms
             return new Dictionary<string, string>
             {
                 { "{applicationNumber}", MainWorkFormWorker.SelectedRowID?.ToString() ?? "Неизвестно" },
-                { "{companyName}", UserApplicationInfoForWorkerForm.companyWork?.ToString() ?? "Неизвестно" },
+                //{ "{companyName}", UserApplicationInfoForWorkerForm.companyWork?.ToString() ?? "Неизвестно" },
                 { "{imya}", userName?.Substring(0, 1).ToString() ?? "Неизвестно" },
                 { "{famFull}", userFam?.ToString().ToString() ?? "Неизвестно" },
                 { "{otch}", userOtch?.Substring(0, 1).ToString() ?? "Неизвестно"},

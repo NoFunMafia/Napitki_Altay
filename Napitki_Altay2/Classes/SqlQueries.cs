@@ -315,30 +315,14 @@ namespace Napitki_Altay2.Classes
         }
         #endregion
         #region [UserApplicationInfoForWorkerForm]
-        public string sqlComCheckApplicationWorker = "select " +
-                    "ID_Application, Applicant_Company, " +
-                    "Type_Appeal, Description_Of_Appeal, " +
-                    "Date_Of_Request, Document_Name " +
-                    "from Application_To_Company " +
-                    "join Type_Of_Appeal on " +
-                    "Application_To_Company.FK_Type_Of_Appeal " +
-                    "= Type_Of_Appeal.ID_Type_Of_Appeal " +
-                    "full join Application_Document_From_User " +
-                    "on Application_To_Company." +
-                    "FK_Application_Document_From_User = " +
-                    "Application_Document_From_User." +
-                    $"ID_Document_From_User where " +
-                    $"Id_Application = " +
-                    $"'{MainWorkFormWorker.SelectedRowID}'";
-        public string sqlComOpenDocumentWorker = "select " +
-                "Document_Name, Document_Data, " +
-                "Document_Extension from Application_To_Company " +
-                "join Application_Document_From_User " +
-                "on Application_To_Company." +
-                "FK_Application_Document_From_User" +
-                " = Application_Document_From_User." +
-                $"ID_Document_From_User where ID_Application = " +
-                $"'{MainWorkFormWorker.SelectedRowID}'";
+        public string sqlComCheckApplicationWorker = "SELECT ua.Appeal_ID, at.Appeal_Name, " +
+            "ua.Appeal_Description, ua.Appeal_Date FROM User_Appeal ua " +
+            "JOIN Appeal_Type at ON ua.Appeal_Type_ID = at.Appeal_Type_ID " +
+            $"WHERE ua.Appeal_ID = '{MainWorkFormWorker.SelectedRowID}'";
+        public string sqlComOpenDocumentWorker = "SELECT DISTINCT ud.Document_Name, ud.Document_Data, ud.Document_Extension " +
+            "FROM User_Document ud LEFT JOIN Appeal_Documents ad ON ud.Document_ID = ad.Document_ID " +
+            "LEFT JOIN User_Appeal ua ON ud.User_ID = ua.User_ID " +
+            $"WHERE ua.Appeal_ID = {MainWorkFormWorker.SelectedRowID} OR ad.Appeal_ID = {MainWorkFormWorker.SelectedRowID};";
         #endregion
         #region [CreateApplicationForm]
         public string sqlComFkInfoUser = "select * from User_Info where " +
@@ -353,14 +337,6 @@ namespace Napitki_Altay2.Classes
         {
             string sqlCom = "select Appeal_Type_ID " +
                 $"from Appeal_Type where Appeal_Name = '{typeName}'";
-            return sqlCom;
-        }
-        public string SqlComAddApplication(string type,
-            string description, DateTime dateTime, string infoUser)
-        {
-            string sqlCom = "insert into User_Appeal (Appeal_Type_ID, " +
-                "Appeal_Description, Appeal_Date, Date_Of_Request, " +
-                $"User_ID, Status_ID) values ('{type}', '{description}', '{dateTime}', '{infoUser}', '1')";
             return sqlCom;
         }
         public string SqlComAddDocument(string infoUser)
@@ -403,61 +379,39 @@ namespace Napitki_Altay2.Classes
         {
             return "INSERT INTO Appeal_Documents (Appeal_ID, Document_ID) VALUES (@AppealId, @DocId)";
         }
-        public string GetLastAppealIdQuery(string userId)
-        {
-            return $"SELECT TOP 1 Appeal_ID FROM User_Appeal WHERE User_ID = '{userId}' ORDER BY Appeal_Date DESC";
-        }
-        public string GetAllDocumentsForUserQuery(string userId)
-        {
-            return $"SELECT Document_ID FROM User_Document WHERE User_ID = '{userId}'";
-        }
         #endregion
         #region [AnswerToUserApplicationForm]
-        public string SqlComCheckDocumentNameWorker(string name)
-        {
-            string sqlCom = "select * from Answer_Document_From_Worker " +
-                $"where Document_Name_W = '{name}'";
-            return sqlCom;
-        }
-        public string SqlComTakeFkInfoWorker(string name, string fam, string otch)
-        {
-            string sqlCom = "select * from Info_About_User where " +
-                $"User_Surname = '{fam}' and User_Name = '{name}' " +
-                $"and User_Patronymic = '{otch}'";
-            return sqlCom;
-        }
-        public string SqlComTakeFkInfoWorkerWithoutOtch(string name, string fam)
-        {
-            string sqlCom = "select * from Info_About_User where " +
-                $"User_Surname = '{fam}' and User_Name = '{name}'";
-            return sqlCom;
-        }
         public string SqlComCheckStatusID(string statusName)
         {
-            string sqlCom = "select ID_Status from Status_Application " +
+            string sqlCom = "select Status_ID from Appeal_Status " +
                 $"where Status_Name = '{statusName}'";
             return sqlCom;
         }
         public string SqlComUpdateStatus(string status, string idRow)
         {
-            string sqlCom = "update Application_To_Company set " +
-                $"FK_Status_Application = '{status}' where ID_Application = '{idRow}'";
+            string sqlCom = "update User_Appeal set " +
+                $"Status_ID = '{status}' where Appeal_ID = '{idRow}'";
             return sqlCom;
         }
-        public string SqlComCreateReadyApplicationWithoutDocument
-            (string idRow, string idUser, string description, DateTime dateTime)
+        public string SqlComCreateAppealResponse(string appealId, string workerId, string responseText)
         {
-            string sqlCom = "insert into Ready_Application(FK_ID_Application, " +
-                "FK_Info_User, Answer_To_Application, Date_Of_Answer) values " +
-                $"('{idRow}', '{idUser}', '{description}', '{dateTime}')";
-            return sqlCom;
+            return $"INSERT INTO Appeal_Response (Appeal_ID, Worker_ID, Response_Text, Response_Date) " +
+                   $"VALUES ('{appealId}', '{workerId}', '{responseText}', GETDATE()); SELECT SCOPE_IDENTITY();";
         }
-        public string SqlComInsertWorkerDoc(string infoUser)
+        public string SqlComInsertWorkerDoc(string workerId)
         {
-            string sqlCom = "insert into Answer_Document_From_Worker(Document_Name_W, " +
-                "Document_Data_W, Document_Extension_W, FK_Info_User) values " +
-                $"(@filename, @data, @extn, '{infoUser}')";
-            return sqlCom;
+            return $"INSERT INTO Worker_Document (Document_Name, Document_Data, Document_Extension, Worker_ID) " +
+                   $"VALUES (@filename, @data, @extn, '{workerId}'); SELECT SCOPE_IDENTITY();";
+        }
+        public string SqlComGetWorkerId(string name, string fam, string otch)
+        {
+            return $"SELECT User_ID FROM User_Info WHERE Last_Name = '{fam}' AND First_Name = '{name}' " +
+                   (string.IsNullOrEmpty(otch) ? "" : $"AND Middle_Name = '{otch}'");
+        }
+        public string SqlComLinkDocumentToResponse(string responseId, string documentId)
+        {
+            return $"INSERT INTO Response_Documents (Response_ID, Document_ID) " +
+                   $"VALUES ('{responseId}', '{documentId}');";
         }
         public string SqlComInfoAboutDocumentWorker
             (string documentName, string documentExtension)
@@ -465,18 +419,6 @@ namespace Napitki_Altay2.Classes
             string sqlCom = "select * from Answer_Document_From_Worker where " +
                 $"Document_Name_W = '{documentName}' and " +
                 $"Document_Extension_W = '{documentExtension}'";
-            return sqlCom;
-        }
-        public string SqlComCreateReadyApplicationWithDocument
-            (string idRow, string idUser, string description, 
-            DateTime dateTime, string idDocument)
-        {
-            string sqlCom = "insert into Ready_Application(FK_ID_Application, " +
-                "FK_Info_User, Answer_To_Application, Date_Of_Answer, " +
-                "FK_Answer_Document_From_Worker) values " +
-                $"('{idRow}', '{idUser}', " +
-                $"'{description}', '{dateTime}', " +
-                $"'{idDocument}')";
             return sqlCom;
         }
         public string SqlComFioApplication(string idApplication)
@@ -491,66 +433,56 @@ namespace Napitki_Altay2.Classes
         #region [MainWorkFormWorker]
         public string SqlComTakeFioWorker(string login)
         {
-            string sqlCom = "select * from Info_About_User join Authentication_ " +
-                "on Authentication_.FK_Info_User = Info_About_User.ID_Info_User " +
-                $"where Authentication_.Login_User = '{login}'";
+            string sqlCom = "select * from User_Info join User_Auth " +
+                $"on User_Auth.User_ID = User_Info.User_ID where User_Auth.Username = '{login}'";
             return sqlCom;
         }
         public string SqlComCheckWorkerFio(string name, string fam, string otch)
         {
-            string sqlCom = "select * from Info_About_User where " +
-                $"User_Surname = '{fam}' and User_Name = '{name}' " +
-                $"and User_Patronymic = '{otch}'";
+            string sqlCom = "select * from User_Info where " +
+                $"Last_Name = '{fam}' and First_Name = '{name}' and Middle_Name = '{otch}'";
             return sqlCom;
         }
         public string SqlComInsertWorkerFio(string name, string fam, string otch)
         {
-            string sqlCom = "insert into Info_About_User(User_Surname, " +
-                $"User_Name, User_Patronymic) values ('{fam}','{name}','{otch}')";
+            string sqlCom = "insert into User_Info(Last_Name, " +
+                $"First_Name, Middle_Name) values ('{fam}','{name}','{otch}')";
             return sqlCom;
         }
         public string SqlComUpdateWorkerForFio(string name, string fam, string otch, string login)
         {
-            string sqlCom = $"update Authentication_ set FK_Info_User = " +
-                "Info_About_User.ID_Info_User from Info_About_User where " +
-                $"Info_About_User.User_Surname = '{fam}' and " +
-                $"Info_About_User.User_Name = '{name}' and " +
-                $"Info_About_User.User_Patronymic = '{otch}' and " +
-                $"Authentication_.Login_User = '{login}'";
+            string sqlCom = $"update User_Auth set User_Auth.User_ID = " +
+                "User_Info.User_ID from User_Info where " +
+                $"User_Info.Last_Name = '{fam}' and " +
+                $"User_Info.First_Name = '{name}' and " +
+                $"User_Info.Middle_Name = '{otch}' and " +
+                $"User_Auth.Username = '{login}'";
             return sqlCom;
         }
-        public string SqlComOutputAnswers(string name, string fam, string otch)
+        public string SqlComOutputAnswers(string workerID)
         {
-            string sqlCom = "SELECT ar.Appeal_ID AS FK_ID_Application, " +
+            string sqlCom = "SELECT ua.Appeal_ID AS FK_ID_Application, " +
                 "ui.Last_Name AS User_Surname, ui.First_Name AS User_Name, " +
                 "ui.Middle_Name AS User_Patronymic, ar.Response_Date AS Date_Of_Answer, " +
-                "asu.Status_Name " +
-                "FROM Appeal_Response ar " +
-                "JOIN User_Appeal ua ON ar.Appeal_ID = ua.Appeal_ID " +
-                "JOIN User_Info ui ON ua.User_ID = ui.User_ID " +
+                "asu.Status_Name FROM User_Appeal ua JOIN Appeal_Response ar " +
+                "ON ua.Appeal_ID = ar.Appeal_ID JOIN User_Info ui ON ua.User_ID = ui.User_ID " +
                 "JOIN Appeal_Status asu ON ua.Status_ID = asu.Status_ID " +
-                $"WHERE ui.Last_Name = '{fam}' " +
-                $"AND ui.First_Name = '{name}' " +
-                $"AND (ui.Middle_Name = '{otch}' OR ui.Middle_Name IS NULL)";
+                $"WHERE asu.Status_Name = 'Рассмотрено и закрыто' AND ar.Worker_ID = '{workerID}' " +
+                "ORDER BY ar.Response_Date DESC;\r\n";
             return sqlCom;
         }
         public string sqlComOutputApplications = "SELECT ua.Appeal_ID, " +
             "ui.Last_Name AS User_Surname, ui.First_Name AS User_Name, ui.Middle_Name AS User_Patronymic, " +
-            "at.Appeal_Name, asu.Status_Name, ud.Document_Name, ud.Document_Extension " +
+            "at.Appeal_Name, asu.Status_Name " +
             "FROM User_Appeal ua " +
             "JOIN User_Info ui ON ua.User_ID = ui.User_ID " +
             "JOIN Appeal_Status asu ON ua.Status_ID = asu.Status_ID " +
             "JOIN Appeal_Type at ON ua.Appeal_Type_ID = at.Appeal_Type_ID " +
-            "LEFT JOIN Appeal_Documents ad ON ua.Appeal_ID = ad.Appeal_ID " +
-            "LEFT JOIN User_Document ud ON ad.Document_ID = ud.Document_ID " +
             "WHERE asu.Status_Name IN ('Принято к рассмотрению', 'На исполнении')";
-        public string sqlComCheckStatusId = "select ID_Status from Status_Application " +
-            "where Status_Name = 'В процессе рассмотрения'";
+        public string sqlComCheckStatusId = "select Status_ID from Appeal_Status where Status_Name = 'На исполнении'";
         public string SqlComUpdateStatusApplication(string idStatus, string idRow)
         {
-            string sqlCom = "update Application_To_Company set " +
-                $"FK_Status_Application = '{idStatus}' " +
-                $"where ID_Application = '{idRow}'";
+            string sqlCom = $"update User_Appeal set Status_ID = '{idStatus}' where Appeal_ID = '{idRow}'";
             return sqlCom;
         }
         public string SqlComOpenWorkerDocument(string idRow)
@@ -724,21 +656,27 @@ namespace Napitki_Altay2.Classes
                 $"Ready_Application where FK_ID_Application = '{idRow}'";
             return sqlCom;
         }
-        public string SqlComOutputAnswerWithDateTime
-            (string name, string fam, string otch, string firstDate, string secondDate)
+        public string SqlComOutputAnswerWithDateTime(string workerId, string firstDate, string secondDate)
         {
-            string sqlCom = "select FK_ID_Application, User_Surname, User_Name, " +
-                "User_Patronymic, Date_Of_Answer, Status_Name from Ready_Application " +
-                "join Info_About_User on Ready_Application.FK_Info_User = Info_About_User.ID_Info_User " +
-                "join Application_To_Company on " +
-                "Ready_Application.FK_ID_Application = Application_To_Company.ID_Application " +
-                "join Status_Application on " +
-                "Application_To_Company.FK_Status_Application = Status_Application.ID_Status " +
-                $"where User_Surname = '{fam}' and User_Name = '{name}' " +
-                $"and User_Patronymic = '{otch}' and Date_Of_Answer " +
-                $"BETWEEN '{firstDate}T00:00:00' AND '{secondDate}T23:59:59' order by Date_Of_Answer";
+            string sqlCom = "SELECT " +
+                "ua.Appeal_ID AS FK_ID_Application, " +
+                "ui.Last_Name AS User_Surname, " +
+                "ui.First_Name AS User_Name, " +
+                "ui.Middle_Name AS User_Patronymic, " +
+                "ar.Response_Date AS Date_Of_Answer, " +
+                "asu.Status_Name " +
+            "FROM User_Appeal ua " +
+            "JOIN Appeal_Response ar ON ua.Appeal_ID = ar.Appeal_ID  " + // Обращения должны иметь ответ
+            "JOIN User_Info ui ON ua.User_ID = ui.User_ID " + // ФИО заявителя
+            "JOIN Appeal_Status asu ON ua.Status_ID = asu.Status_ID " +
+            "JOIN User_Info worker ON ar.Worker_ID = worker.User_ID " + // Привязываем ID работника
+            $"WHERE worker.User_ID = '{workerId}' " + // Фильтр по ID работника
+            $"AND ar.Response_Date BETWEEN CONVERT(DATETIME, '{firstDate} 00:00:00', 120) " +
+            $"AND CONVERT(DATETIME, '{secondDate} 23:59:59', 120) " + // Фильтр по дате
+            "ORDER BY ar.Response_Date DESC;";
             return sqlCom;
         }
+
         public string SqlComOutputAnswerWithDateTimeWithoutOtch
             (string name, string fam, string firstDate, string secondDate)
         {

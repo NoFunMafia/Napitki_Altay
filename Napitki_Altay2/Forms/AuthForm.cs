@@ -106,35 +106,37 @@ namespace Napitki_Altay2
         private void LogInAppButton_Click
             (object sender, EventArgs e)
         {
-            if (LoginTextBox.Texts.Equals("Логин") || PasswordTextBox.Texts.Equals("Пароль"))
+            if (LoginTextBox.Texts.Equals("Логин") || string.IsNullOrWhiteSpace(LoginTextBox.Texts) ||
+                PasswordTextBox.Texts.Equals("Пароль") || string.IsNullOrWhiteSpace(PasswordTextBox.Texts))
             {
-                MessageBox.Show("Данные для входа не введены!",
-                    "Ошибка",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Error);
-            }
-            else if (!dataBaseWork.IsConnectionAvailable())
-            {
+                ShowErrorMessage("Данные для входа не введены!");
                 return;
             }
-            else
+            if (!dataBaseWork.IsConnectionAvailable())
             {
-                List<string[]> listSearch = FillListQuery();
-                if (listSearch != null)
-                {
-                    CheckUserRole(listSearch);
-                    bool check = CheckRoleUserQuery();
-                    if (check != false)
-                    {
-                        string TitleRole = GetTitleRole();
-                        if (TitleRole != null)
-                            OpenSpecificForm(TitleRole);
-                    }
-                }
-                else
-                    MessageBox.Show("Введен неправильный логин/пароль!",
-                        "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                ShowErrorMessage("Отсутствует подключение к базе данных!");
+                return;
             }
+            List<string[]> listSearch = FillListQuery();
+
+            if (listSearch == null || listSearch.Count == 0)
+            {
+                ShowErrorMessage("Введен неправильный логин/пароль!");
+                return;
+            }
+            CheckUserRole(listSearch);
+            if (!CheckRoleUserQuery())
+            {
+                ShowErrorMessage("Роль пользователя не определена или доступ закрыт!");
+                return;
+            }
+            string titleRole = GetTitleRole();
+            if (string.IsNullOrEmpty(titleRole))
+            {
+                ShowErrorMessage("Ошибка получения роли пользователя!");
+                return;
+            }
+            OpenSpecificForm(titleRole);
         }
         #endregion
         #region [Метод, заполняющий список List из sql-запроса]
@@ -144,8 +146,7 @@ namespace Napitki_Altay2
         /// <returns></returns>
         private List<string[]> FillListQuery()
         {
-            string sqlQueryFirst = sqlQueries.SqlComRoleUser
-                (LoginTextBox.Texts, PasswordTextBox.Texts);
+            string sqlQueryFirst = sqlQueries.SqlComRoleUser(LoginTextBox.Texts, PasswordTextBox.Texts);
             List<string[]> listSearch = dataBaseWork.GetMultiList(sqlQueryFirst, 5);
             return listSearch;
         }
@@ -157,10 +158,8 @@ namespace Napitki_Altay2
         /// <returns></returns>
         private bool CheckRoleUserQuery()
         {
-            string sqlQuerySecond = sqlQueries.SqlComRole
-                (LoginTextBox.Texts, PasswordTextBox.Texts, RoleString);
-            bool check = dataBaseWork.WithoutOutputQuery(sqlQuerySecond);
-            return check;
+            string sqlQuerySecond = sqlQueries.SqlComRole(LoginTextBox.Texts, PasswordTextBox.Texts, RoleString);
+            return dataBaseWork.WithoutOutputQuery(sqlQuerySecond);
         }
         #endregion
         #region [Метод, получающий название роли пользователя]
@@ -173,31 +172,30 @@ namespace Napitki_Altay2
             LoginString = LoginTextBox.Texts;
             PasswordString = PasswordTextBox.Texts;
             string sqlQueryThree = sqlQueries.SqlComTitleRole(RoleString);
-            string TitleRole = dataBaseWork.GetString(sqlQueryThree);
-            return TitleRole;
+            return dataBaseWork.GetString(sqlQueryThree);
         }
         #endregion
         #region [Метод, открывающий определенную форму по роли пользователя]
         private void OpenSpecificForm(string TitleRole)
         {
-            if (TitleRole.Equals("Заявитель"))
+            Form targetForm = null;
+            switch (TitleRole)
             {
-                MainWorkForm mainWorkForm = new MainWorkForm();
-                mainWorkForm.Show();
-                Hide();
+                case "Заявитель":
+                    targetForm = new MainWorkForm();
+                    break;
+                case "Муниципальный служащий":
+                    targetForm = new MainWorkFormWorker();
+                    break;
+                case "Администратор":
+                    targetForm = new MainWorkFormAdmin();
+                    break;
+                default:
+                    ShowErrorMessage("Неизвестная роль пользователя!");
+                    return;
             }
-            else if (TitleRole.Equals("Муниципальный служащий"))
-            {
-                MainWorkFormWorker mainWorkFormWorker = new MainWorkFormWorker();
-                mainWorkFormWorker.Show();
-                Hide();
-            }
-            else if (TitleRole.Equals("Администратор"))
-            {
-                MainWorkFormAdmin mainWorkFormAdmin = new MainWorkFormAdmin();
-                mainWorkFormAdmin.Show();
-                Hide();
-            }
+            targetForm?.Show();
+            Hide();
         }
         #endregion
         #region [Метод, проверяющий пользовательскую роль в приложении]
@@ -214,6 +212,16 @@ namespace Napitki_Altay2
                     RoleString = item[4].ToString();
                 }
             }
+        }
+        #endregion
+        #region [Метод для отображения ошибки]
+        /// <summary>
+        /// Показывает сообщение об ошибке в MessageBox
+        /// </summary>
+        /// <param name="message"></param>
+        private void ShowErrorMessage(string message)
+        {
+            MessageBox.Show(message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
         #endregion
         #region [Метод, показывающий/скрывающий видимость пароля]
