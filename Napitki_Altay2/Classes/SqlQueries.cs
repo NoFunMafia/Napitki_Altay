@@ -320,9 +320,8 @@ namespace Napitki_Altay2.Classes
             "JOIN Appeal_Type at ON ua.Appeal_Type_ID = at.Appeal_Type_ID " +
             $"WHERE ua.Appeal_ID = '{MainWorkFormWorker.SelectedRowID}'";
         public string sqlComOpenDocumentWorker = "SELECT DISTINCT ud.Document_Name, ud.Document_Data, ud.Document_Extension " +
-            "FROM User_Document ud LEFT JOIN Appeal_Documents ad ON ud.Document_ID = ad.Document_ID " +
-            "LEFT JOIN User_Appeal ua ON ud.User_ID = ua.User_ID " +
-            $"WHERE ua.Appeal_ID = {MainWorkFormWorker.SelectedRowID} OR ad.Appeal_ID = {MainWorkFormWorker.SelectedRowID};";
+            "FROM User_Document ud LEFT JOIN User_Appeal ua ON ud.User_ID = ua.User_ID " +
+            $"WHERE ua.Appeal_ID = {MainWorkFormWorker.SelectedRowID};";
         #endregion
         #region [CreateApplicationForm]
         public string sqlComFkInfoUser = "select * from User_Info where " +
@@ -487,30 +486,44 @@ namespace Napitki_Altay2.Classes
         }
         public string SqlComOpenWorkerDocument(string idRow)
         {
-            string sqlCom = "select Document_Name_W, Document_Data_W, " +
-                "Document_Extension_W from Ready_Application join " +
-                "Answer_Document_From_Worker on " +
-                "Ready_Application.FK_Answer_Document_From_Worker = " +
-                "ID_Document_From_Worker join Application_To_Company on " +
-                "Ready_Application.FK_ID_Application = " +
-                $"Application_To_Company.ID_Application where ID_Application = '{idRow}'";
+            string sqlCom = "SELECT wd.Document_ID, wd.Document_Name, wd.Document_Data, wd.Document_Extension " +
+                "FROM Worker_Document wd " +
+                "JOIN Response_Documents rd ON wd.Document_ID = rd.Document_ID " +
+                "JOIN Appeal_Response ar ON rd.Response_ID = ar.Response_ID " +
+                $"WHERE ar.Appeal_ID = {idRow}";
             return sqlCom;
         }
+
         public string SqlComOpenWorkerAnswer(string idRow)
         {
-            string sqlCom = "select FK_ID_Application, Type_Appeal, Status_Name, " +
-                "Answer_To_Application, Date_Of_Answer, Document_Name_W " +
-                "from Ready_Application full join Answer_Document_From_Worker on " +
-                "Ready_Application.FK_Answer_Document_From_Worker " +
-                "= Answer_Document_From_Worker.ID_Document_From_Worker join " +
-                "Application_To_Company on Application_To_Company.ID_Application " +
-                "= Ready_Application.FK_ID_Application join Type_Of_Appeal on " +
-                "Application_To_Company.FK_Type_Of_Appeal = " +
-                "Type_Of_Appeal.ID_Type_Of_Appeal join Status_Application on " +
-                "Application_To_Company.FK_Status_Application = " +
-                $"Status_Application.ID_Status where FK_ID_Application = '{idRow}'";
+            string sqlCom = "SELECT " +
+                "ar.Appeal_ID AS FK_ID_Application, " +
+                "at.Appeal_Name AS Type_Appeal, " +
+                "asu.Status_Name, " +
+                "ar.Response_Text AS Answer_To_Application, " +
+                "CONVERT(VARCHAR, ar.Response_Date, 120) AS Date_Of_Answer, " +  // Формат без миллисекунд
+                "STRING_AGG(wd.Document_Name, ', ') AS Document_Names " +  // Объединение всех документов в строку
+            "FROM Appeal_Response ar " +
+            "JOIN User_Appeal ua ON ar.Appeal_ID = ua.Appeal_ID " +  // Присоединяем обращение
+            "JOIN Appeal_Type at ON ua.Appeal_Type_ID = at.Appeal_Type_ID " +  // Присоединяем тип обращения
+            "JOIN Appeal_Status asu ON ua.Status_ID = asu.Status_ID " +  // Присоединяем статус
+            "LEFT JOIN Response_Documents rd ON ar.Response_ID = rd.Response_ID " +  // Присоединяем документы к ответу
+            "LEFT JOIN Worker_Document wd ON rd.Document_ID = wd.Document_ID " +  // Присоединяем документы сотрудника
+            $"WHERE ar.Appeal_ID = '{idRow}' " +  // Фильтруем по ID обращения
+            "GROUP BY ar.Appeal_ID, at.Appeal_Name, asu.Status_Name, ar.Response_Text, ar.Response_Date " +  // Группировка по уникальным полям
+            "ORDER BY ar.Response_Date DESC;";
             return sqlCom;
         }
+        public string SqlComGetResponseDocuments(string appealId)
+        {
+            string sqlCom = "SELECT wd.Document_Name, wd.Document_Data, wd.Document_Extension " +
+                "FROM Worker_Document wd " +
+                "JOIN Response_Documents rd ON wd.Document_ID = rd.Document_ID " +
+                "JOIN Appeal_Response ar ON rd.Response_ID = ar.Response_ID " +
+                $"WHERE ar.Appeal_ID = '{appealId}'";
+            return sqlCom;
+        }
+
         public string SqlComOpenWorkerAnswerDocInfo(string idRow)
         {
             string sqlCom = "select Document_Name_W from Ready_Application " +
@@ -527,46 +540,33 @@ namespace Napitki_Altay2.Classes
         }
         #endregion
         #region [SupplementForm]
-        public string SqlComSupplementDocumentInfo(string idRow)
+        public string SqlComGetResponseDocumentsUser(string appealId)
         {
-            string sqlCom = "select Document_Name from Application_To_Company join " +
-                "Type_Of_Appeal " +
-                "on Application_To_Company.FK_Type_Of_Appeal = Type_Of_Appeal.ID_Type_Of_Appeal " +
-                "full join Application_Document_From_User " +
-                "on Application_To_Company.FK_Application_Document_From_User " +
-                "= Application_Document_From_User.ID_Document_From_User " +
-                $"where Id_Application = '{idRow}'";
+            string sqlCom = "SELECT ud.Document_Name, ud.Document_Data, ud.Document_Extension " +
+                "FROM User_Document ud " +
+                "JOIN User_Appeal ua ON ud.User_ID = ua.User_ID " + // Связываем документы с пользователями через обращения
+                $"WHERE ua.Appeal_ID = '{appealId}'";
             return sqlCom;
         }
+
         public string SqlComSupplementInfo(string idRow)
         {
-            string sqlCom = "select " +
-                    "ID_Application, Applicant_Company, " +
-                    "Type_Appeal, Description_Of_Appeal, " +
-                    "Date_Of_Request, Document_Name " +
-                    "from Application_To_Company " +
-                    "join Type_Of_Appeal on " +
-                    "Application_To_Company.FK_Type_Of_Appeal " +
-                    "= Type_Of_Appeal.ID_Type_Of_Appeal " +
-                    "full join Application_Document_From_User " +
-                    "on Application_To_Company." +
-                    "FK_Application_Document_From_User = " +
-                    "Application_Document_From_User." +
-                    $"ID_Document_From_User where " +
-                    $"Id_Application = " +
-                    $"'{idRow}'";
-            return sqlCom;
-        }
-        public string SqlComGetFioWorker(string idRow)
-        {
-            string sqlCom = "select User_Surname, User_Name, User_Patronymic " +
-                "from Ready_Application join Info_About_User on " +
-                "Ready_Application.FK_Info_User = Info_About_User.ID_Info_User " +
-                "join Application_To_Company " +
-                "on Application_To_Company.ID_Application = Ready_Application.FK_ID_Application " +
-                "join Status_Application " +
-                "on Status_Application.ID_Status = Application_To_Company.FK_Status_Application " +
-                $"where Application_To_Company.ID_Application = '{idRow}'";
+            string sqlCom = "SELECT " +
+                "ua.Appeal_ID, " +
+                "at.Appeal_Name, " +
+                "ui.Last_Name + ' ' + ui.First_Name + ISNULL(' ' + ui.Middle_Name, '') AS Full_Name, " +
+                "ua.Appeal_Description, " +
+                "ua.Appeal_Date, " +
+                "asu.Status_Name, " +
+                "STRING_AGG(ud.Document_Name, ', ') AS Attached_Documents " +
+                "FROM User_Appeal ua " +
+                "JOIN Appeal_Type at ON ua.Appeal_Type_ID = at.Appeal_Type_ID " +
+                "JOIN User_Info ui ON ua.User_ID = ui.User_ID " +
+                "JOIN Appeal_Status asu ON ua.Status_ID = asu.Status_ID " +
+                "LEFT JOIN User_Document ud ON ua.User_ID = ud.User_ID " + // Убрана Appeal_Documents, связываем документы по User_ID
+                $"WHERE ua.Appeal_ID = '{idRow}' " +
+                "GROUP BY ua.Appeal_ID, at.Appeal_Name, ui.Last_Name, ui.First_Name, ui.Middle_Name, " +
+                "ua.Appeal_Description, ua.Appeal_Date, asu.Status_Name";
             return sqlCom;
         }
         public string SqlComGetFioUser(string idRow)

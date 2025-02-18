@@ -101,7 +101,7 @@
             this.ApplicationPage.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.ApplicationPage.Size = new System.Drawing.Size(1512, 810);
             this.ApplicationPage.TabIndex = 0;
-            this.ApplicationPage.Text = "Новые обращения";
+            this.ApplicationPage.Text = "Ваши заявления";
             // 
             // InfoApplicationLabel
             // 
@@ -207,7 +207,7 @@
             this.AnswerForUserApplicPage.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.AnswerForUserApplicPage.Size = new System.Drawing.Size(1512, 810);
             this.AnswerForUserApplicPage.TabIndex = 1;
-            this.AnswerForUserApplicPage.Text = "Обращения в работе";
+            this.AnswerForUserApplicPage.Text = "Завершенные заявления";
             // 
             // UpdateDataDGWCButton
             // 
@@ -246,7 +246,7 @@
             this.MoreInformationButton.Name = "MoreInformationButton";
             this.MoreInformationButton.Size = new System.Drawing.Size(530, 114);
             this.MoreInformationButton.TabIndex = 12;
-            this.MoreInformationButton.Text = "Дополнить информацию или\r\nпросмотреть ответ сотрудника\r\n";
+            this.MoreInformationButton.Text = "Посмотреть информацию и \r\nответ сотрудника\r\n";
             this.MoreInformationButton.TextColor = System.Drawing.Color.White;
             this.MoreInformationButton.UseVisualStyleBackColor = false;
             this.MoreInformationButton.Click += new System.EventHandler(this.MoreInformationButton_Click);

@@ -49,7 +49,6 @@
             this.GenerateRaportButton = new Napitki_Altay2.Design.CustomButton();
             this.WorkerDataPage = new System.Windows.Forms.TabPage();
             this.VisiblePassCheckMain = new System.Windows.Forms.CheckBox();
-            this.MainWorkFormWorkerPictureBox = new System.Windows.Forms.PictureBox();
             this.PasswordWorkInfoLabel = new System.Windows.Forms.Label();
             this.SurnameWorkInfoLabel = new System.Windows.Forms.Label();
             this.NameWorkInfoLabel = new System.Windows.Forms.Label();
@@ -63,6 +62,7 @@
             this.FamWorkCreateTextBox = new Napitki_Altay2.Design.CustomTextBox();
             this.FolderPathBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
             this.CustomFormForAllProject = new Napitki_Altay2.Components.FormStyleCustom(this.components);
+            this.MainWorkFormWorkerPictureBox = new System.Windows.Forms.PictureBox();
             this.MainWorkWorkerTabControl.SuspendLayout();
             this.AnswerToApplicationPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DataGridViewAnswer)).BeginInit();
@@ -238,8 +238,8 @@
             // 
             // SupplementReplyButton
             // 
-            this.SupplementReplyButton.BackColor = System.Drawing.Color.RoyalBlue;
-            this.SupplementReplyButton.BackgroundColor = System.Drawing.Color.RoyalBlue;
+            this.SupplementReplyButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(56)))), ((int)(((byte)(165)))));
+            this.SupplementReplyButton.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(56)))), ((int)(((byte)(165)))));
             this.SupplementReplyButton.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
             this.SupplementReplyButton.BorderRadius = 0;
             this.SupplementReplyButton.BorderSize = 0;
@@ -309,8 +309,8 @@
             // 
             // UpdateDataDGWAnswer
             // 
-            this.UpdateDataDGWAnswer.BackColor = System.Drawing.Color.RoyalBlue;
-            this.UpdateDataDGWAnswer.BackgroundColor = System.Drawing.Color.RoyalBlue;
+            this.UpdateDataDGWAnswer.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(56)))), ((int)(((byte)(165)))));
+            this.UpdateDataDGWAnswer.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(56)))), ((int)(((byte)(165)))));
             this.UpdateDataDGWAnswer.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
             this.UpdateDataDGWAnswer.BorderRadius = 0;
             this.UpdateDataDGWAnswer.BorderSize = 0;
@@ -330,8 +330,8 @@
             // 
             // GenerateRaportButton
             // 
-            this.GenerateRaportButton.BackColor = System.Drawing.Color.RoyalBlue;
-            this.GenerateRaportButton.BackgroundColor = System.Drawing.Color.RoyalBlue;
+            this.GenerateRaportButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(56)))), ((int)(((byte)(165)))));
+            this.GenerateRaportButton.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(56)))), ((int)(((byte)(165)))));
             this.GenerateRaportButton.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
             this.GenerateRaportButton.BorderRadius = 0;
             this.GenerateRaportButton.BorderSize = 0;
@@ -390,17 +390,6 @@
             this.VisiblePassCheckMain.UseVisualStyleBackColor = true;
             this.VisiblePassCheckMain.CheckedChanged += new System.EventHandler(this.VisiblePassCheckMain_CheckedChanged);
             // 
-            // MainWorkFormWorkerPictureBox
-            // 
-            this.MainWorkFormWorkerPictureBox.Image = global::Napitki_Altay2.Properties.Resources.PictureMainWorkForm;
-            this.MainWorkFormWorkerPictureBox.Location = new System.Drawing.Point(753, 445);
-            this.MainWorkFormWorkerPictureBox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.MainWorkFormWorkerPictureBox.Name = "MainWorkFormWorkerPictureBox";
-            this.MainWorkFormWorkerPictureBox.Size = new System.Drawing.Size(760, 398);
-            this.MainWorkFormWorkerPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.MainWorkFormWorkerPictureBox.TabIndex = 33;
-            this.MainWorkFormWorkerPictureBox.TabStop = false;
-            // 
             // PasswordWorkInfoLabel
             // 
             this.PasswordWorkInfoLabel.AutoSize = true;
@@ -449,7 +438,7 @@
             // 
             this.InfoUserLabel.AutoSize = true;
             this.InfoUserLabel.Font = new System.Drawing.Font("Segoe UI", 22.2F, System.Drawing.FontStyle.Bold);
-            this.InfoUserLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(9)))), ((int)(((byte)(64)))), ((int)(((byte)(127)))));
+            this.InfoUserLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(56)))), ((int)(((byte)(165)))));
             this.InfoUserLabel.Location = new System.Drawing.Point(261, 84);
             this.InfoUserLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.InfoUserLabel.Name = "InfoUserLabel";
@@ -606,6 +595,17 @@
             this.CustomFormForAllProject.HeaderTextColor = System.Drawing.Color.White;
             this.CustomFormForAllProject.HeaderTextFont = new System.Drawing.Font("Segoe UI", 12F);
             // 
+            // MainWorkFormWorkerPictureBox
+            // 
+            this.MainWorkFormWorkerPictureBox.Image = global::Napitki_Altay2.Properties.Resources.Герб_Алтайского_края;
+            this.MainWorkFormWorkerPictureBox.Location = new System.Drawing.Point(992, 483);
+            this.MainWorkFormWorkerPictureBox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.MainWorkFormWorkerPictureBox.Name = "MainWorkFormWorkerPictureBox";
+            this.MainWorkFormWorkerPictureBox.Size = new System.Drawing.Size(355, 325);
+            this.MainWorkFormWorkerPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.MainWorkFormWorkerPictureBox.TabIndex = 33;
+            this.MainWorkFormWorkerPictureBox.TabStop = false;
+            // 
             // MainWorkFormWorker
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
@@ -641,7 +641,6 @@
         private System.Windows.Forms.TabPage AnswerToApplicationPage;
         private System.Windows.Forms.TabPage WorkerDataPage;
         private System.Windows.Forms.DataGridView DataGridViewAnswer;
-        private System.Windows.Forms.PictureBox MainWorkFormWorkerPictureBox;
         private System.Windows.Forms.Label PasswordWorkInfoLabel;
         private System.Windows.Forms.Label SurnameWorkInfoLabel;
         private System.Windows.Forms.Label NameWorkInfoLabel;
@@ -668,5 +667,6 @@
         private System.Windows.Forms.Label LatterOtLabel;
         private System.Windows.Forms.DateTimePicker SecondDateToRaportDTP;
         private System.Windows.Forms.DateTimePicker FirstDateToRaportDTP;
+        private System.Windows.Forms.PictureBox MainWorkFormWorkerPictureBox;
     }
 }

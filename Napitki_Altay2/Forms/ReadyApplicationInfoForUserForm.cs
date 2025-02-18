@@ -7,18 +7,21 @@ using Napitki_Altay2.Classes;
 using System.Diagnostics;
 using System.Collections.Generic;
 using System.Linq;
+using System.Drawing;
 #endregion
 namespace Napitki_Altay2.Forms
 {   
     public partial class ReadyApplicationInfoForUserForm : Form
     {
-        #region [Подключение классов, обьявление переменных]
+        #region [Подключение классов, объявление переменных]
         readonly SqlQueries sqlQueries = new SqlQueries();
         readonly DataBaseWork dataBaseWork = new DataBaseWork();
+        private Dictionary<string, byte[]> documentData = new Dictionary<string, byte[]>(); // Хранит данные всех документов
         #endregion
         public ReadyApplicationInfoForUserForm()
         {
             InitializeComponent();
+            this.Size = new Size((int)(1645 / 1.98), (int)(1888 / 1.93));
         }
         #region [Событие закрытия формы]
         /// <summary>
@@ -47,6 +50,53 @@ namespace Napitki_Altay2.Forms
         {
             List<string[]> listSearch = GetApplicationInfoQuery();
             CheckDataReaderRowsInfo(listSearch);
+            LoadDocumentsList();
+        }
+        #endregion
+        #region [Метод загрузки списка документов в ListBox]
+        private void LoadDocumentsList()
+        {
+            DocumentListBox.Items.Clear();
+            documentData.Clear();
+            try
+            {
+                string sqlQuery = sqlQueries.SqlComOpenWorkerDocument(MainWorkForm.selectedRowIDInDGWC);
+                using (SqlCommand sqlCommand = new SqlCommand(sqlQuery, dataBaseWork.GetConnection()))
+                {
+                    sqlCommand.Parameters.AddWithValue("@idRow", MainWorkForm.selectedRowIDInDGWC);
+                    dataBaseWork.OpenConnection();
+                    using (SqlDataReader dataReader = sqlCommand.ExecuteReader())
+                    {
+                        while (dataReader.Read())
+                        {
+                            string docName = dataReader["Document_Name"].ToString();
+                            byte[] docData = (byte[])dataReader["Document_Data"];
+                            documentData[docName] = docData;
+                            DocumentListBox.Items.Add(docName);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Ошибка загрузки документов: " + ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                dataBaseWork.CloseConnection();
+            }
+        }
+        #endregion
+        #region [Событие нажатия на кнопку OpenPinDocumentButton]
+        private void OpenPinDocumentButton_Click(object sender, EventArgs e)
+        {
+            if (DocumentListBox.SelectedItem == null)
+            {
+                MessageBox.Show("Выберите документ для открытия!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            OpenFile(DocumentListBox.SelectedItem.ToString());
         }
         #endregion
         #region [Событие нажатия на кнопку CloseCompleteApplicationButton]
@@ -62,51 +112,34 @@ namespace Napitki_Altay2.Forms
             supForm?.Close();
         }
         #endregion
-        #region [Событие нажатия на кнопку OpenPinDocumentButton]
-        /// <summary>
-        /// Событие нажатия на кнопку OpenPinDocumentButton
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void OpenPinDocumentButton_Click(object sender, EventArgs e)
-        {
-            OpenFile();
-        }
-        #endregion
         #region [Метод, открывающий прикрепленный документ]
         /// <summary>
         /// Метод, открывающий прикрепленный документ
         /// </summary>
-        private void OpenFile()
+        private void OpenFile(string documentName)
         {
             try
             {
-                string sqlQueryFirst = sqlQueries.SqlComOpenWorkerDocument
-                    (MainWorkForm.selectedRowIDInDGWC);
-                SqlCommand sqlCommand = new SqlCommand(sqlQueryFirst, dataBaseWork.GetConnection());
-                dataBaseWork.OpenConnection();
-                var dataReader = sqlCommand.ExecuteReader();
-                if (dataReader.Read())
+                if (!documentData.ContainsKey(documentName))
                 {
-                    var name = dataReader["Document_Name_W"].ToString();
-                    var data = (byte[])dataReader["Document_Data_W"];
-                    var extn = dataReader["Document_Extension_W"].ToString();
-                    var newFileName = name.Replace(extn,
-                        DateTime.Now.ToString("ddMMyyyyhhmmss")) + extn;
-                    File.WriteAllBytes(newFileName, data);
-                    Process.Start(newFileName);
+                    MessageBox.Show("Документ не найден в данных!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
                 }
+
+                byte[] data = documentData[documentName];
+                string extn = Path.GetExtension(documentName);
+                string newFileName = Path.GetFileNameWithoutExtension(documentName) +
+                                     DateTime.Now.ToString("ddMMyyyyhhmmss") + extn;
+
+                File.WriteAllBytes(newFileName, data);
+                Process.Start(newFileName);
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK,
-                    MessageBoxIcon.Error);
-            }
-            finally
-            {
-                dataBaseWork.CloseConnection();
+                MessageBox.Show("Ошибка при открытии документа: " + ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
         #endregion
         #region [Метод, заполняющий TextBox'ы данными из sql-запроса]
         /// <summary>
@@ -123,10 +156,6 @@ namespace Napitki_Altay2.Forms
                     StatusCompleteTextBox.Texts = item[2];
                     DescripCompleteTextBox.Texts = item[3];
                     ApplCompleteDTP.Text = DateTime.Parse(item[4]).ToString();
-                    if (item[5] != string.Empty)
-                        PinDocumentTextBox.Texts = item[5];
-                    else
-                        PinDocumentTextBox.Texts = "Отсутствует";
                 }
             }
             else
@@ -135,7 +164,6 @@ namespace Napitki_Altay2.Forms
                 StatusCompleteTextBox.Texts = "";
                 DescripCompleteTextBox.Texts = "";
                 ApplCompleteDTP.Text = "";
-                PinDocumentTextBox.Texts = "";
             }
         }
         #endregion
@@ -152,5 +180,78 @@ namespace Napitki_Altay2.Forms
             return listSearch;
         }
         #endregion
+        /// <summary>
+        /// Метод для скачивания документа по выбранному пути
+        /// </summary>
+        /// <param name="documentName">Имя документа</param>
+        /// <summary>
+        /// Метод для скачивания всех документов из ListBox в выбранную папку
+        /// </summary>
+        private void DownloadAllFiles()
+        {
+            try
+            {
+                if (DocumentListBox.Items.Count == 0)
+                {
+                    MessageBox.Show("Нет документов для скачивания!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                // Открываем диалог выбора папки
+                using (FolderBrowserDialog folderDialog = new FolderBrowserDialog())
+                {
+                    folderDialog.Description = "Выберите папку для сохранения документов";
+                    if (folderDialog.ShowDialog() == DialogResult.OK)
+                    {
+                        string selectedPath = folderDialog.SelectedPath;
+                        int downloadedCount = 0;
+
+                        foreach (var item in DocumentListBox.Items)
+                        {
+                            string documentName = item.ToString();
+
+                            if (documentData.ContainsKey(documentName))
+                            {
+                                byte[] data = documentData[documentName];
+                                string newFileName = Path.Combine(selectedPath, documentName);
+
+                                // Проверка на существование файла и перезапись
+                                if (File.Exists(newFileName))
+                                {
+                                    var result = MessageBox.Show($"Файл {documentName} уже существует. Перезаписать?",
+                                        "Подтверждение",
+                                        MessageBoxButtons.YesNo,
+                                        MessageBoxIcon.Question);
+
+                                    if (result == DialogResult.No)
+                                        continue;
+                                }
+
+                                File.WriteAllBytes(newFileName, data);
+                                downloadedCount++;
+                            }
+                        }
+
+                        MessageBox.Show($"Скачано документов: {downloadedCount}",
+                            "Успешное скачивание",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Information);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Ошибка при скачивании документов: " + ex.Message,
+                    "Ошибка",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+            }
+        }
+
+
+        private void DownloadDocUserButton_Click(object sender, EventArgs e)
+        {
+            DownloadAllFiles();
+        }
     }
 }

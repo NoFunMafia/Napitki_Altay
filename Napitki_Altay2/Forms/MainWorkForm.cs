@@ -166,7 +166,7 @@ namespace Napitki_Altay2.Forms
                     selectedRowIDInDGWC = CompleteApplicationDGWUser.CurrentRow.Cells[0].Value.ToString();
                     ReadyApplicationInfoForUserForm readyForm = new ReadyApplicationInfoForUserForm();
                     readyForm.Show();
-                    readyForm.Location = new Point(740, 90);
+                    readyForm.Location = new Point(900, 30);
                     Hide();
                 }
                 else
@@ -482,7 +482,7 @@ namespace Napitki_Altay2.Forms
                         selectedRowIDInDGWC = CompleteApplicationDGWUser.CurrentRow.Cells[0].Value.ToString();
                         SupplementForm supForm = new SupplementForm();
                         supForm.Show();
-                        supForm.Location = new Point(40, 90);
+                        supForm.Location = new Point(40, 30);
                         supForm.DisableControls();
                         Hide();
                         OpenMessageFromWorker();
@@ -492,7 +492,7 @@ namespace Napitki_Altay2.Forms
                         selectedRowIDInDGWC = CompleteApplicationDGWUser.CurrentRow.Cells[0].Value.ToString();
                         SupplementForm supForm = new SupplementForm();
                         supForm.Show();
-                        supForm.Location = new Point(40, 90);
+                        supForm.Location = new Point(40, 30);
                         supForm.EnableControls();
                         Hide();
                         OpenMessageFromWorker();

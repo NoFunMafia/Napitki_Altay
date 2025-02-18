@@ -121,9 +121,9 @@
             this.SelectAnsWorkDocumentLabel.Location = new System.Drawing.Point(715, 67);
             this.SelectAnsWorkDocumentLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.SelectAnsWorkDocumentLabel.Name = "SelectAnsWorkDocumentLabel";
-            this.SelectAnsWorkDocumentLabel.Size = new System.Drawing.Size(658, 45);
+            this.SelectAnsWorkDocumentLabel.Size = new System.Drawing.Size(642, 45);
             this.SelectAnsWorkDocumentLabel.TabIndex = 53;
-            this.SelectAnsWorkDocumentLabel.Text = "Прикрепить файл к ответу на обращение:";
+            this.SelectAnsWorkDocumentLabel.Text = "Прикрепить файл к ответу на заявление:";
             // 
             // ChooseStatusApplPictureBox
             // 
@@ -147,7 +147,7 @@
             this.расИзакToolStripMenuItem,
             this.отказаноToolStripMenuItem});
             this.TypeApplWorkMenuStrip.Name = "TypeApplWorkMenuStrip";
-            this.TypeApplWorkMenuStrip.Size = new System.Drawing.Size(426, 136);
+            this.TypeApplWorkMenuStrip.Size = new System.Drawing.Size(426, 92);
             // 
             // расИзакToolStripMenuItem
             // 
@@ -333,7 +333,7 @@
             this.DescripWorkAnsTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F);
             this.DescripWorkAnsTextBox.ForeColor = System.Drawing.Color.Black;
             this.DescripWorkAnsTextBox.Location = new System.Drawing.Point(41, 795);
-            this.DescripWorkAnsTextBox.Margin = new System.Windows.Forms.Padding(8, 8, 8, 8);
+            this.DescripWorkAnsTextBox.Margin = new System.Windows.Forms.Padding(8);
             this.DescripWorkAnsTextBox.Multiline = true;
             this.DescripWorkAnsTextBox.Name = "DescripWorkAnsTextBox";
             this.DescripWorkAnsTextBox.Padding = new System.Windows.Forms.Padding(10, 11, 10, 11);
@@ -356,7 +356,7 @@
             this.StatusApplicationTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F);
             this.StatusApplicationTextBox.ForeColor = System.Drawing.Color.Black;
             this.StatusApplicationTextBox.Location = new System.Drawing.Point(41, 580);
-            this.StatusApplicationTextBox.Margin = new System.Windows.Forms.Padding(8, 8, 8, 8);
+            this.StatusApplicationTextBox.Margin = new System.Windows.Forms.Padding(8);
             this.StatusApplicationTextBox.Multiline = false;
             this.StatusApplicationTextBox.Name = "StatusApplicationTextBox";
             this.StatusApplicationTextBox.Padding = new System.Windows.Forms.Padding(10, 11, 10, 11);

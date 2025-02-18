@@ -185,8 +185,8 @@
             // 
             // ClearFilesButton
             // 
-            this.ClearFilesButton.BackColor = System.Drawing.Color.RoyalBlue;
-            this.ClearFilesButton.BackgroundColor = System.Drawing.Color.RoyalBlue;
+            this.ClearFilesButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(56)))), ((int)(((byte)(165)))));
+            this.ClearFilesButton.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(56)))), ((int)(((byte)(165)))));
             this.ClearFilesButton.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
             this.ClearFilesButton.BorderRadius = 0;
             this.ClearFilesButton.BorderSize = 0;
@@ -206,8 +206,8 @@
             // 
             // ChooseDocumentButton
             // 
-            this.ChooseDocumentButton.BackColor = System.Drawing.Color.RoyalBlue;
-            this.ChooseDocumentButton.BackgroundColor = System.Drawing.Color.RoyalBlue;
+            this.ChooseDocumentButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(56)))), ((int)(((byte)(165)))));
+            this.ChooseDocumentButton.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(56)))), ((int)(((byte)(165)))));
             this.ChooseDocumentButton.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
             this.ChooseDocumentButton.BorderRadius = 0;
             this.ChooseDocumentButton.BorderSize = 0;
@@ -227,8 +227,8 @@
             // 
             // CancelApplButton
             // 
-            this.CancelApplButton.BackColor = System.Drawing.Color.RoyalBlue;
-            this.CancelApplButton.BackgroundColor = System.Drawing.Color.RoyalBlue;
+            this.CancelApplButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(56)))), ((int)(((byte)(165)))));
+            this.CancelApplButton.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(56)))), ((int)(((byte)(165)))));
             this.CancelApplButton.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
             this.CancelApplButton.BorderRadius = 0;
             this.CancelApplButton.BorderSize = 0;
@@ -248,8 +248,8 @@
             // 
             // RegApplButton
             // 
-            this.RegApplButton.BackColor = System.Drawing.Color.RoyalBlue;
-            this.RegApplButton.BackgroundColor = System.Drawing.Color.RoyalBlue;
+            this.RegApplButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(56)))), ((int)(((byte)(165)))));
+            this.RegApplButton.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(56)))), ((int)(((byte)(165)))));
             this.RegApplButton.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
             this.RegApplButton.BorderRadius = 0;
             this.RegApplButton.BorderSize = 0;
@@ -272,8 +272,8 @@
             this.DescripTextBox.AutoScroll = true;
             this.DescripTextBox.AutoScrollMinSize = new System.Drawing.Size(0, 2);
             this.DescripTextBox.BackColor = System.Drawing.Color.White;
-            this.DescripTextBox.BorderColor = System.Drawing.Color.RoyalBlue;
-            this.DescripTextBox.BorderFocusColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
+            this.DescripTextBox.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(56)))), ((int)(((byte)(165)))));
+            this.DescripTextBox.BorderFocusColor = System.Drawing.Color.FromArgb(((int)(((byte)(207)))), ((int)(((byte)(20)))), ((int)(((byte)(1)))));
             this.DescripTextBox.BorderSize = 2;
             this.DescripTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F);
             this.DescripTextBox.ForeColor = System.Drawing.Color.Black;
@@ -294,8 +294,8 @@
             // TypeApplTextBox
             // 
             this.TypeApplTextBox.BackColor = System.Drawing.Color.White;
-            this.TypeApplTextBox.BorderColor = System.Drawing.Color.RoyalBlue;
-            this.TypeApplTextBox.BorderFocusColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
+            this.TypeApplTextBox.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(56)))), ((int)(((byte)(165)))));
+            this.TypeApplTextBox.BorderFocusColor = System.Drawing.Color.FromArgb(((int)(((byte)(207)))), ((int)(((byte)(20)))), ((int)(((byte)(1)))));
             this.TypeApplTextBox.BorderSize = 2;
             this.TypeApplTextBox.Enabled = false;
             this.TypeApplTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F);

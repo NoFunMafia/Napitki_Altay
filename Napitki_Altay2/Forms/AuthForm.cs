@@ -103,41 +103,65 @@ namespace Napitki_Altay2
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void LogInAppButton_Click
-            (object sender, EventArgs e)
+        private void LogInAppButton_Click(object sender, EventArgs e)
         {
+            // Закрываем предыдущее соединение, если оно открыто
+            dataBaseWork.CloseConnection();
+
+            // Проверка заполненности полей
             if (LoginTextBox.Texts.Equals("Логин") || string.IsNullOrWhiteSpace(LoginTextBox.Texts) ||
                 PasswordTextBox.Texts.Equals("Пароль") || string.IsNullOrWhiteSpace(PasswordTextBox.Texts))
             {
                 ShowErrorMessage("Данные для входа не введены!");
                 return;
             }
+
+            // Попытка установить соединение с БД
+            try
+            {
+                dataBaseWork.OpenConnection();
+            }
+            catch (Exception)
+            {
+                ShowErrorMessage("Отсутствует подключение к базе данных!");
+                return;
+            }
+
+            // Если соединение всё ещё недоступно
             if (!dataBaseWork.IsConnectionAvailable())
             {
                 ShowErrorMessage("Отсутствует подключение к базе данных!");
                 return;
             }
-            List<string[]> listSearch = FillListQuery();
 
+            // Пытаемся выполнить запрос для проверки логина/пароля
+            List<string[]> listSearch = FillListQuery();
             if (listSearch == null || listSearch.Count == 0)
             {
                 ShowErrorMessage("Введен неправильный логин/пароль!");
                 return;
             }
+
+            // Проверка роли пользователя (допустим, метод меняет глобальную переменную RoleString)
             CheckUserRole(listSearch);
             if (!CheckRoleUserQuery())
             {
                 ShowErrorMessage("Роль пользователя не определена или доступ закрыт!");
                 return;
             }
+
+            // Получение названия роли
             string titleRole = GetTitleRole();
             if (string.IsNullOrEmpty(titleRole))
             {
                 ShowErrorMessage("Ошибка получения роли пользователя!");
                 return;
             }
+
+            // Открытие соответствующей формы
             OpenSpecificForm(titleRole);
         }
+
         #endregion
         #region [Метод, заполняющий список List из sql-запроса]
         /// <summary>

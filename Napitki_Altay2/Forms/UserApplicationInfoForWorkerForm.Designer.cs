@@ -93,8 +93,8 @@
             // 
             // OpenDocumentWorkButton
             // 
-            this.OpenDocumentWorkButton.BackColor = System.Drawing.Color.RoyalBlue;
-            this.OpenDocumentWorkButton.BackgroundColor = System.Drawing.Color.RoyalBlue;
+            this.OpenDocumentWorkButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(56)))), ((int)(((byte)(165)))));
+            this.OpenDocumentWorkButton.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(56)))), ((int)(((byte)(165)))));
             this.OpenDocumentWorkButton.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
             this.OpenDocumentWorkButton.BorderRadius = 0;
             this.OpenDocumentWorkButton.BorderSize = 0;
@@ -114,8 +114,8 @@
             // 
             // CloseApplicWorkButton
             // 
-            this.CloseApplicWorkButton.BackColor = System.Drawing.Color.RoyalBlue;
-            this.CloseApplicWorkButton.BackgroundColor = System.Drawing.Color.RoyalBlue;
+            this.CloseApplicWorkButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(56)))), ((int)(((byte)(165)))));
+            this.CloseApplicWorkButton.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(56)))), ((int)(((byte)(165)))));
             this.CloseApplicWorkButton.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
             this.CloseApplicWorkButton.BorderRadius = 0;
             this.CloseApplicWorkButton.BorderSize = 0;
@@ -136,8 +136,8 @@
             // DescripWorkTextBox
             // 
             this.DescripWorkTextBox.BackColor = System.Drawing.Color.White;
-            this.DescripWorkTextBox.BorderColor = System.Drawing.Color.RoyalBlue;
-            this.DescripWorkTextBox.BorderFocusColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
+            this.DescripWorkTextBox.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(56)))), ((int)(((byte)(165)))));
+            this.DescripWorkTextBox.BorderFocusColor = System.Drawing.Color.FromArgb(((int)(((byte)(207)))), ((int)(((byte)(20)))), ((int)(((byte)(1)))));
             this.DescripWorkTextBox.BorderSize = 2;
             this.DescripWorkTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F);
             this.DescripWorkTextBox.ForeColor = System.Drawing.Color.Black;
@@ -189,8 +189,8 @@
             // TypeApplWorkTextBox
             // 
             this.TypeApplWorkTextBox.BackColor = System.Drawing.Color.White;
-            this.TypeApplWorkTextBox.BorderColor = System.Drawing.Color.RoyalBlue;
-            this.TypeApplWorkTextBox.BorderFocusColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
+            this.TypeApplWorkTextBox.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(56)))), ((int)(((byte)(165)))));
+            this.TypeApplWorkTextBox.BorderFocusColor = System.Drawing.Color.FromArgb(((int)(((byte)(207)))), ((int)(((byte)(20)))), ((int)(((byte)(1)))));
             this.TypeApplWorkTextBox.BorderSize = 2;
             this.TypeApplWorkTextBox.Enabled = false;
             this.TypeApplWorkTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F);
@@ -245,8 +245,8 @@
             // 
             // DownloadDocWorkButton
             // 
-            this.DownloadDocWorkButton.BackColor = System.Drawing.Color.RoyalBlue;
-            this.DownloadDocWorkButton.BackgroundColor = System.Drawing.Color.RoyalBlue;
+            this.DownloadDocWorkButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(56)))), ((int)(((byte)(165)))));
+            this.DownloadDocWorkButton.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(56)))), ((int)(((byte)(165)))));
             this.DownloadDocWorkButton.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
             this.DownloadDocWorkButton.BorderRadius = 0;
             this.DownloadDocWorkButton.BorderSize = 0;
@@ -287,7 +287,7 @@
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "UserApplicationInfoForWorkerForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
-            this.Text = "Обращение пользователя";
+            this.Text = "Заявление пользователя";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.UserApplicationInfoForWorkerForm_FormClosed);
             this.Load += new System.EventHandler(this.UserApplicationInfoForWorkerForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.ApplPictureBox)).EndInit();

@@ -185,7 +185,7 @@ namespace Napitki_Altay2.Forms
                         SelectedRowID = CompleteApplicationDGW.CurrentRow.Cells[0].Value.ToString();
                         SupplementWorkForm supWorkForm = new SupplementWorkForm();
                         supWorkForm.Show();
-                        supWorkForm.Location = new Point(740, 90);
+                        supWorkForm.Location = new Point(900, 20);
                         supWorkForm.DisableControls();
                         UserApplicationInfoForWorkerForm userForm = new UserApplicationInfoForWorkerForm();
                         userForm.Show();
@@ -196,7 +196,7 @@ namespace Napitki_Altay2.Forms
                         SelectedRowID = CompleteApplicationDGW.CurrentRow.Cells[0].Value.ToString();
                         SupplementWorkForm supWorkForm = new SupplementWorkForm();
                         supWorkForm.Show();
-                        supWorkForm.Location = new Point(740, 90);
+                        supWorkForm.Location = new Point(900, 20);
                         supWorkForm.EnableControls();
                         UserApplicationInfoForWorkerForm userForm = new UserApplicationInfoForWorkerForm();
                         userForm.Show();
@@ -208,7 +208,7 @@ namespace Napitki_Altay2.Forms
             }
             catch (Exception)
             {
-                MessageBox.Show("Невозможно дополнить/просмотреть ответ не выделенного обращения!",
+                MessageBox.Show("Невозможно просмотреть ответ не выделенного обращения!",
                     "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
