@@ -412,21 +412,21 @@ namespace Napitki_Altay2.Classes
             return $"INSERT INTO Response_Documents (Response_ID, Document_ID) " +
                    $"VALUES ('{responseId}', '{documentId}');";
         }
-        public string SqlComInfoAboutDocumentWorker
-            (string documentName, string documentExtension)
-        {
-            string sqlCom = "select * from Answer_Document_From_Worker where " +
-                $"Document_Name_W = '{documentName}' and " +
-                $"Document_Extension_W = '{documentExtension}'";
-            return sqlCom;
-        }
         public string SqlComFioApplication(string idApplication)
         {
-            string sqlCom = "select ID_Application, User_Surname, User_Name, " +
-                "User_Patronymic from Application_To_Company join " +
-                "Info_About_User on Application_To_Company.FK_Info_User = " +
-                $"Info_About_User.ID_Info_User where ID_Application = '{idApplication}'";
+            string sqlCom = "select Appeal_ID, Last_Name, First_Name, Middle_Name " +
+                "from User_Appeal join User_Info on User_Appeal.User_ID = User_Info.User_ID " +
+                $"where Appeal_ID = '{idApplication}'";
             return sqlCom;
+        }
+        public string SqlComGetApplicantEmailByAppealId(string appealId)
+        {
+            return
+                "SELECT ua.Email " +
+                "FROM User_Appeal a " +
+                "JOIN User_Info ui ON a.User_ID = ui.User_ID " +
+                "JOIN User_Auth ua ON ua.User_ID = ui.User_ID " +
+                $"WHERE a.Appeal_ID = '{appealId}'";
         }
         #endregion
         #region [MainWorkFormWorker]
@@ -463,11 +463,12 @@ namespace Napitki_Altay2.Classes
             string sqlCom = "SELECT ua.Appeal_ID AS FK_ID_Application, " +
                 "ui.Last_Name AS User_Surname, ui.First_Name AS User_Name, " +
                 "ui.Middle_Name AS User_Patronymic, ar.Response_Date AS Date_Of_Answer, " +
-                "asu.Status_Name FROM User_Appeal ua JOIN Appeal_Response ar " +
-                "ON ua.Appeal_ID = ar.Appeal_ID JOIN User_Info ui ON ua.User_ID = ui.User_ID " +
-                "JOIN Appeal_Status asu ON ua.Status_ID = asu.Status_ID " +
-                $"WHERE asu.Status_Name = 'Рассмотрено и закрыто' AND ar.Worker_ID = '{workerID}' " +
-                "ORDER BY ar.Response_Date DESC;\r\n";
+                "asu.Status_Name FROM User_Appeal ua JOIN Appeal_Response " +
+                "ar ON ua.Appeal_ID = ar.Appeal_ID JOIN User_Info ui " +
+                "ON ua.User_ID = ui.User_ID JOIN Appeal_Status asu " +
+                "ON ua.Status_ID = asu.Status_ID WHERE asu.Status_Name " +
+                "IN ('Услуга оказана', 'Отказано в рассмотрении') AND " +
+                $"ar.Worker_ID = '{workerID}' ORDER BY ar.Response_Date DESC;\r\n";
             return sqlCom;
         }
         public string sqlComOutputApplications = "SELECT ua.Appeal_ID, " +

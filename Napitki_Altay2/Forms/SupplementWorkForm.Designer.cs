@@ -212,7 +212,7 @@
             this.HelpThanksButton.Name = "HelpThanksButton";
             this.HelpThanksButton.Size = new System.Drawing.Size(256, 81);
             this.HelpThanksButton.TabIndex = 76;
-            this.HelpThanksButton.Text = "Письмо-претензия";
+            this.HelpThanksButton.Text = "Отказ компенсации";
             this.HelpThanksButton.TextColor = System.Drawing.Color.White;
             this.HelpThanksButton.UseVisualStyleBackColor = false;
             this.HelpThanksButton.Click += new System.EventHandler(this.HelpThanksButton_Click);
@@ -233,7 +233,7 @@
             this.HelpDiscussionButton.Name = "HelpDiscussionButton";
             this.HelpDiscussionButton.Size = new System.Drawing.Size(256, 81);
             this.HelpDiscussionButton.TabIndex = 75;
-            this.HelpDiscussionButton.Text = "Письмо-\r\n-благодарность";
+            this.HelpDiscussionButton.Text = "Отказ постановки на учет";
             this.HelpDiscussionButton.TextColor = System.Drawing.Color.White;
             this.HelpDiscussionButton.UseVisualStyleBackColor = false;
             this.HelpDiscussionButton.Click += new System.EventHandler(this.HelpDiscussionButton_Click);
@@ -254,7 +254,7 @@
             this.HelpCollaborationButton.Name = "HelpCollaborationButton";
             this.HelpCollaborationButton.Size = new System.Drawing.Size(256, 81);
             this.HelpCollaborationButton.TabIndex = 73;
-            this.HelpCollaborationButton.Text = "Сотрудничество";
+            this.HelpCollaborationButton.Text = "Постановка на учет";
             this.HelpCollaborationButton.TextColor = System.Drawing.Color.White;
             this.HelpCollaborationButton.UseVisualStyleBackColor = false;
             this.HelpCollaborationButton.Click += new System.EventHandler(this.HelpCollaborationButton_Click);

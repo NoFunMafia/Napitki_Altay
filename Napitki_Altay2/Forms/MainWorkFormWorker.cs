@@ -549,7 +549,7 @@ namespace Napitki_Altay2.Forms
                 Dictionary<string, int> employeeTasksCount = new Dictionary<string, int>();
                 Dictionary<string, int> statusCounts = new Dictionary<string, int>()
                 {
-                    { "Рассмотрено и закрыто", 0 },
+                    { "Услуга оказана", 0 },
                     { "Отказано в рассмотрении", 0 }
                 };
                 // Данные таблицы
@@ -613,8 +613,8 @@ namespace Napitki_Altay2.Forms
                 // Add data series
                 Excel.SeriesCollection seriesCollection = (Excel.SeriesCollection)chart.SeriesCollection(Type.Missing);
                 Excel.Series series = seriesCollection.NewSeries();
-                series.XValues = new string[] { "Рассмотрено и закрыто", "Отказано в рассмотрении" };
-                series.Values = new int[] { statusCounts["Рассмотрено и закрыто"], statusCounts["Отказано в рассмотрении"] };
+                series.XValues = new string[] { "Услуга оказана", "Отказано в рассмотрении" };
+                series.Values = new int[] { statusCounts["Услуга оказана"], statusCounts["Отказано в рассмотрении"] };
                 series.Name = "Завершенные обращения";
                 series.ChartType = Excel.XlChartType.xlColumnClustered;
                 chart.HasTitle = true;
@@ -640,6 +640,12 @@ namespace Napitki_Altay2.Forms
                             break;
                         case 2:
                             point.Interior.Color = Color.FromArgb(255, 99, 71); // Отказано в рассмотрении - красный
+                            break;
+                        case 3:
+                            point.Interior.Color = Color.FromArgb(44, 117, 255); // На исполнении - электрик (синий)
+                            break;
+                        case 4:
+                            point.Interior.Color = Color.FromArgb(255, 196, 34); // Принято к рассмотрению - желтый
                             break;
                     }
                 }

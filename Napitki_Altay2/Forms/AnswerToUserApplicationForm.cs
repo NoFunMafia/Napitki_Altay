@@ -1,18 +1,21 @@
 ﻿#region [using's]
+using DocumentFormat.OpenXml.Packaging;
+using DocumentFormat.OpenXml.Wordprocessing;
+using MailKit.Net.Smtp;
+using MimeKit;
 using Napitki_Altay2.Classes;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.IO;
-using System.Windows.Forms;
-using DocumentFormat.OpenXml.Packaging;
-using DocumentFormat.OpenXml.Wordprocessing;
-using System.Globalization;
-using Point = System.Drawing.Point;
-using System.Linq;
-using System.Text;
 using System.Drawing;
+using System.Globalization;
+using System.IO;
+using System.Linq;
+using System.Net.Sockets;
+using System.Text;
+using System.Windows.Forms;
+using Point = System.Drawing.Point;
 #endregion
 
 namespace Napitki_Altay2.Forms
@@ -24,6 +27,9 @@ namespace Napitki_Altay2.Forms
         readonly SqlQueries sqlQueries = new SqlQueries();
         string workerId;
         List<Tuple<string, byte[], string>> attachedDocuments = new List<Tuple<string, byte[], string>>();
+        private string userFam;
+        private string userName;
+        private string userOtch;
         readonly CultureInfo russianCulture = new CultureInfo("ru-RU");
         #endregion
         public AnswerToUserApplicationForm()
@@ -64,7 +70,7 @@ namespace Napitki_Altay2.Forms
         }
         private void РасИЗакToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            StatusApplicationTextBox.Texts = "Рассмотрено и закрыто";
+            StatusApplicationTextBox.Texts = "Услуга оказана";
         }
         #endregion
         #region [Добавление документов в список]
@@ -96,6 +102,58 @@ namespace Napitki_Altay2.Forms
                 string selectedDocument = DocumentListBox.SelectedItem.ToString();
                 attachedDocuments.RemoveAll(doc => doc.Item1 == selectedDocument);
                 DocumentListBox.Items.Remove(selectedDocument);
+            }
+        }
+        #endregion
+        #region [Метод, отправляющий email уведомление о добавлении обращения]
+        private async void SendAnEmail()
+        {
+            try
+            {
+                MimeMessage mimeMessage = new MimeMessage();
+                mimeMessage.From.Add(new MailboxAddress("Администрация Волчихинского района Алтайского края",
+                    "napitki-altay@mail.ru"));
+                mimeMessage.To.Add(MailboxAddress.Parse(sqlQueries.SqlComGetApplicantEmailByAppealId(workerId)));
+                mimeMessage.Subject = "Уведомление о получении ответа на Ваше заявление";
+                mimeMessage.Body = new TextPart("html")
+                {
+                    Text = "<h2>На ваше заявление ответил сотрудник</h2>" +
+                    "<p>Ответ на ваше заявление можете посмотреть в приложении.</p>" +
+                    "<p>С уважением,<br>Администрация Волчихинского района Алтайского края</p>"
+                };
+                using (var smtpClient = new SmtpClient())
+                {
+                    try
+                    {
+                        await smtpClient.ConnectAsync("smtp.mail.ru", 465, true);
+                        await smtpClient.AuthenticateAsync("napitki-altay@mail.ru", "zqfuuDCwzsSzyuMsrktn");
+                        await smtpClient.SendAsync(mimeMessage);
+                    }
+                    catch (SmtpCommandException)
+                    {
+                        MessageBox.Show("Не удалось отправить уведомление на указанную почту.",
+                            "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+                    catch (SocketException)
+                    {
+                        MessageBox.Show("Ошибка соединения с почтовым сервером.",
+                            "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+                    catch (Exception)
+                    {
+                        MessageBox.Show("Не удалось отправить письмо.",
+                            "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    finally
+                    {
+                        await smtpClient.DisconnectAsync(true);
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Произошла непредвиденная ошибка при отправке письма.",
+                    "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
         #endregion
@@ -144,6 +202,7 @@ namespace Napitki_Altay2.Forms
                 }
                 MessageBox.Show("Ответ на обращение создан!", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 MainWorkFormWorker mainWorkFormW = Application.OpenForms.OfType<MainWorkFormWorker>().FirstOrDefault();
+                SendAnEmail();
                 mainWorkFormW?.LoadDataInDataGridViewAnswer(); // Вызываем метод обновления DataGridView
                 mainWorkFormW?.LoadDataInCompleteApplicationDGW(); // Вызываем метод обновления DataGridView
                 Close();
@@ -168,7 +227,7 @@ namespace Napitki_Altay2.Forms
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void HelpCollaborationButton_Click(object sender, EventArgs e)
+        private void RegistrationButtonButton_Click(object sender, EventArgs e)
         {
             List<string[]> listSearch = GetFioFromQuery();
             FillFioStrings(listSearch);
@@ -185,11 +244,11 @@ namespace Napitki_Altay2.Forms
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void HelpThanksButton_Click(object sender, EventArgs e)
+        private void DenialCompensationButton_Click(object sender, EventArgs e)
         {
             List<string[]> listSearch = GetFioFromQuery();
             FillFioStrings(listSearch);
-            string newDocumentPath = CreateThanksDocumentPath();
+            string newDocumentPath = DenialCompensationDocumentPath();
             Dictionary<string, string> placeHolders = CreatePlaceHolders();
             ReplacePlaceholdersInDocument(newDocumentPath, placeHolders);
             MessageBox.Show("Документ создан и сохранен по пути: " + newDocumentPath,
@@ -202,11 +261,11 @@ namespace Napitki_Altay2.Forms
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void HelpDiscussionButton_Click(object sender, EventArgs e)
+        private void RefusalRegistrationButton_Click(object sender, EventArgs e)
         {
             List<string[]> listSearch = GetFioFromQuery();
             FillFioStrings(listSearch);
-            string newDocumentPath = CreateDiscussionDocumentPath();
+            string newDocumentPath = RefusalRegistrationDocumentPath();
             Dictionary<string, string> placeHolders = CreatePlaceHolders();
             ReplacePlaceholdersInDocument(newDocumentPath, placeHolders);
             MessageBox.Show("Документ создан и сохранен по пути: " + newDocumentPath,
@@ -232,22 +291,13 @@ namespace Napitki_Altay2.Forms
         private Dictionary<string, string> CreatePlaceHolders()
         {
             // Заполнить плейсхолдеры данными
-            /*return new Dictionary<string, string>
+            return new Dictionary<string, string>
             {
-                { "{applicationNumber}", MainWorkFormWorker.SelectedRowID?.ToString() ?? "Неизвестно" },
-                //{ "{companyName}", UserApplicationInfoForWorkerForm.companyWork?.ToString() ?? "Неизвестно" },
-                { "{imya}", userName?.Substring(0, 1).ToString() ?? "Неизвестно" },
-                { "{famFull}", userFam?.ToString().ToString() ?? "Неизвестно" },
-                { "{otch}", userOtch?.Substring(0, 1).ToString() ?? "Неизвестно"},
+                { "{applicationNum}", MainWorkFormWorker.SelectedRowID?.ToString() ?? "-" },
                 { "{day}", DateTime.Today.Day.ToString() },
-                { "{monthName}", russianCulture.DateTimeFormat.GetMonthName(DateTime.Today.Month) },
+                { "{month}", russianCulture.DateTimeFormat.GetMonthName(DateTime.Today.Month) },
                 { "{year}", DateTime.Today.Year.ToString() },
-                { "{dayFiling}", UserApplicationInfoForWorkerForm.dateTimeWork.Day.ToString() },
-                { "{monthFiling}", russianCulture.DateTimeFormat.GetMonthName
-                (UserApplicationInfoForWorkerForm.dateTimeWork.Month).ToString() },
-                { "{yearFiling}", UserApplicationInfoForWorkerForm.dateTimeWork.Year.ToString() }
-            };*/
-            return new Dictionary<string, string> { };
+            };
         }
         #endregion
         #region [Метод, создающий документ сотрудничества по пути рабочего стола]
@@ -260,10 +310,10 @@ namespace Napitki_Altay2.Forms
             string assemblyPath = System.Reflection.Assembly.GetExecutingAssembly().Location;
             string assemblyDirectory = Path.GetDirectoryName(assemblyPath);
             string subfolderName = "WordDocuments";
-            string templateFileName = "Пример для составления ответа на сотрудничество.docx";
+            string templateFileName = "Постановка на учет(плейсхолдеры).docx";
             string templatePath = Path.Combine(assemblyDirectory, subfolderName, templateFileName);
             string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-            string newDocumentName = "Ответ на сотрудничество.docx";
+            string newDocumentName = "Постановка на учет.docx";
             string newDocumentPath = Path.Combine(desktopPath, newDocumentName);
             // Создание копии шаблона
             File.Copy(templatePath, newDocumentPath, true);
@@ -275,15 +325,15 @@ namespace Napitki_Altay2.Forms
         /// Метод, создающий документ претензии по пути рабочего стола
         /// </summary>
         /// <returns></returns>
-        private static string CreateThanksDocumentPath()
+        private static string DenialCompensationDocumentPath()
         {
             string assemblyPath = System.Reflection.Assembly.GetExecutingAssembly().Location;
             string assemblyDirectory = Path.GetDirectoryName(assemblyPath);
             string subfolderName = "WordDocuments";
-            string templateFileName = "Пример для составления ответа на претензию.docx";
+            string templateFileName = "Отказ в компенсации(плейсхолдеры).docx";
             string templatePath = Path.Combine(assemblyDirectory, subfolderName, templateFileName);
             string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-            string newDocumentName = "Ответ на претензию.docx";
+            string newDocumentName = "Отказ в компенсации.docx";
             string newDocumentPath = Path.Combine(desktopPath, newDocumentName);
             // Создание копии шаблона
             File.Copy(templatePath, newDocumentPath, true);
@@ -295,15 +345,15 @@ namespace Napitki_Altay2.Forms
         /// Метод, создающий документ проблемы по пути рабочего стола
         /// </summary>
         /// <returns></returns>
-        private static string CreateDiscussionDocumentPath()
+        private static string RefusalRegistrationDocumentPath()
         {
             string assemblyPath = System.Reflection.Assembly.GetExecutingAssembly().Location;
             string assemblyDirectory = Path.GetDirectoryName(assemblyPath);
             string subfolderName = "WordDocuments";
-            string templateFileName = "Пример для составления ответа на благодарность.docx";
+            string templateFileName = "Отказ в постановке на учет(плейсхолдеры).docx";
             string templatePath = Path.Combine(assemblyDirectory, subfolderName, templateFileName);
             string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-            string newDocumentName = "Ответ на проблему.docx";
+            string newDocumentName = "Отказ постановки на учет.docx";
             string newDocumentPath = Path.Combine(desktopPath, newDocumentName);
             // Создание копии шаблона
             File.Copy(templatePath, newDocumentPath, true);
@@ -388,9 +438,9 @@ namespace Napitki_Altay2.Forms
             {
                 foreach (string[] item in strings)
                 {
-                    //userFam = item[1];
-                    //userName = item[2];
-                    //userOtch = item[3];
+                    userFam = item[1];
+                    userName = item[2];
+                    userOtch = item[3];
                 }
             }
         }

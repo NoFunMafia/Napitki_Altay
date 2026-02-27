@@ -208,12 +208,12 @@ namespace Napitki_Altay2.Forms
                     }
                     catch (SmtpCommandException)
                     {
-                        MessageBox.Show("Не удалось отправить уведомление на указанную почту. Проверьте правильность данных или попробуйте позже.",
+                        MessageBox.Show("Не удалось отправить уведомление на указанную почту, но Ваше заявление у нас в обработке!",
                             "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     }
                     catch (SocketException)
                     {
-                        MessageBox.Show("Ошибка соединения с почтовым сервером. Попробуйте позже.",
+                        MessageBox.Show("Ошибка соединения с почтовым сервером. Уведомление не было доставлено, но Ваше заявление у нас в обработке!",
                             "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     }
                     catch (Exception)

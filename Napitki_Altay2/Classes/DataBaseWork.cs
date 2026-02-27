@@ -245,15 +245,6 @@ namespace Napitki_Altay2
                 sqlCommand.ExecuteNonQuery();
                 return true;
             }
-            catch (Exception)
-            {
-                CloseConnection();
-                MessageBox.Show("Возникла непредвиденная ошибка!",
-                    "Ошибка",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Error);
-                return false;
-            }
             finally
             {
                 CloseConnection();

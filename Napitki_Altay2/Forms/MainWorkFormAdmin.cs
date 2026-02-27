@@ -278,8 +278,8 @@ namespace Napitki_Altay2.Forms
                 int sheetIndex = 1;
                 for (int j = 0; j < DataGridViewApplication.Rows.Count; j++)
                 {
-                    string currentEmployeeFullName = $"{DataGridViewApplication.Rows[j].Cells["User_Surname"].Value}" + $" {DataGridViewApplication.Rows[j].Cells["User_Name"].Value}" +
-                        $" {DataGridViewApplication.Rows[j].Cells["User_Patronymic"].Value}";
+                    string currentEmployeeFullName = $"{DataGridViewApplication.Rows[j].Cells["Last_Name"].Value}" + $" {DataGridViewApplication.Rows[j].Cells["First_Name"].Value}" +
+                        $" {DataGridViewApplication.Rows[j].Cells["Middle_Name"].Value}";
                     // Если лист для текущего сотрудника уже создан, переходим к следующей итерации цикла
                     if (createdEmployeeNames.Contains(currentEmployeeFullName))
                     {
@@ -300,17 +300,16 @@ namespace Napitki_Altay2.Forms
                     Dictionary<string, int> employeeTasksCount = new Dictionary<string, int>();
                     Dictionary<string, int> statusCounts = new Dictionary<string, int>()
                     {
-                        { "Дополнено", 0 },
-                        { "Завершено", 0 },
-                        { "Ожидание доп. информации", 0 }
+                        { "Рассмотрено и закрыто", 0 },
+                        { "Отказано в рассмотрении", 0 },
                     };
                     // Заполнение таблицы данными
                     int rowIndex = 4;
                     for (int i = 0; i < DataGridViewApplication.Rows.Count; i++)
                     {
-                        if (DataGridViewApplication.Rows[i].Cells["User_Surname"].Value.ToString() == DataGridViewApplication.Rows[j].Cells["User_Surname"].Value.ToString() &&
-                            DataGridViewApplication.Rows[i].Cells["User_Name"].Value.ToString() == DataGridViewApplication.Rows[j].Cells["User_Name"].Value.ToString() &&
-                            DataGridViewApplication.Rows[i].Cells["User_Patronymic"].Value.ToString() == DataGridViewApplication.Rows[j].Cells["User_Patronymic"].Value.ToString())
+                        if (DataGridViewApplication.Rows[i].Cells["Last_Name"].Value.ToString() == DataGridViewApplication.Rows[j].Cells["Last_Name"].Value.ToString() &&
+                            DataGridViewApplication.Rows[i].Cells["First_Name"].Value.ToString() == DataGridViewApplication.Rows[j].Cells["First_Name"].Value.ToString() &&
+                            DataGridViewApplication.Rows[i].Cells["Middle_Name"].Value.ToString() == DataGridViewApplication.Rows[j].Cells["Middle_Name"].Value.ToString())
                         {
                             int columnIndex = 1;
                             for (int k = 0; k < DataGridViewApplication.Columns.Count; k++)
@@ -372,8 +371,8 @@ namespace Napitki_Altay2.Forms
                     // Add data series
                     Excel.SeriesCollection seriesCollection = (Excel.SeriesCollection)chart.SeriesCollection(Type.Missing);
                     Excel.Series series = seriesCollection.NewSeries();
-                    series.XValues = new string[] { "Дополнено", "Завершено", "Ожидание доп. информации" };
-                    series.Values = new int[] { statusCounts["Дополнено"], statusCounts["Завершено"], statusCounts["Ожидание доп. информации"] };
+                    series.XValues = new string[] { "Рассмотрено и закрыто", "Отказано в рассмотрении" };
+                    series.Values = new int[] { statusCounts["Рассмотрено и закрыто"], statusCounts["Отказано в рассмотрении"] };
                     series.Name = "Завершенные обращения";
                     series.ChartType = Excel.XlChartType.xlColumnClustered;
                     chart.HasTitle = true;
@@ -395,13 +394,10 @@ namespace Napitki_Altay2.Forms
                         switch (i)
                         {
                             case 1:
-                                point.Interior.Color = Color.FromArgb(255, 99, 71); // Дополнено - красный
+                                point.Interior.Color = Color.FromArgb(50, 205, 50); // Рассмотрено и закрыто - зеленый
                                 break;
                             case 2:
-                                point.Interior.Color = Color.FromArgb(50, 205, 50); // Завершено - зеленый
-                                break;
-                            case 3:
-                                point.Interior.Color = Color.FromArgb(255, 215, 0); // Ожидание доп. информации - желтый
+                                point.Interior.Color = Color.FromArgb(255, 99, 71); // Отказано в рассмотрении - красный
                                 break;
                         }
                     }
@@ -436,16 +432,6 @@ namespace Napitki_Altay2.Forms
             }
         }
         #endregion
-        private void ApplyBorder(Excel.Range range)
-        {
-            Excel.Borders borders = range.Borders;
-            borders[Excel.XlBordersIndex.xlEdgeLeft].LineStyle = Excel.XlLineStyle.xlContinuous;
-            borders[Excel.XlBordersIndex.xlEdgeRight].LineStyle = Excel.XlLineStyle.xlContinuous;
-            borders[Excel.XlBordersIndex.xlEdgeTop].LineStyle = Excel.XlLineStyle.xlContinuous;
-            borders[Excel.XlBordersIndex.xlEdgeBottom].LineStyle = Excel.XlLineStyle.xlContinuous;
-            borders.Color = Color.Black;
-        }
-
         #region [Метод, устанавливающий в дату "ОТ" первое число месяца]
         /// <summary>
         /// Метод, устанавливающий в дату "ОТ" первое число месяца

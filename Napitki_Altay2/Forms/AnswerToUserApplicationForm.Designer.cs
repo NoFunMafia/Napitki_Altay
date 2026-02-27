@@ -41,9 +41,9 @@
             this.расИзакToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.отказаноToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.HelpLabel = new System.Windows.Forms.Label();
-            this.HelpThanksButton = new Napitki_Altay2.Design.CustomButton();
-            this.HelpDiscussionButton = new Napitki_Altay2.Design.CustomButton();
-            this.HelpCollaborationButton = new Napitki_Altay2.Design.CustomButton();
+            this.DenialCompensationButton = new Napitki_Altay2.Design.CustomButton();
+            this.RefusalRegistrationButton = new Napitki_Altay2.Design.CustomButton();
+            this.RegistrationButton = new Napitki_Altay2.Design.CustomButton();
             this.DeleteAnsWorkDocumentButton = new Napitki_Altay2.Design.CustomButton();
             this.ChooseAnsWorkDocumentButton = new Napitki_Altay2.Design.CustomButton();
             this.AnswerApplButton = new Napitki_Altay2.Design.CustomButton();
@@ -154,7 +154,7 @@
             this.расИзакToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.расИзакToolStripMenuItem.Name = "расИзакToolStripMenuItem";
             this.расИзакToolStripMenuItem.Size = new System.Drawing.Size(425, 44);
-            this.расИзакToolStripMenuItem.Text = "Рассмотрено и закрыто";
+            this.расИзакToolStripMenuItem.Text = "Услуга оказана";
             this.расИзакToolStripMenuItem.Click += new System.EventHandler(this.РасИЗакToolStripMenuItem_Click);
             // 
             // отказаноToolStripMenuItem
@@ -177,73 +177,73 @@
             this.HelpLabel.TabIndex = 56;
             this.HelpLabel.Text = "Макеты для формирования документов:";
             // 
-            // HelpThanksButton
+            // DenialCompensationButton
             // 
-            this.HelpThanksButton.BackColor = System.Drawing.Color.RoyalBlue;
-            this.HelpThanksButton.BackgroundColor = System.Drawing.Color.RoyalBlue;
-            this.HelpThanksButton.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
-            this.HelpThanksButton.BorderRadius = 0;
-            this.HelpThanksButton.BorderSize = 0;
-            this.HelpThanksButton.FlatAppearance.BorderSize = 0;
-            this.HelpThanksButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.HelpThanksButton.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold);
-            this.HelpThanksButton.ForeColor = System.Drawing.Color.White;
-            this.HelpThanksButton.Location = new System.Drawing.Point(1247, 1535);
-            this.HelpThanksButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.HelpThanksButton.Name = "HelpThanksButton";
-            this.HelpThanksButton.Size = new System.Drawing.Size(256, 81);
-            this.HelpThanksButton.TabIndex = 58;
-            this.HelpThanksButton.Text = "Письмо-претензия";
-            this.HelpThanksButton.TextColor = System.Drawing.Color.White;
-            this.HelpThanksButton.UseVisualStyleBackColor = false;
-            this.HelpThanksButton.Click += new System.EventHandler(this.HelpThanksButton_Click);
+            this.DenialCompensationButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(56)))), ((int)(((byte)(165)))));
+            this.DenialCompensationButton.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(56)))), ((int)(((byte)(165)))));
+            this.DenialCompensationButton.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
+            this.DenialCompensationButton.BorderRadius = 0;
+            this.DenialCompensationButton.BorderSize = 0;
+            this.DenialCompensationButton.FlatAppearance.BorderSize = 0;
+            this.DenialCompensationButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.DenialCompensationButton.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold);
+            this.DenialCompensationButton.ForeColor = System.Drawing.Color.White;
+            this.DenialCompensationButton.Location = new System.Drawing.Point(1247, 1535);
+            this.DenialCompensationButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.DenialCompensationButton.Name = "DenialCompensationButton";
+            this.DenialCompensationButton.Size = new System.Drawing.Size(256, 81);
+            this.DenialCompensationButton.TabIndex = 58;
+            this.DenialCompensationButton.Text = "Отказ компенсации";
+            this.DenialCompensationButton.TextColor = System.Drawing.Color.White;
+            this.DenialCompensationButton.UseVisualStyleBackColor = false;
+            this.DenialCompensationButton.Click += new System.EventHandler(this.DenialCompensationButton_Click);
             // 
-            // HelpDiscussionButton
+            // RefusalRegistrationButton
             // 
-            this.HelpDiscussionButton.BackColor = System.Drawing.Color.RoyalBlue;
-            this.HelpDiscussionButton.BackgroundColor = System.Drawing.Color.RoyalBlue;
-            this.HelpDiscussionButton.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
-            this.HelpDiscussionButton.BorderRadius = 0;
-            this.HelpDiscussionButton.BorderSize = 0;
-            this.HelpDiscussionButton.FlatAppearance.BorderSize = 0;
-            this.HelpDiscussionButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.HelpDiscussionButton.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold);
-            this.HelpDiscussionButton.ForeColor = System.Drawing.Color.White;
-            this.HelpDiscussionButton.Location = new System.Drawing.Point(981, 1535);
-            this.HelpDiscussionButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.HelpDiscussionButton.Name = "HelpDiscussionButton";
-            this.HelpDiscussionButton.Size = new System.Drawing.Size(256, 81);
-            this.HelpDiscussionButton.TabIndex = 57;
-            this.HelpDiscussionButton.Text = "Письмо-\r\n-благодарность";
-            this.HelpDiscussionButton.TextColor = System.Drawing.Color.White;
-            this.HelpDiscussionButton.UseVisualStyleBackColor = false;
-            this.HelpDiscussionButton.Click += new System.EventHandler(this.HelpDiscussionButton_Click);
+            this.RefusalRegistrationButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(56)))), ((int)(((byte)(165)))));
+            this.RefusalRegistrationButton.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(56)))), ((int)(((byte)(165)))));
+            this.RefusalRegistrationButton.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
+            this.RefusalRegistrationButton.BorderRadius = 0;
+            this.RefusalRegistrationButton.BorderSize = 0;
+            this.RefusalRegistrationButton.FlatAppearance.BorderSize = 0;
+            this.RefusalRegistrationButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.RefusalRegistrationButton.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold);
+            this.RefusalRegistrationButton.ForeColor = System.Drawing.Color.White;
+            this.RefusalRegistrationButton.Location = new System.Drawing.Point(981, 1535);
+            this.RefusalRegistrationButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.RefusalRegistrationButton.Name = "RefusalRegistrationButton";
+            this.RefusalRegistrationButton.Size = new System.Drawing.Size(256, 81);
+            this.RefusalRegistrationButton.TabIndex = 57;
+            this.RefusalRegistrationButton.Text = "Отказ постановки на учет";
+            this.RefusalRegistrationButton.TextColor = System.Drawing.Color.White;
+            this.RefusalRegistrationButton.UseVisualStyleBackColor = false;
+            this.RefusalRegistrationButton.Click += new System.EventHandler(this.RefusalRegistrationButton_Click);
             // 
-            // HelpCollaborationButton
+            // RegistrationButton
             // 
-            this.HelpCollaborationButton.BackColor = System.Drawing.Color.RoyalBlue;
-            this.HelpCollaborationButton.BackgroundColor = System.Drawing.Color.RoyalBlue;
-            this.HelpCollaborationButton.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
-            this.HelpCollaborationButton.BorderRadius = 0;
-            this.HelpCollaborationButton.BorderSize = 0;
-            this.HelpCollaborationButton.FlatAppearance.BorderSize = 0;
-            this.HelpCollaborationButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.HelpCollaborationButton.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold);
-            this.HelpCollaborationButton.ForeColor = System.Drawing.Color.White;
-            this.HelpCollaborationButton.Location = new System.Drawing.Point(716, 1535);
-            this.HelpCollaborationButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.HelpCollaborationButton.Name = "HelpCollaborationButton";
-            this.HelpCollaborationButton.Size = new System.Drawing.Size(256, 81);
-            this.HelpCollaborationButton.TabIndex = 55;
-            this.HelpCollaborationButton.Text = "Сотрудничество";
-            this.HelpCollaborationButton.TextColor = System.Drawing.Color.White;
-            this.HelpCollaborationButton.UseVisualStyleBackColor = false;
-            this.HelpCollaborationButton.Click += new System.EventHandler(this.HelpCollaborationButton_Click);
+            this.RegistrationButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(56)))), ((int)(((byte)(165)))));
+            this.RegistrationButton.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(56)))), ((int)(((byte)(165)))));
+            this.RegistrationButton.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
+            this.RegistrationButton.BorderRadius = 0;
+            this.RegistrationButton.BorderSize = 0;
+            this.RegistrationButton.FlatAppearance.BorderSize = 0;
+            this.RegistrationButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.RegistrationButton.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold);
+            this.RegistrationButton.ForeColor = System.Drawing.Color.White;
+            this.RegistrationButton.Location = new System.Drawing.Point(716, 1535);
+            this.RegistrationButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.RegistrationButton.Name = "RegistrationButton";
+            this.RegistrationButton.Size = new System.Drawing.Size(256, 81);
+            this.RegistrationButton.TabIndex = 55;
+            this.RegistrationButton.Text = "Постановка на учет";
+            this.RegistrationButton.TextColor = System.Drawing.Color.White;
+            this.RegistrationButton.UseVisualStyleBackColor = false;
+            this.RegistrationButton.Click += new System.EventHandler(this.RegistrationButtonButton_Click);
             // 
             // DeleteAnsWorkDocumentButton
             // 
-            this.DeleteAnsWorkDocumentButton.BackColor = System.Drawing.Color.RoyalBlue;
-            this.DeleteAnsWorkDocumentButton.BackgroundColor = System.Drawing.Color.RoyalBlue;
+            this.DeleteAnsWorkDocumentButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(56)))), ((int)(((byte)(165)))));
+            this.DeleteAnsWorkDocumentButton.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(56)))), ((int)(((byte)(165)))));
             this.DeleteAnsWorkDocumentButton.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
             this.DeleteAnsWorkDocumentButton.BorderRadius = 0;
             this.DeleteAnsWorkDocumentButton.BorderSize = 0;
@@ -263,8 +263,8 @@
             // 
             // ChooseAnsWorkDocumentButton
             // 
-            this.ChooseAnsWorkDocumentButton.BackColor = System.Drawing.Color.RoyalBlue;
-            this.ChooseAnsWorkDocumentButton.BackgroundColor = System.Drawing.Color.RoyalBlue;
+            this.ChooseAnsWorkDocumentButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(56)))), ((int)(((byte)(165)))));
+            this.ChooseAnsWorkDocumentButton.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(56)))), ((int)(((byte)(165)))));
             this.ChooseAnsWorkDocumentButton.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
             this.ChooseAnsWorkDocumentButton.BorderRadius = 0;
             this.ChooseAnsWorkDocumentButton.BorderSize = 0;
@@ -284,8 +284,8 @@
             // 
             // AnswerApplButton
             // 
-            this.AnswerApplButton.BackColor = System.Drawing.Color.RoyalBlue;
-            this.AnswerApplButton.BackgroundColor = System.Drawing.Color.RoyalBlue;
+            this.AnswerApplButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(56)))), ((int)(((byte)(165)))));
+            this.AnswerApplButton.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(56)))), ((int)(((byte)(165)))));
             this.AnswerApplButton.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
             this.AnswerApplButton.BorderRadius = 0;
             this.AnswerApplButton.BorderSize = 0;
@@ -305,8 +305,8 @@
             // 
             // CloseAnsButton
             // 
-            this.CloseAnsButton.BackColor = System.Drawing.Color.RoyalBlue;
-            this.CloseAnsButton.BackgroundColor = System.Drawing.Color.RoyalBlue;
+            this.CloseAnsButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(56)))), ((int)(((byte)(165)))));
+            this.CloseAnsButton.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(56)))), ((int)(((byte)(165)))));
             this.CloseAnsButton.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
             this.CloseAnsButton.BorderRadius = 0;
             this.CloseAnsButton.BorderSize = 0;
@@ -327,8 +327,8 @@
             // DescripWorkAnsTextBox
             // 
             this.DescripWorkAnsTextBox.BackColor = System.Drawing.Color.White;
-            this.DescripWorkAnsTextBox.BorderColor = System.Drawing.Color.RoyalBlue;
-            this.DescripWorkAnsTextBox.BorderFocusColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
+            this.DescripWorkAnsTextBox.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(56)))), ((int)(((byte)(165)))));
+            this.DescripWorkAnsTextBox.BorderFocusColor = System.Drawing.Color.FromArgb(((int)(((byte)(207)))), ((int)(((byte)(20)))), ((int)(((byte)(1)))));
             this.DescripWorkAnsTextBox.BorderSize = 2;
             this.DescripWorkAnsTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F);
             this.DescripWorkAnsTextBox.ForeColor = System.Drawing.Color.Black;
@@ -349,8 +349,8 @@
             // StatusApplicationTextBox
             // 
             this.StatusApplicationTextBox.BackColor = System.Drawing.Color.White;
-            this.StatusApplicationTextBox.BorderColor = System.Drawing.Color.RoyalBlue;
-            this.StatusApplicationTextBox.BorderFocusColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(147)))), ((int)(((byte)(255)))));
+            this.StatusApplicationTextBox.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(56)))), ((int)(((byte)(165)))));
+            this.StatusApplicationTextBox.BorderFocusColor = System.Drawing.Color.FromArgb(((int)(((byte)(207)))), ((int)(((byte)(20)))), ((int)(((byte)(1)))));
             this.StatusApplicationTextBox.BorderSize = 2;
             this.StatusApplicationTextBox.Enabled = false;
             this.StatusApplicationTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F);
@@ -419,10 +419,10 @@
             this.ClientSize = new System.Drawing.Size(1619, 1914);
             this.Controls.Add(this.DocumentListBox);
             this.Controls.Add(this.AdministrationLabel);
-            this.Controls.Add(this.HelpThanksButton);
-            this.Controls.Add(this.HelpDiscussionButton);
+            this.Controls.Add(this.DenialCompensationButton);
+            this.Controls.Add(this.RefusalRegistrationButton);
             this.Controls.Add(this.HelpLabel);
-            this.Controls.Add(this.HelpCollaborationButton);
+            this.Controls.Add(this.RegistrationButton);
             this.Controls.Add(this.ChooseStatusApplPictureBox);
             this.Controls.Add(this.SelectAnsWorkDocumentLabel);
             this.Controls.Add(this.DeleteAnsWorkDocumentButton);
@@ -469,9 +469,9 @@
         private System.Windows.Forms.ContextMenuStrip TypeApplWorkMenuStrip;
         private System.Windows.Forms.ToolStripMenuItem отказаноToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem расИзакToolStripMenuItem;
-        private Design.CustomButton HelpCollaborationButton;
-        private Design.CustomButton HelpThanksButton;
-        private Design.CustomButton HelpDiscussionButton;
+        private Design.CustomButton RegistrationButton;
+        private Design.CustomButton DenialCompensationButton;
+        private Design.CustomButton RefusalRegistrationButton;
         private System.Windows.Forms.Label HelpLabel;
         private System.Windows.Forms.Label AdministrationLabel;
         private System.Windows.Forms.ListBox DocumentListBox;
